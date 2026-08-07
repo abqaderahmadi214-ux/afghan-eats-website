@@ -42,6 +42,7 @@ jobs:
           node --check assets/live-search.js
           node --check assets/rewards.js
           node --check assets/recovery.js
+          node --check assets/group-order.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
