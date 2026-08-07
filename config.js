@@ -20,3 +20,10 @@ window.AFGHAN_EATS_CONFIG = {
   if(!enabled)return;
   const script=document.createElement('script');script.src='/assets/dispatch.js';script.async=true;script.dataset.aeDispatchModule='1';document.head.appendChild(script);
 })();
+
+(function loadLastMilePrecision(){
+  const path=location.pathname.toLowerCase();
+  const enabled=path.endsWith('/operations.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/rider-portal'||path==='/order';
+  if(!enabled)return;
+  const script=document.createElement('script');script.src='/assets/lastmile.js';script.async=true;script.dataset.aeLastMileModule='1';document.head.appendChild(script);
+})();

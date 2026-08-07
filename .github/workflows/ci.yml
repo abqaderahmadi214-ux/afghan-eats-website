@@ -33,6 +33,7 @@ jobs:
           node --check assets/merchant.js
           node --check assets/merchant-owner.js
           node --check assets/dispatch.js
+          node --check assets/lastmile.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
