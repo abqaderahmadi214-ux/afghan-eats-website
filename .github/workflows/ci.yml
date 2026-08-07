@@ -4,7 +4,8 @@ on:
   pull_request:
   push:
     branches:
-      - feature/advanced-marketplace-v1
+      - main
+      - 'feature/**'
 
 jobs:
   validate:
@@ -18,6 +19,7 @@ jobs:
         run: |
           node --check assets/app.js
           node --check assets/advanced.js
+          node --check assets/operations.js
       - name: Validate JSON and local references
         run: |
           python - <<'PY'
