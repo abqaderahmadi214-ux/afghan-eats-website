@@ -25,6 +25,7 @@ jobs:
           node --check assets/portal-admin.js
           node --check assets/customer.js
           node --check assets/customer-admin.js
+          node --check assets/reliability.js
       - name: Validate JSON and local references
         run: |
           python - <<'PY'
