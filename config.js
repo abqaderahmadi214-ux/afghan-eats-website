@@ -33,3 +33,7 @@ window.AFGHAN_EATS_CONFIG = {
   if(!(path.endsWith('/operations.html')||path==='/operations'))return;
   const script=document.createElement('script');script.src='/assets/integrity.js';script.async=true;script.dataset.aeIntegrityModule='1';document.head.appendChild(script);
 })();
+
+(function loadPlatformStatus(){
+  const script=document.createElement('script');script.src='/assets/platform-status.js';script.async=true;script.dataset.aePlatformStatus='1';document.head.appendChild(script);
+})();
