@@ -35,6 +35,7 @@ jobs:
           node --check assets/dispatch.js
           node --check assets/lastmile.js
           node --check assets/integrity.js
+          node --check assets/platform-status.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
