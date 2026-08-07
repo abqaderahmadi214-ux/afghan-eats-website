@@ -46,6 +46,7 @@ jobs:
           node --check assets/timeline.js
           node --check assets/scheduling.js
           node --check assets/personalization.js
+          node --check assets/support-resolution.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
