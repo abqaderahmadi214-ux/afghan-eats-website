@@ -28,6 +28,7 @@ jobs:
           node --check assets/reliability.js
           node --check assets/notifications.js
           node --check assets/communications-admin.js
+          node --check assets/security.js
       - name: Validate JSON and local references
         run: |
           python - <<'PY'
