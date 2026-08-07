@@ -5,60 +5,13 @@ window.AFGHAN_EATS_CONFIG = {
   launchCity: 'Herat'
 };
 
-(function loadMerchantOperations(){
-  const path=location.pathname.toLowerCase();
-  const owner=path.endsWith('/owner.html')||path==='/owner';
-  const customer=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path.endsWith('/restaurant.html')||path.endsWith('/checkout.html');
-  const src=owner?'/assets/merchant-owner.js':customer?'/assets/merchant.js':'';
-  if(!src)return;
-  const script=document.createElement('script');script.src=src;script.async=true;script.dataset.aeMerchantModule='1';document.head.appendChild(script);
-})();
-
-(function loadDispatchIntelligence(){
-  const path=location.pathname.toLowerCase();
-  const enabled=path.endsWith('/operations.html')||path.endsWith('/owner.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/owner'||path==='/rider-portal'||path==='/order';
-  if(!enabled)return;
-  const script=document.createElement('script');script.src='/assets/dispatch.js';script.async=true;script.dataset.aeDispatchModule='1';document.head.appendChild(script);
-})();
-
-(function loadLastMilePrecision(){
-  const path=location.pathname.toLowerCase();
-  const enabled=path.endsWith('/operations.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/rider-portal'||path==='/order';
-  if(!enabled)return;
-  const script=document.createElement('script');script.src='/assets/lastmile.js';script.async=true;script.dataset.aeLastMileModule='1';document.head.appendChild(script);
-})();
-
-(function loadMarketplaceIntegrity(){
-  const path=location.pathname.toLowerCase();
-  if(!(path.endsWith('/operations.html')||path==='/operations'))return;
-  const script=document.createElement('script');script.src='/assets/integrity.js';script.async=true;script.dataset.aeIntegrityModule='1';document.head.appendChild(script);
-})();
-
-(function loadPlatformStatus(){
-  const script=document.createElement('script');script.src='/assets/platform-status.js';script.async=true;script.dataset.aePlatformStatus='1';document.head.appendChild(script);
-})();
-
-(function loadCityContext(){
-  const script=document.createElement('script');script.src='/assets/cities.js';script.async=true;script.dataset.aeCityModule='1';document.head.appendChild(script);
-})();
-
-(function loadMerchantQuality(){
-  const path=location.pathname.toLowerCase();
-  const enabled=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path.endsWith('/operations.html')||path.endsWith('/owner.html')||path==='/operations'||path==='/owner';
-  if(!enabled)return;
-  const script=document.createElement('script');script.src='/assets/quality.js';script.async=true;script.dataset.aeQualityModule='1';document.head.appendChild(script);
-})();
-
-(function loadCatalogStudio(){
-  const path=location.pathname.toLowerCase();
-  const enabled=path.endsWith('/restaurant.html')||path.endsWith('/checkout.html')||path.endsWith('/owner.html')||path==='/restaurant'||path==='/checkout'||path==='/owner';
-  if(!enabled)return;
-  const script=document.createElement('script');script.src='/assets/catalog.js';script.async=true;script.dataset.aeCatalogModule='1';document.head.appendChild(script);
-})();
-
-(function loadLiveDiscovery(){
-  const path=location.pathname.toLowerCase();
-  const enabled=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path==='/restaurants';
-  if(!enabled)return;
-  const script=document.createElement('script');script.src='/assets/live-search.js';script.async=true;script.dataset.aeLiveDiscovery='1';document.head.appendChild(script);
-})();
+(function loadMerchantOperations(){const path=location.pathname.toLowerCase(),owner=path.endsWith('/owner.html')||path==='/owner',customer=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path.endsWith('/restaurant.html')||path.endsWith('/checkout.html'),src=owner?'/assets/merchant-owner.js':customer?'/assets/merchant.js':'';if(!src)return;const script=document.createElement('script');script.src=src;script.async=true;script.dataset.aeMerchantModule='1';document.head.appendChild(script)})();
+(function loadDispatchIntelligence(){const path=location.pathname.toLowerCase(),enabled=path.endsWith('/operations.html')||path.endsWith('/owner.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/owner'||path==='/rider-portal'||path==='/order';if(!enabled)return;const script=document.createElement('script');script.src='/assets/dispatch.js';script.async=true;script.dataset.aeDispatchModule='1';document.head.appendChild(script)})();
+(function loadLastMilePrecision(){const path=location.pathname.toLowerCase(),enabled=path.endsWith('/operations.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/rider-portal'||path==='/order';if(!enabled)return;const script=document.createElement('script');script.src='/assets/lastmile.js';script.async=true;script.dataset.aeLastMileModule='1';document.head.appendChild(script)})();
+(function loadMarketplaceIntegrity(){const path=location.pathname.toLowerCase();if(!(path.endsWith('/operations.html')||path==='/operations'))return;const script=document.createElement('script');script.src='/assets/integrity.js';script.async=true;script.dataset.aeIntegrityModule='1';document.head.appendChild(script)})();
+(function loadPlatformStatus(){const script=document.createElement('script');script.src='/assets/platform-status.js';script.async=true;script.dataset.aePlatformStatus='1';document.head.appendChild(script)})();
+(function loadCityContext(){const script=document.createElement('script');script.src='/assets/cities.js';script.async=true;script.dataset.aeCityModule='1';document.head.appendChild(script)})();
+(function loadMerchantQuality(){const path=location.pathname.toLowerCase(),enabled=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path.endsWith('/operations.html')||path.endsWith('/owner.html')||path==='/operations'||path==='/owner';if(!enabled)return;const script=document.createElement('script');script.src='/assets/quality.js';script.async=true;script.dataset.aeQualityModule='1';document.head.appendChild(script)})();
+(function loadCatalogStudio(){const path=location.pathname.toLowerCase(),enabled=path.endsWith('/restaurant.html')||path.endsWith('/checkout.html')||path.endsWith('/owner.html')||path==='/restaurant'||path==='/checkout'||path==='/owner';if(!enabled)return;const script=document.createElement('script');script.src='/assets/catalog.js';script.async=true;script.dataset.aeCatalogModule='1';document.head.appendChild(script)})();
+(function loadLiveDiscovery(){const path=location.pathname.toLowerCase(),enabled=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path==='/restaurants';if(!enabled)return;const script=document.createElement('script');script.src='/assets/live-search.js';script.async=true;script.dataset.aeLiveDiscovery='1';document.head.appendChild(script)})();
+(function loadRewardsRedemption(){const path=location.pathname.toLowerCase(),enabled=path.endsWith('/checkout.html')||path.endsWith('/operations.html')||path==='/checkout'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/rewards.js';script.async=true;script.dataset.aeRewardsModule='1';document.head.appendChild(script)})();
