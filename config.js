@@ -48,3 +48,10 @@ window.AFGHAN_EATS_CONFIG = {
   if(!enabled)return;
   const script=document.createElement('script');script.src='/assets/quality.js';script.async=true;script.dataset.aeQualityModule='1';document.head.appendChild(script);
 })();
+
+(function loadCatalogStudio(){
+  const path=location.pathname.toLowerCase();
+  const enabled=path.endsWith('/restaurant.html')||path.endsWith('/checkout.html')||path.endsWith('/owner.html')||path==='/restaurant'||path==='/checkout'||path==='/owner';
+  if(!enabled)return;
+  const script=document.createElement('script');script.src='/assets/catalog.js';script.async=true;script.dataset.aeCatalogModule='1';document.head.appendChild(script);
+})();
