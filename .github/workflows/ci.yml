@@ -28,7 +28,7 @@ jobs:
           for page in root.glob('*.html'):
               text=page.read_text(encoding='utf-8')
               for ref in re.findall(r'(?:href|src)=["\']([^"\']+)', text):
-                  if ref.startswith(('http://','https://','#','mailto:','tel:','javascript:')):
+                  if '${' in ref or ref.startswith(('http://','https://','#','mailto:','tel:','javascript:')):
                       continue
                   path=ref.split('?',1)[0].split('#',1)[0].lstrip('/')
                   if not path or path.endswith('/'):
