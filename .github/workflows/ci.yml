@@ -23,6 +23,8 @@ jobs:
           node --check assets/trust.js
           node --check assets/portal.js
           node --check assets/portal-admin.js
+          node --check assets/customer.js
+          node --check assets/customer-admin.js
       - name: Validate JSON and local references
         run: |
           python - <<'PY'
