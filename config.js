@@ -27,3 +27,9 @@ window.AFGHAN_EATS_CONFIG = {
   if(!enabled)return;
   const script=document.createElement('script');script.src='/assets/lastmile.js';script.async=true;script.dataset.aeLastMileModule='1';document.head.appendChild(script);
 })();
+
+(function loadMarketplaceIntegrity(){
+  const path=location.pathname.toLowerCase();
+  if(!(path.endsWith('/operations.html')||path==='/operations'))return;
+  const script=document.createElement('script');script.src='/assets/integrity.js';script.async=true;script.dataset.aeIntegrityModule='1';document.head.appendChild(script);
+})();
