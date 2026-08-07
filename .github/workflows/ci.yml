@@ -1,0 +1,42 @@
+name: Frontend CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - feature/advanced-marketplace-v1
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/app.js
+          node --check assets/advanced.js
+      - name: Validate JSON and local references
+        run: |
+          python - <<'PY'
+          import json, pathlib, re, sys
+          root=pathlib.Path('.')
+          json.load(open(root/'data/fallback-restaurants.json', encoding='utf-8'))
+          missing=[]
+          for page in root.glob('*.html'):
+              text=page.read_text(encoding='utf-8')
+              for ref in re.findall(r'(?:href|src)=["\']([^"\']+)', text):
+                  if ref.startswith(('http://','https://','#','mailto:','tel:','javascript:')):
+                      continue
+                  path=ref.split('?',1)[0].split('#',1)[0].lstrip('/')
+                  if not path or path.endswith('/'):
+                      continue
+                  if not (root/path).exists():
+                      missing.append((page.name,ref))
+          if missing:
+              print('Missing local references:', missing)
+              sys.exit(1)
+          print('Frontend validation passed')
+          PY
