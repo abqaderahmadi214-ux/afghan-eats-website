@@ -13,3 +13,10 @@ window.AFGHAN_EATS_CONFIG = {
   if(!src)return;
   const script=document.createElement('script');script.src=src;script.async=true;script.dataset.aeMerchantModule='1';document.head.appendChild(script);
 })();
+
+(function loadDispatchIntelligence(){
+  const path=location.pathname.toLowerCase();
+  const enabled=path.endsWith('/operations.html')||path.endsWith('/owner.html')||path.endsWith('/rider-portal.html')||path.endsWith('/order.html')||path==='/operations'||path==='/owner'||path==='/rider-portal'||path==='/order';
+  if(!enabled)return;
+  const script=document.createElement('script');script.src='/assets/dispatch.js';script.async=true;script.dataset.aeDispatchModule='1';document.head.appendChild(script);
+})();
