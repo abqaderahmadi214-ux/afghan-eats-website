@@ -37,3 +37,7 @@ window.AFGHAN_EATS_CONFIG = {
 (function loadPlatformStatus(){
   const script=document.createElement('script');script.src='/assets/platform-status.js';script.async=true;script.dataset.aePlatformStatus='1';document.head.appendChild(script);
 })();
+
+(function loadCityContext(){
+  const script=document.createElement('script');script.src='/assets/cities.js';script.async=true;script.dataset.aeCityModule='1';document.head.appendChild(script);
+})();
