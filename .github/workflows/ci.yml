@@ -54,6 +54,7 @@ jobs:
           node --check assets/kitchen.js
           node --check assets/forecast.js
           node --check assets/inventory.js
+          node --check assets/observability.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
