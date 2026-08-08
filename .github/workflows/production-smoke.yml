@@ -44,6 +44,10 @@ jobs:
 
           retry_contains "https://afghaneats.net/config.js" "loadLaunchReadinessV40" /tmp/ae-config.js
           retry_contains "https://afghaneats.net/assets/launch-readiness.js" "launchReadiness.snapshot" /tmp/ae-launch.js
+          if [ "$GITHUB_EVENT_NAME" != "pull_request" ]; then
+            retry_contains "https://afghaneats.net/config.js" "loadExperienceV43" /tmp/ae-config-v43.js
+            retry_contains "https://afghaneats.net/assets/experience-v43.js" "aeSubmitHomeSearch" /tmp/ae-experience-v43.js
+          fi
 
       - name: Verify frontend production security headers
         shell: bash
@@ -124,6 +128,11 @@ jobs:
         run: |
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            echo 'Frontend v43 customer experience: production verification deferred until merge'
+          else
+            echo 'Frontend v43 customer experience: live'
+          fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
           echo 'Backend v40 launch-readiness route: live and access-controlled'
