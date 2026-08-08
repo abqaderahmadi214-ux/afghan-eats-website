@@ -1,0 +1,23 @@
+.hero{padding:44px 0 48px}
+.hero-grid{gap:40px}
+.hero h1{font-size:clamp(2.7rem,4.15vw,4rem);max-width:640px}
+.hero-image{height:370px}
+.smart-discovery{padding:34px 0 22px}
+.smart-discovery .section-head{margin-bottom:18px}
+.section{padding:50px 0}
+.restaurant-card{background:#fff}
+.restaurant-body{padding:17px}
+.restaurant-body .tagline{line-height:1.45}
+.btn[aria-disabled="true"],.btn.disabled{opacity:.45;pointer-events:none;box-shadow:none;transform:none}
+.ae-loading-card{border:1px solid #eee7e2;border-radius:18px;overflow:hidden;background:#fff;min-height:330px;box-shadow:0 4px 16px rgba(42,30,24,.035)}
+.ae-loading-media,.ae-loading-line{position:relative;overflow:hidden;background:#f0ece9}
+.ae-loading-media{height:215px}
+.ae-loading-body{padding:17px}
+.ae-loading-line{height:13px;border-radius:999px;margin-top:10px}
+.ae-loading-line:first-child{height:18px;width:62%;margin-top:0}
+.ae-loading-line.short{width:43%}
+.ae-loading-media:after,.ae-loading-line:after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);animation:ae-v43-shimmer 1.25s infinite}
+@keyframes ae-v43-shimmer{100%{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){.ae-loading-media:after,.ae-loading-line:after{animation:none}}
+@media(max-width:1000px){.hero{padding-top:38px}.hero-image{height:350px}}
+@media(max-width:620px){.hero{padding:28px 0 30px}.hero h1{font-size:clamp(2.3rem,11vw,3rem)}.hero-trust{font-size:.75rem}.smart-discovery{padding:24px 0 16px}.section{padding:38px 0}.ae-loading-card{min-height:310px}.ae-loading-media{height:205px}}
