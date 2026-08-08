@@ -52,6 +52,7 @@ jobs:
           node --check assets/compensation.js
           node --check assets/food-safety.js
           node --check assets/kitchen.js
+          node --check assets/forecast.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
