@@ -56,6 +56,7 @@ jobs:
           node --check assets/inventory.js
           node --check assets/observability.js
           node --check assets/data-readiness.js
+          node --check assets/security-posture.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
@@ -78,4 +79,34 @@ jobs:
               print('Missing local references:', missing)
               sys.exit(1)
           print('Frontend validation passed')
+          PY
+      - name: Security regression checks
+        run: |
+          python - <<'PY'
+          import pathlib, re, sys
+          root=pathlib.Path('.')
+          netlify=(root/'netlify.toml').read_text(encoding='utf-8')
+          problems=[]
+          if 'Content-Security-Policy' not in netlify:
+              problems.append('Netlify CSP header is missing')
+          asset_block=netlify.split('for = "/assets/*"',1)[-1]
+          if 'immutable' in asset_block.lower():
+              problems.append('Unversioned assets must not use immutable caching')
+          patterns=[
+              re.compile(r'sk_live_[A-Za-z0-9]{12,}'),
+              re.compile(r'eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}'),
+              re.compile(r'(?:SUPABASE_SERVICE_ROLE_KEY|JWT_SECRET|COMMUNICATIONS_PROVIDER_TOKEN)\s*[:=]\s*["\'][^$"\']{12,}["\']',re.I),
+          ]
+          for p in root.rglob('*'):
+              if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in {'.js','.html','.json','.toml','.md','.txt'}:
+                  continue
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              for rx in patterns:
+                  if rx.search(text):
+                      problems.append(f'Possible hard-coded secret in {p}')
+                      break
+          if problems:
+              print('\n'.join(problems))
+              sys.exit(1)
+          print('Security regression checks passed')
           PY
