@@ -1,0 +1,130 @@
+name: Production Smoke
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: true
+
+jobs:
+  verify-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Verify final frontend release is live
+        shell: bash
+        run: |
+          set -euo pipefail
+          retry_contains() {
+            local url="$1" needle="$2" out="$3"
+            for attempt in $(seq 1 30); do
+              echo "Attempt ${attempt}/30: ${url}"
+              if curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$url" -o "$out"; then
+                if grep -Fq "$needle" "$out"; then
+                  return 0
+                fi
+              fi
+              sleep 20
+            done
+            echo "Expected production marker not found: ${needle}" >&2
+            echo "Last response (first 120 lines):" >&2
+            sed -n '1,120p' "$out" >&2 || true
+            return 1
+          }
+
+          retry_contains "https://afghaneats.net/config.js" "loadLaunchReadinessV40" /tmp/ae-config.js
+          retry_contains "https://afghaneats.net/assets/launch-readiness.js" "launchReadiness.snapshot" /tmp/ae-launch.js
+
+      - name: Verify frontend production security headers
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 https://afghaneats.net/ | tr -d '\r' > /tmp/frontend-headers
+          cat /tmp/frontend-headers
+          grep -qi '^content-security-policy:' /tmp/frontend-headers
+          grep -qi '^strict-transport-security:' /tmp/frontend-headers
+          grep -qi '^x-content-type-options: nosniff' /tmp/frontend-headers
+          grep -qi '^x-frame-options: DENY' /tmp/frontend-headers
+
+          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 https://afghaneats.net/config.js | tr -d '\r' > /tmp/config-headers
+          if grep -qi '^cache-control:.*immutable' /tmp/config-headers; then
+            echo 'config.js must not use immutable caching' >&2
+            exit 1
+          fi
+
+      - name: Verify live API health and v40 route
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            echo "API health attempt ${attempt}/30"
+            if curl -fsS --connect-timeout 10 --max-time 30 --retry 2 --retry-delay 2 https://afghaneats-api.onrender.com/health -o /tmp/health.json; then
+              if python - <<'PY'
+          import json
+          d=json.load(open('/tmp/health.json'))
+          required={
+              'status':'ok',
+              'service':'Afghan Eats API',
+              'database':'connected',
+              'securityHardening':'ready',
+              'observability':'ready',
+              'dataPortability':'ready',
+              'inventory':'transactional_opt_in',
+          }
+          bad={k:(d.get(k),v) for k,v in required.items() if d.get(k)!=v}
+          if bad:
+              raise SystemExit(f'Health contract mismatch: {bad}')
+          print('API health contract passed')
+          PY
+              then break; fi
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              cat /tmp/health.json 2>/dev/null || true
+              exit 1
+            fi
+            sleep 20
+          done
+
+          route='https://afghaneats-api.onrender.com/api/trpc/launchReadiness.snapshot?input=%7B%22json%22%3Anull%7D'
+          for attempt in $(seq 1 10); do
+            code=$(curl -sS --connect-timeout 10 --max-time 25 -o /tmp/launch-route.json -w '%{http_code}' "$route" || true)
+            echo "launchReadiness route HTTP ${code}"
+            if [ "$code" = '401' ]; then
+              break
+            fi
+            if [ "$attempt" -eq 10 ]; then
+              cat /tmp/launch-route.json 2>/dev/null || true
+              echo 'Expected 401 from existing admin-only v40 launchReadiness route.' >&2
+              exit 1
+            fi
+            sleep 15
+          done
+
+      - name: Verify API response hardening
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 https://afghaneats-api.onrender.com/health | tr -d '\r' > /tmp/api-headers
+          cat /tmp/api-headers
+          grep -qi '^x-request-id:' /tmp/api-headers
+          grep -qi '^cache-control:.*no-store' /tmp/api-headers
+          grep -qi '^x-content-type-options: nosniff' /tmp/api-headers
+
+      - name: Production verification summary
+        run: |
+          echo 'Afghan Eats production smoke passed.'
+          echo 'Frontend v40 asset: live'
+          echo 'Frontend security headers: live'
+          echo 'API database health: live'
+          echo 'Backend v40 launch-readiness route: live and access-controlled'
+          echo 'API hardening headers: live'
