@@ -58,6 +58,7 @@ jobs:
           node --check assets/data-readiness.js
           node --check assets/security-posture.js
           node --check assets/accessibility.js
+          node --check assets/launch-readiness.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
