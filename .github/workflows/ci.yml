@@ -57,6 +57,7 @@ jobs:
           node --check assets/observability.js
           node --check assets/data-readiness.js
           node --check assets/security-posture.js
+          node --check assets/accessibility.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
@@ -109,4 +110,35 @@ jobs:
               print('\n'.join(problems))
               sys.exit(1)
           print('Security regression checks passed')
+          PY
+      - name: Accessibility and performance quality gates
+        run: |
+          python - <<'PY'
+          import pathlib,re,sys
+          root=pathlib.Path('.')
+          problems=[]
+          for page in root.glob('*.html'):
+              text=page.read_text(encoding='utf-8')
+              low=text.lower()
+              if not re.search(r'<html[^>]+lang=["\'][^"\']+["\']',text,re.I): problems.append(f'{page}: html lang is missing')
+              if '<title>' not in low or '</title>' not in low: problems.append(f'{page}: title is missing')
+              if 'name="viewport"' not in low and "name='viewport'" not in low: problems.append(f'{page}: viewport meta is missing')
+              if '<main' not in low: problems.append(f'{page}: main landmark is missing')
+              ids=re.findall(r'\bid=["\']([^"\']+)',text,re.I)
+              dup=sorted({x for x in ids if ids.count(x)>1})
+              if dup: problems.append(f'{page}: duplicate ids {dup}')
+              for tag in re.findall(r'<img\b[^>]*>',text,re.I):
+                  if not re.search(r'\balt\s*=',tag,re.I): problems.append(f'{page}: static image missing alt')
+              for tag in re.findall(r'<a\b[^>]*target=["\']_blank["\'][^>]*>',text,re.I):
+                  rel=re.search(r'\brel=["\']([^"\']*)',tag,re.I)
+                  if not rel or 'noopener' not in rel.group(1).lower(): problems.append(f'{page}: target=_blank link missing noopener')
+              if page.stat().st_size>350_000: problems.append(f'{page}: HTML exceeds 350KB budget')
+          js=list((root/'assets').glob('*.js'))
+          for p in js:
+              if p.stat().st_size>350_000: problems.append(f'{p}: JS exceeds 350KB single-file budget')
+          if sum(p.stat().st_size for p in js)>2_500_000: problems.append('Total assets/*.js exceeds 2.5MB source budget')
+          if problems:
+              print('\n'.join(problems))
+              sys.exit(1)
+          print('Accessibility and performance quality gates passed')
           PY
