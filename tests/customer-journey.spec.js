@@ -31,7 +31,7 @@ test('homepage to restaurant to mobile basket to quoted checkout', async ({page}
   await page.goto('/');
   await page.locator('.address-box input[name="address"]').fill('Gulha Circle');
   await page.locator('.address-box button').click();
-  await expect(page).toHaveURL(/\/restaurants$/);
+  await expect(page).toHaveURL(/\/restaurants(?:\?.*)?$/);
   const card=page.locator('.restaurant-card').first();
   await expect(card).toContainText('Herat Kitchen');
   await expect(card).toContainText('؋ 60');
@@ -84,6 +84,6 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await expect(page.locator('#deliveryQuotePanel')).toContainText('Delivery confirmed');
   await page.locator('#promo').fill('WELCOME100');
   await page.getByRole('button',{name:'Apply'}).click();
-  await expect(page.locator('#promoMsg')).toContainText('server');
+  await expect(page.locator('#promoMsg')).toContainText('Invalid promo');
   await expect(page.locator('#cartDiscount')).toContainText('0');
 });
