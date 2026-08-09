@@ -70,6 +70,20 @@ jobs:
           import json, pathlib, re, sys
           root=pathlib.Path('.')
           json.load(open(root/'data/fallback-restaurants.json', encoding='utf-8'))
+          directory=json.load(open(root/'data/public-herat-directory.json', encoding='utf-8'))
+          ids=[]
+          for entry in directory:
+              restaurant=entry.get('restaurant',{})
+              rid=restaurant.get('id')
+              ids.append(rid)
+              if not rid or restaurant.get('listing_mode')!='directory':
+                  raise SystemExit(f'Invalid public directory entry: {rid!r}')
+              if restaurant.get('status')!='pending' or restaurant.get('has_delivery') is not False or restaurant.get('has_takeaway') is not False:
+                  raise SystemExit(f'Public listing must not imply active Afghan Eats ordering: {rid}')
+              if not str(restaurant.get('source_url','')).startswith('https://') or not restaurant.get('source_checked_at'):
+                  raise SystemExit(f'Public listing source is incomplete: {rid}')
+          if len(ids)!=len(set(ids)):
+              raise SystemExit('Duplicate restaurant ID in public Herat directory')
           missing=[]
           for page in root.glob('*.html'):
               text=page.read_text(encoding='utf-8')
