@@ -58,7 +58,7 @@ test('homepage to restaurant to mobile basket to quoted checkout', async ({page}
   await expect(page).toHaveURL(/\/checkout$/);
   await expect(page.locator('#deliveryQuotePanel')).toContainText('Delivery confirmed');
   await expect(page.locator('#cartDelivery')).toContainText('60');
-  await page.locator('input[name="fulfillment"][value="pickup"]').check();
+  await page.locator('label:has(input[name="fulfillment"][value="pickup"])').click();
   await expect(page.locator('#deliveryQuotePanel')).toContainText('Pickup selected');
   await expect(page.locator('.delivery-only').first()).toHaveClass(/hidden/);
 });
