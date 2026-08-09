@@ -45,8 +45,11 @@ jobs:
           retry_contains "https://afghaneats.net/config.js" "loadLaunchReadinessV40" /tmp/ae-config.js
           retry_contains "https://afghaneats.net/assets/launch-readiness.js" "launchReadiness.snapshot" /tmp/ae-launch.js
           if [ "$GITHUB_EVENT_NAME" != "pull_request" ]; then
-            retry_contains "https://afghaneats.net/config.js" "loadExperienceV43" /tmp/ae-config-v43.js
-            retry_contains "https://afghaneats.net/assets/experience-v43.js" "aeSubmitHomeSearch" /tmp/ae-experience-v43.js
+            retry_contains "https://afghaneats.net/config.js" "prepareCustomerLocale" /tmp/ae-config-v44.js
+            retry_contains "https://afghaneats.net/assets/app.js" "requestDeliveryQuote" /tmp/ae-app-v44.js
+            retry_contains "https://afghaneats.net/checkout.html" "deliveryQuotePanel" /tmp/ae-checkout-v44.html
+            retry_contains "https://afghaneats.net/assets/app.js" "renderConnectivityState" /tmp/ae-app-v45.js
+            retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
           fi
 
       - name: Verify frontend production security headers
@@ -124,16 +127,47 @@ jobs:
           grep -qi '^cache-control:.*no-store' /tmp/api-headers
           grep -qi '^x-content-type-options: nosniff' /tmp/api-headers
 
+      - name: Verify customer delivery quote contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          list_url='https://afghaneats-api.onrender.com/api/trpc/restaurants.list?input=%7B%22json%22%3A%7B%7D%7D'
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$list_url" -o /tmp/restaurants.json
+          restaurant_id=$(python - <<'PY'
+          import json
+          data=json.load(open('/tmp/restaurants.json'))
+          items=data.get('result',{}).get('data',{}).get('json',[])
+          item=next((x for x in items if x.get('has_takeaway') is not False),None)
+          if not item: raise SystemExit('No pickup-capable restaurant is available for quote verification')
+          print(item['id'])
+          PY
+          )
+          quote_url=$(RESTAURANT_ID="$restaurant_id" python - <<'PY'
+          import json,os,urllib.parse
+          value={'json':{'restaurantId':os.environ['RESTAURANT_ID'],'fulfillment':'pickup'}}
+          print('https://afghaneats-api.onrender.com/api/trpc/orders.quote?input='+urllib.parse.quote(json.dumps(value,separators=(',',':'))))
+          PY
+          )
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$quote_url" -o /tmp/quote.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/quote.json')).get('result',{}).get('data',{}).get('json',{})
+          if data.get('fulfillment')!='pickup' or float(data.get('deliveryFee',-1))!=0:
+              raise SystemExit(f'Pickup quote contract mismatch: {data}')
+          print('Pickup quote contract passed')
+          PY
+
       - name: Production verification summary
         run: |
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v43 customer experience: production verification deferred until merge'
+            echo 'Frontend v45 customer experience: production verification deferred until merge'
           else
-            echo 'Frontend v43 customer experience: live'
+            echo 'Frontend v45 customer experience: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
+          echo 'Customer delivery quote contract: live'
           echo 'Backend v40 launch-readiness route: live and access-controlled'
           echo 'API hardening headers: live'

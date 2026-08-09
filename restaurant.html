@@ -1,1 +1,53 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Restaurant menu | Afghan Eats</title><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/advanced.css"><link rel="stylesheet" href="/assets/trust.css"><script src="/config.js"></script></head><body><header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><nav class="navlinks"><a href="/restaurants.html" data-i18n="restaurants"></a><a href="/orders.html" data-i18n="orders"></a></nav><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account.html" data-i18n="account"></a><a class="btn btn-primary" href="/checkout.html">🛒 <span class="cart-count badge-count">0</span></a></div></div></header><div id="storeHero"></div><div class="store-tabs"><div class="container" id="storeTabs"></div></div><main class="section soft"><div class="container menu-layout"><section id="menuContent"></section><aside class="cart-panel"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h2 data-i18n="cart"></h2><span class="advanced-badge">✦ <span class="en-copy">Live basket</span><span class="fa-copy">سبد زنده</span></span></div><div id="cartItems"></div><div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div><div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div><div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div><div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div><a class="btn btn-primary" style="width:100%" href="/checkout.html" data-i18n="checkout"></a><div class="group-order"><strong>👥 <span class="en-copy">Group basket</span><span class="fa-copy">سبد گروهی</span></strong><p class="en-copy">Share this basket with family, friends or colleagues so they can continue from the same items.</p><p class="fa-copy">این سبد را با خانواده، دوستان یا همکاران شریک کنید تا از همان اقلام ادامه دهند.</p><button class="btn btn-light" type="button" onclick="shareCart()"><span class="en-copy">Share basket link</span><span class="fa-copy">اشتراک لینک سبد</span></button></div><div class="safety-note"><span class="en-copy">Final prices and menu availability are rechecked by the order server at checkout.</span><span class="fa-copy">قیمت نهایی و موجودیت منو هنگام پرداخت دوباره در سرور بررسی می‌شود.</span></div></aside></div></main><div class="modal" id="itemModal"><div class="modal-card"><button class="btn btn-light" onclick="closeModal()">×</button><h2 id="modalTitle"></h2><p id="modalDesc" class="muted"></p><h3 id="modalPrice"></h3><button class="btn btn-primary" style="width:100%" onclick="addCurrent()" data-i18n="add"></button></div></div><script src="/assets/app.js"></script><script>document.addEventListener('DOMContentLoaded',async()=>{if(!restaurants.length)await loadData();const id=new URLSearchParams(location.search).get('id'),r=restaurants.find(x=>x.id===id)||restaurants[0];if(!r){document.getElementById('menuContent').innerHTML='<div class="notice">Restaurant not found.</div>';return}currentRestaurant=r;window.currentRestaurant=r;document.getElementById('storeHero').innerHTML=`<section class="store-hero"><img src="${imageFor(r)}" alt="${displayName(r)}"><div class="store-overlay"><div class="container store-title"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px"><span class="verify ${['owner_confirmed','field_verified'].includes(r.verification_status)?'':'provisional'}">${['owner_confirmed','field_verified'].includes(r.verification_status)?'✓ '+t('verified'):'ℹ '+t('provisional')}</span><span class="advanced-badge">⚡ ${r.delivery_time_min??25}–${r.delivery_time_max??45} ${t('min')}</span></div><h1>${displayName(r)}</h1><p>${cuisineText(r)}</p><p>★ ${Number(r.rating??r.external_rating??0).toFixed(1)} · ${Number(r.delivery_fee_min||0)===0?t('free'):money(r.delivery_fee_min)}</p><p>${r.address||''}</p></div></div></section>`;const m=await getMenu(r);currentMenuItems=m.items||[];window.currentMenuItems=currentMenuItems;const cats=(m.categories||[]).length?m.categories:[{id:'all',name:'Menu',name_dari:'منو'}];document.getElementById('storeTabs').innerHTML=cats.map((c,i)=>`<button class="chip" onclick="document.getElementById('cat${i}').scrollIntoView()">${lang==='fa'&&c.name_dari?c.name_dari:c.name}</button>`).join('');document.getElementById('menuContent').innerHTML=cats.map((c,i)=>{const its=c.id==='all'?currentMenuItems:currentMenuItems.filter(x=>x.category_id===c.id);return `<section class="menu-section" id="cat${i}"><h2>${lang==='fa'&&c.name_dari?c.name_dari:c.name}</h2>${its.length?its.map(it=>`<div class="menu-item"><div><h3>${lang==='fa'&&it.name_dari?it.name_dari:it.name}</h3><p>${it.description||''}</p><div class="price">${Number(it.price)>0?money(it.price):'Price to confirm'}</div>${it.is_popular?'<span class="smart-reason">★ Popular</span>':''}</div><button class="add-btn" ${Number(it.price)<=0?'disabled':''} onclick="openItem('${r.id}','${it.id}')">+</button></div>`).join(''):'<p class="muted">Menu is being confirmed.</p>'}</section>`}).join('');renderCart();setTimeout(()=>{if(typeof trustLoadReviews==='function')trustLoadReviews()},150)});</script><script src="/assets/advanced.js"></script><script src="/assets/trust.js"></script><script src="/assets/customer.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Restaurant menu | Afghan Eats</title>
+  <meta name="description" content="Browse a Herat restaurant menu and order through Afghan Eats.">
+  <link rel="canonical" href="https://afghaneats.net/restaurant">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Restaurant menu | Afghan Eats">
+  <meta property="og:description" content="Browse a Herat restaurant menu and order through Afghan Eats.">
+  <meta property="og:url" content="https://afghaneats.net/restaurant">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/advanced.css">
+  <link rel="stylesheet" href="/assets/trust.css">
+  <script src="/config.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a>
+      <nav class="navlinks"><a href="/restaurants" data-i18n="restaurants"></a><a href="/orders" data-i18n="orders"></a></nav>
+      <div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a><a class="btn btn-primary" href="/checkout">🛒 <span class="cart-count badge-count">0</span></a></div>
+    </div>
+  </header>
+  <div id="storeHero" class="store-hero-loading" aria-busy="true"><div class="store-loading-block"></div></div>
+  <div class="store-tabs"><div class="container" id="storeTabs"><span class="store-tab-loading"></span><span class="store-tab-loading"></span><span class="store-tab-loading"></span></div></div>
+  <main class="section soft">
+    <div class="container menu-layout">
+      <section id="menuContent" aria-live="polite"><div class="menu-loading"><div></div><div></div><div></div></div></section>
+      <aside class="cart-panel">
+        <div class="cart-panel-head"><h2 data-i18n="cart"></h2><span class="advanced-badge">✦ <span class="en-copy">Live basket</span><span class="fa-copy">سبد زنده</span></span></div>
+        <div id="cartItems"></div>
+        <div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div>
+        <div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div>
+        <div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div>
+        <div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
+        <a class="btn btn-primary" style="width:100%" href="/checkout" data-i18n="checkout"></a>
+        <div class="group-order"><strong>👥 <span class="en-copy">Group basket</span><span class="fa-copy">سبد گروهی</span></strong><p class="en-copy">Share this basket with family, friends or colleagues so they can continue from the same items.</p><p class="fa-copy">این سبد را با خانواده، دوستان یا همکاران شریک کنید تا از همان اقلام ادامه دهند.</p><button class="btn btn-light" type="button" onclick="shareCart()"><span class="en-copy">Share basket link</span><span class="fa-copy">اشتراک لینک سبد</span></button></div>
+        <div class="safety-note"><span class="en-copy">Final prices and menu availability are rechecked by the order server at checkout.</span><span class="fa-copy">قیمت نهایی و موجودیت منو هنگام پرداخت دوباره در سرور بررسی می‌شود.</span></div>
+      </aside>
+    </div>
+  </main>
+  <a id="mobileBasketBar" class="mobile-basket-bar" href="/checkout" aria-hidden="true"><span><b><span class="en-copy">View basket</span><span class="fa-copy">مشاهده سبد</span></b> · <span data-basket-count>0</span></span><strong data-basket-total>؋ 0</strong></a>
+  <div class="modal" id="itemModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" onclick="if(event.target===this)closeModal()"><div class="modal-card"><button class="btn btn-light modal-close" type="button" onclick="closeModal()" data-aria-en="Close" data-aria-fa="بستن" aria-label="Close">×</button><h2 id="modalTitle"></h2><p id="modalDesc" class="muted"></p><h3 id="modalPrice"></h3><button class="btn btn-primary" type="button" style="width:100%" onclick="addCurrent()" data-i18n="add"></button></div></div>
+  <nav class="mobile-nav"><a href="/"><span>⌂</span><b data-i18n="home"></b></a><a href="/restaurants"><span>⌕</span><b data-i18n="restaurants"></b></a><a href="/orders"><span>☷</span><b data-i18n="orders"></b></a><a href="/account"><span>☺</span><b data-i18n="account"></b></a></nav>
+  <script src="/assets/app.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>initRestaurantPage().catch(error=>{console.error(error);const host=document.getElementById('menuContent');if(host)host.innerHTML='<div class="notice error">Menu could not be loaded. Please try again.</div>'}))</script>
+  <script src="/assets/advanced.js"></script>
+  <script src="/assets/trust.js"></script>
+  <script src="/assets/customer.js"></script>
+</body>
+</html>

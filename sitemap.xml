@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://afghaneats.net/</loc></url>
-  <url><loc>https://afghaneats.net/restaurants.html</loc></url>
-  <url><loc>https://afghaneats.net/partner.html</loc></url>
-  <url><loc>https://afghaneats.net/rider.html</loc></url>
-  <url><loc>https://afghaneats.net/help.html</loc></url>
-  <url><loc>https://afghaneats.net/about.html</loc></url>
-  <url><loc>https://afghaneats.net/privacy.html</loc></url>
-  <url><loc>https://afghaneats.net/terms.html</loc></url>
+  <url><loc>https://afghaneats.net/restaurants</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=mawlana-restaurant</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=char-fasl-restaurant</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=qoqnoos-restaurant</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=food-box-restaurant</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=parmis-restaurant</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=new-mahtab-shinwari</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=istanbul-doner-pizza</loc></url>
+  <url><loc>https://afghaneats.net/restaurant?id=darbar-herat</loc></url>
+  <url><loc>https://afghaneats.net/partner</loc></url>
+  <url><loc>https://afghaneats.net/rider</loc></url>
+  <url><loc>https://afghaneats.net/help</loc></url>
+  <url><loc>https://afghaneats.net/about</loc></url>
 </urlset>

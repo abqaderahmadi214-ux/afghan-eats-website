@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - name: Install test dependencies
+        run: npm ci
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
@@ -76,7 +79,8 @@ jobs:
                   path=ref.split('?',1)[0].split('#',1)[0].lstrip('/')
                   if not path or path.endswith('/'):
                       continue
-                  if not (root/path).exists():
+                  target=root/path
+                  if not target.exists() and not target.with_suffix('.html').exists():
                       missing.append((page.name,ref))
           if missing:
               print('Missing local references:', missing)
@@ -144,3 +148,7 @@ jobs:
               sys.exit(1)
           print('Accessibility and performance quality gates passed')
           PY
+      - name: Install Chromium for the customer journey
+        run: npx playwright install --with-deps chromium
+      - name: Run customer journey browser tests
+        run: npm run test:e2e
