@@ -10,13 +10,20 @@ const menu = {categories:[{id:'main',name:'Main dishes',name_dari:'غذاهای 
 const quote = {restaurantId:restaurant.id,fulfillment:'delivery',deliveryFee:60,minimumOrder:0,etaMin:25,etaMax:40,zone:{id:'gulha',name:'Gulha',nameDari:'گل‌ها'},source:'zone'};
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page){
+async function mockApi(page,{deliveryUnavailable=false}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
     if(path.endsWith('/restaurants.list'))data=[restaurant];
     else if(path.endsWith('/restaurants.getMenu'))data=menu;
-    else if(path.endsWith('/orders.quote'))data=quote;
+    else if(path.endsWith('/orders.quote')){
+      const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{"json":{}}').json||{};
+      if(deliveryUnavailable&&input.fulfillment!=='pickup'){
+        await route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({error:{json:{message:'Delivery is not available for this address'}}})});
+        return;
+      }
+      data=input.fulfillment==='pickup'?{...quote,fulfillment:'pickup',deliveryFee:0,zone:null,source:'pickup'}:quote;
+    }
     else if(path.endsWith('/catalog.publicModifiers'))data={groups:[],options:[],links:[]};
     else if(path.endsWith('/merchant.publicAvailabilityBatch'))data=[];
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
@@ -86,4 +93,14 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await page.getByRole('button',{name:'Apply'}).click();
   await expect(page.locator('#promoMsg')).toContainText('Invalid promo');
   await expect(page.locator('#cartDiscount')).toContainText('0');
+});
+
+test('an unavailable delivery address offers a clear pickup path', async ({page})=>{
+  await mockApi(page,{deliveryUnavailable:true});
+  await page.goto('/');
+  await page.locator('.address-box input[name="address"]').fill('Outside delivery area');
+  await page.locator('.address-box button').click();
+  await expect(page.locator('#restaurantGrid')).toContainText('Delivery is not available to this address yet');
+  await page.getByRole('button',{name:'Show pickup restaurants'}).click();
+  await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
 });
