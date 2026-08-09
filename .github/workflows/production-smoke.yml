@@ -50,6 +50,8 @@ jobs:
             retry_contains "https://afghaneats.net/checkout.html" "deliveryQuotePanel" /tmp/ae-checkout-v44.html
             retry_contains "https://afghaneats.net/assets/app.js" "renderConnectivityState" /tmp/ae-app-v45.js
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
+            retry_contains "https://afghaneats.net/assets/app.js" "directoryContactMarkup" /tmp/ae-app-v46.js
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "jumeirah-fast-food-herat" /tmp/ae-directory-v46.json
           fi
 
       - name: Verify frontend production security headers
@@ -162,9 +164,9 @@ jobs:
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v45 customer experience: production verification deferred until merge'
+            echo 'Frontend v46 Herat restaurant directory: production verification deferred until merge'
           else
-            echo 'Frontend v45 customer experience: live'
+            echo 'Frontend v46 Herat restaurant directory: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
