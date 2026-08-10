@@ -8,13 +8,19 @@ const restaurant = {
 };
 const menu = {categories:[{id:'main',name:'Main dishes',name_dari:'غذاهای اصلی'}],items:[{id:'kebab',category_id:'main',name:'Kebab',name_dari:'کباب',description:'Freshly prepared kebab',price:250,image_url:null,is_available:true,is_popular:true}]};
 const quote = {restaurantId:restaurant.id,fulfillment:'delivery',deliveryFee:60,minimumOrder:0,etaMin:25,etaMax:40,zone:{id:'gulha',name:'Gulha',nameDari:'گل‌ها'},source:'zone'};
+const directoryListing = {
+  id:'jumeirah-fast-food-herat',name:'Jumeirah Fast Food',name_dari:'فست‌فود جمیرا',description:'Public restaurant listing',description_dari:'فهرست عمومی رستورانت',
+  cuisine_tags:['Fast Food','Pizza'],category_primary:'Fast Food',address:'Mokhaberat Road, Herat',address_dari:'هرات، جاده مخابرات',district:'Jade Mokhaberat',city:'Herat',
+  phone:'+93 728 778 355',phone2:'+93 728 213 595',phone_numbers:['+93 728 778 355','+93 728 213 595','+93 790 810 167'],source_url:'https://www.instagram.com/jumeirah____fastfood/',source_label:'Official Instagram profile',source_checked_at:'2026-08-09',
+  cover_image_url:null,logo_url:null,has_delivery:false,has_takeaway:false,status:'pending',is_open:false,rating:null,total_reviews:0,verification_status:'public_seeded',partnership_status:'prospect',listing_mode:'directory'
+};
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
 async function mockApi(page,{deliveryUnavailable=false}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
-    if(path.endsWith('/restaurants.list'))data=[restaurant];
+    if(path.endsWith('/restaurants.list'))data=[restaurant,directoryListing];
     else if(path.endsWith('/restaurants.getMenu'))data=menu;
     else if(path.endsWith('/orders.quote')){
       const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{"json":{}}').json||{};
@@ -29,6 +35,8 @@ async function mockApi(page,{deliveryUnavailable=false}={}){
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
     else if(path.endsWith('/cities.publicCatalog'))data=[];
     else if(path.endsWith('/discovery.trending'))data=[];
+    else if(path.endsWith('/operations.applyRestaurantClaim'))data={success:true,duplicate:false,reference:'AEC-20260811-TEST01',status:'pending',restaurantName:directoryListing.name};
+    else if(path.endsWith('/operations.restaurantClaimStatus'))data={reference:'AEC-20260811-TEST01',status:'pending',restaurant_name:directoryListing.name};
     await route.fulfill({status:200,contentType:'application/json',body:trpc(data)});
   });
 }
@@ -91,6 +99,18 @@ test('public Herat directory listings remain distinct from active Afghan Eats or
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
   await expect(page.locator('.directory-detail a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
   await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
+});
+
+test('a public listing can be claimed without creating or activating another restaurant', async ({page})=>{
+  await mockApi(page);
+  await page.goto('/claim?restaurant=jumeirah-fast-food-herat');
+  await expect(page.locator('#claimRestaurantSummary')).toContainText('Jumeirah Fast Food');
+  await page.locator('input[name="claimantName"]').fill('Restaurant Owner');
+  await page.locator('#restaurantClaimForm input[name="phone"]').fill('+93 700 000 001');
+  await page.locator('textarea[name="evidenceNotes"]').fill('I own this restaurant. Please call the published restaurant number in the afternoon.');
+  await page.getByRole('button',{name:'Submit verified claim'}).click();
+  await expect(page.locator('#restaurantClaimResult')).toContainText('AEC-20260811-TEST01');
+  await expect(page.locator('#restaurantClaimResult')).toContainText('published restaurant number');
 });
 
 test('saved checkout addresses can be reused without a client-invented promo discount', async ({page})=>{

@@ -54,6 +54,8 @@ jobs:
             retry_contains "https://afghaneats.net/data/public-herat-directory.json" "jumeirah-fast-food-herat" /tmp/ae-directory-v46.json
             retry_contains "https://afghaneats.net/admin-reset.html" "adminResetForm" /tmp/ae-admin-reset-v47.html
             retry_contains "https://afghaneats.net/assets/operations.js" "resetAdminPassword" /tmp/ae-operations-v47.js
+            retry_contains "https://afghaneats.net/claim.html" "restaurantClaimForm" /tmp/ae-claim-v48.html
+            retry_contains "https://afghaneats.net/assets/claims.js" "adminCreateClaimInvite" /tmp/ae-claims-v48.js
           fi
 
       - name: Verify frontend production security headers
@@ -92,11 +94,15 @@ jobs:
               'dataPortability':'ready',
               'inventory':'transactional_opt_in',
               'adminPasswordRecovery':'ready',
+              'restaurantConsolidation':'ready',
+              'restaurantClaims':'ready',
           }
           bad={k:(d.get(k),v) for k,v in required.items() if d.get(k)!=v}
           if bad:
               raise SystemExit(f'Health contract mismatch: {bad}')
           print('API health contract passed')
+          if int(d.get('directoryListings',0)) < 19:
+              raise SystemExit(f"Directory import incomplete: {d.get('directoryListings')}")
           PY
               then break; fi
             fi
@@ -162,17 +168,38 @@ jobs:
           print('Pickup quote contract passed')
           PY
 
+      - name: Verify database-backed restaurant directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          list_url='https://afghaneats-api.onrender.com/api/trpc/restaurants.list?input=%7B%22json%22%3A%7B%7D%7D'
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$list_url" -o /tmp/restaurants-v48.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/restaurants-v48.json')).get('result',{}).get('data',{}).get('json',[])
+          directory=[x for x in data if x.get('listing_mode')=='directory']
+          if len(directory)<19:
+              raise SystemExit(f'Expected at least 19 database-backed directory listings, found {len(directory)}')
+          required=next((x for x in directory if x.get('id')=='jumeirah-fast-food-herat'),None)
+          if not required or not required.get('source_url') or len(required.get('phone_numbers') or [])<1:
+              raise SystemExit(f'Directory metadata contract mismatch: {required}')
+          if required.get('has_delivery') is not False or required.get('has_takeaway') is not False or required.get('status')!='pending':
+              raise SystemExit(f'Directory ordering safety mismatch: {required}')
+          print('Database-backed directory contract passed')
+          PY
+
       - name: Production verification summary
         run: |
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v47 secure admin access: production verification deferred until merge'
+            echo 'Frontend v48 restaurant claims: production verification deferred until merge'
           else
-            echo 'Frontend v47 secure admin access: live'
+            echo 'Frontend v48 restaurant claims: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
           echo 'Customer delivery quote contract: live'
+          echo 'Database-backed restaurant directory: live'
           echo 'Backend v40 launch-readiness route: live and access-controlled'
           echo 'API hardening headers: live'
