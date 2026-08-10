@@ -52,6 +52,8 @@ jobs:
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
             retry_contains "https://afghaneats.net/assets/app.js" "directoryContactMarkup" /tmp/ae-app-v46.js
             retry_contains "https://afghaneats.net/data/public-herat-directory.json" "jumeirah-fast-food-herat" /tmp/ae-directory-v46.json
+            retry_contains "https://afghaneats.net/admin-reset.html" "adminResetForm" /tmp/ae-admin-reset-v47.html
+            retry_contains "https://afghaneats.net/assets/operations.js" "resetAdminPassword" /tmp/ae-operations-v47.js
           fi
 
       - name: Verify frontend production security headers
@@ -89,6 +91,7 @@ jobs:
               'observability':'ready',
               'dataPortability':'ready',
               'inventory':'transactional_opt_in',
+              'adminPasswordRecovery':'ready',
           }
           bad={k:(d.get(k),v) for k,v in required.items() if d.get(k)!=v}
           if bad:
@@ -164,9 +167,9 @@ jobs:
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v46 Herat restaurant directory: production verification deferred until merge'
+            echo 'Frontend v47 secure admin access: production verification deferred until merge'
           else
-            echo 'Frontend v46 Herat restaurant directory: live'
+            echo 'Frontend v47 secure admin access: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
