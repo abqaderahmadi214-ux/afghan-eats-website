@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Claim a restaurant | Afghan Eats</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/operations.css">
+  <link rel="stylesheet" href="/assets/claims.css">
+  <script src="/config.js"></script>
+</head>
+<body class="claim-shell">
+  <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><nav class="navlinks"><a href="/restaurants" data-i18n="restaurants"></a><a href="/partner" data-i18n="partner"></a></nav><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/owner"><span class="en-copy">Owner portal</span><span class="fa-copy">پورتال مالک</span></a></div></div></header>
+  <main class="section">
+    <div class="container claim-layout">
+      <section class="claim-card">
+        <span class="hero-kicker">● <span class="en-copy">Verified ownership transfer</span><span class="fa-copy">انتقال تأییدشده مالکیت</span></span>
+        <h1 class="en-copy">Claim your restaurant listing</h1>
+        <h1 class="fa-copy">درخواست مالکیت فهرست رستورانت</h1>
+        <p class="muted en-copy">This request links you to the existing restaurant page. It does not create a duplicate listing or activate ordering.</p>
+        <p class="muted fa-copy">این درخواست شما را به صفحه موجود رستورانت وصل می‌کند. فهرست تکراری ساخته نمی‌شود و سفارش نیز خودکار فعال نمی‌گردد.</p>
+        <div id="claimRestaurantSummary" class="claim-summary" aria-live="polite"><span class="muted en-copy">Loading selected restaurant…</span><span class="muted fa-copy">رستورانت انتخاب‌شده در حال بارگذاری است…</span></div>
+        <form id="restaurantClaimForm" class="grid2" onsubmit="submitRestaurantClaim(event)">
+          <input name="restaurantId" type="hidden">
+          <label class="field"><span class="en-copy">Your full name</span><span class="fa-copy">نام کامل شما</span><input name="claimantName" required minlength="2" maxlength="200"></label>
+          <label class="field"><span class="en-copy">Your role</span><span class="fa-copy">نقش شما</span><select name="claimantRole"><option value="owner">Owner / مالک</option><option value="manager">Manager / مدیر</option><option value="authorized_representative">Authorized representative / نماینده مجاز</option></select></label>
+          <label class="field"><span class="en-copy">Phone</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required minlength="9" maxlength="50" placeholder="+93"></label>
+          <label class="field"><span>WhatsApp</span><input name="whatsapp" type="tel" maxlength="50" placeholder="+93"></label>
+          <label class="field full"><span>Email</span><input name="email" type="email" maxlength="320" placeholder="optional"></label>
+          <label class="field full"><span class="en-copy">How can Afghan Eats verify your connection to this restaurant?</span><span class="fa-copy">افغان ایتس چگونه ارتباط شما با این رستورانت را تأیید کند؟</span><textarea name="evidenceNotes" required minlength="10" maxlength="1500" rows="5" placeholder="Your position, the published number we should call, and a suitable time to contact the restaurant"></textarea></label>
+          <div class="claim-note field full"><span class="en-copy">For security, Afghan Eats will call one of the phone numbers already published for this restaurant. Never send passwords, database keys, national-ID numbers or bank details in this form.</span><span class="fa-copy">برای امنیت، افغان ایتس با یکی از شماره‌های عمومی همین رستورانت تماس می‌گیرد. رمز عبور، کلید دیتابیس، شماره تذکره یا معلومات بانکی را در این فورم ننویسید.</span></div>
+          <button class="btn btn-primary field full" type="submit"><span class="en-copy">Submit verified claim</span><span class="fa-copy">ارسال درخواست تأیید</span></button>
+        </form>
+        <div id="restaurantClaimResult" class="notice hidden" role="status" aria-live="polite"></div>
+      </section>
+      <aside>
+        <section class="claim-card claim-guidance">
+          <h2 class="en-copy">What happens next</h2><h2 class="fa-copy">مراحل بعدی</h2>
+          <div class="claim-step"><span>1</span><div><b class="en-copy">Operations review</b><b class="fa-copy">بررسی بخش عملیاتی</b><p class="en-copy">The claim is compared with the existing listing and other applications.</p><p class="fa-copy">درخواست با فهرست موجود و سایر درخواست‌ها مقایسه می‌شود.</p></div></div>
+          <div class="claim-step"><span>2</span><div><b class="en-copy">Published-number verification</b><b class="fa-copy">تأیید از طریق شماره عمومی</b><p class="en-copy">Afghan Eats calls a number already published for the restaurant.</p><p class="fa-copy">افغان ایتس با شماره‌ای که از قبل برای رستورانت نشر شده تماس می‌گیرد.</p></div></div>
+          <div class="claim-step"><span>3</span><div><b class="en-copy">Private owner access</b><b class="fa-copy">دسترسی خصوصی مالک</b><p class="en-copy">An approved owner receives a one-time activation link for this restaurant only.</p><p class="fa-copy">مالک تأییدشده لینک یک‌بارمصرف برای همین رستورانت دریافت می‌کند.</p></div></div>
+        </section>
+        <section class="claim-card claim-status-card">
+          <h2 class="en-copy">Check a claim</h2><h2 class="fa-copy">بررسی درخواست</h2>
+          <form onsubmit="checkRestaurantClaim(event)"><label class="field"><span class="en-copy">Claim reference</span><span class="fa-copy">شماره پیگیری</span><input name="reference" required placeholder="AEC-..."></label><label class="field" style="margin-top:12px"><span class="en-copy">Phone used in the claim</span><span class="fa-copy">شماره تماس ثبت‌شده</span><input name="phone" required placeholder="+93"></label><button class="btn btn-dark" type="submit" style="width:100%;margin-top:14px"><span class="en-copy">Check status</span><span class="fa-copy">بررسی وضعیت</span></button></form>
+          <div id="restaurantClaimStatus" class="notice hidden" aria-live="polite"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script src="/assets/claims.js"></script>
+</body>
+</html>
