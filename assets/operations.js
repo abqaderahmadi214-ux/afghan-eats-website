@@ -280,6 +280,7 @@ async function loadAdminDashboard() {
     renderRiderApplications(ridersApps || []);
     renderRiders(riders || []);
     renderAssignments(assignments || []);
+    if (typeof loadRestaurantClaims === 'function') loadRestaurantClaims();
   } catch (error) {
     const globalError = document.getElementById('adminGlobalError');
     if (globalError) {
