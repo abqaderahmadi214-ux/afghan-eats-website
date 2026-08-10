@@ -121,3 +121,19 @@ test('an unavailable delivery address offers a clear pickup path', async ({page}
   await page.getByRole('button',{name:'Show pickup restaurants'}).click();
   await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
 });
+
+test('one-time admin reset removes its token after a successful password change', async ({page})=>{
+  let resetPayload=null;
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/auth.resetPassword',async route=>{
+    resetPayload=JSON.parse(route.request().postData()||'{}').json;
+    await route.fulfill({status:200,contentType:'application/json',body:trpc({success:true})});
+  });
+  await page.goto('/admin-reset?token=single-use-test-token');
+  await page.locator('input[name="newPassword"]').fill('SecureAdmin!2026Herat');
+  await page.locator('input[name="confirmPassword"]').fill('SecureAdmin!2026Herat');
+  await page.getByRole('button',{name:'Set password'}).click();
+  await expect(page.locator('#adminResetResult')).toContainText('Password updated');
+  await expect(page).toHaveURL(/\/admin-reset$/);
+  expect(resetPayload).toEqual({token:'single-use-test-token',newPassword:'SecureAdmin!2026Herat'});
+  await expect(page.locator('#adminResetForm')).toHaveClass(/hidden/);
+});
