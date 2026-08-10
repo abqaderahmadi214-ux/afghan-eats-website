@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Reset Afghan Eats admin access</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/operations.css">
+  <script src="/config.js"></script>
+</head>
+<body class="ops-shell">
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small style="font-size:.65rem;color:#666">Operations</small></a>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <section class="form-card ops-login" aria-labelledby="resetTitle">
+        <h1 id="resetTitle">Set a new admin password</h1>
+        <p class="muted">This private link can be used once. Choose a password that you do not use for any other account.</p>
+        <form id="adminResetForm" onsubmit="resetAdminPassword(event)">
+          <input name="token" type="hidden">
+          <label class="field">
+            <span>New password</span>
+            <input name="newPassword" type="password" autocomplete="new-password" minlength="14" maxlength="200" required aria-describedby="passwordRequirements">
+          </label>
+          <p id="passwordRequirements" class="ops-security">Use at least 14 characters, including uppercase and lowercase letters, a number and a symbol.</p>
+          <label class="field" style="margin-top:13px">
+            <span>Confirm new password</span>
+            <input name="confirmPassword" type="password" autocomplete="new-password" minlength="14" maxlength="200" required>
+          </label>
+          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:16px">Set password</button>
+        </form>
+        <div id="adminResetResult" class="notice hidden" role="status" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script src="/assets/operations.js"></script>
+</body>
+</html>

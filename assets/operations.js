@@ -168,6 +168,72 @@ async function adminLogin(event) {
   }
 }
 
+function validAdminPassword(value) {
+  return value.length >= 14
+    && /[a-z]/.test(value)
+    && /[A-Z]/.test(value)
+    && /\d/.test(value)
+    && /[^A-Za-z0-9]/.test(value);
+}
+
+async function resetAdminPassword(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const out = document.getElementById('adminResetResult');
+  const f = new FormData(form);
+  const token = String(f.get('token') || '');
+  const newPassword = String(f.get('newPassword') || '');
+  const confirmPassword = String(f.get('confirmPassword') || '');
+  out.className = 'notice error';
+  if (!token) { out.textContent = 'This reset link is incomplete or has expired.'; return; }
+  if (!validAdminPassword(newPassword)) { out.textContent = 'Use at least 14 characters with uppercase and lowercase letters, a number and a symbol.'; return; }
+  if (newPassword !== confirmPassword) { out.textContent = 'The passwords do not match.'; return; }
+  setSubmitState(form, true);
+  try {
+    await opsMutation('auth.resetPassword', { token, newPassword });
+    history.replaceState({}, document.title, '/admin-reset');
+    form.reset();
+    form.classList.add('hidden');
+    out.className = 'notice success';
+    out.innerHTML = 'Password updated and all earlier admin sessions were signed out. <a href="/operations"><b>Continue to Operations login</b></a>.';
+  } catch (error) {
+    out.className = 'notice error';
+    out.textContent = error.message || 'This reset link is invalid or has expired.';
+  } finally {
+    setSubmitState(form, false);
+  }
+}
+
+async function changeAdminPassword(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const out = document.getElementById('adminPasswordResult');
+  const f = new FormData(form);
+  const currentPassword = String(f.get('currentPassword') || '');
+  const newPassword = String(f.get('newPassword') || '');
+  const confirmPassword = String(f.get('confirmPassword') || '');
+  out.className = 'notice error';
+  if (!validAdminPassword(newPassword)) { out.textContent = 'Use at least 14 characters with uppercase and lowercase letters, a number and a symbol.'; return; }
+  if (newPassword !== confirmPassword) { out.textContent = 'The passwords do not match.'; return; }
+  if (currentPassword === newPassword) { out.textContent = 'Choose a password different from the current password.'; return; }
+  setSubmitState(form, true);
+  try {
+    await opsMutation('auth.changePassword', { currentPassword, newPassword }, true);
+    adminLogout();
+    form.reset();
+    const loginError = document.getElementById('adminLoginError');
+    if (loginError) {
+      loginError.className = 'notice success';
+      loginError.textContent = 'Password updated. Sign in again with the new password.';
+    }
+  } catch (error) {
+    out.className = 'notice error';
+    out.textContent = error.message || 'Password could not be updated.';
+  } finally {
+    setSubmitState(form, false);
+  }
+}
+
 function adminLogout() {
   sessionStorage.removeItem('ae_admin_token');
   sessionStorage.removeItem('ae_admin');
@@ -346,4 +412,18 @@ async function initOperationsAdmin() {
   }
 }
 
+function initAdminReset() {
+  const form = document.getElementById('adminResetForm');
+  if (!form) return;
+  const token = new URLSearchParams(location.search).get('token') || '';
+  form.elements.token.value = token;
+  if (!token) {
+    const out = document.getElementById('adminResetResult');
+    out.className = 'notice error';
+    out.textContent = 'This reset link is incomplete or has expired.';
+    form.querySelector('button[type=submit]').disabled = true;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', initOperationsAdmin);
+document.addEventListener('DOMContentLoaded', initAdminReset);
