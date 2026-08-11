@@ -129,10 +129,11 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
     else if(path==='portal.ownerUpsertMenuItem'){
       ownerMenu.items.push({id:'new-bolani',restaurant_id:ownerRestaurant.id,category_id:input.categoryId,name:input.name,name_dari:input.nameDari,description:input.description,description_dari:input.descriptionDari,price:input.price,image_url:input.imageUrl,is_available:input.isAvailable,is_popular:input.isPopular,is_vegetarian:input.isVegetarian,is_spicy:input.isSpicy,sort_order:input.sortOrder,archived_at:null});
       data={success:true,item:ownerMenu.items.at(-1)};
-    }else if(path==='portal.ownerUpdateRestaurantContent'){
-      Object.assign(ownerRestaurant,{description:input.description,description_dari:input.descriptionDari,logo_url:input.logoUrl,cover_image_url:input.coverImageUrl,opening_hours:input.openingHours});data={success:true};
     }
     await route.fulfill({status:200,contentType:'application/json',body:trpc(data)});
+  });
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/portal.ownerUpdateRestaurantContent',async route=>{
+    await route.fulfill({status:200,contentType:'application/json',body:trpc({success:true})});
   });
   await page.goto('/owner');
   await expect(page.locator('#ownerTitle')).toHaveText('Herat Kitchen');
@@ -159,6 +160,7 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   const [profileRequest,profileResponse]=await Promise.all([profileSaveRequest,profileSaveResponse]);
   expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
   expect(profileResponse.ok()).toBe(true);
+  await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
 });
 
 test('saved checkout addresses can be reused without a client-invented promo discount', async ({page})=>{
