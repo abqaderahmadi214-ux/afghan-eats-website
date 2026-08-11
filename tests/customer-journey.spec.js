@@ -151,6 +151,7 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.locator('#ownerProfileForm textarea[name="description"]').fill('Family Afghan restaurant');
   await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
   await page.locator('#ownerProfileForm').getByRole('button',{name:'Save public profile'}).click();
+  await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
   expect(mutations.find(x=>x.path==='portal.ownerUpdateRestaurantContent').input).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
 });
 
