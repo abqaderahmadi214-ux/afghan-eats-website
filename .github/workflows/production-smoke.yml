@@ -56,6 +56,8 @@ jobs:
             retry_contains "https://afghaneats.net/assets/operations.js" "resetAdminPassword" /tmp/ae-operations-v47.js
             retry_contains "https://afghaneats.net/claim.html" "restaurantClaimForm" /tmp/ae-claim-v48.html
             retry_contains "https://afghaneats.net/assets/claims.js" "adminCreateClaimInvite" /tmp/ae-claims-v48.js
+            retry_contains "https://afghaneats.net/owner.html" "ownerItemForm" /tmp/ae-owner-v49.html
+            retry_contains "https://afghaneats.net/assets/portal.js" "ownerUpsertMenuItem" /tmp/ae-portal-v49.js
           fi
 
       - name: Verify frontend production security headers
@@ -96,6 +98,10 @@ jobs:
               'adminPasswordRecovery':'ready',
               'restaurantConsolidation':'ready',
               'restaurantClaims':'ready',
+              'ownerStudio':'ready',
+              'ownerMenuManagement':'create_edit_archive',
+              'ownerWeeklyHours':'ready',
+              'ownerChangeAudit':'ready',
           }
           bad={k:(d.get(k),v) for k,v in required.items() if d.get(k)!=v}
           if bad:
@@ -193,9 +199,9 @@ jobs:
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v48 restaurant claims: production verification deferred until merge'
+            echo 'Frontend v49 owner studio: production verification deferred until merge'
           else
-            echo 'Frontend v48 restaurant claims: live'
+            echo 'Frontend v49 owner studio: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'
