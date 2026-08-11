@@ -1,1 +1,112 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Restaurant Owner Portal | Afghan Eats</title><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/operations.css"><link rel="stylesheet" href="/assets/portal.css"><link rel="stylesheet" href="/assets/notifications.css"><script src="/config.js"></script></head><body class="portal-shell"><header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small style="font-size:.65rem;color:#666">Restaurant Portal</small></a><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><button class="btn btn-light" onclick="portalLogout()"><span class="en-copy">Log out</span><span class="fa-copy">خروج</span></button></div></div></header><main class="section"><div class="container"><section id="ownerAuth" class="form-card portal-auth"><span class="portal-role">Restaurant owner</span><h1 class="en-copy">Manage your restaurant</h1><h1 class="fa-copy">رستورانت خود را مدیریت کنید</h1><p class="muted en-copy">Use the username from your Afghan Eats activation invitation.</p><p class="muted fa-copy">از نام کاربری موجود در دعوت‌نامه فعال‌سازی افغان ایتس استفاده کنید.</p><form onsubmit="portalLogin(event,'owner')"><label class="field"><span class="en-copy">Username / phone</span><span class="fa-copy">نام کاربری / شماره تماس</span><input name="username" required autocomplete="username"></label><label class="field" style="margin-top:13px"><span class="en-copy">Password</span><span class="fa-copy">رمز عبور</span><input name="password" type="password" required autocomplete="current-password"></label><button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit"><span class="en-copy">Sign in</span><span class="fa-copy">ورود</span></button><div class="portal-login-error notice error hidden"></div></form><p class="muted" style="margin-top:16px"><span class="en-copy">No portal access yet? Your restaurant application must be approved first.</span><span class="fa-copy">هنوز دسترسی ندارید؟ ابتدا درخواست رستورانت باید تأیید شود.</span></p><a href="/partner.html" class="btn btn-light" style="width:100%"><span class="en-copy">Restaurant partnership</span><span class="fa-copy">همکاری رستورانت</span></a></section><section id="ownerDashboard" class="portal-dashboard hidden"><div class="portal-top"><div><span class="portal-role">Restaurant owner</span><h1 id="ownerTitle">Restaurant</h1><p class="muted en-copy">Manage live orders, store availability and menu pricing.</p><p class="muted fa-copy">سفارش‌های زنده، وضعیت رستورانت و قیمت منو را مدیریت کنید.</p></div><div class="actions"><a id="ownerPublicLink" class="btn btn-light" href="/restaurants.html" target="_blank" rel="noopener"><span class="en-copy">View public listing</span><span class="fa-copy">مشاهده صفحه عمومی</span></a><button class="btn btn-light" onclick="loadOwnerDashboard()">↻</button></div></div><div id="ownerError" class="notice error hidden"></div><div id="ownerStats" class="portal-stats"></div><div class="portal-grid"><div><section class="portal-card"><h2 class="en-copy">Live & recent orders</h2><h2 class="fa-copy">سفارش‌های زنده و اخیر</h2><div id="ownerOrders" class="portal-list"></div></section><section class="portal-card"><h2 class="en-copy">Menu availability & prices</h2><h2 class="fa-copy">موجودیت و قیمت منو</h2><p class="muted en-copy">Price changes are immediately used by the secure server-side checkout.</p><p class="muted fa-copy">تغییر قیمت فوراً در محاسبه امن سفارش استفاده می‌شود.</p><div id="ownerMenu" class="portal-list"></div></section></div><aside><section class="portal-card"><h2 class="en-copy">Store controls</h2><h2 class="fa-copy">تنظیمات رستورانت</h2><div class="store-controls"><label class="switch-row"><span class="en-copy">Accepting orders</span><span class="fa-copy">پذیرش سفارش</span><input id="storeOpen" type="checkbox"></label><label class="switch-row"><span class="en-copy">Delivery available</span><span class="fa-copy">ارسال فعال</span><input id="storeDelivery" type="checkbox"></label><label class="switch-row"><span class="en-copy">Pickup available</span><span class="fa-copy">دریافت حضوری فعال</span><input id="storePickup" type="checkbox"></label><label class="field"><span class="en-copy">Minimum ETA (min)</span><span class="fa-copy">حداقل زمان (دقیقه)</span><input id="storeMinTime" type="number" min="5" max="240"></label><label class="field"><span class="en-copy">Maximum ETA (min)</span><span class="fa-copy">حداکثر زمان (دقیقه)</span><input id="storeMaxTime" type="number" min="5" max="300"></label><label class="field"><span class="en-copy">Minimum order (AFN)</span><span class="fa-copy">حداقل سفارش (افغانی)</span><input id="storeMinOrder" type="number" min="0"></label><button class="btn btn-primary" onclick="saveOwnerStore()"><span class="en-copy">Save store settings</span><span class="fa-copy">ذخیره تنظیمات</span></button></div></section><section class="portal-card"><h3>🛡️ <span class="en-copy">Scoped access</span><span class="fa-copy">دسترسی محدود</span></h3><p class="muted en-copy">This account can only manage its assigned restaurant. Rider, other restaurant and admin data are not accessible.</p><p class="muted fa-copy">این حساب فقط رستورانت مرتبط خود را مدیریت می‌کند و به معلومات سایر رستورانت‌ها، پیک‌ها یا ادمین دسترسی ندارد.</p></section></aside></div></section></div></main><script src="/assets/app.js"></script><script src="/assets/portal.js"></script><script src="/assets/notifications.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Restaurant Owner Portal | Afghan Eats</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/operations.css">
+  <link rel="stylesheet" href="/assets/portal.css">
+  <link rel="stylesheet" href="/assets/notifications.css">
+  <script src="/config.js"></script>
+</head>
+<body class="portal-shell">
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small>Restaurant Portal</small></a>
+      <div class="actions">
+        <button class="lang" type="button" onclick="toggleLang()">دری</button>
+        <button class="btn btn-light" type="button" onclick="portalLogout()"><span class="en-copy">Log out</span><span class="fa-copy">خروج</span></button>
+      </div>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <section id="ownerAuth" class="form-card portal-auth">
+        <span class="portal-role">Restaurant owner</span>
+        <h1 class="en-copy">Manage your restaurant</h1>
+        <h1 class="fa-copy">رستورانت خود را مدیریت کنید</h1>
+        <p class="muted en-copy">Use the username from your Afghan Eats activation invitation.</p>
+        <p class="muted fa-copy">از نام کاربری موجود در دعوت‌نامه فعال‌سازی افغان ایتس استفاده کنید.</p>
+        <form onsubmit="portalLogin(event,'owner')">
+          <label class="field"><span class="en-copy">Username / phone</span><span class="fa-copy">نام کاربری / شماره تماس</span><input name="username" required autocomplete="username"></label>
+          <label class="field owner-field-gap"><span class="en-copy">Password</span><span class="fa-copy">رمز عبور</span><input name="password" type="password" required autocomplete="current-password"></label>
+          <button class="btn btn-primary owner-full-button" type="submit"><span class="en-copy">Sign in</span><span class="fa-copy">ورود</span></button>
+          <div class="portal-login-error notice error hidden" role="alert"></div>
+        </form>
+        <p class="muted owner-login-help"><span class="en-copy">No portal access yet? Claim your existing listing or apply for partnership.</span><span class="fa-copy">هنوز دسترسی ندارید؟ مالکیت فهرست موجود را درخواست کنید یا برای همکاری ثبت‌نام کنید.</span></p>
+        <div class="portal-login-links"><a href="/claim" class="btn btn-light"><span class="en-copy">Claim restaurant</span><span class="fa-copy">درخواست مالکیت</span></a><a href="/partner" class="btn btn-light"><span class="en-copy">Restaurant partnership</span><span class="fa-copy">همکاری رستورانت</span></a></div>
+      </section>
+
+      <section id="ownerDashboard" class="portal-dashboard hidden">
+        <div class="portal-top">
+          <div><span class="portal-role">Restaurant owner</span><h1 id="ownerTitle">Restaurant</h1><p class="muted en-copy">Manage orders, menu, opening hours and public restaurant content.</p><p class="muted fa-copy">سفارش‌ها، منو، ساعات کاری و معلومات عمومی رستورانت را مدیریت کنید.</p></div>
+          <div class="actions"><a id="ownerPublicLink" class="btn btn-light" href="/restaurants" target="_blank" rel="noopener"><span class="en-copy">View public listing</span><span class="fa-copy">مشاهده صفحه عمومی</span></a><button class="btn btn-light" type="button" onclick="loadOwnerDashboard()" aria-label="Refresh">↻</button></div>
+        </div>
+        <div id="ownerError" class="notice error hidden" role="alert"></div>
+        <div id="ownerToast" class="notice success hidden" role="status" aria-live="polite"></div>
+        <div id="ownerActivationNotice" class="notice hidden"></div>
+        <div id="ownerStats" class="portal-stats"></div>
+
+        <nav class="owner-tabs" aria-label="Owner workspace">
+          <button class="owner-tab active" type="button" data-owner-panel="ownerOrdersPanel" onclick="showOwnerPanel('ownerOrdersPanel',this)"><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></button>
+          <button class="owner-tab" type="button" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span class="en-copy">Menu</span><span class="fa-copy">منو</span></button>
+          <button class="owner-tab" type="button" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span class="en-copy">Store & profile</span><span class="fa-copy">رستورانت و پروفایل</span></button>
+        </nav>
+
+        <section id="ownerOrdersPanel" class="owner-panel">
+          <div class="portal-card"><h2 class="en-copy">Live & recent orders</h2><h2 class="fa-copy">سفارش‌های زنده و اخیر</h2><div id="ownerOrders" class="portal-list"></div></div>
+        </section>
+
+        <section id="ownerMenuPanel" class="owner-panel hidden">
+          <div class="owner-studio-grid">
+            <div>
+              <section class="portal-card">
+                <div class="owner-section-head"><div><h2 class="en-copy">Menu items</h2><h2 class="fa-copy">آیتم‌های منو</h2><p class="muted en-copy">Create dishes, update details and mark unavailable items without deleting order history.</p><p class="muted fa-copy">غذاها را اضافه یا ویرایش کنید و بدون حذف سابقه سفارش، ناموجود بسازید.</p></div><button class="btn btn-primary" type="button" onclick="startNewOwnerItem()"><span class="en-copy">+ New item</span><span class="fa-copy">+ آیتم جدید</span></button></div>
+                <div id="ownerMenu" class="portal-list"></div>
+              </section>
+              <section class="portal-card"><h3 class="en-copy">Archived items</h3><h3 class="fa-copy">آیتم‌های آرشیف‌شده</h3><div id="ownerArchivedMenu" class="portal-list"></div></section>
+            </div>
+            <aside>
+              <section class="portal-card owner-editor-card">
+                <h2 id="ownerItemFormTitle" class="en-copy">Add menu item</h2><h2 class="fa-copy">افزودن آیتم منو</h2>
+                <form id="ownerItemForm" class="owner-editor-form">
+                  <input name="id" type="hidden">
+                  <label class="field"><span class="en-copy">Category</span><span class="fa-copy">دسته‌بندی</span><select name="categoryId" id="ownerItemCategory"><option value="">Uncategorized</option></select></label>
+                  <label class="field"><span class="en-copy">English name</span><span class="fa-copy">نام انگلیسی</span><input name="name" maxlength="300" required></label>
+                  <label class="field"><span class="en-copy">Dari name</span><span class="fa-copy">نام دری</span><input name="nameDari" maxlength="300" dir="rtl"></label>
+                  <label class="field"><span class="en-copy">English description</span><span class="fa-copy">توضیحات انگلیسی</span><textarea name="description" maxlength="1500" rows="3"></textarea></label>
+                  <label class="field"><span class="en-copy">Dari description</span><span class="fa-copy">توضیحات دری</span><textarea name="descriptionDari" maxlength="1500" rows="3" dir="rtl"></textarea></label>
+                  <div class="owner-form-row"><label class="field"><span class="en-copy">Price (AFN)</span><span class="fa-copy">قیمت (افغانی)</span><input name="price" type="number" min="0" max="100000" step="1" required></label><label class="field"><span class="en-copy">Display order</span><span class="fa-copy">ترتیب نمایش</span><input name="sortOrder" type="number" min="0" max="999" value="0"></label></div>
+                  <label class="field"><span class="en-copy">Dish image URL (HTTPS)</span><span class="fa-copy">لینک عکس غذا (HTTPS)</span><input name="imageUrl" type="url" inputmode="url" placeholder="https://..."></label>
+                  <div class="owner-check-grid"><label><input name="isAvailable" type="checkbox" checked> <span class="en-copy">Available</span><span class="fa-copy">موجود</span></label><label><input name="isPopular" type="checkbox"> <span class="en-copy">Popular</span><span class="fa-copy">محبوب</span></label><label><input name="isVegetarian" type="checkbox"> <span class="en-copy">Vegetarian</span><span class="fa-copy">گیاهی</span></label><label><input name="isSpicy" type="checkbox"> <span class="en-copy">Spicy</span><span class="fa-copy">تند</span></label></div>
+                  <div class="portal-actions"><button class="btn btn-primary" type="submit"><span class="en-copy">Save item</span><span class="fa-copy">ذخیره آیتم</span></button><button class="btn btn-light" type="button" onclick="startNewOwnerItem()"><span class="en-copy">Clear</span><span class="fa-copy">پاک‌کردن</span></button></div>
+                </form>
+              </section>
+              <section class="portal-card"><h3 class="en-copy">Menu categories</h3><h3 class="fa-copy">دسته‌بندی‌های منو</h3><form id="ownerCategoryForm" class="owner-category-form"><input name="id" type="hidden"><input name="name" required maxlength="200" placeholder="Main dishes"><input name="nameDari" maxlength="200" placeholder="غذاهای اصلی" dir="rtl"><input name="sortOrder" type="number" min="0" max="999" value="0" aria-label="Display order"><button class="btn btn-primary btn-sm" type="submit"><span class="en-copy">Save category</span><span class="fa-copy">ذخیره دسته‌بندی</span></button></form><div id="ownerCategories" class="portal-list owner-category-list"></div></section>
+            </aside>
+          </div>
+        </section>
+
+        <section id="ownerStorePanel" class="owner-panel hidden">
+          <div class="portal-grid">
+            <div>
+              <section class="portal-card"><h2 class="en-copy">Public restaurant profile</h2><h2 class="fa-copy">پروفایل عمومی رستورانت</h2><p class="muted en-copy">Descriptions and HTTPS image links appear on your restaurant page. Name, address and phone changes remain controlled by Afghan Eats operations.</p><p class="muted fa-copy">توضیحات و لینک عکس در صفحه رستورانت نمایش داده می‌شود. تغییر نام، آدرس و شماره تماس توسط تیم افغان ایتس بررسی می‌شود.</p><form id="ownerProfileForm" class="owner-editor-form"><label class="field"><span>English description</span><textarea name="description" maxlength="2000" rows="4"></textarea></label><label class="field"><span>توضیحات دری</span><textarea name="descriptionDari" maxlength="2000" rows="4" dir="rtl"></textarea></label><label class="field"><span class="en-copy">Logo image URL (HTTPS)</span><span class="fa-copy">لینک لوگو (HTTPS)</span><input name="logoUrl" type="url" placeholder="https://..."></label><label class="field"><span class="en-copy">Cover image URL (HTTPS)</span><span class="fa-copy">لینک عکس روی جلد (HTTPS)</span><input name="coverImageUrl" type="url" placeholder="https://..."></label><button class="btn btn-primary" type="submit"><span class="en-copy">Save public profile</span><span class="fa-copy">ذخیره پروفایل عمومی</span></button></form></section>
+              <section class="portal-card"><h2 class="en-copy">Weekly opening hours</h2><h2 class="fa-copy">ساعات کاری هفتگی</h2><p class="muted en-copy">Use 24-hour times. Mark a day closed when the restaurant does not open.</p><p class="muted fa-copy">از ساعت ۲۴ ساعته استفاده کنید. روزهای تعطیل را بسته مشخص کنید.</p><div id="ownerHours" class="owner-hours"></div><button class="btn btn-primary" type="button" onclick="saveOwnerProfile()"><span class="en-copy">Save opening hours</span><span class="fa-copy">ذخیره ساعات کاری</span></button></section>
+            </div>
+            <aside>
+              <section class="portal-card"><h2 class="en-copy">Store controls</h2><h2 class="fa-copy">تنظیمات رستورانت</h2><div class="store-controls"><label class="switch-row"><span class="en-copy">Accepting orders</span><span class="fa-copy">پذیرش سفارش</span><input id="storeOpen" type="checkbox"></label><label class="switch-row"><span class="en-copy">Delivery available</span><span class="fa-copy">ارسال فعال</span><input id="storeDelivery" type="checkbox"></label><label class="switch-row"><span class="en-copy">Pickup available</span><span class="fa-copy">دریافت حضوری فعال</span><input id="storePickup" type="checkbox"></label><label class="field"><span class="en-copy">Minimum ETA (min)</span><span class="fa-copy">حداقل زمان (دقیقه)</span><input id="storeMinTime" type="number" min="5" max="240"></label><label class="field"><span class="en-copy">Maximum ETA (min)</span><span class="fa-copy">حداکثر زمان (دقیقه)</span><input id="storeMaxTime" type="number" min="5" max="300"></label><label class="field"><span class="en-copy">Minimum order (AFN)</span><span class="fa-copy">حداقل سفارش (افغانی)</span><input id="storeMinOrder" type="number" min="0"></label><button class="btn btn-primary" type="button" onclick="saveOwnerStore()"><span class="en-copy">Save store settings</span><span class="fa-copy">ذخیره تنظیمات</span></button></div></section>
+              <section class="portal-card"><h3 class="en-copy">Recent owner changes</h3><h3 class="fa-copy">تغییرات اخیر مالک</h3><div id="ownerHistory" class="portal-list"></div></section>
+              <section class="portal-card"><h3>🛡️ <span class="en-copy">Scoped access</span><span class="fa-copy">دسترسی محدود</span></h3><p class="muted en-copy">This account can manage only its assigned restaurant. It cannot access riders, customers, other restaurants or admin data.</p><p class="muted fa-copy">این حساب فقط رستورانت مربوط خود را مدیریت می‌کند و به اطلاعات پیک‌ها، مشتریان، سایر رستورانت‌ها یا ادمین دسترسی ندارد.</p></section>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script src="/assets/portal.js"></script>
+  <script src="/assets/notifications.js"></script>
+</body>
+</html>
