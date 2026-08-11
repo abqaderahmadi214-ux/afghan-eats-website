@@ -113,6 +113,47 @@ test('a public listing can be claimed without creating or activating another res
   await expect(page.locator('#restaurantClaimResult')).toContainText('published restaurant number');
 });
 
+test('a scoped restaurant owner can build a menu and maintain the public profile', async ({page})=>{
+  const ownerRestaurant={...restaurant,status:'pending',is_open:false,opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
+  const ownerMenu={categories:[...menu.categories],items:[...menu.items]};
+  const mutations=[];
+  await page.addInitScript(()=>{sessionStorage.setItem('ae_portal_token','owner-test-token');sessionStorage.setItem('ae_portal_role','owner');sessionStorage.setItem('ae_portal_account',JSON.stringify({role:'owner'}))});
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/**',async route=>{
+    const path=new URL(route.request().url()).pathname.split('/').pop();
+    const input=route.request().method()==='POST'?JSON.parse(route.request().postData()||'{"json":{}}').json:null;
+    let data=[];
+    if(path==='portal.me')data={id:'owner-account',username:'+93700000001',role:'owner',restaurantId:ownerRestaurant.id};
+    else if(path==='portal.ownerDashboard')data={restaurant:ownerRestaurant,orders:[],stats:{orders_today:0,delivered_gmv:0,cancelled_today:0}};
+    else if(path==='portal.ownerMenu')data=ownerMenu;
+    else if(path==='portal.ownerChangeHistory')data=[];
+    else if(path==='portal.ownerUpsertMenuItem'){
+      mutations.push({path,input});
+      ownerMenu.items.push({id:'new-bolani',restaurant_id:ownerRestaurant.id,category_id:input.categoryId,name:input.name,name_dari:input.nameDari,description:input.description,description_dari:input.descriptionDari,price:input.price,image_url:input.imageUrl,is_available:input.isAvailable,is_popular:input.isPopular,is_vegetarian:input.isVegetarian,is_spicy:input.isSpicy,sort_order:input.sortOrder,archived_at:null});
+      data={success:true,item:ownerMenu.items.at(-1)};
+    }else if(path==='portal.ownerUpdateRestaurantContent'){
+      mutations.push({path,input});Object.assign(ownerRestaurant,{description:input.description,description_dari:input.descriptionDari,logo_url:input.logoUrl,cover_image_url:input.coverImageUrl,opening_hours:input.openingHours});data={success:true};
+    }
+    await route.fulfill({status:200,contentType:'application/json',body:trpc(data)});
+  });
+  await page.goto('/owner');
+  await expect(page.locator('#ownerTitle')).toHaveText('Herat Kitchen');
+  await expect(page.locator('#ownerActivationNotice')).toContainText('still in onboarding');
+  await page.getByRole('button',{name:'Menu'}).click();
+  await page.locator('#ownerItemForm input[name="name"]').fill('Bolani');
+  await page.locator('#ownerItemForm input[name="nameDari"]').fill('بولانی');
+  await page.locator('#ownerItemForm textarea[name="description"]').fill('Filled flatbread');
+  await page.locator('#ownerItemForm input[name="price"]').fill('120');
+  await page.locator('#ownerItemForm select[name="categoryId"]').selectOption('main');
+  await page.locator('#ownerItemForm').getByRole('button',{name:'Save item'}).click();
+  await expect(page.locator('#ownerMenu')).toContainText('Bolani');
+  expect(mutations.find(x=>x.path==='portal.ownerUpsertMenuItem').input).toMatchObject({name:'Bolani',nameDari:'بولانی',price:120,categoryId:'main',isAvailable:true});
+  await page.getByRole('button',{name:'Store & profile'}).click();
+  await page.locator('#ownerProfileForm textarea[name="description"]').fill('Family Afghan restaurant');
+  await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
+  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save public profile'}).click();
+  expect(mutations.find(x=>x.path==='portal.ownerUpdateRestaurantContent').input).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
+});
+
 test('saved checkout addresses can be reused without a client-invented promo discount', async ({page})=>{
   await mockApi(page);
   await page.addInitScript(({restaurant,menu})=>{
