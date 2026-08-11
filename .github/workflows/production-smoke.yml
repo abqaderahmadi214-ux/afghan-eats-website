@@ -58,6 +58,8 @@ jobs:
             retry_contains "https://afghaneats.net/assets/claims.js" "adminCreateClaimInvite" /tmp/ae-claims-v48.js
             retry_contains "https://afghaneats.net/owner.html" "ownerItemForm" /tmp/ae-owner-v49.html
             retry_contains "https://afghaneats.net/assets/portal.js" "ownerUpsertMenuItem" /tmp/ae-portal-v49.js
+            retry_contains "https://afghaneats.net/rider-portal.html" "riderPerformancePanel" /tmp/ae-rider-v50.html
+            retry_contains "https://afghaneats.net/assets/portal.js" "lastmile.riderVerifyPin" /tmp/ae-portal-v50.js
           fi
 
       - name: Verify frontend production security headers
@@ -199,9 +201,9 @@ jobs:
           echo 'Afghan Eats production smoke passed.'
           echo 'Frontend v40 asset: live'
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            echo 'Frontend v49 owner studio: production verification deferred until merge'
+            echo 'Frontend v50 rider workspace: production verification deferred until merge'
           else
-            echo 'Frontend v49 owner studio: live'
+            echo 'Frontend v50 rider workspace: live'
           fi
           echo 'Frontend security headers: live'
           echo 'API database health: live'

@@ -163,6 +163,46 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
 });
 
+test('a rider can complete a protected delivery without exposing closed-job customer details', async ({page})=>{
+  test.setTimeout(45_000);
+  const rider={id:'rider-test',full_name:'Farid Rider',phone:'+93 700 000 091',vehicle:'motorcycle',service_area:'Herat City',status:'active',is_available:false,total_deliveries:17,cash_balance:850};
+  const assignment={id:'11111111-1111-4111-8111-111111111111',order_id:'22222222-2222-4222-8222-222222222222',order_number:'AE-1051',status:'on_the_way',items:[{quantity:2,name:'Bolani'}],total:410,delivery_address:'Gulha Circle, Herat',delivery_phone:'+93 700 000 033',order_notes:'Call at the gate',restaurant_name:'Herat Kitchen',restaurant_address:'Jada-e-Maiwand, Herat',restaurant_phone:'+93 700 000 044',assigned_at:new Date().toISOString(),picked_up_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+  const proof={active:{assignmentId:assignment.id,orderId:assignment.order_id,orderNumber:assignment.order_number,status:assignment.status,address:assignment.delivery_address,location:{latitude:34.3529,longitude:62.2040,accuracyM:15,updatedAt:new Date().toISOString()},pinEnabled:true,pinVerified:false,distanceKm:1.2,roughEtaMinutes:7}};
+  let pinPayload=null,deliveryPayload=null;
+  await page.addInitScript(()=>{sessionStorage.setItem('ae_portal_token','rider-test-token');sessionStorage.setItem('ae_portal_role','rider');sessionStorage.setItem('ae_portal_account',JSON.stringify({role:'rider'}))});
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/**',async route=>{
+    const path=new URL(route.request().url()).pathname.split('/').pop(),input=route.request().method()==='POST'?JSON.parse(route.request().postData()||'{"json":{}}').json:null;
+    let data=[];
+    if(path==='portal.me')data={id:'rider-account',username:rider.phone,role:'rider',riderId:rider.id};
+    else if(path==='portal.riderDashboard')data={rider,assignments:[assignment]};
+    else if(path==='dispatch.riderSla')data={active:assignment,performance:{deliveries:17,deliveries30d:9,avgAcceptMinutes:1.8,avgDeliveryMinutes:21.4}};
+    else if(path==='lastmile.riderContext')data=proof;
+    else if(path==='lastmile.riderVerifyPin'){pinPayload=input;proof.active.pinVerified=true;data={success:true,verified:true};}
+    else if(path==='portal.riderUpdateAssignment'){deliveryPayload=input;assignment.status=input.status;assignment.updated_at=new Date().toISOString();if(input.status==='delivered'){assignment.delivered_at=new Date().toISOString();rider.total_deliveries+=1;}proof.active=null;data={success:true};}
+    await route.fulfill({status:200,contentType:'application/json',body:trpc(data)});
+  });
+  await page.goto('/rider-portal');
+  await expect(page.locator('#riderName')).toHaveText('Farid Rider');
+  await expect(page.locator('#riderActive')).toContainText('Herat Kitchen');
+  await expect(page.locator('#riderActive')).toContainText('Call at the gate');
+  await expect(page.locator('#riderActive').getByRole('button',{name:'Confirm delivered'})).toBeDisabled();
+  await page.locator('.rider-pin-form input[name="pin"]').fill('4821');
+  await page.locator('.rider-pin-form').getByRole('button',{name:'Verify'}).click();
+  expect(pinPayload).toEqual({assignmentId:assignment.id,pin:'4821'});
+  await expect(page.locator('#riderActive')).toContainText('Customer code verified');
+  page.once('dialog',dialog=>dialog.accept());
+  await page.locator('#riderActive').getByRole('button',{name:'Confirm delivered'}).click();
+  expect(deliveryPayload).toEqual({assignmentId:assignment.id,status:'delivered'});
+  await expect(page.locator('#riderActive')).toContainText('No active delivery');
+  await page.getByRole('button',{name:'Delivery history'}).click();
+  await expect(page.locator('#riderPast')).toContainText('AE-1051');
+  await expect(page.locator('#riderPast')).not.toContainText('+93 700 000 033');
+  await expect(page.locator('#riderPast')).not.toContainText('Gulha Circle');
+  await page.getByRole('button',{name:'Performance & safety'}).click();
+  await expect(page.locator('#riderPerformance')).toContainText('21.4 min');
+  await expect(page.locator('#riderServiceProfile')).toContainText('Herat City');
+});
+
 test('saved checkout addresses can be reused without a client-invented promo discount', async ({page})=>{
   await mockApi(page);
   await page.addInitScript(({restaurant,menu})=>{
