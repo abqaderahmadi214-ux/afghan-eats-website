@@ -145,6 +145,8 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.locator('#ownerItemForm input[name="price"]').fill('120');
   await page.locator('#ownerItemForm select[name="categoryId"]').selectOption('main');
   await page.locator('#ownerItemForm').getByRole('button',{name:'Save item'}).click();
+  await expect(page.locator('#ownerToast')).toContainText('Menu item saved');
+  await expect.poll(()=>mutations.some(x=>x.path==='portal.ownerUpsertMenuItem')).toBe(true);
   await expect(page.locator('#ownerMenu')).toContainText('Bolani');
   expect(mutations.find(x=>x.path==='portal.ownerUpsertMenuItem').input).toMatchObject({name:'Bolani',nameDari:'بولانی',price:120,categoryId:'main',isAvailable:true});
   await page.getByRole('button',{name:'Store & profile'}).click();
