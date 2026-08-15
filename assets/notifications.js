@@ -28,7 +28,7 @@ function installNotificationSessionHooks(){
   if(typeof window.portalSaveSession==='function'&&!window.portalSaveSession.__aeNotifyWrapped){const original=window.portalSaveSession;const wrapped=function(...args){const result=original.apply(this,args);setTimeout(()=>refreshPortalNotifications(),0);return result};wrapped.__aeNotifyWrapped=true;window.portalSaveSession=wrapped}
 }
 function startNotificationPolling(){if(AENOTIFY.customerTimer)clearInterval(AENOTIFY.customerTimer);if(AENOTIFY.portalTimer)clearInterval(AENOTIFY.portalTimer);refreshCustomerNotifications(false);refreshPortalNotifications();AENOTIFY.customerTimer=setInterval(()=>{if(!document.hidden)refreshCustomerNotifications(true)},30000);AENOTIFY.portalTimer=setInterval(()=>{if(!document.hidden)refreshPortalNotifications()},20000)}
-function loadAccountSecurityModule(){if(document.querySelector('script[data-ae-security]'))return;const s=document.createElement('script');s.src='/assets/security.js';s.defer=true;s.dataset.aeSecurity='true';document.body.appendChild(s)}
+function loadAccountSecurityModule(){if(document.querySelector('script[data-ae-security]'))return;const s=document.createElement('script');s.src='/assets/security.js?v=assisted-recovery-1';s.defer=true;s.dataset.aeSecurity='true';document.body.appendChild(s)}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){refreshCustomerNotifications(true);refreshPortalNotifications()}});
 installNotificationSessionHooks();
 document.addEventListener('DOMContentLoaded',()=>{installNotificationSessionHooks();loadAccountSecurityModule();setTimeout(startNotificationPolling,400)});

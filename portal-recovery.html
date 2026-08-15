@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Recover portal access | Afghan Eats</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/operations.css">
+  <link rel="stylesheet" href="/assets/portal.css">
+  <script src="/config.js"></script>
+</head>
+<body class="portal-shell">
+  <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small>Account recovery</small></a><a class="btn btn-light" href="/owner">Owner portal</a></div></header>
+  <main class="section"><div class="container"><section class="form-card portal-auth"><span class="portal-role">Verified account recovery</span><h1>Set a new portal password</h1><p class="muted">This private link is valid once and expires automatically. Do not share it.</p><div id="recoveryLoading" class="notice">Checking your recovery link…</div><div id="recoveryBody" class="hidden"><div class="notice success"><b id="recoveryIdentity"></b><span id="recoveryExpiry" class="muted"></span></div><form id="portalRecoveryForm" class="owner-editor-form"><label class="field"><span>New password</span><input name="newPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label><label class="field"><span>Confirm new password</span><input name="confirmPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label><button class="btn btn-primary" type="submit">Set new password</button></form></div><div id="recoveryResult" class="notice error hidden" role="alert"></div></section></div></main>
+  <script src="/assets/portal-recovery.js?v=assisted-recovery-1"></script>
+</body>
+</html>
