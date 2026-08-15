@@ -190,6 +190,6 @@
   document.addEventListener('keydown',trapDialogFocus,true);
   document.addEventListener('click',blockDisabledCheckoutLinks,true);
   const observer=new MutationObserver(mutations=>{for(const mutation of mutations){for(const node of mutation.addedNodes){if(node.nodeType===1)enhanceAccessibility(node)}}announceClosedState();guardEmptyModifierGroups();if(typeof window.syncCheckoutButton==='function')window.syncCheckoutButton()});
-  function boot(){patchAll();observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','aria-hidden']});const timer=setInterval(()=>{patchAll();if(Date.now()-startedAt>PATCH_WINDOW_MS)clearInterval(timer)},PATCH_INTERVAL_MS)}
+  function boot(){patchAll();observer.observe(document.body,{childList:true,subtree:true});const timer=setInterval(()=>{patchAll();if(Date.now()-startedAt>PATCH_WINDOW_MS)clearInterval(timer)},PATCH_INTERVAL_MS)}
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',boot,{once:true}):boot();
 })();
