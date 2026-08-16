@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 const restaurant = {
   id:'test-restaurant',name:'Herat Kitchen',name_dari:'آشپزخانه هرات',description:'Afghan food',description_dari:'غذای افغانی',
-  cuisine_tags:['Afghan','Kebab'],category_primary:'Afghan',address:'Gulha Circle, Herat',district:'Gulha',city:'Herat',
+  cuisine_tags:['Afghan','Kebab'],category_primary:'Afghan',address:'Gulha Circle, Herat',district:'Gulha',city:'Herat',phone:'+93 700 000 099',
   cover_image_url:null,logo_url:null,has_delivery:true,has_takeaway:true,delivery_time_min:20,delivery_time_max:35,
   delivery_fee_min:null,min_order_amount:0,status:'active',is_open:true,rating:4.8,total_reviews:12,verification_status:'owner_confirmed'
 };
@@ -154,6 +154,7 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.getByRole('button',{name:'Store & profile'}).click();
   await page.locator('#ownerProfileForm textarea[name="description"]').fill('Family Afghan restaurant');
   await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
+  expect(await page.locator('#ownerProfileForm').evaluate(form=>form.checkValidity())).toBe(true);
   const profileSaveRequest=page.waitForRequest(request=>request.url().endsWith('/portal.ownerUpdateRestaurantContent'));
   const profileSaveResponse=page.waitForResponse(response=>response.url().endsWith('/portal.ownerUpdateRestaurantContent'));
   await page.locator('#ownerProfileForm').getByRole('button',{name:'Save restaurant profile'}).click();
