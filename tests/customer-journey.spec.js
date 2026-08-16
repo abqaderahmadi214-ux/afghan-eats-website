@@ -115,7 +115,7 @@ test('a public listing can be claimed without creating or activating another res
 
 test('a scoped restaurant owner can build a menu and maintain the public profile', async ({page})=>{
   test.setTimeout(45_000);
-  const ownerRestaurant={...restaurant,status:'pending',is_open:false,opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
+  const ownerRestaurant={...restaurant,status:'pending',is_open:false,cover_image_url:'https://images.example.com/cover.jpg',opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
   const ownerMenu={categories:[...menu.categories],items:[...menu.items]};
   await page.addInitScript(()=>{sessionStorage.setItem('ae_portal_token','owner-test-token');sessionStorage.setItem('ae_portal_role','owner');sessionStorage.setItem('ae_portal_account',JSON.stringify({role:'owner'}))});
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**',async route=>{
@@ -156,9 +156,9 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
   const profileSaveRequest=page.waitForRequest(request=>request.url().endsWith('/portal.ownerUpdateRestaurantContent'));
   const profileSaveResponse=page.waitForResponse(response=>response.url().endsWith('/portal.ownerUpdateRestaurantContent'));
-  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save public profile'}).click();
+  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save restaurant profile'}).click();
   const [profileRequest,profileResponse]=await Promise.all([profileSaveRequest,profileSaveResponse]);
-  expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
+  expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg',coverImageUrl:'https://images.example.com/cover.jpg'});
   expect(profileResponse.ok()).toBe(true);
   await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
 });
