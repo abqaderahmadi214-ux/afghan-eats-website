@@ -1,16 +1,19 @@
 (function(){
   'use strict';
 
+  const customerPath=/^\/(?:index(?:\.html)?|restaurants(?:\.html)?|restaurant(?:\.html)?|checkout(?:\.html)?|orders(?:\.html)?|account(?:\.html)?)?$/;
+  if(!customerPath.test(location.pathname))return;
+
   const PATCH_INTERVAL_MS=250;
   const PATCH_WINDOW_MS=15000;
   const startedAt=Date.now();
 
   function isFa(){return document.documentElement.lang==='fa'||document.documentElement.dir==='rtl'||localStorage.getItem('ae_lang')==='fa'}
   function txt(en,fa){return isFa()?fa:en}
-  function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
   function appRestaurants(){try{return typeof restaurants!=='undefined'&&Array.isArray(restaurants)?restaurants:[]}catch{return[]}}
   function appCart(){try{return typeof cart!=='undefined'&&Array.isArray(cart)?cart:[]}catch{return[]}}
   function currentMode(){try{return typeof mode!=='undefined'?mode:(localStorage.getItem('ae_mode')||'delivery')}catch{return localStorage.getItem('ae_mode')||'delivery'}}
+  function isDirectoryListing(r){return Boolean(r&&r.listing_mode==='directory')}
   function restaurantIsOpen(r){return Boolean(r&&r.status==='active'&&r.is_open!==false)}
   function cartRestaurant(){const c=appCart(),list=appRestaurants();return c.length?list.find(r=>String(r.id)===String(c[0].restaurantId))||null:null}
   function pageRestaurant(){try{return typeof currentRestaurant!=='undefined'&&currentRestaurant?currentRestaurant:cartRestaurant()}catch{return cartRestaurant()}}
@@ -34,7 +37,7 @@
     root.querySelectorAll?.('.cart-count').forEach(el=>{el.setAttribute('aria-live','polite');el.setAttribute('aria-atomic','true')});
     root.querySelectorAll?.('.lang').forEach(btn=>{btn.setAttribute('aria-label',txt('Switch language to Dari','تغییر زبان به انگلیسی'));btn.setAttribute('title',btn.getAttribute('aria-label'))});
     root.querySelectorAll?.('.mode-tabs button').forEach(btn=>{btn.setAttribute('aria-pressed',String(btn.classList.contains('active')));btn.setAttribute('role','button')});
-    root.querySelectorAll?.('.chip').forEach(btn=>{if(btn.tagName==='BUTTON'){btn.setAttribute('aria-pressed',String(btn.classList.contains('active')))}});
+    root.querySelectorAll?.('.chip').forEach(btn=>{if(btn.tagName==='BUTTON')btn.setAttribute('aria-pressed',String(btn.classList.contains('active')))});
     root.querySelectorAll?.('.status-pill').forEach(el=>{el.setAttribute('role','status');const t=el.textContent?.trim();if(t)el.setAttribute('aria-label',t)});
     root.querySelectorAll?.('#checkoutError').forEach(el=>liveRegion(el,'alert'));
     root.querySelectorAll?.('#deliveryQuotePanel,#orderSubmitState,#aeConnectivity').forEach(el=>liveRegion(el,'status'));
@@ -45,13 +48,14 @@
 
   function announceClosedState(){
     const r=pageRestaurant();
-    const closed=Boolean(r&&!restaurantIsOpen(r));
+    const closed=Boolean(r&&!isDirectoryListing(r)&&!restaurantIsOpen(r));
     const cartPanel=document.querySelector('.cart-panel');
     let notice=document.getElementById('aeV51ClosedNotice');
     if(closed&&cartPanel){
       if(!notice){notice=document.createElement('div');notice.id='aeV51ClosedNotice';notice.className='ae-v51-block';notice.setAttribute('role','alert');cartPanel.prepend(notice)}
-      notice.textContent=closedMessage();
-    }else notice?.remove();
+      const message=closedMessage();
+      if(notice.textContent!==message)notice.textContent=message;
+    }else if(notice){notice.remove();notice=null}
 
     if(closed){
       document.querySelectorAll('.add-btn').forEach(btn=>{btn.disabled=true;btn.setAttribute('aria-disabled','true');btn.setAttribute('title',closedMessage())});
@@ -68,15 +72,15 @@
     box.querySelectorAll('.catalog-group').forEach(group=>{
       const required=Boolean(group.querySelector('.catalog-required'));
       const inputs=group.querySelectorAll('input[type="radio"],input[type="checkbox"]');
-      group.querySelector('.ae-v51-inline')?.remove();
-      group.classList.remove('ae-v51-empty-required');
-      if(inputs.length)return;
+      const existing=group.querySelector('.ae-v51-inline');
+      if(inputs.length){existing?.remove();group.classList.remove('ae-v51-empty-required');return}
       if(!required){group.remove();return}
-      blocked=true;group.classList.add('ae-v51-empty-required');
-      const msg=document.createElement('span');msg.className='ae-v51-inline';msg.setAttribute('role','alert');msg.textContent=txt('This required choice has not been configured yet. This item cannot be added until the restaurant completes its options.','این انتخاب ضروری هنوز تنظیم نشده است. تا زمانی که رستورانت گزینه‌ها را تکمیل نکند، این قلم قابل افزودن نیست.');group.appendChild(msg)
+      blocked=true;
+      group.classList.add('ae-v51-empty-required');
+      if(!existing){const msg=document.createElement('span');msg.className='ae-v51-inline';msg.setAttribute('role','alert');msg.textContent=txt('This required choice has not been configured yet. This item cannot be added until the restaurant completes its options.','این انتخاب ضروری هنوز تنظیم نشده است. تا زمانی که رستورانت گزینه‌ها را تکمیل نکند، این قلم قابل افزودن نیست.');group.appendChild(msg)}
     });
     const add=modal.querySelector('button[onclick="addCurrent()"]');
-    if(add){const closed=Boolean(pageRestaurant()&&!restaurantIsOpen(pageRestaurant()));add.disabled=blocked||closed;add.setAttribute('aria-disabled',String(add.disabled));if(blocked)add.setAttribute('title',txt('Required item options are not configured','گزینه‌های ضروری این قلم تنظیم نشده است'));else if(!closed)add.removeAttribute('title')}
+    if(add){const r=pageRestaurant(),closed=Boolean(r&&!isDirectoryListing(r)&&!restaurantIsOpen(r));add.disabled=blocked||closed;add.setAttribute('aria-disabled',String(add.disabled));if(blocked)add.setAttribute('title',txt('Required item options are not configured','گزینه‌های ضروری این قلم تنظیم نشده است'));else if(closed)add.setAttribute('title',closedMessage());else add.removeAttribute('title')}
   }
 
   function patchRequestDeliveryQuote(){
@@ -181,7 +185,7 @@
     if(event.key!=='Tab')return;const dialog=[...document.querySelectorAll('[role="dialog"]')].reverse().find(d=>d.getAttribute('aria-hidden')!=='true'&&getComputedStyle(d).display!=='none');if(!dialog)return;const focusable=[...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>el.offsetParent!==null);if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}
   }
 
-  function blockDisabledCheckoutLinks(event){const link=event.target?.closest?.('a[aria-disabled="true"]');if(!link)return;event.preventDefault();event.stopPropagation();const notice=document.getElementById('aeV51ClosedNotice');notice?.focus?.()}
+  function blockDisabledCheckoutLinks(event){const link=event.target?.closest?.('a[aria-disabled="true"]');if(!link)return;event.preventDefault();event.stopPropagation();document.getElementById('aeV51ClosedNotice')?.focus?.()}
 
   function patchAll(){
     ensureStyles();patchRequestDeliveryQuote();patchTotals();patchRefreshCheckoutQuote();patchSyncCheckoutButton();patchPlaceOrder();patchOpenItem();patchModeState();enhanceAccessibility();announceClosedState();guardEmptyModifierGroups();
