@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.app.afghaneatsmobile",
+      "sha256_cert_fingerprints": [
+        "01:76:4E:62:3F:C4:84:2A:AF:55:4F:E3:D6:D8:D6:30:A6:37:A6:A4:03:5A:33:EF:43:7A:14:07:45:4B:DE:C7"
+      ]
+    }
+  }
+]

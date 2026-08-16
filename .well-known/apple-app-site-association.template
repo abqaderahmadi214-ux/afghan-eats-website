@@ -1,0 +1,22 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "${APPLE_TEAM_ID}.com.app.afghaneatsmobile",
+        "components": [
+          {
+            "/": "/restaurant/*",
+            "comment": "Open a trusted Afghan Eats restaurant link in the app."
+          },
+          {
+            "/": "/restaurant.html",
+            "?": {
+              "id": "*"
+            },
+            "comment": "Open the existing website restaurant-detail URL in the app."
+          }
+        ]
+      }
+    ]
+  }
+}
