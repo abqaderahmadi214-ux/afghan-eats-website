@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 const restaurant = {
   id:'test-restaurant',name:'Herat Kitchen',name_dari:'آشپزخانه هرات',description:'Afghan food',description_dari:'غذای افغانی',
-  cuisine_tags:['Afghan','Kebab'],category_primary:'Afghan',address:'Gulha Circle, Herat',district:'Gulha',city:'Herat',
+  cuisine_tags:['Afghan','Kebab'],category_primary:'Afghan',address:'Gulha Circle, Herat',district:'Gulha',city:'Herat',phone:'+93 700 000 099',
   cover_image_url:null,logo_url:null,has_delivery:true,has_takeaway:true,delivery_time_min:20,delivery_time_max:35,
   delivery_fee_min:null,min_order_amount:0,status:'active',is_open:true,rating:4.8,total_reviews:12,verification_status:'owner_confirmed'
 };
@@ -115,7 +115,7 @@ test('a public listing can be claimed without creating or activating another res
 
 test('a scoped restaurant owner can build a menu and maintain the public profile', async ({page})=>{
   test.setTimeout(45_000);
-  const ownerRestaurant={...restaurant,status:'pending',is_open:false,opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
+  const ownerRestaurant={...restaurant,status:'pending',is_open:false,cover_image_url:'https://images.example.com/cover.jpg',opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
   const ownerMenu={categories:[...menu.categories],items:[...menu.items]};
   await page.addInitScript(()=>{sessionStorage.setItem('ae_portal_token','owner-test-token');sessionStorage.setItem('ae_portal_role','owner');sessionStorage.setItem('ae_portal_account',JSON.stringify({role:'owner'}))});
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**',async route=>{
@@ -154,11 +154,12 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.getByRole('button',{name:'Store & profile'}).click();
   await page.locator('#ownerProfileForm textarea[name="description"]').fill('Family Afghan restaurant');
   await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
+  expect(await page.locator('#ownerProfileForm').evaluate(form=>form.checkValidity())).toBe(true);
   const profileSaveRequest=page.waitForRequest(request=>request.url().endsWith('/portal.ownerUpdateRestaurantContent'));
   const profileSaveResponse=page.waitForResponse(response=>response.url().endsWith('/portal.ownerUpdateRestaurantContent'));
-  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save public profile'}).click();
+  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save restaurant profile'}).click();
   const [profileRequest,profileResponse]=await Promise.all([profileSaveRequest,profileSaveResponse]);
-  expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
+  expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg',coverImageUrl:'https://images.example.com/cover.jpg'});
   expect(profileResponse.ok()).toBe(true);
   await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
 });
