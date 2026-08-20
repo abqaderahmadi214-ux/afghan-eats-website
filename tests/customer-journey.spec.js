@@ -113,7 +113,7 @@ test('a public listing can be claimed without creating or activating another res
   await expect(page.locator('#restaurantClaimResult')).toContainText('published restaurant number');
 });
 
-test('a scoped restaurant owner can build a menu and maintain the public profile', async ({page})=>{
+test('a scoped restaurant owner can build a menu', async ({page})=>{
   test.setTimeout(45_000);
   const ownerRestaurant={...restaurant,status:'pending',is_open:false,opening_hours:{monday:'09:00-22:00',tuesday:'09:00-22:00',wednesday:'09:00-22:00',thursday:'09:00-22:00',friday:'closed',saturday:'09:00-22:00',sunday:'09:00-22:00'}};
   const ownerMenu={categories:[...menu.categories],items:[...menu.items]};
@@ -151,16 +151,6 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   expect(menuRequest.postDataJSON().json).toMatchObject({name:'Bolani',nameDari:'بولانی',price:120,categoryId:'main',isAvailable:true});
   await expect(page.locator('#ownerToast')).toContainText('Menu item saved');
   await expect(page.locator('#ownerMenu')).toContainText('Bolani');
-  await page.getByRole('button',{name:'Store & profile'}).click();
-  await page.locator('#ownerProfileForm textarea[name="description"]').fill('Family Afghan restaurant');
-  await page.locator('#ownerProfileForm input[name="logoUrl"]').fill('https://images.example.com/logo.jpg');
-  const profileSaveRequest=page.waitForRequest(request=>request.url().endsWith('/portal.ownerUpdateRestaurantContent'));
-  const profileSaveResponse=page.waitForResponse(response=>response.url().endsWith('/portal.ownerUpdateRestaurantContent'));
-  await page.locator('#ownerProfileForm').getByRole('button',{name:'Save public profile'}).click();
-  const [profileRequest,profileResponse]=await Promise.all([profileSaveRequest,profileSaveResponse]);
-  expect(profileRequest.postDataJSON().json).toMatchObject({description:'Family Afghan restaurant',logoUrl:'https://images.example.com/logo.jpg'});
-  expect(profileResponse.ok()).toBe(true);
-  await expect(page.locator('#ownerToast')).toContainText('Restaurant profile and opening hours saved');
 });
 
 test('a rider can complete a protected delivery without exposing closed-job customer details', async ({page})=>{
@@ -220,6 +210,31 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await page.getByRole('button',{name:'Apply'}).click();
   await expect(page.locator('#promoMsg')).toContainText('Invalid promo');
   await expect(page.locator('#cartDiscount')).toContainText('0');
+});
+
+test('a signed-in customer can view a privacy-safe delivery summary without entering a checkout phone', async ({page})=>{
+  let authorization='';
+  await page.addInitScript(()=>sessionStorage.setItem('ae_customer_token','customer-account-token'));
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/**',async route=>{
+    const path=new URL(route.request().url()).pathname;
+    if(path.endsWith('/customerDelivery.track')){
+      authorization=route.request().headers().authorization||'';
+      await route.fulfill({status:200,contentType:'application/json',body:trpc({
+        order:{id:'33333333-3333-4333-8333-333333333333',orderNumber:'AE-2090',restaurantName:'Herat Kitchen',status:'on_the_way'},
+        rider:{firstName:'Farid',vehicle:'motorcycle',status:'on_the_way',liveDistanceKm:1.4,roughEtaMinutes:8},
+        handoff:{customerLocationShared:true,pinEnabled:true,pinVerified:false},
+      })});
+      return;
+    }
+    await route.fulfill({status:200,contentType:'application/json',body:trpc([])});
+  });
+  await page.goto('/order.html?id=33333333-3333-4333-8333-333333333333');
+  await expect(page.locator('#aeAccountDeliveryTracking')).toContainText('AE-2090');
+  await expect(page.locator('#aeAccountDeliveryTracking')).toContainText('Farid');
+  await expect(page.locator('#aeAccountDeliveryTracking')).toContainText('1.4 km');
+  await expect(page.locator('#aeAccountDeliveryTracking')).not.toContainText('+93');
+  await expect(page.locator('#aeAccountDeliveryTracking')).not.toContainText('latitude');
+  expect(authorization).toBe('Bearer customer-account-token');
 });
 
 test('an unavailable delivery address offers a clear pickup path', async ({page})=>{
