@@ -2,7 +2,7 @@
   "name": "afghan-eats-frontend",
   "private": true,
   "scripts": {
-    "test:e2e": "playwright test"
+    "test:e2e": "npx playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0"
