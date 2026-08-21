@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/advanced.css">
   <link rel="stylesheet" href="/assets/trust.css">
-  <link rel="stylesheet" href="/assets/customer.css">
+  <link rel="stylesheet" href="/assets/customer.css"><link rel="stylesheet" href="/assets/experience-v52.css">
   <script src="/config.js"></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
     <h1 data-i18n="checkout"></h1>
     <p class="muted en-copy">Choose delivery or pickup. For delivery, Afghan Eats checks your address and fee before you place the order.</p>
     <p class="muted fa-copy">ارسال یا دریافت حضوری را انتخاب کنید. برای ارسال، افغان ایتس پیش از ثبت سفارش آدرس و هزینه را بررسی می‌کند.</p>
-    <div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
+    <div class="customer-flow-banner"><div><strong class="en-copy">Review once. Deliver with confidence.</strong><strong class="fa-copy">یک‌بار بررسی کنید؛ با اطمینان تحویل بگیرید.</strong><p class="en-copy">Your address, delivery fee and final total are shown before you place the order.</p><p class="fa-copy">آدرس، هزینه ارسال و مبلغ نهایی پیش از ثبت سفارش به شما نشان داده می‌شود.</p></div><span class="customer-flow-token" aria-hidden="true">✓</span></div><div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
     <div id="checkoutError" class="notice error hidden"></div>
     <form onsubmit="placeOrder(event)"><div class="grid2">
       <div class="field full"><span><span class="en-copy">How would you like your order?</span><span class="fa-copy">سفارش را چگونه دریافت می‌کنید؟</span></span><div class="fulfillment-card"><label><input type="radio" name="fulfillment" value="delivery" checked><span>🛵 <span data-i18n="delivery"></span></span></label><label><input type="radio" name="fulfillment" value="pickup"><span>🏪 <span data-i18n="pickup"></span></span></label></div></div>
