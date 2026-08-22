@@ -252,3 +252,58 @@ test('one-time admin reset removes its token after a successful password change'
   expect(resetPayload).toEqual({token:'single-use-test-token',newPassword:'SecureAdmin!2026Herat'});
   await expect(page.locator('#adminResetForm')).toHaveClass(/hidden/);
 });
+
+
+test.describe('refined homepage desktop visual regression',()=>{
+  test.use({viewport:{width:1440,height:960}});
+
+  test('keeps the ordering path visible without an unverified hero image', async ({page})=>{
+    await mockApi(page);
+    await page.goto('/');
+    await expect(page.locator('#main-content')).toBeVisible();
+    await expect(page.locator('.flow-order-card')).toBeVisible();
+    await expect(page.locator('.flow-order-card')).toContainText('Delivery fees and availability are confirmed for your address before checkout.');
+    await expect(page.locator('.flow-journey-card')).toContainText('From location to tracking.');
+    await expect(page.locator('.flow-search-card')).toBeVisible();
+    await expect(page.locator('#homeRestaurants .restaurant-card').first()).toContainText('Herat Kitchen');
+    await expect(page.locator('img.hero-image')).toHaveCount(0);
+    await expect(page.locator('img[src*="images.unsplash.com"]')).toHaveCount(0);
+    await expect(page).toHaveScreenshot('customer-flow-home-desktop.png',{fullPage:true,animations:'disabled'});
+  });
+});
+
+test.describe('refined homepage mobile and RTL customer-flow regressions',()=>{
+  test.use({viewport:{width:390,height:844}});
+
+  test('keeps the delivery entry, search and restaurant discovery usable on mobile',async ({page})=>{
+    await mockApi(page);
+    await page.goto('/');
+    await expect(page.locator('.flow-order-card')).toBeVisible();
+    await expect(page.locator('.flow-order-card .address-box input[name="address"]')).toBeVisible();
+    await expect(page.locator('.flow-order-card .address-box button')).toBeVisible();
+    await expect(page.locator('.flow-cuisine-row')).toBeVisible();
+    await expect(page.locator('#homeRestaurants .restaurant-card').first()).toBeVisible();
+    await expect(page).toHaveScreenshot('customer-flow-home-mobile.png',{fullPage:true,animations:'disabled'});
+  });
+
+  test('keeps the refined ordering path localized and right-to-left in Dari',async ({page})=>{
+    await mockApi(page);
+    await page.addInitScript(()=>{localStorage.setItem('ae_lang','fa');localStorage.setItem('ae_mode','pickup')});
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('dir','rtl');
+    await expect(page.locator('.flow-order-card')).toContainText('با موقعیت خود آغاز کنید');
+    await expect(page.locator('.flow-order-card .en-copy').first()).toBeHidden();
+    await expect(page.locator('.flow-order-card .fa-copy').first()).toBeVisible();
+    await expect(page.locator('#smartSearchInput')).toHaveAttribute('placeholder',/کباب/);
+    await expect(page).toHaveScreenshot('customer-flow-home-dari-mobile.png',{fullPage:true,animations:'disabled'});
+  });
+});
+
+test('refined homepage preserves safe fallback when live restaurant discovery is unavailable',async ({page})=>{
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/**',route=>route.abort());
+  await page.goto('/');
+  await expect(page.locator('.flow-order-card')).toBeVisible();
+  await expect(page.locator('#homeRestaurants .restaurant-card').first()).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Failed to fetch');
+  await expect(page.locator('body')).not.toContainText('NetworkError');
+});
