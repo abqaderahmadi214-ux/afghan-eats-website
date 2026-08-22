@@ -41,6 +41,14 @@ async function mockApi(page,{deliveryUnavailable=false}={}){
   });
 }
 
+test('restaurant discovery falls back without exposing raw fetch failures', async ({page})=>{
+  await page.route('**/api/trpc/restaurants.list**', route=>route.abort());
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card').first()).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Failed to fetch');
+  await expect(page.locator('body')).not.toContainText('NetworkError');
+});
+
 test('homepage to restaurant to mobile basket to quoted checkout', async ({page})=>{
   await mockApi(page);
   await page.goto('/');
