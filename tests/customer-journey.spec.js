@@ -262,8 +262,15 @@ test.describe('refined homepage desktop visual regression',()=>{
     await page.goto('/');
     await expect(page.locator('#main-content')).toBeVisible();
     await expect(page.locator('.flow-order-card')).toBeVisible();
-    await expect(page.locator('.flow-order-card')).toContainText('Delivery fees and availability are confirmed for your address before checkout.');
+    await expect(page.locator('.flow-order-card')).toContainText('The final delivery fee and minimum order are confirmed before you place the order.');
     await expect(page.locator('.flow-journey-card')).toContainText('From location to tracking.');
+    const primaryCustomerNav=page.locator('header .customer-nav');
+    await expect(primaryCustomerNav.getByRole('link',{name:'Restaurants'})).toBeVisible();
+    await expect(primaryCustomerNav.getByRole('link',{name:'Orders'})).toBeVisible();
+    await expect(primaryCustomerNav.locator('a[href="/partner"],a[href="/rider"],a[href="/careers"]')).toHaveCount(0);
+    await expect(page.locator('footer a[href="/partner"]')).toHaveCount(1);
+    await expect(page.locator('footer a[href="/rider"]')).toHaveCount(1);
+    await expect(page.locator('footer a[href="/careers"]')).toHaveCount(1);
     await expect(page.locator('.flow-search-card')).toBeVisible();
     await expect(page.locator('#homeRestaurants .restaurant-card').first()).toContainText('Herat Kitchen');
     await expect(page.locator('img.hero-image')).toHaveCount(0);
@@ -292,6 +299,8 @@ test.describe('refined homepage mobile and RTL customer-flow regressions',()=>{
     await page.goto('/');
     await expect(page.locator('html')).toHaveAttribute('dir','rtl');
     await expect(page.locator('.flow-order-card')).toContainText('با موقعیت خود آغاز کنید');
+    await expect(page.locator('.flow-order-note')).toContainText('هزینه نهایی ارسال و حداقل سفارش پیش از نهایی‌کردن سفارش تأیید می‌شود.');
+    await expect(page.locator('header .customer-nav a[href="/partner"],header .customer-nav a[href="/rider"],header .customer-nav a[href="/careers"]')).toHaveCount(0);
     await expect(page.locator('.flow-order-card .en-copy').first()).toBeHidden();
     await expect(page.locator('.flow-order-card .fa-copy').first()).toBeVisible();
     await expect(page.locator('#smartSearchInput')).toHaveAttribute('placeholder',/کباب/);
