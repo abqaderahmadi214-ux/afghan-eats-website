@@ -1,0 +1,40 @@
+name: Fix identity initialization readiness
+
+on:
+  push:
+    branches: [fix/identity-init-ready-state]
+    paths:
+      - '.github/workflows/fix-identity-init.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-and-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/identity-init-ready-state
+      - name: Make identity init safe after DOMContentLoaded
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('assets/identity.js')
+          text=p.read_text()
+          old="  document.addEventListener('DOMContentLoaded',()=>{initCustomer();initRiderApplication();initRiderPortal()});\n})();\n"
+          new="  const initIdentity=()=>{initCustomer();initRiderApplication();initRiderPortal()};\n  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initIdentity,{once:true});else initIdentity();\n})();\n"
+          if old not in text: raise SystemExit('Identity init footer pattern not found')
+          p.write_text(text.replace(old,new,1))
+          PY
+      - name: JavaScript syntax check
+        run: node --check assets/identity.js
+      - name: Remove one-shot workflow and commit
+        run: |
+          rm -f .github/workflows/fix-identity-init.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/identity.js .github/workflows/fix-identity-init.yml
+          git commit -m "Make identity initialization robust after DOM ready"
+          git push origin HEAD:fix/identity-init-ready-state
