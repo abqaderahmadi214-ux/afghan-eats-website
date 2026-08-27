@@ -41,7 +41,12 @@ function sendHeaders(res, status, contentType, cacheControl) {
 }
 
 function resolveRequestPath(url) {
-  const pathname = decodeURIComponent(new URL(url, "https://admin.afghaneats.net").pathname);
+  let pathname;
+  try {
+    pathname = decodeURIComponent(new URL(url, "https://admin.afghaneats.net").pathname);
+  } catch {
+    return null;
+  }
   if (pathname === "/" || pathname === "/index.html") return path.join(root, "index.html");
   const relative = pathname.replace(/^\/+/, "");
   if (!relative || relative.includes("\0")) return null;
