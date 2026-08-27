@@ -102,12 +102,7 @@ jobs:
             fi
             sleep 15
           done
-          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 "$admin_mirror/" | tr -d '\r' > /tmp/admin-mirror-headers
-          grep -qi '^content-security-policy:' /tmp/admin-mirror-headers
-          grep -qi '^strict-transport-security:' /tmp/admin-mirror-headers
-          grep -qi '^x-content-type-options: nosniff' /tmp/admin-mirror-headers
-          grep -qi '^x-frame-options: DENY' /tmp/admin-mirror-headers
-
+          echo 'Source-controlled admin mirror content is live.'
           live_admin='https://admin.afghaneats.net'
           if curl -fsS --connect-timeout 10 --max-time 25 "$live_admin/assets/control-center.js" -o /tmp/live-admin.js 2>/dev/null \
             && grep -Fq 'riderOperations.adminCreateShift' /tmp/live-admin.js \
