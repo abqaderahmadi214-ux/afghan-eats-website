@@ -30,6 +30,7 @@ async function mockApi(page,{deliveryUnavailable=false}={}){
       }
       data=input.fulfillment==='pickup'?{...quote,fulfillment:'pickup',deliveryFee:0,zone:null,source:'pickup'}:quote;
     }
+    else if(path.endsWith('/orders.place'))data={success:true,replayed:false,orderId:'33333333-3333-4333-8333-333333333333',orderNumber:'AE-20260827-4242',message:'Order placed successfully',pricing:{subtotal:250,deliveryFee:60,serviceFee:8,discount:0,tipAmount:0,total:318},promo:null,loyalty:null,logistics:quote,customerLinked:false,scheduledFor:null};
     else if(path.endsWith('/catalog.publicModifiers'))data={groups:[],options:[],links:[]};
     else if(path.endsWith('/merchant.publicAvailabilityBatch'))data=[];
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
@@ -69,6 +70,36 @@ test('homepage to restaurant to mobile basket to quoted checkout', async ({page}
   await page.locator('label:has(input[name="fulfillment"][value="pickup"])').click();
   await expect(page.locator('#deliveryQuotePanel')).toContainText('Pickup selected');
   await expect(page.locator('.delivery-only').first()).toHaveClass(/hidden/);
+});
+
+test('checkout submits a real order payload and opens order confirmation', async ({page})=>{
+  await mockApi(page);
+  await page.addInitScript(({restaurant,menu})=>{
+    localStorage.setItem('ae_cart',JSON.stringify([{id:menu.items[0].id,restaurantId:restaurant.id,restaurantName:restaurant.name,name:menu.items[0].name,price:menu.items[0].price,qty:1,selections:[]} ]));
+    localStorage.setItem('ae_mode','delivery');
+    localStorage.setItem('ae_address','Gulha Circle');
+  },{restaurant,menu});
+  await page.goto('/checkout');
+  await page.locator('input[name="name"]').fill('Test Customer');
+  await page.locator('input[name="phone"]').fill('+93 700 000 123');
+  await page.locator('select[name="district"]').selectOption('Gulha');
+  await page.locator('input[name="address"]').fill('Gulha Circle');
+  await expect(page.locator('#deliveryQuotePanel')).toContainText('Delivery confirmed');
+  const orderRequest=page.waitForRequest(request=>request.url().endsWith('/orders.place')&&request.method()==='POST');
+  await page.getByRole('button',{name:'Place order'}).click();
+  const request=await orderRequest;
+  const payload=request.postDataJSON().json;
+  expect(payload).toMatchObject({
+    restaurantId:restaurant.id,
+    customerName:'Test Customer',
+    customerPhone:'+93 700 000 123',
+    deliveryArea:'Gulha',
+    deliveryAddress:'Gulha Circle',
+    fulfillment:'delivery',
+    items:[{id:'kebab',quantity:1,selections:[]}]
+  });
+  expect(payload.clientRequestId).toBeTruthy();
+  await expect(page).toHaveURL(/\/order(?:\.html)?\?id=33333333-3333-4333-8333-333333333333$/);
 });
 
 test('Dari customer chrome and discovery stay localized', async ({page})=>{

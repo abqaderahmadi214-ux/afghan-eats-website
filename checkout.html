@@ -21,7 +21,7 @@
     <p class="muted fa-copy">ارسال یا دریافت حضوری را انتخاب کنید. برای ارسال، افغان ایتس پیش از ثبت سفارش آدرس و هزینه را بررسی می‌کند.</p>
     <div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
     <div id="checkoutError" class="notice error hidden"></div>
-    <form onsubmit="placeOrder(event)"><div class="grid2">
+    <form onsubmit="placeOrder(event); return false"><div class="grid2">
       <div class="field full"><span><span class="en-copy">How would you like your order?</span><span class="fa-copy">سفارش را چگونه دریافت می‌کنید؟</span></span><div class="fulfillment-card"><label><input type="radio" name="fulfillment" value="delivery" checked><span>🛵 <span data-i18n="delivery"></span></span></label><label><input type="radio" name="fulfillment" value="pickup"><span>🏪 <span data-i18n="pickup"></span></span></label></div></div>
       <div id="deliveryQuotePanel" class="delivery-quote-panel notice full"><span class="en-copy">Enter your address to check delivery coverage and fee.</span><span class="fa-copy">آدرس را وارد کنید تا محدوده و هزینه ارسال بررسی شود.</span></div>
       <label class="field"><span data-i18n="name"></span><input name="name" required minlength="2" maxlength="120" autocomplete="name"></label>
