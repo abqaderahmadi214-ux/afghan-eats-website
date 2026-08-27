@@ -64,6 +64,7 @@ jobs:
           node --check assets/launch-readiness.js
           node --check assets/experience-v43.js
           node --check assets/claims.js
+          node --check admin-control-center/assets/control-center.js
           node --check config.js
       - name: Validate JSON and local references
         run: |
