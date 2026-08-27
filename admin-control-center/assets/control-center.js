@@ -306,6 +306,41 @@ async function action(event) {
   const target = event.target.closest('[data-action]'); if (!target) return;
   const type = target.dataset.action; const id = target.dataset.id;
   if (type === 'refresh-view') return renderView();
+  if (type === 'market-toggle') {
+    const open = target.dataset.open === 'true', controls = state.cache.overview?.platform?.controls || state.cache.website?.controls || {};
+    const payload = {
+      orderingEnabled: open,
+      orderingMessageEn: open ? null : (controls.ordering_message_en || 'Ordering is temporarily paused by Afghan Eats operations. Please try again later.'),
+      orderingMessageDari: open ? null : (controls.ordering_message_dari || 'ثبت سفارش به طور موقت از سوی عملیات افغان ایتس متوقف شده است. لطفاً بعداً دوباره تلاش کنید.'),
+      bannerEnabled: Boolean(controls.banner_enabled), bannerLevel: controls.banner_level || 'info',
+      bannerTitleEn: controls.banner_title_en || null, bannerTitleDari: controls.banner_title_dari || null,
+      bannerBodyEn: controls.banner_body_en || null, bannerBodyDari: controls.banner_body_dari || null,
+    };
+    return openConfirm(open ? 'Open Afghan Eats market' : 'Close Afghan Eats market', open ? 'Allow new customer checkout and order creation now?' : 'Stop all new customer checkout now? Existing orders, tracking, support and active deliveries will continue.', async () => { await mutate('platform.adminUpdateControls', payload); toast(open ? 'Afghan Eats market is open.' : 'Afghan Eats market is closed.'); renderView(); });
+  }
+  if (type === 'auto-dispatch-toggle') {
+    const enabled = target.dataset.enabled === 'true';
+    return openConfirm(enabled ? 'Enable automatic Rider assignment' : 'Disable automatic Rider assignment', enabled ? 'New eligible delivery orders may be assigned automatically to a free Rider who is inside an active approved shift.' : 'Stop automatic Rider assignment. Manual dispatch remains available.', async () => { await mutate('dispatch.adminUpdateSettings', { autoDispatchEnabled: enabled }); toast(`Automatic dispatch ${enabled ? 'enabled' : 'disabled'}.`); renderView(); }, enabled ? false : true);
+  }
+  if (type === 'rider-availability-review') {
+    const status = target.dataset.status;
+    return openConfirm(status === 'approved' ? 'Approve Rider availability' : 'Reject Rider availability', status === 'approved' ? 'Approve this availability block and create the confirmed Rider shift?' : 'Reject this Rider availability request?', async () => { await mutate('riderOperations.adminReviewAvailability', { id, status }); toast(`Rider availability ${status}.`); renderView(); }, status !== 'approved');
+  }
+  if (type === 'rider-shift-cancel') return openConfirm('Cancel Rider shift', 'Cancel this open or assigned Rider shift? It will no longer make the Rider eligible for new jobs.', async () => { await mutate('riderOperations.adminCancelShift', { id }); toast('Rider shift cancelled.'); renderView(); });
+  if (type === 'rider-timeoff-review') {
+    const status = target.dataset.status;
+    return openConfirm(`${title(status)} Rider time off`, `${title(status)} this Rider time-off request?`, async () => { await mutate('riderOperations.adminReviewTimeOff', { id, status }); toast(`Time-off request ${status}.`); renderView(); }, status !== 'approved');
+  }
+  if (type === 'rider-support-open') { state.riderSupportThread = await query('riderChat.adminSupportThread', { threadId: id }); return renderView(); }
+  if (type === 'rider-support-close') { state.riderSupportThread = null; return renderView(); }
+  if (type === 'customer-support-update') {
+    const status = document.querySelector(`[data-support-status="${CSS.escape(id)}"]`)?.value; if (!status) return;
+    return openConfirm('Update customer support case', `Set this case to “${status.replaceAll('_',' ')}”?`, async () => { await mutate('trust.adminUpdateSupportCase', { id, status }); toast('Support case updated.'); renderView(); }, false);
+  }
+  if (type === 'promotion-toggle') {
+    const active = target.dataset.active === 'true';
+    return openConfirm(active ? 'Activate promotion' : 'Pause promotion', active ? 'Activate this promotion for eligible checkout requests?' : 'Pause this promotion for new checkout requests?', async () => { await mutate('trust.adminUpdatePromotion', { id, active }); toast(`Promotion ${active ? 'activated' : 'paused'}.`); renderView(); }, !active);
+  }
   if (type === 'assign-rider') { const select = document.querySelector(`[data-order-rider="${CSS.escape(id)}"]`); if (!select?.value) return toast('Choose a rider before assigning.', 'error'); return openConfirm('Assign rider', 'Assign this rider to the active order?', async () => { await mutate('operations.adminAssignRider', { orderId: id, riderId: select.value }); toast('Rider assigned.'); renderView(); }, false); }
   if (type === 'update-assignment') { const select = document.querySelector(`[data-assignment-status="${CSS.escape(id)}"]`); if (!select?.value) return; return openConfirm('Update delivery status', `Set this delivery assignment to “${select.value.replaceAll('_', ' ')}”?`, async () => { await mutate('operations.adminUpdateAssignment', { id, status: select.value }); toast('Delivery status updated.'); renderView(); }, false); }
   if (type === 'open-restaurant-create') { const panel = document.getElementById('restaurant-create-panel'); panel?.classList.remove('hidden'); panel?.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.setTimeout(() => document.querySelector('#restaurant-create-form [name="name"]')?.focus(), 180); return; }
