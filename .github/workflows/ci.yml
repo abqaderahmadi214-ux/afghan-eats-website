@@ -18,6 +18,23 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Diagnose live admin source
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "=== DNS ==="
+          getent ahosts admin.afghaneats.net || true
+          if command -v dig >/dev/null; then
+            echo "CNAME:"; dig +short admin.afghaneats.net CNAME || true
+            echo "A:"; dig +short admin.afghaneats.net A || true
+          fi
+          curl -fsSL --connect-timeout 15 --max-time 45 -D /tmp/admin-headers.txt https://admin.afghaneats.net/ -o /tmp/admin.html
+          echo "=== HEADERS ==="; sed -n '1,100p' /tmp/admin-headers.txt
+          echo "=== TITLE ==="; grep -Eio '<title>[^<]*</title>' /tmp/admin.html | head -5 || true
+          echo "=== REFERENCES ==="; grep -Eo '(src|href)="[^"]+"' /tmp/admin.html | head -120 || true
+          echo "=== MARKERS ==="; grep -Eio 'Afghan Eats Control Center|overview|orders|restaurants|riders|shift|dispatch|market|support' /tmp/admin.html | sort | uniq -c || true
+          echo "=== HASH SIZE ==="; sha256sum /tmp/admin.html; wc -c /tmp/admin.html
+          echo "=== HTML HEAD ==="; sed -n '1,160p' /tmp/admin.html
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
