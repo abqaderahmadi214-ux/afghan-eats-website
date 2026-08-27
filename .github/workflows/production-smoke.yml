@@ -123,6 +123,33 @@ jobs:
             echo '::warning::admin.afghaneats.net still serves the previous Netlify deployment. The hardened final release is live at afghan-eats-admin.onrender.com and only the custom-domain cutover remains.'
           fi
 
+      - name: Verify final admin CORS boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          origin='https://afghan-eats-admin.onrender.com'
+          api='https://afghaneats-api.onrender.com/api/trpc/auth.me?input=%7B%22json%22%3Anull%7D'
+
+          curl -sS -D /tmp/admin-cors-headers -o /tmp/admin-cors-body \
+            --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 \
+            -H "Origin: $origin" "$api" || true
+          tr -d '\r' < /tmp/admin-cors-headers > /tmp/admin-cors-headers-clean
+          cat /tmp/admin-cors-headers-clean
+          grep -qi "^access-control-allow-origin: $origin$" /tmp/admin-cors-headers-clean
+          grep -qi '^vary:.*origin' /tmp/admin-cors-headers-clean
+          grep -Eq '^HTTP/[0-9.]+ 401|^HTTP/2 401' /tmp/admin-cors-headers-clean
+
+          curl -sS -D /tmp/admin-preflight-headers -o /dev/null -X OPTIONS \
+            --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 \
+            -H "Origin: $origin" \
+            -H 'Access-Control-Request-Method: POST' \
+            -H 'Access-Control-Request-Headers: authorization,content-type' \
+            'https://afghaneats-api.onrender.com/api/trpc/auth.login'
+          tr -d '\r' < /tmp/admin-preflight-headers > /tmp/admin-preflight-headers-clean
+          grep -qi "^access-control-allow-origin: $origin$" /tmp/admin-preflight-headers-clean
+          grep -qi '^access-control-allow-credentials: true' /tmp/admin-preflight-headers-clean
+          grep -qi '^access-control-allow-methods:.*POST' /tmp/admin-preflight-headers-clean
+
       - name: Verify live API health and v40 route
         shell: bash
         run: |
