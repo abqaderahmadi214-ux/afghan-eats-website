@@ -19,6 +19,8 @@ function asArray(value) { return Array.isArray(value) ? value : (value?.items ||
 function number(value) { return Number(value || 0).toLocaleString(); }
 function money(value) { return `AFN ${number(value)}`; }
 function shortDate(value) { if (!value) return '—'; try { return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value)); } catch { return '—'; } }
+function afghanDate(value) { if (!value) return '—'; try { return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kabul', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(value)); } catch { return '—'; } }
+function kabulIso(value) { const raw = String(value || '').trim(); if (!raw) throw new Error('Choose the shift date and time.'); const normalized = raw.length === 16 ? `${raw}:00` : raw; const date = new Date(`${normalized}+04:30`); if (Number.isNaN(date.getTime())) throw new Error('The Afghanistan shift date/time is invalid.'); return date.toISOString(); }
 function statusClass(value) { const key = String(value || '').toLowerCase(); if (['active','approved','open','delivered','resolved','enabled'].includes(key)) return 'badge-active'; if (['pending','reviewing','new','preparing','monitoring','assigned','accepted','on_the_way'].includes(key)) return 'badge-pending'; if (['inactive','suspended','rejected','cancelled','paused','failed','closed'].includes(key)) return 'badge-suspended'; return 'badge-neutral'; }
 function badge(value) { return `<span class="badge ${statusClass(value)}">${esc(String(value || 'unknown').replaceAll('_', ' '))}</span>`; }
 function title(value) { return String(value || '').replace(/\b\w/g, char => char.toUpperCase()); }
@@ -62,6 +64,7 @@ const VIEW_META = {
   restaurants: ['Partner operations', 'Restaurants'],
   riders: ['Delivery operations', 'Riders'],
   customers: ['Customer operations', 'Customers'],
+  ops: ['Support & governance', 'Support & operations'],
   access: ['Identity & access', 'Portal access'],
   careers: ['People operations', 'Careers'],
   website: ['Public-site control', 'Website reliability'],
@@ -85,6 +88,7 @@ async function renderView() {
     if (state.view === 'restaurants') await renderRestaurants();
     if (state.view === 'riders') await renderRiders();
     if (state.view === 'customers') await renderCustomers();
+    if (state.view === 'ops') await renderOperationsTools();
     if (state.view === 'access') await renderAccess();
     if (state.view === 'careers') await renderCareers();
     if (state.view === 'website') await renderWebsite();
@@ -100,9 +104,11 @@ async function overviewData() {
     query('operations.adminRiderApplications', { limit: 100 }),
     query('operations.adminRiders', { availableOnly: false }),
     query('platform.adminStatus', null),
+    query('riderOperations.adminBoard', null),
+    query('dispatch.adminSettings', null),
   ]);
   const get = index => result[index].status === 'fulfilled' ? result[index].value : null;
-  return { orders: asArray(get(0)), partners: asArray(get(1)), riderApps: asArray(get(2)), riders: asArray(get(3)), platform: get(4) || { controls: {}, incidents: [] } };
+  return { orders: asArray(get(0)), partners: asArray(get(1)), riderApps: asArray(get(2)), riders: asArray(get(3)), platform: get(4) || { controls: {}, incidents: [] }, riderBoard: get(5) || { availability: [], riders: [] }, dispatch: get(6) || {} };
 }
 
 async function renderOverview() {
@@ -110,19 +116,24 @@ async function renderOverview() {
   const activeOrders = data.orders.filter(item => !['delivered','cancelled','failed'].includes(item.status)).length;
   const pendingPartners = data.partners.filter(item => ['pending','reviewing'].includes(item.status)).length;
   const pendingRiders = data.riderApps.filter(item => ['pending','reviewing'].includes(item.status)).length;
-  const availableRiders = data.riders.filter(item => item.status === 'active' && item.is_available).length;
+  const eligibleRiders = asArray(data.riderBoard.riders).filter(item => item.status === 'active' && item.isAvailable && item.shiftActive && !item.busy).length;
+  const pendingAvailability = asArray(data.riderBoard.availability).filter(item => item.status === 'pending').length;
   const controls = data.platform.controls || {};
+  const marketOpen = controls.ordering_enabled !== false;
+  const autoDispatch = Boolean(data.dispatch.auto_dispatch_enabled);
   const incidents = asArray(data.platform.incidents).filter(item => item.status !== 'resolved');
   root.innerHTML = `
     <div class="metric-grid">
       ${metric('Live orders', activeOrders, 'Orders still in progress')}
       ${metric('Partner queue', pendingPartners, 'Restaurant applications to review')}
-      ${metric('Rider queue', pendingRiders, 'Rider applications to review')}
-      ${metric('Available riders', availableRiders, 'Dispatch-ready fleet members')}
+      ${metric('Rider availability', pendingAvailability, 'Requests waiting for approval')}
+      ${metric('Eligible riders', eligibleRiders, 'On shift, available and free')}
     </div>
     <div class="content-grid">
+      <section class="panel"><div class="panel-head"><div><h2>Marketplace master control</h2><p>This is the final server-enforced market switch.</p></div>${badge(marketOpen ? 'open' : 'paused')}</div><div class="panel-body"><div class="safety-card"><strong>${marketOpen ? 'Afghan Eats is OPEN for new orders' : 'Afghan Eats is CLOSED for new orders'}</strong><p>${marketOpen ? 'Customer checkout can create new orders.' : esc(controls.ordering_message_en || 'New checkout is paused; active orders keep running.')}</p></div><div class="button-stack" style="margin-top:14px"><button class="button ${marketOpen ? 'button-danger' : 'button-primary'}" type="button" data-action="market-toggle" data-open="${marketOpen ? 'false' : 'true'}">${marketOpen ? 'Close market' : 'Open market'}</button><a class="button button-secondary" href="#website">Service banner settings</a></div></div></section>
+      <section class="panel"><div class="panel-head"><div><h2>Automatic rider assignment</h2><p>Only free riders inside an active approved shift are eligible.</p></div>${badge(autoDispatch ? 'enabled' : 'paused')}</div><div class="panel-body"><div class="safety-card"><strong>${autoDispatch ? 'Automatic dispatch is ON' : 'Automatic dispatch is OFF'}</strong><p>Acceptance window: ${number(data.dispatch.acceptance_timeout_seconds || 180)} seconds. Unanswered jobs can be reassigned according to dispatch policy.</p></div><button class="button ${autoDispatch ? 'button-danger' : 'button-primary'}" style="margin-top:14px" type="button" data-action="auto-dispatch-toggle" data-enabled="${autoDispatch ? 'false' : 'true'}">${autoDispatch ? 'Turn off automatic dispatch' : 'Turn on automatic dispatch'}</button></div></section>
       <section class="panel"><div class="panel-head"><div><h2>Active order queue</h2><p>Review and assign active marketplace orders.</p></div><a class="button button-secondary button-small" href="#dispatch">Open dispatch</a></div><div class="panel-body">${ordersTable(data.orders.slice(0, 7), false)}</div></section>
-      <section class="panel"><div class="panel-head"><div><h2>Public-site state</h2><p>Server-enforced customer ordering control.</p></div><a class="button button-secondary button-small" href="#website">Manage</a></div><div class="panel-body"><div class="safety-card"><strong>${controls.ordering_enabled === false ? 'New ordering is paused' : 'New ordering is enabled'}</strong><p>${controls.ordering_enabled === false ? esc(controls.ordering_message_en || 'Browsing, tracking and active delivery remain available.') : 'Customer checkout is currently available.'}</p></div><div class="activity-list" style="margin-top:14px">${incidents.length ? incidents.slice(0,4).map(incidentRow).join('') : '<div class="empty-state">No active public incidents.</div>'}</div></div></section>
+      <section class="panel"><div class="panel-head"><div><h2>Public service state</h2><p>Incidents and public notices.</p></div><a class="button button-secondary button-small" href="#website">Manage</a></div><div class="panel-body"><div class="activity-list">${incidents.length ? incidents.slice(0,4).map(incidentRow).join('') : '<div class="empty-state">No active public incidents.</div>'}</div></div></section>
     </div>`;
 }
 function metric(label, value, note) { return `<article class="metric-card"><small>${esc(label)}</small><strong>${number(value)}</strong><span>${esc(note)}</span></article>`; }
@@ -140,11 +151,11 @@ async function renderDispatch() {
   const data = await dispatchData(); state.cache.dispatch = data;
   const assignmentsByOrder = new Map(data.assignments.map(item => [String(item.order_id), item]));
   const active = data.orders.filter(item => !['delivered','cancelled','failed'].includes(item.status));
-  root.innerHTML = `<p class="section-intro">Manage live order assignment and delivery progress. The backend authorizes each dispatch update and automatically links valid delivery status changes to the customer order.</p><section class="panel"><div class="panel-head"><div><h2>Live dispatch board</h2><p>${number(active.length)} active order${active.length === 1 ? '' : 's'} · ${number(data.riders.filter(r => r.status === 'active' && r.is_available).length)} riders marked available</p></div></div><div class="panel-body">${active.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Order</th><th>Customer</th><th>Order status</th><th>Rider & delivery</th><th>Control</th></tr></thead><tbody>${active.map(order => dispatchRow(order, data.riders, assignmentsByOrder.get(String(order.id)))).join('')}</tbody></table></div>` : '<div class="empty-state">There are no active orders awaiting dispatch.</div>'}</div></section>`;
+  root.innerHTML = `<p class="section-intro">Manage live order assignment and delivery progress. Manual selection shows only riders who are active, inside an approved shift, marked available and free of another delivery.</p><section class="panel"><div class="panel-head"><div><h2>Live dispatch board</h2><p>${number(active.length)} active order${active.length === 1 ? '' : 's'} · ${number(data.riders.filter(r => r.status === 'active' && r.is_available && r.shift_active && !r.busy).length)} dispatch-eligible riders</p></div></div><div class="panel-body">${active.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Order</th><th>Customer</th><th>Order status</th><th>Rider & delivery</th><th>Control</th></tr></thead><tbody>${active.map(order => dispatchRow(order, data.riders, assignmentsByOrder.get(String(order.id)))).join('')}</tbody></table></div>` : '<div class="empty-state">There are no active orders awaiting dispatch.</div>'}</div></section>`;
 }
 function dispatchRow(order, riders, assignment) {
-  const activeRiders = riders.filter(rider => rider.status === 'active');
-  const riderOptions = activeRiders.map(rider => `<option value="${attr(rider.id)}">${esc(rider.full_name)}${rider.is_available ? ' · available' : ' · busy'}</option>`).join('');
+  const activeRiders = riders.filter(rider => rider.status === 'active' && rider.is_available && rider.shift_active && !rider.busy);
+  const riderOptions = activeRiders.map(rider => `<option value="${attr(rider.id)}">${esc(rider.full_name)} · on shift · available</option>`).join('');
   const assignmentStatuses = ['assigned','accepted','at_restaurant','picked_up','on_the_way','delivered','cancelled'];
   const control = assignment ? `<div class="button-stack"><select class="inline-select" data-assignment-status="${attr(assignment.id)}">${assignmentStatuses.map(status => `<option value="${status}" ${assignment.status === status ? 'selected' : ''}>${esc(status.replaceAll('_',' '))}</option>`).join('')}</select><button class="button button-primary button-small" type="button" data-action="update-assignment" data-id="${attr(assignment.id)}">Update</button></div>` : `<div class="button-stack"><select class="inline-select" data-order-rider="${attr(order.id)}"><option value="">Choose rider</option>${riderOptions}</select><button class="button button-primary button-small" type="button" data-action="assign-rider" data-id="${attr(order.id)}">Assign</button></div>`;
   return `<tr><td><span class="row-title">${esc(order.order_number || order.id)}</span><span class="row-sub">${money(order.total)}</span></td><td>${esc(order.customer_name || 'Customer')}<span class="row-sub">${esc(order.delivery_address || 'No delivery address')}</span></td><td>${badge(order.status)}</td><td>${assignment ? `<span class="row-title">${esc(assignment.rider_name || 'Assigned rider')}</span><span class="row-sub">${badge(assignment.status)}</span>` : '<span class="row-sub">Unassigned</span>'}</td><td>${control}</td></tr>`;
