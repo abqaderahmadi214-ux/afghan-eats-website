@@ -49,6 +49,7 @@ jobs:
             retry_contains "https://afghaneats.net/assets/app.js" "requestDeliveryQuote" /tmp/ae-app-v44.js
             retry_contains "https://afghaneats.net/checkout.html" "deliveryQuotePanel" /tmp/ae-checkout-v44.html
             retry_contains "https://afghaneats.net/assets/app.js" "renderConnectivityState" /tmp/ae-app-v45.js
+            retry_contains "https://afghaneats.net/assets/app.js" "checkoutRequestKey" /tmp/ae-app-ordering.js
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
             retry_contains "https://afghaneats.net/assets/app.js" "directoryContactMarkup" /tmp/ae-app-v46.js
             retry_contains "https://afghaneats.net/data/public-herat-directory.json" "jumeirah-fast-food-herat" /tmp/ae-directory-v46.json
@@ -159,24 +160,34 @@ jobs:
           import json
           data=json.load(open('/tmp/restaurants.json'))
           items=data.get('result',{}).get('data',{}).get('json',[])
-          item=next((x for x in items if x.get('has_takeaway') is not False),None)
-          if not item: raise SystemExit('No pickup-capable restaurant is available for quote verification')
+          item=next((x for x in items if x.get('status')=='active' and x.get('has_delivery') is not False and x.get('has_takeaway') is not False),None)
+          if not item: raise SystemExit('No active delivery and pickup restaurant is available for quote verification')
           print(item['id'])
           PY
           )
-          quote_url=$(RESTAURANT_ID="$restaurant_id" python - <<'PY'
+          delivery_quote_url=$(RESTAURANT_ID="$restaurant_id" python - <<'PY'
+          import json,os,urllib.parse
+          value={'json':{'restaurantId':os.environ['RESTAURANT_ID'],'fulfillment':'delivery','deliveryArea':'Herat City','deliveryAddress':'Herat City'}}
+          print('https://afghaneats-api.onrender.com/api/trpc/orders.quote?input='+urllib.parse.quote(json.dumps(value,separators=(',',':'))))
+          PY
+          )
+          pickup_quote_url=$(RESTAURANT_ID="$restaurant_id" python - <<'PY'
           import json,os,urllib.parse
           value={'json':{'restaurantId':os.environ['RESTAURANT_ID'],'fulfillment':'pickup'}}
           print('https://afghaneats-api.onrender.com/api/trpc/orders.quote?input='+urllib.parse.quote(json.dumps(value,separators=(',',':'))))
           PY
           )
-          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$quote_url" -o /tmp/quote.json
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$delivery_quote_url" -o /tmp/delivery-quote.json
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$pickup_quote_url" -o /tmp/pickup-quote.json
           python - <<'PY'
           import json
-          data=json.load(open('/tmp/quote.json')).get('result',{}).get('data',{}).get('json',{})
-          if data.get('fulfillment')!='pickup' or float(data.get('deliveryFee',-1))!=0:
-              raise SystemExit(f'Pickup quote contract mismatch: {data}')
-          print('Pickup quote contract passed')
+          delivery=json.load(open('/tmp/delivery-quote.json')).get('result',{}).get('data',{}).get('json',{})
+          pickup=json.load(open('/tmp/pickup-quote.json')).get('result',{}).get('data',{}).get('json',{})
+          if delivery.get('fulfillment')!='delivery' or float(delivery.get('deliveryFee',-1))!=50 or float(delivery.get('minimumOrder',-1))!=200 or delivery.get('source')!='zone':
+              raise SystemExit(f'Delivery quote contract mismatch: {delivery}')
+          if pickup.get('fulfillment')!='pickup' or float(pickup.get('deliveryFee',-1))!=0:
+              raise SystemExit(f'Pickup quote contract mismatch: {pickup}')
+          print('Delivery and pickup quote contracts passed')
           PY
 
       - name: Verify database-backed restaurant directory
