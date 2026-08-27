@@ -60,6 +60,9 @@ jobs:
             retry_contains "https://afghaneats.net/assets/portal.js" "ownerUpsertMenuItem" /tmp/ae-portal-v49.js
             retry_contains "https://afghaneats.net/rider-portal.html" "riderPerformancePanel" /tmp/ae-rider-v50.html
             retry_contains "https://afghaneats.net/assets/portal.js" "lastmile.riderVerifyPin" /tmp/ae-portal-v50.js
+            retry_contains "https://afghaneats.net/privacy" "Effective date: 27 August 2026." /tmp/ae-play-privacy.html
+            retry_contains "https://afghaneats.net/terms" "Effective date: 27 August 2026." /tmp/ae-play-terms.html
+            retry_contains "https://afghaneats.net/data-deletion" "Request account and data deletion" /tmp/ae-play-delete.html
           fi
 
       - name: Verify frontend production security headers
