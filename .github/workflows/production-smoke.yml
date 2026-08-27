@@ -83,6 +83,40 @@ jobs:
             exit 1
           fi
 
+      - name: Verify canonical admin release mirror
+        shell: bash
+        run: |
+          set -euo pipefail
+          admin_mirror='https://afghan-eats-admin-control-center.onrender.com'
+          for attempt in $(seq 1 20); do
+            if curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_mirror/" -o /tmp/admin-control-center.html \
+              && curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_mirror/assets/control-center.js" -o /tmp/admin-control-center.js \
+              && grep -Fq 'Riders & shifts' /tmp/admin-control-center.html \
+              && grep -Fq 'riderOperations.adminCreateShift' /tmp/admin-control-center.js \
+              && grep -Fq 'market-toggle' /tmp/admin-control-center.js; then
+              break
+            fi
+            if [ "$attempt" -eq 20 ]; then
+              echo 'Canonical admin release mirror is not serving the final Control Center.' >&2
+              exit 1
+            fi
+            sleep 15
+          done
+          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 "$admin_mirror/" | tr -d '\r' > /tmp/admin-mirror-headers
+          grep -qi '^content-security-policy:' /tmp/admin-mirror-headers
+          grep -qi '^strict-transport-security:' /tmp/admin-mirror-headers
+          grep -qi '^x-content-type-options: nosniff' /tmp/admin-mirror-headers
+          grep -qi '^x-frame-options: DENY' /tmp/admin-mirror-headers
+
+          live_admin='https://admin.afghaneats.net'
+          if curl -fsS --connect-timeout 10 --max-time 25 "$live_admin/assets/control-center.js" -o /tmp/live-admin.js 2>/dev/null \
+            && grep -Fq 'riderOperations.adminCreateShift' /tmp/live-admin.js \
+            && grep -Fq 'market-toggle' /tmp/live-admin.js; then
+            echo 'admin.afghaneats.net is serving the final Control Center release.'
+          else
+            echo '::warning::admin.afghaneats.net still serves the previous Netlify deployment. The final release is live on the source-controlled Render mirror and requires the custom-domain DNS/deployment cutover.'
+          fi
+
       - name: Verify live API health and v40 route
         shell: bash
         run: |
