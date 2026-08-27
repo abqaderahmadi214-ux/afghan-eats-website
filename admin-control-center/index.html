@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="same-origin">
+  <title>Afghan Eats Control Center</title>
+  <link rel="stylesheet" href="/assets/control-center.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <main id="login-view" class="auth-layout">
+    <section class="auth-card" aria-labelledby="login-title">
+      <div class="brand-lockup"><span class="brand-mark">AE</span><div><strong>Afghan Eats</strong><span>Control Center</span></div></div>
+      <p class="eyebrow">Restricted operations workspace</p>
+      <h1 id="login-title">Sign in to manage the marketplace.</h1>
+      <p class="auth-copy">This workspace is limited to Afghan Eats administrators. Your session is stored only in this browser tab.</p>
+      <form id="login-form" novalidate>
+        <label class="field"><span>Username</span><input id="login-username" name="username" autocomplete="username" required></label>
+        <label class="field"><span>Password</span><input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
+        <button class="button button-primary button-wide" type="submit">Sign in securely</button>
+      </form>
+      <p id="login-error" class="notice notice-error hidden" role="alert"></p>
+      <p class="auth-note">Do not share administrator credentials or activation links. All control actions are authorized by the Afghan Eats backend.</p>
+    </section>
+    <aside class="auth-aside" aria-hidden="true"><div class="auth-aside-orbit orbit-one"></div><div class="auth-aside-orbit orbit-two"></div><p>Built for dependable marketplace operations in Herat.</p></aside>
+  </main>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar" aria-label="Control center navigation">
+      <a class="brand-lockup sidebar-brand" href="#overview"><span class="brand-mark">AE</span><div><strong>Afghan Eats</strong><span>Control Center</span></div></a>
+      <p class="workspace-label">Operations</p>
+      <nav id="primary-nav" class="nav-list">
+        <a data-view="overview" href="#overview"><span>◫</span>Overview</a>
+        <a data-view="dispatch" href="#dispatch"><span>⌁</span>Orders & dispatch</a>
+        <a data-view="restaurants" href="#restaurants"><span>⌂</span>Restaurants</a>
+        <a data-view="riders" href="#riders"><span>↗</span>Riders</a>
+        <a data-view="customers" href="#customers"><span>◎</span>Customers</a>
+        <a data-view="access" href="#access"><span>⊞</span>Portal access</a>
+        <a data-view="careers" href="#careers"><span>✦</span>Careers</a>
+        <a data-view="website" href="#website"><span>◌</span>Public site</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="site-link" href="https://afghaneats.net" target="_blank" rel="noopener noreferrer"><span>↗</span>View customer site</a>
+        <div class="admin-card"><span id="admin-initial" class="admin-avatar">A</span><div><strong id="admin-name">Administrator</strong><small id="admin-role">Admin</small></div><button id="logout-button" class="icon-button" type="button" title="Sign out" aria-label="Sign out">⏻</button></div>
+      </div>
+    </aside>
+    <main id="main-content" class="workspace" tabindex="-1">
+      <header class="workspace-header"><div><p id="page-kicker" class="eyebrow">Marketplace control</p><h1 id="page-title">Overview</h1></div><div class="header-actions"><span id="connection-state" class="connection-state"><i></i>Secure session</span><button id="refresh-button" class="button button-secondary" type="button">Refresh data</button></div></header>
+      <section id="global-notice" class="notice hidden" aria-live="polite"></section>
+      <section id="view-root" aria-live="polite"><div class="loading-panel"><span class="spinner"></span><p>Loading controls…</p></div></section>
+    </main>
+  </div>
+
+  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog"><p class="eyebrow">Confirm operational change</p><h2 id="confirm-title">Confirm action</h2><p id="confirm-copy"></p><div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancel</button><button id="confirm-action" class="button button-danger" value="confirm">Confirm change</button></div></form>
+  </dialog>
+
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="/assets/control-center.js?v=careers-1"></script>
+</body>
+</html>
