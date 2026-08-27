@@ -48,6 +48,23 @@ jobs:
             /tmp/control-center.css
           if-no-files-found: error
           retention-days: 1
+      - name: Match custom admin domain to likely Netlify site name
+        shell: bash
+        run: |
+          set -euo pipefail
+          target_hash=$(curl -fsSL --connect-timeout 10 --max-time 30 https://admin.afghaneats.net/ | sha256sum | awk '{print $1}')
+          echo "Target hash: $target_hash"
+          for host in admin-afghaneats.netlify.app afghan-eats-admin.netlify.app afghaneats-admin.netlify.app afghaneats-control-center.netlify.app; do
+            tmp="/tmp/$host.html"
+            if curl -fsSL --connect-timeout 10 --max-time 30 "https://$host/" -o "$tmp" 2>/dev/null; then
+              hash=$(sha256sum "$tmp" | awk '{print $1}')
+              title=$(grep -Eio '<title>[^<]*</title>' "$tmp" | head -1 || true)
+              if [ "$hash" = "$target_hash" ]; then match="MATCH"; else match="different"; fi
+              echo "$host | $match | $hash | $title"
+            else
+              echo "$host | unavailable"
+            fi
+          done
       - name: Identify connected Netlify admin site without exposing credentials
         shell: bash
         env:
