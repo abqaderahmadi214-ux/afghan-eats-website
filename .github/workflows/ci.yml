@@ -33,8 +33,21 @@ jobs:
           echo "=== TITLE ==="; grep -Eio '<title>[^<]*</title>' /tmp/admin.html | head -5 || true
           echo "=== REFERENCES ==="; grep -Eo '(src|href)="[^"]+"' /tmp/admin.html | head -120 || true
           echo "=== MARKERS ==="; grep -Eio 'Afghan Eats Control Center|overview|orders|restaurants|riders|shift|dispatch|market|support' /tmp/admin.html | sort | uniq -c || true
-          echo "=== HASH SIZE ==="; sha256sum /tmp/admin.html; wc -c /tmp/admin.html
+          curl -fsSL --connect-timeout 15 --max-time 45 https://admin.afghaneats.net/assets/control-center.js -o /tmp/control-center.js
+          curl -fsSL --connect-timeout 15 --max-time 45 https://admin.afghaneats.net/assets/control-center.css -o /tmp/control-center.css
+          echo "=== HASH SIZE ==="; sha256sum /tmp/admin.html /tmp/control-center.js /tmp/control-center.css; wc -c /tmp/admin.html /tmp/control-center.js /tmp/control-center.css
+          echo "=== JS ROUTES / API MARKERS ==="; grep -Eo '[A-Za-z][A-Za-z0-9]+\.[A-Za-z][A-Za-z0-9]+' /tmp/control-center.js | sort -u | head -200 || true
           echo "=== HTML HEAD ==="; sed -n '1,160p' /tmp/admin.html
+      - name: Preserve live admin source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-admin-control-center
+          path: |
+            /tmp/admin.html
+            /tmp/control-center.js
+            /tmp/control-center.css
+          if-no-files-found: error
+          retention-days: 1
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
