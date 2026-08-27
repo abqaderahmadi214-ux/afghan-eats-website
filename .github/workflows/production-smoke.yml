@@ -136,7 +136,7 @@ jobs:
           tr -d '\r' < /tmp/admin-cors-headers > /tmp/admin-cors-headers-clean
           cat /tmp/admin-cors-headers-clean
           grep -qi "^access-control-allow-origin: $origin$" /tmp/admin-cors-headers-clean
-          grep -qi '^vary:.*origin' /tmp/admin-cors-headers-clean
+          grep -qi '^access-control-allow-credentials: true' /tmp/admin-cors-headers-clean
           grep -Eq '^HTTP/[0-9.]+ 401|^HTTP/2 401' /tmp/admin-cors-headers-clean
 
           curl -sS -D /tmp/admin-preflight-headers -o /dev/null -X OPTIONS \
