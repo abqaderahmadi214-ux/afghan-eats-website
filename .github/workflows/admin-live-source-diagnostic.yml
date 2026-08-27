@@ -1,0 +1,36 @@
+name: Admin Live Source Diagnostic
+on:
+  push:
+    branches:
+      - diagnostic/admin-live-source-20260828
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Resolve admin domain
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "=== DNS ==="
+          getent ahosts admin.afghaneats.net || true
+          command -v dig >/dev/null && dig +short admin.afghaneats.net CNAME || true
+          command -v dig >/dev/null && dig +short admin.afghaneats.net A || true
+      - name: Fetch admin control center
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --connect-timeout 15 --max-time 45 -D /tmp/admin-headers.txt https://admin.afghaneats.net/ -o /tmp/admin.html
+          echo "=== HEADERS ==="
+          sed -n '1,80p' /tmp/admin-headers.txt
+          echo "=== TITLE / META ==="
+          grep -Eio '<title>[^<]*</title>|<meta[^>]+>|<base[^>]+>' /tmp/admin.html | head -80 || true
+          echo "=== SCRIPT / STYLE REFERENCES ==="
+          grep -Eo '(src|href)="[^"]+"' /tmp/admin.html | head -120 || true
+          echo "=== ROUTE / CONTROL CENTER MARKERS ==="
+          grep -Eio 'Afghan Eats Control Center|overview|orders|restaurants|riders|shift|dispatch|market|support' /tmp/admin.html | sort | uniq -c || true
+          echo "=== BODY HASH / SIZE ==="
+          sha256sum /tmp/admin.html
+          wc -c /tmp/admin.html
+          echo "=== FIRST 120 LINES ==="
+          sed -n '1,120p' /tmp/admin.html
