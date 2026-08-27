@@ -83,33 +83,44 @@ jobs:
             exit 1
           fi
 
-      - name: Verify canonical admin release mirror
+      - name: Verify hardened final admin host
         shell: bash
         run: |
           set -euo pipefail
-          admin_mirror='https://afghan-eats-admin-control-center.onrender.com'
+          admin_host='https://afghan-eats-admin.onrender.com'
           for attempt in $(seq 1 20); do
-            if curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_mirror/" -o /tmp/admin-control-center.html \
-              && curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_mirror/assets/control-center.js" -o /tmp/admin-control-center.js \
+            if curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_host/" -o /tmp/admin-control-center.html \
+              && curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_host/assets/control-center.js" -o /tmp/admin-control-center.js \
+              && curl -fsS --connect-timeout 10 --max-time 25 --retry 2 --retry-delay 2 "$admin_host/health" -o /tmp/admin-health.json \
               && grep -Fq 'Riders & shifts' /tmp/admin-control-center.html \
               && grep -Fq 'riderOperations.adminCreateShift' /tmp/admin-control-center.js \
-              && grep -Fq 'market-toggle' /tmp/admin-control-center.js; then
+              && grep -Fq 'market-toggle' /tmp/admin-control-center.js \
+              && grep -Fq 'Afghan Eats Control Center' /tmp/admin-health.json; then
               break
             fi
             if [ "$attempt" -eq 20 ]; then
-              echo 'Canonical admin release mirror is not serving the final Control Center.' >&2
+              echo 'Hardened final admin host is not serving the final Control Center.' >&2
               exit 1
             fi
             sleep 15
           done
-          echo 'Source-controlled admin mirror content is live.'
+
+          curl -fsSI --connect-timeout 10 --max-time 25 --retry 3 --retry-delay 3 "$admin_host/" | tr -d '\r' > /tmp/admin-host-headers
+          cat /tmp/admin-host-headers
+          grep -qi '^content-security-policy:.*frame-ancestors' /tmp/admin-host-headers
+          grep -qi '^strict-transport-security:' /tmp/admin-host-headers
+          grep -qi '^x-content-type-options: nosniff' /tmp/admin-host-headers
+          grep -qi '^x-frame-options: DENY' /tmp/admin-host-headers
+          grep -qi '^permissions-policy:.*camera=()' /tmp/admin-host-headers
+          grep -qi '^cache-control: no-store' /tmp/admin-host-headers
+
           live_admin='https://admin.afghaneats.net'
           if curl -fsS --connect-timeout 10 --max-time 25 "$live_admin/assets/control-center.js" -o /tmp/live-admin.js 2>/dev/null \
             && grep -Fq 'riderOperations.adminCreateShift' /tmp/live-admin.js \
             && grep -Fq 'market-toggle' /tmp/live-admin.js; then
             echo 'admin.afghaneats.net is serving the final Control Center release.'
           else
-            echo '::warning::admin.afghaneats.net still serves the previous Netlify deployment. The final release is live on the source-controlled Render mirror and requires the custom-domain DNS/deployment cutover.'
+            echo '::warning::admin.afghaneats.net still serves the previous Netlify deployment. The hardened final release is live at afghan-eats-admin.onrender.com and only the custom-domain cutover remains.'
           fi
 
       - name: Verify live API health and v40 route
