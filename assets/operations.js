@@ -298,7 +298,7 @@ function renderAdminStats(orders, partners, riderApps, riders) {
   const activeOrders = orders.filter(o => !['delivered', 'cancelled', 'failed'].includes(o.status)).length;
   const pendingPartners = partners.filter(x => ['pending', 'reviewing'].includes(x.status)).length;
   const pendingRiders = riderApps.filter(x => ['pending', 'reviewing'].includes(x.status)).length;
-  const availableRiders = riders.filter(x => x.status === 'active' && x.is_available).length;
+  const availableRiders = riders.filter(x => x.status === 'active' && x.is_available && x.shift_active && !x.busy).length;
   el.innerHTML = [
     ['Live orders', activeOrders, 'Orders still moving through the system'],
     ['Partner queue', pendingPartners, 'Restaurants awaiting a decision'],
@@ -308,7 +308,7 @@ function renderAdminStats(orders, partners, riderApps, riders) {
 }
 
 function riderOptions() {
-  const active = AEOPS.riders.filter(r => r.status === 'active');
+  const active = AEOPS.riders.filter(r => r.status === 'active' && r.is_available && r.shift_active && !r.busy);
   return active.map(r => `<option value="${esc(r.id)}">${esc(r.full_name)} · ${esc(r.vehicle)}${r.is_available ? ' · available' : ''}</option>`).join('');
 }
 
@@ -369,11 +369,16 @@ async function setApplicationStatus(type, id, status) {
 
 function renderRiders(items) {
   const el = document.getElementById('opsRiders'); if (!el) return;
-  el.innerHTML = items.length ? items.map(r => `<div class="ops-row">
-    <div><b>${esc(r.full_name)}</b><div>${esc(r.phone)} · ${esc(r.vehicle)}</div><small>${Number(r.total_deliveries || 0)} deliveries</small></div>
-    <div><span class="status-badge status-${esc(r.status)}">${esc(r.status)}</span><div>${r.is_available ? '🟢 Available' : '⚪ Busy/offline'}</div></div>
-    <div class="ops-actions"><button class="btn btn-light btn-sm" onclick="toggleRiderAvailability('${esc(r.id)}',${!r.is_available})">${r.is_available ? 'Set busy' : 'Set available'}</button></div>
-  </div>`).join('') : '<div class="empty-state">Approve rider applications to build the fleet.</div>';
+  el.innerHTML = items.length ? items.map(r => {
+    const shiftActive=Boolean(r.shift_active),busy=Boolean(r.busy),eligible=r.status==='active'&&shiftActive&&!busy;
+    const availability=r.is_available&&eligible?'🟢 Available for dispatch':busy?'🟠 On a delivery':shiftActive?'⚪ Shift active · rider offline':'⚪ No active approved shift';
+    const action=r.is_available?`<button class="btn btn-light btn-sm" onclick="toggleRiderAvailability('${esc(r.id)}',false)">Set offline</button>`:eligible?`<button class="btn btn-primary btn-sm" onclick="toggleRiderAvailability('${esc(r.id)}',true)">Set available</button>`:'';
+    return `<div class="ops-row">
+      <div><b>${esc(r.full_name)}</b><div>${esc(r.phone)} · ${esc(r.vehicle)}</div><small>${Number(r.total_deliveries || 0)} deliveries</small></div>
+      <div><span class="status-badge status-${esc(r.status)}">${esc(r.status)}</span><div>${availability}</div></div>
+      <div class="ops-actions">${action}</div>
+    </div>`;
+  }).join('') : '<div class="empty-state">Approve rider applications to build the fleet.</div>';
 }
 
 async function toggleRiderAvailability(id, isAvailable) {
