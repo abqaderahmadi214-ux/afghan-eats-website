@@ -48,6 +48,39 @@ jobs:
             /tmp/control-center.css
           if-no-files-found: error
           retention-days: 1
+      - name: Identify connected Netlify admin site without exposing credentials
+        shell: bash
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+        run: |
+          set -euo pipefail
+          token="${NETLIFY_AUTH_TOKEN:-${NETLIFY_TOKEN:-}}"
+          if [ -z "$token" ]; then
+            echo "No repository Netlify API token is configured under NETLIFY_AUTH_TOKEN or NETLIFY_TOKEN."
+            exit 0
+          fi
+          echo "A repository Netlify API token is available; listing non-secret site metadata."
+          curl -fsSL -H "Authorization: Bearer $token" "https://api.netlify.com/api/v1/sites?per_page=100" -o /tmp/netlify-sites.json
+          python - <<'PY'
+          import json
+          sites=json.load(open('/tmp/netlify-sites.json'))
+          for s in sites:
+              fields=[
+                  str(s.get('id') or ''),
+                  str(s.get('name') or ''),
+                  str(s.get('url') or ''),
+                  str(s.get('ssl_url') or ''),
+                  str(s.get('custom_domain') or ''),
+                  str((s.get('build_settings') or {}).get('repo_url') or ''),
+                  str((s.get('build_settings') or {}).get('repo_branch') or ''),
+                  str((s.get('build_settings') or {}).get('dir') or ''),
+                  str((s.get('build_settings') or {}).get('cmd') or ''),
+              ]
+              joined=' | '.join(fields)
+              if 'afghan' in joined.lower() or 'admin' in joined.lower():
+                  print(joined)
+          PY
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
