@@ -660,3 +660,33 @@ html[dir="rtl"] .owner-premium input[type=tel],
   .owner-premium .owner-business-tools .fc-metrics,
   .owner-premium .owner-business-tools .fs-admin-grid{grid-template-columns:1fr}
 }
+
+/* Owner secure recovery v1 */
+.owner-premium .owner-forgot-link{
+  width:100%;margin:12px 0 0;padding:8px;border:0;background:transparent;
+  color:var(--op-red-dark);font:inherit;font-size:.75rem;font-weight:800;text-decoration:underline;
+  text-underline-offset:3px;cursor:pointer
+}
+.owner-premium .owner-recovery-panel{animation:ownerRecoveryIn 180ms ease}
+@keyframes ownerRecoveryIn{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.owner-premium .owner-recovery-back{
+  display:inline-flex;align-items:center;gap:6px;padding:0;border:0;background:transparent;
+  color:#69756f;font:inherit;font-size:.7rem;font-weight:800;cursor:pointer
+}
+.owner-premium .owner-recovery-icon{
+  width:46px;height:46px;display:grid;place-items:center;margin:20px auto 10px;border-radius:14px;
+  background:#fff0ec;font-size:1.15rem
+}
+.owner-premium .owner-recovery-panel h2{margin:0;color:var(--op-green);font-size:1.55rem;text-align:center}
+.owner-premium.rtl .owner-recovery-panel h2,
+html[dir="rtl"] .owner-premium .owner-recovery-panel h2{line-height:1.55}
+.owner-premium .owner-recovery-panel>p{margin:8px 0 18px;color:#748079;font-size:.76rem;line-height:1.65;text-align:center}
+.owner-premium .owner-recovery-panel form{display:grid;gap:12px}
+.owner-premium .owner-recovery-security{
+  display:grid;grid-template-columns:30px minmax(0,1fr);gap:9px;align-items:flex-start;
+  margin-top:15px;padding:11px 12px;border-radius:12px;background:#f5f8f6;color:#6e7973
+}
+.owner-premium .owner-recovery-security>span{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#fff}
+.owner-premium .owner-recovery-security p{margin:0;font-size:.63rem;line-height:1.55}
+.owner-premium.rtl .owner-recovery-back,
+html[dir="rtl"] .owner-premium .owner-recovery-back{direction:rtl}
