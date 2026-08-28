@@ -6,7 +6,7 @@
   function token(){return sessionStorage.getItem('ae_customer_token')||localStorage.getItem('ae_customer_token')||'';}
   function guest(){
     host.className='checkout-identity-card guest';
-    host.innerHTML='<div class="checkout-identity-main"><span class="checkout-identity-icon">✓</span><div><b>'+tx('Continue as guest','ادامه به‌عنوان مهمان')+'</b><p>'+tx('No account is required. Enter your contact and delivery details below and place your order.','برای سفارش حساب لازم نیست. معلومات تماس و تحویل را در پایین وارد کنید و سفارش دهید.')+'</p></div></div><div class="checkout-member-actions"><a class="btn btn-light" href="/account?auth=login">'+tx('Sign in','ورود')+'</a><a class="btn btn-primary" href="/account?auth=register">'+tx('Create account','ساخت حساب')+'</a></div>';
+    host.innerHTML='<div class="checkout-identity-main"><span class="checkout-identity-icon">✓</span><div><b>'+tx('Continue as guest','ادامه به‌عنوان مهمان')+'</b><p>'+tx('No account is required. Enter your contact and delivery details below and place your order.','برای سفارش حساب لازم نیست. معلومات تماس و تحویل را در پایین وارد کنید و سفارش دهید.')+'</p></div></div><div class="checkout-member-actions"><a class="btn btn-light" href="/account?return=%2Fcheckout&auth=login">'+tx('Sign in','ورود')+'</a><a class="btn btn-primary" href="/account?return=%2Fcheckout&auth=register">'+tx('Create account','ساخت حساب')+'</a></div>';
   }
   async function member(){
     var base=(window.AFGHAN_EATS_CONFIG||{}).apiBaseUrl||'';
