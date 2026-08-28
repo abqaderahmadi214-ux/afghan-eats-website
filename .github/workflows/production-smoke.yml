@@ -68,6 +68,9 @@ jobs:
             retry_contains "https://afghaneats.net/checkout" "class=\"checkout-shell\"" /tmp/ae-checkout-v2.html
             retry_contains "https://afghaneats.net/checkout" "class=\"checkout-summary-panel\"" /tmp/ae-checkout-summary-v2.html
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Checkout v2" /tmp/ae-checkout-css-v2.css
+            retry_contains "https://afghaneats.net/order" "id=\"trackingExperience\"" /tmp/ae-tracking-v2.html
+            retry_contains "https://afghaneats.net/assets/advanced.js" "tracking-status-chip" /tmp/ae-tracking-render-v2.js
+            retry_contains "https://afghaneats.net/assets/customer-premium.css" "Tracking v2" /tmp/ae-tracking-css-v2.css
             retry_contains "https://afghaneats.net/orders" "id=\"ordersMembership\"" /tmp/ae-orders-member.html
             retry_contains "https://afghaneats.net/assets/orders-hub.js" "Guest ordering" /tmp/ae-orders-hub.js
             retry_contains "https://afghaneats.net/assets/app.js" "directory-menu-grid" /tmp/ae-menu-grid-v3.js
