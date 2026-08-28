@@ -994,3 +994,144 @@
   .restaurants-page .restaurant-grid{grid-template-columns:1fr;gap:16px}
   .restaurants-page .browse-restaurant-card .restaurant-image{height:195px}
 }
+
+/* Restaurant detail v2 — calm directory/preview presentation */
+.restaurant-page .brand-home{display:inline-flex;align-items:center;gap:10px}
+.restaurant-page .brand-emblem{width:38px;height:38px;display:inline-flex;flex:none;color:var(--ae-red)}
+.restaurant-page .brand-emblem svg{width:100%;height:100%;display:block}
+.restaurant-page .brand-wordmark{color:var(--ae-deep);font-size:1.32rem;font-weight:900;letter-spacing:-.035em}
+.restaurant-page .brand-mark{display:none!important}
+.restaurant-page .nav{height:66px}
+.restaurant-page .store-tabs.directory-tabs{display:none}
+.restaurant-page .directory-store-hero,
+.restaurant-page .directory-store-hero.store-hero{
+  height:285px;
+  min-height:285px;
+}
+.restaurant-page .directory-store-hero .store-overlay{
+  background:linear-gradient(180deg,rgba(10,28,24,.02) 30%,rgba(10,28,24,.72) 100%);
+}
+.restaurant-page .directory-store-title{
+  padding:28px 0 26px;
+}
+.restaurant-page .directory-store-title .store-badges{margin-bottom:9px}
+.restaurant-page .directory-store-title .status-pill{
+  background:rgba(255,255,255,.94);
+  color:#5d5b50;
+  border:0;
+  box-shadow:none;
+}
+.restaurant-page .directory-store-title h1{
+  max-width:700px;
+  margin:0;
+  font-size:clamp(2rem,3.4vw,3rem);
+  line-height:1.05;
+}
+.restaurant-page.rtl .directory-store-title h1{line-height:1.16}
+.restaurant-page .store-cuisine,
+.restaurant-page .store-address,
+.restaurant-page .store-meta-line{
+  margin:7px 0 0;
+  color:rgba(255,255,255,.9);
+}
+.restaurant-page .store-address{font-size:.88rem}
+.restaurant-page .directory-layout{
+  display:block;
+}
+.restaurant-page .directory-layout>#menuContent{
+  max-width:980px;
+  margin:0 auto;
+}
+.restaurant-page .directory-layout+.cart-panel{display:none}
+.restaurant-page .directory-detail-v2{
+  padding:26px 28px;
+  border:1px solid var(--ae-line);
+  border-radius:20px;
+  box-shadow:0 10px 28px rgba(23,63,52,.055);
+}
+.restaurant-page .directory-summary{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:28px;
+  align-items:center;
+}
+.restaurant-page .directory-summary h2{
+  margin:7px 0 0;
+  color:var(--ae-deep);
+  font-size:clamp(1.55rem,2.5vw,2rem);
+  letter-spacing:-.025em;
+}
+.restaurant-page.rtl .directory-summary h2{letter-spacing:0}
+.restaurant-page .directory-summary p{
+  max-width:680px;
+  margin:9px 0 0;
+  color:var(--ae-muted);
+  line-height:1.6;
+}
+.restaurant-page .directory-primary-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.restaurant-page.rtl .directory-primary-actions{justify-content:flex-start}
+.restaurant-page .directory-primary-actions .btn{
+  min-height:44px;
+  border-radius:11px;
+}
+.restaurant-page .directory-checked{
+  display:block;
+  margin-top:14px;
+  color:#89928d;
+  font-size:.7rem;
+}
+.restaurant-page .directory-public-menu{
+  margin-top:28px;
+  padding-top:24px;
+  border-top:1px solid var(--ae-line);
+}
+.restaurant-page .directory-menu-head{
+  align-items:flex-start;
+  margin-bottom:18px;
+}
+.restaurant-page .directory-menu-head h2{
+  margin:6px 0 4px;
+  font-size:1.45rem;
+}
+.restaurant-page .directory-menu-head p{
+  max-width:690px;
+  color:var(--ae-muted);
+  font-size:.84rem;
+  line-height:1.55;
+}
+.restaurant-page .directory-owner-v2{
+  margin-top:28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:16px 18px;
+  border:1px solid var(--ae-line);
+  border-radius:14px;
+  background:#faf8f4;
+}
+.restaurant-page .directory-owner-v2 span{display:grid;gap:3px}
+.restaurant-page .directory-owner-v2 b{color:var(--ae-deep);font-size:.88rem}
+.restaurant-page .directory-owner-v2 small{color:var(--ae-muted);font-size:.74rem}
+.restaurant-page #aeMerchantBanner:has(+ .store-tabs.directory-tabs),
+.restaurant-page .directory-store-hero + #aeMerchantBanner{display:none!important}
+@media(max-width:700px){
+  .restaurant-page .directory-store-hero,
+  .restaurant-page .directory-store-hero.store-hero{height:230px;min-height:230px}
+  .restaurant-page .directory-store-title{padding:20px 0}
+  .restaurant-page .directory-store-title h1{font-size:2rem}
+  .restaurant-page main.section{padding-top:22px}
+  .restaurant-page .directory-detail-v2{padding:20px 17px;border-radius:17px}
+  .restaurant-page .directory-summary{grid-template-columns:1fr;gap:18px}
+  .restaurant-page .directory-primary-actions{justify-content:flex-start}
+  .restaurant-page.rtl .directory-primary-actions{justify-content:flex-start}
+  .restaurant-page .directory-primary-actions .btn{width:100%}
+  .restaurant-page .directory-owner-v2{align-items:flex-start;flex-direction:column}
+  .restaurant-page .directory-owner-v2 .btn{width:100%}
+}
