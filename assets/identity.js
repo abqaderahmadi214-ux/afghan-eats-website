@@ -103,7 +103,9 @@
     sessionStorage.setItem("ae_customer_token", data.token);
     localStorage.removeItem("ae_customer_token");
     localStorage.setItem("ae_customer_hint", JSON.stringify(data.customer || {}));
-    location.reload();
+    const requested = new URLSearchParams(location.search).get("return") || "";
+    if (requested.startsWith("/") && !requested.startsWith("//")) location.href = requested;
+    else location.reload();
   }
 
   function customerError(message) {
