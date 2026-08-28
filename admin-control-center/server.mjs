@@ -48,6 +48,7 @@ function resolveRequestPath(url) {
     return null;
   }
   if (pathname === "/" || pathname === "/index.html") return path.join(root, "index.html");
+  if (pathname === "/admin-reset" || pathname === "/admin-reset/") return path.join(root, "admin-reset.html");
   const relative = pathname.replace(/^\/+/, "");
   if (!relative || relative.includes("\0")) return null;
   const candidate = path.resolve(root, relative);
