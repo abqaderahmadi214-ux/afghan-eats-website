@@ -2792,3 +2792,42 @@
   .tracking-page .tracking-help-actions{grid-column:1/-1}
   .tracking-page .tracking-help-actions .btn{flex:1}
 }
+
+.tracking-page .tracking-cancel-slot .cancel-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:15px 17px;
+  border:1px solid #edd9d3;
+  border-radius:16px;
+  background:#fff8f5;
+  box-shadow:none;
+}
+.tracking-page .tracking-cancel-slot .cancel-card b{
+  color:#7b3f34;
+  font-size:.8rem;
+}
+.tracking-page .tracking-cancel-slot .cancel-card p{
+  margin:3px 0 0;
+  font-size:.67rem;
+  line-height:1.5;
+}
+.tracking-page .tracking-cancel-slot .cancel-card .btn{
+  flex:none;
+  min-height:38px;
+  color:#9a4033;
+}
+.tracking-page.rtl .tracking-cancel-slot .cancel-card{
+  direction:rtl;
+  text-align:right;
+}
+@media(max-width:700px){
+  .tracking-page .tracking-cancel-slot .cancel-card{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .tracking-page .tracking-cancel-slot .cancel-card .btn{
+    width:100%;
+  }
+}
