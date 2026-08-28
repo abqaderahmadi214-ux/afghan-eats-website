@@ -57,6 +57,14 @@ jobs:
             retry_contains "https://afghaneats.net/assets/hero-carousel.js" "AUTOPLAY_MS = 3500" /tmp/ae-hero-carousel.js
             retry_contains "https://afghaneats.net/" "id=\"cuisinePhotoGrid\"" /tmp/ae-home-cuisine.html
             retry_contains "https://afghaneats.net/assets/cuisine-motion.js" "IntersectionObserver" /tmp/ae-cuisine-motion.js
+            retry_contains "https://afghaneats.net/" "support@afghaneats.net" /tmp/ae-footer-support.html
+            retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
+            retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
+            retry_contains "https://afghaneats.net/assets/app-downloads.js" "customerAndroidDownload" /tmp/ae-app-downloads.js
+            if grep -Fq 'ie.flipdish.br11970' /tmp/ae-footer-apps.html; then
+              echo 'Unrelated Flipdish Afghan Eats app link must never appear in the Herat footer.' >&2
+              exit 1
+            fi
             if grep -Fq 'journey-section' /tmp/ae-home-premium.html || grep -Fq 'Ordering that fits Herat' /tmp/ae-home-premium.html; then
               echo 'Legacy hidden homepage content is still present in production HTML.' >&2
               exit 1
