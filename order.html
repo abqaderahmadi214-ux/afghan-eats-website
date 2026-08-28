@@ -78,7 +78,7 @@
 <script src="/assets/app.js"></script>
 <script src="/assets/advanced.js?v=20260828-13"></script>
 <script src="/assets/portal.js"></script>
-<script src="/assets/reliability.js"></script>
+<script src="/assets/reliability.js?v=20260828-14"></script>
 <script src="/assets/account-delivery-tracking.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded',()=>{try{const id=new URLSearchParams(location.search).get('id'),o=JSON.parse(localStorage.getItem('ae_last_order')||'null');if(o?.customerPhone&&(o.orderId===id||o.id===id)){document.getElementById('trackPhone').value=o.customerPhone;setTimeout(()=>{if(typeof trackOrderWithLiveRider==='function')trackOrderWithLiveRider()},700)}}catch{}})
