@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
-  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260829-2">
+  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260829-3">
   <link rel="stylesheet" href="/assets/notifications.css">
   <script src="/config.js"></script>
 </head>
@@ -30,14 +30,32 @@
         <h1 class="fa-copy">رستورانت خود را مدیریت کنید</h1>
         <p class="muted en-copy">Use the username from your Afghan Eats activation invitation.</p>
         <p class="muted fa-copy">از نام کاربری موجود در دعوت‌نامه فعال‌سازی افغان ایتس استفاده کنید.</p>
-        <form onsubmit="portalLogin(event,'owner')">
-          <label class="field"><span class="en-copy">Username / phone</span><span class="fa-copy">نام کاربری / شماره تماس</span><input name="username" required autocomplete="username"></label>
-          <label class="field owner-field-gap"><span class="en-copy">Password</span><span class="fa-copy">رمز عبور</span><input name="password" type="password" required autocomplete="current-password"></label>
-          <button class="btn btn-primary owner-full-button" type="submit"><span class="en-copy">Sign in</span><span class="fa-copy">ورود</span></button>
-          <div class="portal-login-error notice error hidden" role="alert"></div>
-        </form>
-        <p class="muted owner-login-help"><span class="en-copy">No portal access yet? Claim your existing listing or apply for partnership.</span><span class="fa-copy">هنوز دسترسی ندارید؟ مالکیت فهرست موجود را درخواست کنید یا برای همکاری ثبت‌نام کنید.</span></p>
-        <div class="portal-login-links"><a href="/claim" class="btn btn-light"><span class="en-copy">Claim restaurant</span><span class="fa-copy">درخواست مالکیت</span></a><a href="/partner" class="btn btn-light"><span class="en-copy">Restaurant partnership</span><span class="fa-copy">همکاری رستورانت</span></a></div>
+        <div id="ownerLoginPrimary">
+          <form onsubmit="portalLogin(event,'owner')">
+            <label class="field"><span class="en-copy">Username / phone</span><span class="fa-copy">نام کاربری / شماره تماس</span><input name="username" required autocomplete="username"></label>
+            <label class="field owner-field-gap"><span class="en-copy">Password</span><span class="fa-copy">رمز عبور</span><input name="password" type="password" required autocomplete="current-password"></label>
+            <button class="btn btn-primary owner-full-button" type="submit"><span class="en-copy">Sign in</span><span class="fa-copy">ورود</span></button>
+            <div class="portal-login-error notice error hidden" role="alert"></div>
+          </form>
+          <button class="owner-forgot-link" type="button" onclick="openPortalRecovery('owner')"><span class="en-copy">Forgot username or password?</span><span class="fa-copy">نام کاربری یا رمز را فراموش کرده‌اید؟</span></button>
+          <p class="muted owner-login-help"><span class="en-copy">No portal access yet? Claim your existing listing or apply for partnership.</span><span class="fa-copy">هنوز دسترسی ندارید؟ مالکیت فهرست موجود را درخواست کنید یا برای همکاری ثبت‌نام کنید.</span></p>
+          <div class="portal-login-links"><a href="/claim" class="btn btn-light"><span class="en-copy">Claim restaurant</span><span class="fa-copy">درخواست مالکیت</span></a><a href="/partner" class="btn btn-light"><span class="en-copy">Restaurant partnership</span><span class="fa-copy">همکاری رستورانت</span></a></div>
+        </div>
+        <section id="ownerRecoveryPanel" class="owner-recovery-panel hidden" aria-live="polite">
+          <button class="owner-recovery-back" type="button" onclick="closePortalRecovery('owner')">← <span class="en-copy">Back to sign in</span><span class="fa-copy">بازگشت به ورود</span></button>
+          <span class="owner-recovery-icon" aria-hidden="true">🔐</span>
+          <h2 class="en-copy">Recover restaurant access</h2><h2 class="fa-copy">بازیابی دسترسی رستورانت</h2>
+          <p class="muted en-copy">Enter the phone number used for this restaurant portal. Afghan Eats will create a recovery request for verification. For your security, a password is never sent or displayed.</p>
+          <p class="muted fa-copy">شماره تماسی را که برای این پورتال رستورانت استفاده شده وارد کنید. افغان ایتس یک درخواست بازیابی برای بررسی ایجاد می‌کند. برای امنیت شما، رمز قبلی هرگز نمایش یا ارسال نمی‌شود.</p>
+          <form id="ownerRecoveryForm" onsubmit="requestPortalRecovery(event,'owner')">
+            <label class="field"><span class="en-copy">Portal phone / username</span><span class="fa-copy">شماره تماس / نام کاربری پورتال</span><input name="phone" type="tel" required minlength="9" maxlength="50" autocomplete="tel" placeholder="07xxxxxxxx"></label>
+            <label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="restaurantName" maxlength="300" placeholder="Optional"></label>
+            <label class="field"><span class="en-copy">Note for Afghan Eats support</span><span class="fa-copy">یادداشت برای پشتیبانی افغان ایتس</span><textarea name="supportNote" maxlength="1500" rows="3" placeholder=""></textarea></label>
+            <button class="btn btn-primary owner-full-button" type="submit"><span class="en-copy">Request secure recovery</span><span class="fa-copy">درخواست بازیابی امن</span></button>
+          </form>
+          <div id="ownerRecoveryResult" class="notice hidden" role="status"></div>
+          <div class="owner-recovery-security"><span>🛡️</span><p class="en-copy">Recovery requires verification before a one-time reset link is issued. This prevents anyone with only a phone number from taking over a restaurant account.</p><p class="fa-copy">پیش از صدور لینک یک‌بارمصرف، درخواست بازیابی باید تأیید شود. این کار از دسترسی افراد صرفاً با داشتن شماره تماس جلوگیری می‌کند.</p></div>
+        </section>
       </section>
 
       <section id="ownerDashboard" class="portal-dashboard owner-premium-dashboard hidden">
@@ -175,7 +193,7 @@
     </div>
   </main>
   <script src="/assets/app.js"></script>
-  <script src="/assets/portal.js?v=owner-premium-2"></script>
+  <script src="/assets/portal.js?v=owner-recovery-1"></script>
   <script src="/assets/notifications.js"></script>
 </body>
 </html>
