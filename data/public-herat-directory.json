@@ -18,7 +18,7 @@
       "phone_numbers": ["+93 793 335 050", "+93 747 425 050"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754995839101-448556745-1-large.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -34,12 +34,58 @@
       "verification_status": "public_seeded",
       "partnership_status": "prospect",
       "listing_mode": "directory",
-      "source_label": "Mizban public listing",
-      "source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/overview",
-      "source_checked_at": "2026-08-09"
+      "source_label": "Official Instagram profile",
+      "source_url": "https://www.instagram.com/5050fastfood/?hl=fa",
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/menu",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"fifty-glass-desserts","name":"Glass desserts","name_dari":"دسرهای گیلاسی","sort_order":1},
+      {"id":"fifty-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":2},
+      {"id":"fifty-special-sandwiches","name":"Special sandwiches","name_dari":"ساندویچ‌های ویژه","sort_order":3}
+    ],
+    "items": [
+      {"id":"fifty-coffee-glass-dessert","category_id":"fifty-glass-desserts","name":"Coffee Glass Dessert","description":"A cold drink made with coffee, milk and ice cream.","price":90,"image_url":"https://mizbanapp.com/images/dish/Coffee-Glass-Dessert-medx5qb3ys7bh9-1-small.webp","sort_order":1},
+      {"id":"fifty-pineapple-glass-dessert","category_id":"fifty-glass-desserts","name":"Pineapple Glass Dessert","description":"A cold, refreshing pineapple drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Pineapple-Glass-Dessert-medxp5rytikj7m-1-small.webp","sort_order":2},
+      {"id":"fifty-chocolate-glass-dessert","category_id":"fifty-glass-desserts","name":"Chocolate Glass Dessert","description":"A cold, creamy chocolate drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Glass-Dessert-medxrgdx1mlpmj-1-small.webp","sort_order":3},
+      {"id":"fifty-banana-glass-dessert","category_id":"fifty-glass-desserts","name":"Banana Glass Dessert","description":"A cold, creamy banana drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Banana-Glass-Dessert-medxud8bdwap1j-1-small.webp","sort_order":4},
+      {"id":"fifty-mango-glass-dessert","category_id":"fifty-glass-desserts","name":"Mango Glass Dessert","description":"A cold, sweet mango drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Mango-Glass-Dessert-medxx34b625wjq-1-small.webp","sort_order":5},
+      {"id":"fifty-orange-glass-dessert","category_id":"fifty-glass-desserts","name":"Orange Glass Dessert","description":"Fresh orange juice, cold and naturally refreshing.","price":90,"sort_order":6},
+
+      {"id":"fifty-chefs-special-pizza","category_id":"fifty-pizza","name":"Chef’s Special Pizza","description":"Chicken breast, minced meat, cheese, bell pepper, tomato and olive.","price":200,"sort_order":1},
+      {"id":"fifty-special-pizza","category_id":"fifty-pizza","name":"Special Pizza","description":"Chicken breast and sausage, cheese, bell pepper, tomato and olive.","price":180,"sort_order":2},
+      {"id":"fifty-chicken-pizza","category_id":"fifty-pizza","name":"Chicken Pizza","description":"Chicken breast, cheese, bell pepper, tomato and olive.","price":180,"sort_order":3},
+      {"id":"fifty-meat-pizza","category_id":"fifty-pizza","name":"Meat Pizza","description":"Beef, cheese, bell pepper, tomato and olive.","price":200,"sort_order":4},
+      {"id":"fifty-tuna-pizza","category_id":"fifty-pizza","name":"Tuna Pizza","description":"Tuna, cheese, bell pepper, tomato and olive.","price":180,"sort_order":5},
+      {"id":"fifty-vegetable-pizza","category_id":"fifty-pizza","name":"Vegetable Pizza","description":"Vegetables, cheese, bell pepper, tomato and olive.","price":150,"sort_order":6},
+      {"id":"fifty-hawaiian-pizza","category_id":"fifty-pizza","name":"Hawaiian Pizza","description":"Chicken breast, pineapple, cheese, bell pepper, tomato and olive.","price":200,"sort_order":7},
+      {"id":"fifty-four-seasons-pizza","category_id":"fifty-pizza","name":"Four Seasons Pizza","description":"Chicken breast, beef, vegetables and sausage.","price":200,"sort_order":8},
+      {"id":"fifty-pepperoni-pizza","category_id":"fifty-pizza","name":"Pepperoni Pizza","description":"Special sauce, pepperoni and cheese.","price":150,"sort_order":9},
+      {"id":"fifty-baalbaki-pizza","category_id":"fifty-pizza","name":"Baalbaki Pizza","description":"Chicken shawarma, bell pepper, cheese and sesame.","price":250,"sort_order":10},
+      {"id":"fifty-alfredo-pizza","category_id":"fifty-pizza","name":"Alfredo Pizza","description":"Chicken fillet, basil, Alfredo sauce and parmesan cheese.","price":200,"sort_order":11},
+      {"id":"fifty-chicken-roll-pizza","category_id":"fifty-pizza","name":"Chicken Roll Pizza","description":"Chicken breast, cheese, egg yolk and sesame.","price":200,"sort_order":12},
+      {"id":"fifty-margherita-pizza","category_id":"fifty-pizza","name":"Margherita Pizza","description":"Special sauce, tomato and cheese.","price":150,"sort_order":13},
+      {"id":"fifty-supreme-pizza","category_id":"fifty-pizza","name":"Supreme Pizza","description":"Minced meat, roast beef, chicken breast and bell pepper.","price":200,"sort_order":14},
+
+      {"id":"fifty-royal-sandwich","category_id":"fifty-special-sandwiches","name":"Royal Sandwich","description":"Round bread, handmade meat burger, special sauce, lettuce, pickles and tomato.","price":150,"sort_order":1},
+      {"id":"fifty-mixed-sandwich","category_id":"fifty-special-sandwiches","name":"Mixed Sandwich","description":"Burger, chicken breast, sausage, pickles, lettuce and tomato.","price":70,"sort_order":2},
+      {"id":"fifty-hot-dog-sandwich","category_id":"fifty-special-sandwiches","name":"Hot Dog Sandwich","description":"Hot dog sausage, special sauce, lettuce, tomato and pickles.","price":70,"sort_order":3},
+      {"id":"fifty-popcorn-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Popcorn Chicken Sandwich","description":"Chicken breast, ketchup, saffron, pickles, lettuce and tomato.","price":80,"sort_order":4},
+      {"id":"fifty-yang-sandwich","category_id":"fifty-special-sandwiches","name":"Yang Sandwich","description":"Burger, sausage, cheese, tomato and lettuce.","price":80,"sort_order":5},
+      {"id":"fifty-cheesy-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Cheesy Chicken Sandwich","description":"Chicken breast, cheese, tomato, lettuce and pickles.","price":100,"sort_order":6},
+      {"id":"fifty-special-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Special Chicken Sandwich","description":"Chicken breast, special sauce, tomato, lettuce and pickles.","price":80,"sort_order":7},
+      {"id":"fifty-bs-burger","category_id":"fifty-special-sandwiches","name":"BS Burger","description":"Beef, cheese, ketchup, tomato and pickles.","price":80,"sort_order":8},
+      {"id":"fifty-cs-burger","category_id":"fifty-special-sandwiches","name":"CS Burger","description":"Chicken breast, cheese, ketchup, tomato and pickles.","price":80,"sort_order":9},
+      {"id":"fifty-double-burger-sandwich","category_id":"fifty-special-sandwiches","name":"Double Burger Sandwich","description":"Double burger, cheese, mushrooms, pepper, ketchup, lettuce, pickles and tomato.","price":100,"sort_order":10},
+      {"id":"fifty-beef-shawarma","category_id":"fifty-special-sandwiches","name":"Beef Shawarma","description":"Beef, marinated mix, tomato, lettuce and pickles.","price":100,"sort_order":11},
+      {"id":"fifty-chicken-shawarma","category_id":"fifty-special-sandwiches","name":"Chicken Shawarma","description":"Chicken breast, marinated mix, tomato, lettuce and pickles.","price":100,"sort_order":12},
+      {"id":"fifty-roast-beef-sandwich","category_id":"fifty-special-sandwiches","name":"Roast Beef Sandwich","description":"Roast beef, mushroom sauce, tomato, lettuce and pickles.","price":100,"sort_order":13},
+      {"id":"fifty-chicken-mushroom-sandwich","category_id":"fifty-special-sandwiches","name":"Chicken Mushroom Sandwich","description":"Chicken breast, mushroom sauce, tomato, lettuce and pickles.","price":100,"sort_order":14},
+      {"id":"fifty-fifty-sandwich","category_id":"fifty-special-sandwiches","name":"Fifty Sandwich","description":"Chicken fillet, Fifty special sauce, tomato, lettuce and pickles.","price":100,"sort_order":15}
+    ]
   },
   {
     "restaurant": {
