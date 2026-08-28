@@ -5,11 +5,13 @@ The final Afghan Eats administrator workspace preserves every administrator-faci
 | Former Operations feature | Final Control Center location |
 | --- | --- |
 | Live orders | Orders & dispatch |
+| Recent completed/cancelled order history | Orders & dispatch |
 | Manual rider assignment | Orders & dispatch |
+| Full recent delivery assignment board | Orders & dispatch |
 | Delivery assignment status updates | Orders & dispatch |
-| Restaurant applications | Restaurants |
+| Restaurant applications and application history | Restaurants |
 | Review / approve / waitlist / reject restaurant applications | Restaurants |
-| Rider applications | Riders & shifts |
+| Rider applications and application history | Riders & shifts |
 | Review / approve / waitlist / reject rider applications | Riders & shifts |
 | Rider fleet and availability | Riders & shifts |
 | Marketplace open / close | Overview + Public site |
