@@ -6,13 +6,33 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Recover portal access | Afghan Eats</title>
   <link rel="stylesheet" href="/assets/styles.css">
-  <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
+  <link rel="stylesheet" href="/assets/portal-recovery-premium.css?v=20260829-1">
   <script src="/config.js"></script>
 </head>
-<body class="portal-shell">
-  <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small>Account recovery</small></a><a class="btn btn-light" href="/owner">Owner portal</a></div></header>
-  <main class="section"><div class="container"><section class="form-card portal-auth"><span class="portal-role">Verified account recovery</span><h1>Set a new portal password</h1><p class="muted">This private link is valid once and expires automatically. Do not share it.</p><div id="recoveryLoading" class="notice">Checking your recovery link…</div><div id="recoveryBody" class="hidden"><div class="notice success"><b id="recoveryIdentity"></b><span id="recoveryExpiry" class="muted"></span></div><form id="portalRecoveryForm" class="owner-editor-form"><label class="field"><span>New password</span><input name="newPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label><label class="field"><span>Confirm new password</span><input name="confirmPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label><button class="btn btn-primary" type="submit">Set new password</button></form></div><div id="recoveryResult" class="notice error hidden" role="alert"></div></section></div></main>
-  <script src="/assets/portal-recovery.js?v=assisted-recovery-1"></script>
+<body class="portal-shell portal-recovery-page">
+  <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats <small><span class="en-copy">Account recovery</span><span class="fa-copy">بازیابی حساب</span></small></a><div class="actions"><button class="lang" type="button" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/owner"><span class="en-copy">Owner portal</span><span class="fa-copy">پورتال مالک</span></a></div></div></header>
+  <main class="section"><div class="container recovery-container">
+    <section class="form-card portal-auth recovery-card">
+      <span class="portal-role"><span class="en-copy">Verified account recovery</span><span class="fa-copy">بازیابی تأییدشده حساب</span></span>
+      <div class="recovery-lock">🔐</div>
+      <h1 class="en-copy">Set a new portal password</h1><h1 class="fa-copy">رمز جدید پورتال را تعیین کنید</h1>
+      <p class="muted en-copy">This private link is valid once and expires automatically. Do not share it.</p>
+      <p class="muted fa-copy">این لینک خصوصی یک‌بار قابل استفاده است و به‌صورت خودکار منقضی می‌شود. آن را با کسی شریک نسازید.</p>
+      <div id="recoveryLoading" class="notice"><span class="en-copy">Checking your recovery link…</span><span class="fa-copy">در حال بررسی لینک بازیابی…</span></div>
+      <div id="recoveryBody" class="hidden">
+        <div class="notice success recovery-identity"><b id="recoveryIdentity"></b><span id="recoveryExpiry" class="muted"></span></div>
+        <form id="portalRecoveryForm" class="owner-editor-form">
+          <label class="field"><span class="en-copy">New password</span><span class="fa-copy">رمز جدید</span><input name="newPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
+          <label class="field"><span class="en-copy">Confirm new password</span><span class="fa-copy">تأیید رمز جدید</span><input name="confirmPassword" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
+          <button class="btn btn-primary" type="submit"><span class="en-copy">Set new password</span><span class="fa-copy">ذخیره رمز جدید</span></button>
+        </form>
+      </div>
+      <div id="recoveryResult" class="notice error hidden" role="alert"></div>
+      <div class="recovery-security"><span>🛡️</span><p class="en-copy">Afghan Eats will never show or send your previous password. This reset link is bound to the verified portal account.</p><p class="fa-copy">افغان ایتس هرگز رمز قبلی شما را نمایش یا ارسال نمی‌کند. این لینک فقط به حساب پورتال تأییدشده مربوط است.</p></div>
+    </section>
+  </div></main>
+  <script src="/assets/app.js"></script>
+  <script src="/assets/portal-recovery.js?v=assisted-recovery-2"></script>
 </body>
 </html>
