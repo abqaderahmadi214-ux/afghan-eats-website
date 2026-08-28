@@ -61,6 +61,8 @@ jobs:
             retry_contains "https://afghaneats.net/" "class=\"brand-emblem\"" /tmp/ae-brand-v3.html
             retry_contains "https://afghaneats.net/assets/app.js" "Order food in Herat" /tmp/ae-app-v3.js
             retry_contains "https://afghaneats.net/restaurants" "restaurant-discovery-bar" /tmp/ae-restaurants-v2.html
+            retry_contains "https://afghaneats.net/assets/app.js" "directory-detail-v2" /tmp/ae-restaurant-detail-v2.js
+            retry_contains "https://afghaneats.net/assets/merchant.js" "publicOnly" /tmp/ae-merchant-directory-guard.js
             retry_contains "https://afghaneats.net/assets/app.js" "browseRestaurantMedia" /tmp/ae-restaurants-app-v2.js
             retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
             retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
