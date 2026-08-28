@@ -1899,3 +1899,230 @@
     height:235px;
   }
 }
+
+/* Menu v6 — premium spacing and readable Dari */
+.restaurant-page main.section>.container.menu-layout{
+  width:min(1440px,94%);
+  max-width:1440px;
+}
+.restaurant-page .menu-layout{
+  grid-template-columns:minmax(0,1fr) 280px;
+  gap:32px;
+}
+.restaurant-page.rtl .menu-layout{
+  grid-template-columns:280px minmax(0,1fr);
+}
+
+/* Give categories real breathing room from the dishes */
+.restaurant-page .menu-category-browser{
+  grid-template-columns:210px minmax(0,1fr);
+  gap:40px;
+}
+.restaurant-page.rtl .menu-category-browser{
+  grid-template-columns:minmax(0,1fr) 210px;
+  gap:40px;
+}
+.restaurant-page .menu-category-content{
+  min-width:0;
+  padding-inline-start:2px;
+}
+.restaurant-page.rtl .menu-category-content{
+  padding-inline-start:0;
+  padding-inline-end:2px;
+}
+
+/* Premium category rail */
+.restaurant-page .menu-category-rail{
+  padding:14px 12px;
+  border:1px solid #e8e2da;
+  border-radius:17px;
+  background:#faf9f6;
+}
+.restaurant-page .menu-category-label{
+  padding:4px 10px 11px;
+  color:#8b948f;
+  font-size:.68rem;
+}
+.restaurant-page .menu-category-options{
+  gap:8px;
+}
+.restaurant-page .menu-category-option{
+  min-height:50px;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:.92rem;
+  line-height:1.5;
+}
+.restaurant-page .menu-category-option>span{
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.5;
+}
+.restaurant-page .menu-category-option.active{
+  border-color:#e6ddd4;
+  background:#fff;
+}
+.restaurant-page .menu-category-option small{
+  min-width:27px;
+  padding:4px 7px;
+  font-size:.66rem;
+}
+
+/* Dari typography needs more vertical rhythm than English */
+.restaurant-page.rtl .menu-category-label,
+.restaurant-page.rtl .menu-category-option,
+.restaurant-page.rtl .menu-section-heading h2,
+.restaurant-page.rtl .menu-section-heading h3,
+.restaurant-page.rtl .premium-menu-card .menu-item-copy,
+.restaurant-page.rtl .cart-panel{
+  font-family:Tahoma,Arial,sans-serif;
+}
+.restaurant-page.rtl .menu-category-label{
+  font-size:.72rem;
+  line-height:1.7;
+}
+.restaurant-page.rtl .menu-category-option{
+  min-height:54px;
+  font-size:1rem;
+  line-height:1.85;
+}
+.restaurant-page.rtl .menu-category-option>span{
+  line-height:1.85;
+}
+.restaurant-page .menu-section-heading{
+  margin-bottom:18px;
+}
+.restaurant-page .menu-section-heading h2,
+.restaurant-page .menu-section-heading h3{
+  font-size:1.42rem;
+  line-height:1.4;
+}
+.restaurant-page.rtl .menu-section-heading h2,
+.restaurant-page.rtl .menu-section-heading h3{
+  font-size:1.52rem;
+  line-height:1.8;
+  font-weight:800;
+}
+.restaurant-page .menu-item-count{
+  font-size:.74rem;
+}
+.restaurant-page.rtl .menu-item-count{
+  font-size:.78rem;
+  line-height:1.7;
+}
+
+/* Food cards: comfortable reading and cleaner rhythm */
+.restaurant-page .active-category-browser .menu-card-grid,
+.restaurant-page .directory-category-browser .directory-menu-grid{
+  gap:20px;
+}
+.restaurant-page .premium-menu-card{
+  border-radius:19px;
+}
+.restaurant-page .premium-menu-card .menu-item-media{
+  height:205px;
+}
+.restaurant-page .premium-menu-card .menu-item-copy{
+  padding:17px 17px 18px;
+}
+.restaurant-page .premium-menu-card .menu-item-copy h3{
+  font-size:1.03rem;
+  line-height:1.5;
+}
+.restaurant-page .premium-menu-card .menu-item-copy p{
+  font-size:.8rem;
+  line-height:1.65;
+}
+.restaurant-page.rtl .premium-menu-card .menu-item-copy h3{
+  font-size:1.08rem;
+  line-height:1.9;
+  font-weight:800;
+}
+.restaurant-page.rtl .premium-menu-card .menu-item-copy p{
+  font-size:.84rem;
+  line-height:2;
+}
+.restaurant-page .premium-menu-card .menu-price{
+  padding-top:14px;
+  font-size:.96rem;
+}
+.restaurant-page.rtl .premium-menu-card .menu-price{
+  font-size:1rem;
+}
+
+/* Keep the basket useful but visually secondary */
+.restaurant-page .cart-panel{
+  padding:15px;
+  border-radius:17px;
+}
+.restaurant-page .cart-panel-head h2{
+  font-size:1.02rem;
+}
+.restaurant-page.rtl .cart-panel-head h2{
+  font-size:1.08rem;
+  line-height:1.7;
+}
+.restaurant-page #cartItems{
+  max-height:220px;
+}
+.restaurant-page .cart-row,
+.restaurant-page .sum-row{
+  font-size:.76rem;
+}
+.restaurant-page.rtl .cart-row,
+.restaurant-page.rtl .sum-row{
+  line-height:1.75;
+}
+.restaurant-page .group-order strong{
+  font-size:.72rem;
+}
+.restaurant-page .safety-note{
+  font-size:.59rem;
+}
+
+/* Tablet keeps the category rail useful without crowding */
+@media(max-width:1180px){
+  .restaurant-page .menu-category-browser{
+    grid-template-columns:185px minmax(0,1fr);
+    gap:28px;
+  }
+  .restaurant-page.rtl .menu-category-browser{
+    grid-template-columns:minmax(0,1fr) 185px;
+    gap:28px;
+  }
+  .restaurant-page .menu-layout{
+    grid-template-columns:minmax(0,1fr) 270px;
+    gap:26px;
+  }
+  .restaurant-page.rtl .menu-layout{
+    grid-template-columns:270px minmax(0,1fr);
+  }
+}
+
+/* Mobile stays simple and highly readable */
+@media(max-width:700px){
+  .restaurant-page .menu-category-options{
+    gap:8px;
+    padding-bottom:9px;
+  }
+  .restaurant-page .menu-category-option,
+  .restaurant-page.rtl .menu-category-option{
+    min-height:42px;
+    padding:8px 12px;
+    font-size:.9rem;
+    line-height:1.5;
+    white-space:nowrap;
+  }
+  .restaurant-page .menu-category-option>span,
+  .restaurant-page.rtl .menu-category-option>span{
+    white-space:nowrap;
+    line-height:1.5;
+  }
+  .restaurant-page .premium-menu-card .menu-item-media{
+    height:220px;
+  }
+  .restaurant-page .premium-menu-card .menu-item-copy{
+    padding:15px 15px 16px;
+  }
+}
