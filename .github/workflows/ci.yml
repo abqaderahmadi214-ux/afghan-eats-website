@@ -65,6 +65,7 @@ jobs:
           node --check assets/experience-v43.js
           node --check assets/claims.js
           node --check admin-control-center/assets/control-center.js
+          node --check admin-control-center/assets/admin-reset.js
           node --check admin-control-center/server.mjs
           node --check config.js
       - name: Validate JSON and local references
@@ -164,6 +165,45 @@ jobs:
               print('\n'.join(problems))
               sys.exit(1)
           print('Accessibility and performance quality gates passed')
+          PY
+      - name: Verify final admin contains legacy Operations features
+        run: |
+          python - <<'PY'
+          import pathlib, sys
+          root=pathlib.Path('admin-control-center')
+          index=(root/'index.html').read_text(encoding='utf-8')
+          app=(root/'assets/control-center.js').read_text(encoding='utf-8')
+          reset=(root/'assets/admin-reset.js').read_text(encoding='utf-8')
+          required_views=['#dispatch','#restaurants','#riders','#customers','#promotions','#communications','#support','#access','#security','#audit','#website']
+          required_api=[
+              'orders.adminList','operations.adminPartnerApplications','operations.adminRiderApplications',
+              'operations.adminRiders','operations.adminAssignRider','operations.adminAssignments',
+              'operations.adminUpdateAssignment','operations.adminUpdatePartnerApplication',
+              'operations.adminUpdateRiderApplication','operations.adminUpdateRider',
+              'restaurants.adminToggleStatus','portal.adminAccounts','customer.adminCustomers',
+              'customer.adminSettings','customer.adminUpdateSettings','customer.adminSetActive',
+              'trust.adminPromotions','trust.adminCreatePromotion','trust.adminUpdatePromotion',
+              'trust.adminSupportCases','trust.adminUpdateSupportCase','trust.adminAudit',
+              'communications.adminBroadcast','communications.adminProviderStatus',
+              'auth.changePassword','platform.adminStatus','platform.adminUpdateControls',
+              'riderOperations.adminBoard','riderOperations.adminCreateShift',
+              'riderOperations.adminReviewAvailability','riderOperations.adminReviewTimeOff',
+              'riderChat.adminSupportThreads','riderChat.adminSupportReply'
+          ]
+          required_parity=['waitlisted','applicationDetails','assignmentHistoryTable','phone_verified','referral_code','restaurant_status','usage_limit','auditDetails','portal-listing-status']
+          missing=[item for item in required_views if item not in index]
+          missing += [item for item in required_api if item not in app]
+          missing += [item for item in required_parity if item not in app]
+          if 'auth.resetPassword' not in reset:
+              missing.append('auth.resetPassword')
+          for page in [root/'index.html',root/'admin-reset.html']:
+              text=page.read_text(encoding='utf-8').lower()
+              for token in ['<html','lang=','<title>','name="viewport"','<main']:
+                  if token not in text: missing.append(f'{page.name}:{token}')
+          if missing:
+              print('Missing final-admin parity requirements:', sorted(set(missing)))
+              sys.exit(1)
+          print('Final admin legacy parity passed')
           PY
       - name: Install Chromium for the customer journey
         run: npx playwright install --with-deps chromium
