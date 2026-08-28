@@ -82,7 +82,8 @@ async function submitPartnerApplication(event) {
       notes: String(f.get('notes') || ''),
     });
     out.className = 'notice success';
-    out.innerHTML = `${result.duplicate ? '✓ Existing application found.' : '✓ Application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${lang === 'fa' ? 'این شماره پیگیری را نگه دارید.' : 'Keep this reference to check your application status.'}</span>`;
+    const emailNote=result.emailVerified?(lang==='fa'?'✓ ایمیل شما تأیید شده است.':'✓ Your email is verified.'):(result.verificationEmailSent?(lang==='fa'?'لینک تأیید به ایمیل شما ارسال شد. پیش از تأیید نهایی، ایمیل را تأیید کنید.':'A verification link was sent to your email. Verify it before final approval.'):(lang==='fa'?'درخواست ثبت شد، اما ایمیل تأیید فعلاً ارسال نشد.':'Application saved, but the verification email could not be sent yet.'));
+    out.innerHTML = `${result.duplicate ? '✓ Existing application found.' : '✓ Application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${esc(emailNote)}</span>`;
     localStorage.setItem('ae_partner_reference', result.reference);
     if (!result.duplicate) form.reset();
   } catch (error) {
