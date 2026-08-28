@@ -16,11 +16,11 @@ const directoryListing = {
 };
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page,{deliveryUnavailable=false}={}){
+async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing]}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
-    if(path.endsWith('/restaurants.list'))data=[restaurant,directoryListing];
+    if(path.endsWith('/restaurants.list'))data=restaurantRows;
     else if(path.endsWith('/restaurants.getMenu'))data=menu;
     else if(path.endsWith('/orders.quote')){
       const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{"json":{}}').json||{};
@@ -115,7 +115,7 @@ test('Dari customer chrome and discovery stay localized', async ({page})=>{
   await expect(page.locator('#search')).toHaveAttribute('placeholder',/رستورانت/);
 });
 
-test('public Herat directory listings remain distinct from active Afghan Eats ordering', async ({page})=>{
+test('public Herat directory listings can show sourced menus without becoming orderable', async ({page})=>{
   await mockApi(page);
   await page.goto('/restaurants');
   const search=page.locator('#search');
@@ -125,11 +125,26 @@ test('public Herat directory listings remain distinct from active Afghan Eats or
   await expect(listing).toContainText('Jumeirah Fast Food');
   await expect(listing).toContainText('Public listing');
   await expect(listing).toContainText('Ordering not active yet');
+  await expect(listing.locator('img')).toHaveAttribute('src',/Jumeirah%20Fast%20Food/);
   await listing.click();
   await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
-  await expect(page.locator('.directory-detail a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
+  await expect(page.locator('.directory-contact-list a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
+  await expect(page.locator('.directory-menu-head a[target="_blank"]')).toHaveAttribute('href',/mizbanapp\.com\/en\/herat\/restaurant\/jumeirah-fast-food/);
+  await expect(page.locator('.directory-detail')).toContainText('Public menu');
+  await expect(page.locator('.directory-detail')).toContainText('Jumeirah Special Burger');
+  await expect(page.locator('.directory-detail')).toContainText('؋ 200');
+  await expect(page.locator('.directory-detail .add-btn')).toHaveCount(0);
   await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
+});
+
+test('a claimed restaurant uses its owner-managed menu instead of the public source seed', async ({page})=>{
+  const claimed={...directoryListing,status:'active',listing_mode:null,is_open:true,has_delivery:true,has_takeaway:true,verification_status:'owner_confirmed'};
+  await mockApi(page,{restaurants:[restaurant,claimed]});
+  await page.goto('/restaurant.html?id=jumeirah-fast-food-herat');
+  await expect(page.locator('#menuContent')).toContainText('Kebab');
+  await expect(page.locator('.directory-detail')).toHaveCount(0);
+  await expect(page.locator('.add-btn')).toHaveCount(1);
 });
 
 test('a public listing can be claimed without creating or activating another restaurant', async ({page})=>{
