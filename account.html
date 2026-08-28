@@ -55,14 +55,14 @@
         <form class="grid2" onsubmit="customerRegister(event)">
           <label class="field"><span class="en-copy">Full name</span><span class="fa-copy">نام کامل</span><input name="name" required minlength="2" autocomplete="name"></label>
           <label class="field"><span class="en-copy">Phone number</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+93"></label>
-          <label class="field full"><span>Email <small class="muted">(optional)</small></span><input name="email" type="email" autocomplete="email"></label>
+          <label class="field full"><span><span class="en-copy">Email address</span><span class="fa-copy">آدرس ایمیل</span> <small class="muted"><span class="en-copy">(verification required)</span><span class="fa-copy">(تأیید لازم است)</span></small></span><input name="email" type="email" required autocomplete="email" placeholder="name@example.com"></label>
           <label class="field"><span class="en-copy">Password</span><span class="fa-copy">رمز</span><input name="password" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
           <label class="field"><span class="en-copy">Confirm password</span><span class="fa-copy">تأیید رمز</span><input name="confirm" type="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
           <label class="field full"><span class="en-copy">Referral code</span><span class="fa-copy">کد معرفی</span><input name="referralCode" maxlength="24" placeholder="Optional"></label>
           <label class="field full account-checkbox"><input name="remember" type="checkbox"><span class="en-copy">Keep me signed in on this device</span><span class="fa-copy">در این دستگاه وارد بمانم</span></label>
           <button class="btn btn-primary field full" type="submit"><span class="en-copy">Create account</span><span class="fa-copy">ساخت حساب</span></button>
         </form>
-        <div class="customer-safety account-auth-safety"><span class="en-copy">Phone verification is only marked complete after a real OTP provider verifies it.</span><span class="fa-copy">تأیید شماره تماس فقط پس از تأیید واقعی از طریق سرویس OTP کامل نمایش داده می‌شود.</span></div>
+        <div class="customer-safety account-auth-safety"><span class="en-copy">After registration, Afghan Eats sends a verification link to your email. Your password is never sent by email.</span><span class="fa-copy">پس از ثبت‌نام، افغان ایتس لینک تأیید را به ایمیل شما می‌فرستد. رمز عبور هرگز از طریق ایمیل ارسال نمی‌شود.</span></div>
       </div>
       <div id="customerAuthError" class="notice error hidden"></div>
     </div>
@@ -73,7 +73,8 @@
       <div class="account-hero-main">
         <span class="account-member-pill"><span aria-hidden="true">●</span><span class="en-copy">Afghan Eats member</span><span class="fa-copy">عضو افغان ایتس</span></span>
         <h1><span id="customerName">Customer</span></h1>
-        <div class="account-hero-meta"><span id="customerPhone" dir="ltr"></span><span id="customerVerification" class="customer-verification"></span></div>
+        <div class="account-hero-meta"><span id="customerPhone" dir="ltr"></span><span id="customerVerification" class="customer-verification"></span><span id="customerEmailVerification" class="customer-verification"></span></div>
+        <div id="customerEmailVerifyBanner" class="account-email-verify-banner hidden"><div><b><span class="en-copy">Verify your email</span><span class="fa-copy">ایمیل خود را تأیید کنید</span></b><p class="en-copy">Check your inbox for the Afghan Eats verification link.</p><p class="fa-copy">ایمیل خود را برای لینک تأیید افغان ایتس بررسی کنید.</p></div><button class="btn account-hero-light" type="button" onclick="resendCustomerEmailVerification()"><span class="en-copy">Resend email</span><span class="fa-copy">ارسال دوباره</span></button></div>
         <p class="en-copy">Your orders, addresses and eligible member benefits in one place.</p>
         <p class="fa-copy">سفارش‌ها، آدرس‌ها و مزایای واجد شرایط شما در یک محل.</p>
       </div>
@@ -181,7 +182,7 @@
 </div></main>
 
 <script src="/assets/app.js"></script>
-<script src="/assets/customer.js?v=20260828-15"></script>
+<script src="/assets/customer.js?v=email-verification-1"></script>
 <script src="/assets/notifications.js"></script>
 <script src="/assets/account-dashboard.js?v=20260828-15"></script>
 </body>
