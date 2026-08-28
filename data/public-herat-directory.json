@@ -226,7 +226,7 @@
       "phone_numbers": ["+93 793 105 013"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Mansoor%20Fast%20Food-mf3fywy8yx9nws-1-medium.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -243,11 +243,48 @@
       "partnership_status": "prospect",
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
-      "source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/photos",
-      "source_checked_at": "2026-08-09"
+      "source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/overview",
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/menu",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"mansoor-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":1},
+      {"id":"mansoor-burgers","name":"Burgers","name_dari":"برگرها","sort_order":2},
+      {"id":"mansoor-sandwiches","name":"Sandwiches","name_dari":"ساندویچ‌ها","sort_order":3}
+    ],
+    "items": [
+      {"id":"mansoor-milano-pizza","category_id":"mansoor-pizza","name":"Milano Pizza","price":380,"price_sizes":[380,480],"image_url":"https://mizbanapp.com/images/dish/%D8%A7%D9%85%DB%8C%D9%84%D8%A7%D9%86%D9%88-%D9%BE%DB%8C%D8%B2%D8%A7-mf3keuysqj9jod-1-small.webp","sort_order":1},
+      {"id":"mansoor-chano-pizza","category_id":"mansoor-pizza","name":"Pizza Chano","description":"Thin Italian dough, fresh beef fillet steak, special sauce and pizza cheese.","price":350,"price_sizes":[350,450],"image_url":"https://mizbanapp.com/images/dish/Jano-Pizza-mf3ksq7pxwjvrl-1-small.webp","sort_order":2},
+      {"id":"mansoor-sicilian-chicken-pizza","category_id":"mansoor-pizza","name":"Sicilian Chicken Pizza","price":280,"price_sizes":[280,380],"image_url":"https://mizbanapp.com/images/dish/Sicilian-Chicken-Pizza-mf7seebwb8kk3f-1-small.webp","sort_order":3},
+      {"id":"mansoor-sirasteak-pizza","category_id":"mansoor-pizza","name":"Sirasteak Pizza","price":350,"price_sizes":[350,450],"image_url":"https://mizbanapp.com/images/dish/Sirasteak-Pizza-mf7un6vg96862u-1-small.webp","sort_order":4},
+      {"id":"mansoor-mexican-pizza","category_id":"mansoor-pizza","name":"Mexican Pizza","price":250,"price_sizes":[250,450,500],"image_url":"https://mizbanapp.com/images/dish/Mexican-Pizza-mf7uuwlrluqgw2-1-small.webp","sort_order":5},
+      {"id":"mansoor-roast-beef-pizza","category_id":"mansoor-pizza","name":"Roast Beef Pizza","price":250,"price_sizes":[250,400,500],"sort_order":6},
+      {"id":"mansoor-meat-mushroom-pizza","category_id":"mansoor-pizza","name":"Meat & Mushroom Pizza","price":250,"price_sizes":[250,400,500],"sort_order":7},
+      {"id":"mansoor-chicken-mushroom-pizza","category_id":"mansoor-pizza","name":"Chicken & Mushroom Pizza","description":"Handmade dough, pizza cheese, chicken steak and fresh mushrooms.","price":220,"price_sizes":[220,350,450],"sort_order":8},
+      {"id":"mansoor-veggie-pizza","category_id":"mansoor-pizza","name":"Veggie Pizza","price":180,"price_sizes":[180,320,450],"sort_order":9},
+      {"id":"mansoor-mixed-pizza","category_id":"mansoor-pizza","name":"Mixed Pizza","price":150,"price_sizes":[150,300,380],"sort_order":10},
+      {"id":"mansoor-special-pizza","category_id":"mansoor-pizza","name":"Special Pizza","price":300,"price_sizes":[300,550,650],"sort_order":11},
+      {"id":"mansoor-garlic-bread","category_id":"mansoor-pizza","name":"Garlic Bread","price":150,"sort_order":12},
+      {"id":"mansoor-chicken-minced-pizza","category_id":"mansoor-pizza","name":"Chicken and Minced Meat Mixed Pizza","price":200,"price_sizes":[200,350,500],"sort_order":13},
+
+      {"id":"mansoor-chef-special-burger","category_id":"mansoor-burgers","name":"Chef’s Special Burger","price":300,"sort_order":1},
+      {"id":"mansoor-royal-beef-burger","category_id":"mansoor-burgers","name":"Royal Beef Burger","price":230,"sort_order":2},
+      {"id":"mansoor-double-beef-burger","category_id":"mansoor-burgers","name":"Double Beef Burger","price":250,"sort_order":3},
+      {"id":"mansoor-mushroom-beef-burger","category_id":"mansoor-burgers","name":"Mushroom Beef Burger","price":200,"sort_order":4},
+      {"id":"mansoor-cheeseburger-premium","category_id":"mansoor-burgers","name":"Cheeseburger","price":150,"sort_order":5},
+      {"id":"mansoor-classic-burger","category_id":"mansoor-burgers","name":"Classic Burger","price":120,"sort_order":6},
+      {"id":"mansoor-mushroom-cheese-burger","category_id":"mansoor-burgers","name":"Mushroom and Cheese Burger","price":120,"sort_order":7},
+      {"id":"mansoor-cheeseburger","category_id":"mansoor-burgers","name":"Cheeseburger","price":80,"sort_order":8},
+      {"id":"mansoor-plain-burger","category_id":"mansoor-burgers","name":"Plain Burger","price":50,"sort_order":9},
+      {"id":"mansoor-double-burger","category_id":"mansoor-burgers","name":"Double Burger","price":130,"sort_order":10},
+
+      {"id":"mansoor-cold-sandwich","category_id":"mansoor-sandwiches","name":"Cold Sandwich","price":100,"sort_order":1},
+      {"id":"mansoor-chicken-sandwich","category_id":"mansoor-sandwiches","name":"Chicken Sandwich","price":100,"sort_order":2},
+      {"id":"mansoor-special-chicken","category_id":"mansoor-sandwiches","name":"Special Chicken","price":150,"sort_order":3}
+    ]
   },
   {
     "restaurant": {
@@ -389,7 +426,7 @@
       "phone_numbers": ["+93 799 240 625", "+93 702 469 903", "+93 728 248 508"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Dehkadeh-Fast-Food-mnbwcpssxo3i51-1-large.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -406,11 +443,47 @@
       "partnership_status": "prospect",
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
-      "source_url": "https://mizbanapp.com/fa/herat/restaurant/dehkadeh-fast-food",
-      "source_checked_at": "2026-08-09"
+      "source_url": "https://mizbanapp.com/en/herat/restaurant/dehkadeh-fast-food",
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/dehkadeh-fast-food",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/dehkadeh-fast-food/menu",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"dehkadeh-burgers","name":"Burgers","name_dari":"برگرها","sort_order":1},
+      {"id":"dehkadeh-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":2},
+      {"id":"dehkadeh-sandwiches","name":"Sandwiches","name_dari":"ساندویچ","sort_order":3},
+      {"id":"dehkadeh-drinks","name":"Drinks","name_dari":"نوشیدنی‌ها","sort_order":4}
+    ],
+    "items": [
+      {"id":"dehkadeh-cheese-burger","category_id":"dehkadeh-burgers","name":"Cheese Burger","description":"Handmade beef burger, pizza cheese, chicken breast, salad, sauce and chips.","price":100,"price_sizes":[100,70,60],"image_url":"https://mizbanapp.com/images/dish/Cheese-burger-mf4w7mt1ob6uod-1-small.webp","sort_order":1},
+      {"id":"dehkadeh-simple-burger","category_id":"dehkadeh-burgers","name":"Simple Burger","description":"Handmade beef burger, salad, sauce and chips.","price":50,"image_url":"https://mizbanapp.com/images/dish/simple%20Burger-mndlky1kmd1poc-1-small.webp","sort_order":2},
+      {"id":"dehkadeh-special-burger","category_id":"dehkadeh-burgers","name":"Special Burger","description":"Handmade beef burger, bologna, pizza cheese, salad, sauce and chips.","price":80,"image_url":"https://mizbanapp.com/images/dish/Special-Burger-mf4wekj47gn8al-1-small.webp","sort_order":3},
+      {"id":"dehkadeh-double-burger","category_id":"dehkadeh-burgers","name":"Double Burger","name_dari":"دابل برگر","description":"Handmade beef burger, pizza cheese, salad, sauce and chips.","price":120,"image_url":"https://mizbanapp.com/images/dish/%D8%AF%D8%A7%D8%A8%D9%84%20%D8%A8%D8%B1%DA%AF%D8%B1-mmkkf8f2pik6jo-1-small.webp","sort_order":4},
+      {"id":"dehkadeh-special-beef","category_id":"dehkadeh-burgers","name":"Special Dehkadeh Beef","description":"200g beef burger, two cheese slices, caramelized onion, mustard, special sauce and salad.","price":200,"image_url":"https://mizbanapp.com/images/dish/%D8%A8%DB%8C%D9%81%20%D8%A8%D8%B1%DA%AF%D8%B1-mndkhnup21zcgm-1-small.webp","sort_order":5},
+      {"id":"dehkadeh-special-burger-large","category_id":"dehkadeh-burgers","name":"Special Dehkadeh Burger","description":"Handmade beef burger, bologna, pizza cheese, chicken breast, salad and sauce.","price":160,"sort_order":6},
+      {"id":"dehkadeh-chicken-burger","category_id":"dehkadeh-burgers","name":"Chicken Burger","name_dari":"چکن برگر","description":"Handmade beef burger, pizza cheese, chicken breast, salad, sauce and chips.","price":140,"sort_order":7},
+      {"id":"dehkadeh-beef-burger","category_id":"dehkadeh-burgers","name":"Beef Burger","description":"150g beef burger, cheese, caramelized onion, mustard, special sauce and salad.","price":150,"sort_order":8},
+
+      {"id":"dehkadeh-two-person-pizza","category_id":"dehkadeh-pizza","name":"Two-Person Pizza","name_dari":"پیتزا ۲ نفره","price":200,"sort_order":1},
+      {"id":"dehkadeh-chicken-mushroom-pizza","category_id":"dehkadeh-pizza","name":"Chicken and Mushroom Pizza","description":"Mushrooms, chicken breast, pizza cheese, olives, tomato and pickles.","price":180,"price_sizes":[180,300,500],"sort_order":2},
+      {"id":"dehkadeh-family-pizza","category_id":"dehkadeh-pizza","name":"Family Pizza","name_dari":"پیتزا خانواده","price":350,"sort_order":3},
+      {"id":"dehkadeh-family-pizza-40cm","category_id":"dehkadeh-pizza","name":"Family Pizza (40 cm)","name_dari":"پیتزا خانواده","description":"40 cm.","price":400,"sort_order":4},
+      {"id":"dehkadeh-mixed-pizza","category_id":"dehkadeh-pizza","name":"Mixed Pizza","name_dari":"پیتزا مخلوط","price":250,"sort_order":5},
+      {"id":"dehkadeh-pizza","category_id":"dehkadeh-pizza","name":"Dehkadeh Pizza","description":"Chicken breast, ground meat, special sauce, pizza cheese, olives, tomato and pickles.","price":200,"price_sizes":[200,400,600],"sort_order":6},
+
+      {"id":"dehkadeh-bandari-sandwich","category_id":"dehkadeh-sandwiches","name":"Bandari Sandwich","description":"Glazed sausage, chips, salad and sauce.","price":50,"price_sizes":[50,60,70],"sort_order":1},
+      {"id":"dehkadeh-special-chicken-sandwich","category_id":"dehkadeh-sandwiches","name":"Special Chicken Sandwich","description":"Chicken breast, chips, pizza cheese, salad and sauce.","price":100,"price_sizes":[100,120,150],"sort_order":2},
+      {"id":"dehkadeh-simple-chicken-sandwich","category_id":"dehkadeh-sandwiches","name":"Simple Chicken Sandwich","description":"Chicken breast, chips, salad and sauce.","price":80,"sort_order":3},
+      {"id":"dehkadeh-cold-sandwich","category_id":"dehkadeh-sandwiches","name":"Cold Sandwich","name_dari":"ساندویچ سرد","description":"Lettuce, sausage, salad and sauce.","price":50,"sort_order":4},
+      {"id":"dehkadeh-tandoori-sandwich","category_id":"dehkadeh-sandwiches","name":"Tandoori Sandwich","description":"Bologna, chicken breast, pizza cheese, sauce, salad and chips.","price":130,"sort_order":5},
+
+      {"id":"dehkadeh-small-water","category_id":"dehkadeh-drinks","name":"Small Water","price":10,"price_sizes":[10,20],"sort_order":1},
+      {"id":"dehkadeh-soft-drink","category_id":"dehkadeh-drinks","name":"Soft Drink","name_dari":"نوشابه","price":50,"price_sizes":[50,20,10],"sort_order":2},
+      {"id":"dehkadeh-pepsi","category_id":"dehkadeh-drinks","name":"Pepsi","name_dari":"پیپسی","price":20,"sort_order":3},
+      {"id":"dehkadeh-alcuzzi","category_id":"dehkadeh-drinks","name":"Alcuzzi Energy Drink","name_dari":"انرژی الکوزی","price":60,"sort_order":4}
+    ]
   },
   {
     "restaurant": {
@@ -418,20 +491,20 @@
       "name": "Pizza 99",
       "name_dari": "پیتزا ۹۹",
       "slug": "pizza-99-herat",
-      "description": "A public Herat listing for pizza, sandwiches, burgers and fast food. The exact address and Afghan Eats ordering are awaiting owner confirmation.",
-      "description_dari": "فهرست عمومی پیتزا ۹۹ در هرات برای پیتزا، ساندویچ، برگر و فست‌فود. آدرس دقیق و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
+      "description": "A public Pizza 99 listing at Garda Park Taraqi for pizza, sandwiches, burgers and fast food. Afghan Eats ordering is awaiting owner confirmation.",
+      "description_dari": "فهرست عمومی پیتزا ۹۹ در گرده پارک ترقی برای پیتزا، ساندویچ، برگر و فست‌فود. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
       "cuisine_tags": ["Fast Food", "Pizza", "Burgers", "Sandwiches"],
       "category_primary": "Pizza",
-      "address": "Herat, Afghanistan",
-      "address_dari": "هرات، افغانستان",
-      "landmark": null,
-      "district": null,
+      "address": "Garda Park Taraqi, in front of Mirowais Sadeq Gymnasium, Herat",
+      "address_dari": "هرات، گرده پارک ترقی، مقابل جمنازیوم میرویس صادق",
+      "landmark": "In front of Mirowais Sadeq Gymnasium",
+      "district": "Park-e-Taraqi",
       "city": "Herat",
       "phone": "+93 798 505 016",
       "phone_numbers": ["+93 798 505 016", "+93 798 990 099"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754108899393-17092423-1-large.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -448,11 +521,38 @@
       "partnership_status": "prospect",
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
-      "source_url": "https://mizbanapp.com/fa/herat/restaurant/pizza-99/overview",
-      "source_checked_at": "2026-08-09"
+      "source_url": "https://www.mizbanapp.com/en/herat/restaurant/688d93e3cbac199cae0405be/overview",
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/688d93e3cbac199cae0405be/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://www.mizbanapp.com/en/herat/restaurant/688d93e3cbac199cae0405be/menu",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"pizza99-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":1}
+    ],
+    "items": [
+      {"id":"pizza99-with-sauce","category_id":"pizza99-pizza","name":"Pizza 99 with Sauce","price":120,"sort_order":1},
+      {"id":"pizza99-chicken-club","category_id":"pizza99-pizza","name":"Chicken Club Pizza","price":150,"sort_order":2},
+      {"id":"pizza99-chicken","category_id":"pizza99-pizza","name":"Chicken Pizza","price":170,"sort_order":3},
+      {"id":"pizza99-mixed","category_id":"pizza99-pizza","name":"Mixed Pizza","price":170,"sort_order":4},
+      {"id":"pizza99-vegetable","category_id":"pizza99-pizza","name":"Vegetable Pizza","price":170,"sort_order":5},
+      {"id":"pizza99-chicken-toronto","category_id":"pizza99-pizza","name":"Chicken Toronto Pizza","price":200,"sort_order":6},
+      {"id":"pizza99-fish","category_id":"pizza99-pizza","name":"Fish Pizza","price":220,"sort_order":7},
+      {"id":"pizza99-chicken-mushroom","category_id":"pizza99-pizza","name":"Chicken Mushroom Pizza","price":220,"sort_order":8},
+      {"id":"pizza99-meat","category_id":"pizza99-pizza","name":"Meat Pizza","price":250,"sort_order":9},
+      {"id":"pizza99-kofta-pashan","category_id":"pizza99-pizza","name":"Kofta Pashan Pizza","price":250,"sort_order":10},
+      {"id":"pizza99-canadian-olives","category_id":"pizza99-pizza","name":"Canadian Pizza with Olives","price":270,"sort_order":11},
+      {"id":"pizza99-spicy-mexican","category_id":"pizza99-pizza","name":"Spicy Mexican Pizza","price":270,"sort_order":12},
+      {"id":"pizza99-turkish","category_id":"pizza99-pizza","name":"Turkish Pizza","price":270,"sort_order":13},
+      {"id":"pizza99-russian-beef","category_id":"pizza99-pizza","name":"Russian Beef Pizza","price":280,"sort_order":14},
+      {"id":"pizza99-steak","category_id":"pizza99-pizza","name":"Steak Pizza","price":300,"sort_order":15},
+      {"id":"pizza99-oscar","category_id":"pizza99-pizza","name":"Oscar Pizza","price":300,"sort_order":16},
+      {"id":"pizza99-special-meat","category_id":"pizza99-pizza","name":"Special Meat Pizza","price":350,"sort_order":17},
+      {"id":"pizza99-lahmacun","category_id":"pizza99-pizza","name":"Turkish Lahmacun","price":250,"sort_order":18},
+      {"id":"pizza99-pide","category_id":"pizza99-pizza","name":"Turkish Pide","price":200,"sort_order":19},
+      {"id":"pizza99-roulette","category_id":"pizza99-pizza","name":"Roulette","price":300,"sort_order":20}
+    ]
   },
   {
     "restaurant": {
