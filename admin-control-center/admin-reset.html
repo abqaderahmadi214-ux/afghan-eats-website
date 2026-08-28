@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Reset Afghan Eats admin access</title>
+  <link rel="stylesheet" href="assets/control-center.css">
+</head>
+<body>
+  <main class="auth-layout">
+    <section class="auth-card" aria-labelledby="reset-title">
+      <div class="brand-lockup"><span class="brand-mark">AE</span><div><strong>Afghan Eats</strong><span>Control Center</span></div></div>
+      <p class="eyebrow">Private administrator recovery</p>
+      <h1 id="reset-title">Set a new admin password.</h1>
+      <p class="auth-copy">This private reset link can be used once. Choose a password that you do not use for any other account.</p>
+      <form id="admin-reset-form" novalidate>
+        <input name="token" type="hidden">
+        <label class="field"><span>New password</span><input name="newPassword" type="password" autocomplete="new-password" minlength="14" maxlength="200" required></label>
+        <label class="field"><span>Confirm new password</span><input name="confirmPassword" type="password" autocomplete="new-password" minlength="14" maxlength="200" required></label>
+        <div class="safety-card"><strong>Password requirements</strong><p>At least 14 characters with uppercase and lowercase letters, a number and a symbol.</p></div>
+        <button class="button button-primary button-wide" type="submit">Set new password</button>
+      </form>
+      <p id="admin-reset-result" class="notice hidden" role="status" aria-live="polite"></p>
+      <p class="auth-note"><a href="/">Return to Control Center sign in</a></p>
+    </section>
+    <aside class="auth-aside" aria-hidden="true"><div class="auth-aside-orbit orbit-one"></div><div class="auth-aside-orbit orbit-two"></div><p>Administrator recovery links are private and one-time use.</p></aside>
+  </main>
+  <script src="assets/admin-reset.js?v=legacy-parity-1"></script>
+</body>
+</html>
