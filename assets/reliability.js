@@ -30,7 +30,7 @@ window.cancelCurrentOrder=async function(){
   const reason=prompt(relText('Optional: tell us why you are cancelling.','اختیاری: دلیل لغو سفارش را بنویسید.'));
   if(reason===null)return;
   if(!confirm(relText('Cancel this order now? This cannot be undone.','این سفارش اکنون لغو شود؟ این عمل قابل بازگشت نیست.')))return;
-  try{await trpcMutation('orders.cancel',{orderId:id,customerPhone:phone,reason:String(reason||'').slice(0,300)});if(typeof trackOrderWithLiveRider==='function')await trackOrderWithLiveRider();else if(typeof secureTrackOrder==='function')await secureTrackOrder();alert(relText('Order cancelled.','سفارش لغو شد.'))}catch(e){alert(e?.message||relText('Cancellation failed.','لغو سفارش انجام نشد.'))}
+  try{await trpcMutation('orders.cancel',{orderId:id,customerPhone:phone,reason:String(reason||'').slice(0,300)});if(typeof trackOrderWithLiveRider==='function')await trackOrderWithLiveRider();else if(typeof secureTrackOrder==='function')await secureTrackOrder();alert(relText('Order cancelled.','سفارش لغو شد.'))}catch(e){console.error('Customer order cancellation failed',e);alert(relText('We could not cancel the order right now. Please refresh and try again. If the restaurant has already confirmed it, online cancellation is no longer available.','فعلاً لغو سفارش انجام نشد. صفحه را تازه‌سازی کرده و دوباره تلاش کنید. اگر رستورانت سفارش را تأیید کرده باشد، لغو آنلاین دیگر امکان‌پذیر نیست.'))}
 }
 const relBaseRenderTracking=window.renderAdvancedTracking;
 if(typeof relBaseRenderTracking==='function'){
