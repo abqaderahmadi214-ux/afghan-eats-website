@@ -186,7 +186,9 @@ window.reviewRestaurantClaim = async function reviewRestaurantClaim(id, status) 
 
 window.createClaimOwnerInvite = async function createClaimOwnerInvite(claimId) {
   try {
-    const result = await opsMutation('portal.adminCreateClaimInvite', { claimId }, true), url = `${location.origin}/activate.html?token=${encodeURIComponent(result.activationToken)}`, host = document.getElementById('restaurantClaimInviteOutput');
+    const result = await opsMutation('portal.adminCreateClaimInvite', { claimId }, true);
+    if (!/^[a-f0-9]{64}$/i.test(String(result.activationToken || ''))) throw new Error('Afghan Eats could not create a valid owner activation invitation. Please retry.');
+    const url = `${location.origin}/activate.html?token=${encodeURIComponent(result.activationToken)}`, host = document.getElementById('restaurantClaimInviteOutput');
     host.className = 'claim-invite-output';
     host.innerHTML = `<b>One-time owner activation link for ${claimEsc(result.restaurantName)}</b><p>Username: <strong>${claimEsc(result.username)}</strong> · expires in ${claimEsc(result.expiresInHours)} hours</p><textarea id="restaurantClaimInviteLink" readonly>${claimEsc(url)}</textarea><button class="btn btn-dark btn-sm" type="button" onclick="copyRestaurantClaimInvite()">Copy private activation link</button><p class="muted">Send this link privately. It cannot be recovered after leaving this page.</p>`;
     await loadRestaurantClaims();
