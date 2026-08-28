@@ -115,7 +115,7 @@ test('Dari customer chrome and discovery stay localized', async ({page})=>{
   await expect(page.locator('#search')).toHaveAttribute('placeholder',/رستورانت/);
 });
 
-test('public Herat directory listings remain distinct from active Afghan Eats ordering', async ({page})=>{
+test('public Herat directory listings can show sourced menus without becoming orderable', async ({page})=>{
   await mockApi(page);
   await page.goto('/restaurants');
   const search=page.locator('#search');
@@ -129,6 +129,10 @@ test('public Herat directory listings remain distinct from active Afghan Eats or
   await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
   await expect(page.locator('.directory-detail a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
+  await expect(page.locator('.directory-detail')).toContainText('Public menu');
+  await expect(page.locator('.directory-detail')).toContainText('Jumeirah Special Burger');
+  await expect(page.locator('.directory-detail')).toContainText('؋ 200');
+  await expect(page.locator('.directory-detail .add-btn')).toHaveCount(0);
   await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
 });
 
