@@ -72,6 +72,9 @@ jobs:
             retry_contains "https://afghaneats.net/assets/advanced.js" "tracking-status-chip" /tmp/ae-tracking-render-v2.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Tracking v2" /tmp/ae-tracking-css-v2.css
             retry_contains "https://afghaneats.net/account" "class=\"account-hero\"" /tmp/ae-account-v2.html
+            retry_contains "https://afghaneats.net/owner" "class=\"owner-app-shell\"" /tmp/ae-owner-premium-v1.html
+            retry_contains "https://afghaneats.net/owner" "id=\"ownerOverviewPanel\"" /tmp/ae-owner-overview-v1.html
+            retry_contains "https://afghaneats.net/assets/owner-premium.css" "Premium Dashboard v1" /tmp/ae-owner-premium-css-v1.css
             retry_contains "https://afghaneats.net/activate.html" "ae_portal_activation_token" /tmp/ae-activate-token-v2.html
             retry_contains "https://afghaneats.net/assets/portal.js" "Activation link is incomplete" /tmp/ae-activate-guard-v2.js
             retry_contains "https://afghaneats.net/account" "data-account-panel=\"security\"" /tmp/ae-account-security-v2.html
