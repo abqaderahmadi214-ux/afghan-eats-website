@@ -74,6 +74,10 @@ jobs:
             retry_contains "https://afghaneats.net/account" "class=\"account-hero\"" /tmp/ae-account-v2.html
             retry_contains "https://afghaneats.net/owner" "class=\"owner-app-shell\"" /tmp/ae-owner-premium-v1.html
             retry_contains "https://afghaneats.net/owner" "id=\"ownerBusinessTools\"" /tmp/ae-owner-tools-v2.html
+            retry_contains "https://afghaneats.net/owner" "ownerRecoveryPanel" /tmp/ae-owner-recovery-v1.html
+            retry_contains "https://afghaneats.net/assets/portal.js" "requestPortalRecovery" /tmp/ae-owner-recovery-js-v1.js
+            retry_contains "https://afghaneats.net/portal-recovery" "Set a new portal password" /tmp/ae-portal-recovery-v2.html
+            retry_contains "https://afghaneats.net/assets/portal-recovery-premium.css" "portal-recovery-page" /tmp/ae-portal-recovery-css-v1.css
             retry_contains "https://afghaneats.net/assets/owner-premium.css" "Owner layout containment & advanced tools v2" /tmp/ae-owner-containment-v2.css
             retry_contains "https://afghaneats.net/owner" "id=\"ownerOverviewPanel\"" /tmp/ae-owner-overview-v1.html
             retry_contains "https://afghaneats.net/assets/owner-premium.css" "Premium Dashboard v1" /tmp/ae-owner-premium-css-v1.css
