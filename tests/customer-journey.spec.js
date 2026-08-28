@@ -125,6 +125,7 @@ test('public Herat directory listings can show sourced menus without becoming or
   await expect(listing).toContainText('Jumeirah Fast Food');
   await expect(listing).toContainText('Public listing');
   await expect(listing).toContainText('Ordering not active yet');
+  await expect(listing.locator('img')).toHaveAttribute('src',/Jumeirah%20Fast%20Food/);
   await listing.click();
   await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
