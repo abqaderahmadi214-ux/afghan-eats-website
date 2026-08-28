@@ -11,12 +11,13 @@
   <link rel="stylesheet" href="/assets/trust.css">
   <link rel="stylesheet" href="/assets/customer.css">
   <script src="/config.js"></script>
+  <link rel="stylesheet" href="/assets/customer-premium.css">
 </head>
-<body>
+<body class="premium-customer checkout-page">
   <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a><a class="btn btn-light" href="/restaurants" data-i18n="restaurants"></a></div></div></header>
-  <main class="section soft"><div class="container"><div class="form-card">
+  <main class="section soft"><div class="container checkout-container"><div class="form-card checkout-card">
     <div class="checkout-progress"><div class="checkout-step done">1 · <span class="en-copy">Basket</span><span class="fa-copy">سبد</span></div><div class="checkout-step active">2 · <span class="en-copy">Delivery details</span><span class="fa-copy">معلومات تحویل</span></div><div class="checkout-step">3 · <span class="en-copy">Confirmation</span><span class="fa-copy">تأیید</span></div></div>
-    <h1 data-i18n="checkout"></h1>
+    <div class="checkout-title-row"><div><span class="checkout-eyebrow"><span class="en-copy">Almost there</span><span class="fa-copy">تقریباً تمام شد</span></span><h1 data-i18n="checkout"></h1></div><a class="checkout-back" href="/restaurants"><span aria-hidden="true">←</span><span class="en-copy">Keep browsing</span><span class="fa-copy">ادامه جستجو</span></a></div>
     <p class="muted en-copy">Choose delivery or pickup. For delivery, Afghan Eats checks your address and fee before you place the order.</p>
     <p class="muted fa-copy">ارسال یا دریافت حضوری را انتخاب کنید. برای ارسال، افغان ایتس پیش از ثبت سفارش آدرس و هزینه را بررسی می‌کند.</p>
     <div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
@@ -36,7 +37,7 @@
       <label class="field"><span data-i18n="promo"></span><div class="promo-entry"><input id="promo" autocomplete="off" data-ph-en="Enter a promo code" data-ph-fa="کد تخفیف را وارد کنید"><button class="btn btn-light" type="button" onclick="applyPromo()" data-i18n="apply"></button></div><small id="promoMsg" class="muted"><span class="en-copy">Use a code only if Afghan Eats has shared one with you.</span><span class="fa-copy">فقط کدی را وارد کنید که افغان ایتس با شما شریک کرده باشد.</span></small></label>
       <div class="field full"><span><span class="en-copy">Optional rider tip</span><span class="fa-copy">انعام اختیاری برای پیک</span></span><div class="tip-row"><label class="tip-pill active"><input type="radio" name="tipAmount" value="0" checked onchange="aeSetTip(this)" hidden><span class="en-copy">No tip</span><span class="fa-copy">بدون انعام</span></label><label class="tip-pill"><input type="radio" name="tipAmount" value="30" onchange="aeSetTip(this)" hidden>؋30</label><label class="tip-pill"><input type="radio" name="tipAmount" value="50" onchange="aeSetTip(this)" hidden>؋50</label><label class="tip-pill"><input type="radio" name="tipAmount" value="100" onchange="aeSetTip(this)" hidden>؋100</label></div></div>
     </div>
-    <h2 data-i18n="cart"></h2><div id="cartItems"></div>
+    <div class="checkout-order-heading"><h2 data-i18n="cart"></h2><span class="checkout-secure"><span aria-hidden="true">✓</span><span class="en-copy">Server-verified totals</span><span class="fa-copy">مجموع تأییدشده در سرور</span></span></div><div id="cartItems"></div>
     <div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div><div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div><div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div><div class="sum-row"><span data-i18n="discount"></span><span id="cartDiscount"></span></div><div class="sum-row"><span><span class="en-copy">Tip</span><span class="fa-copy">انعام</span></span><span id="tipPreview">؋ 0</span></div><div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
     <div class="server-price-note">🛡️ <span class="en-copy">The order server rechecks menu prices, delivery coverage, delivery fee, service fee, promotions and tip before accepting the order.</span><span class="fa-copy">سرور پیش از پذیرش سفارش، قیمت منو، محدوده و هزینه ارسال، خدمات، تخفیف و انعام را دوباره بررسی می‌کند.</span></div>
     <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px" data-i18n="place"></button><div id="orderSubmitState" class="order-submit-state"></div>
