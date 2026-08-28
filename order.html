@@ -1,1 +1,86 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track order | Afghan Eats</title><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/advanced.css"><link rel="stylesheet" href="/assets/operations.css"><link rel="stylesheet" href="/assets/portal.css"><script src="/config.js"></script></head><body><header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/orders.html" data-i18n="orders"></a></div></div></header><main class="section soft"><div class="container"><div class="timeline"><div class="section-head"><div><h1 data-i18n="track"></h1><p class="en-copy">Track the restaurant stage and delivery progress with your signed-in Afghan Eats account or the phone number used at checkout.</p><p class="fa-copy">مرحله رستورانت و روند تحویل را با حساب واردشده افغان ایتس یا شماره تماس استفاده‌شده هنگام سفارش پیگیری کنید.</p></div><span class="advanced-badge">🛡️ <span class="en-copy">Private tracking</span><span class="fa-copy">پیگیری خصوصی</span></span></div><div id="trackGate" class="track-gate"><b><span class="en-copy">Verify your order</span><span class="fa-copy">سفارش خود را تأیید کنید</span></b><p class="muted"><span class="en-copy">Enter the phone number you used when placing this order. Linked signed-in orders also show an account-only summary automatically.</span><span class="fa-copy">شماره تماسی را که هنگام سفارش استفاده کردید وارد کنید. سفارش‌های پیوندشده با حساب واردشده نیز به‌صورت خودکار خلاصه مخصوص حساب را نشان می‌دهند.</span></p><div class="track-gate-row"><input id="trackPhone" type="tel" placeholder="+93 7xx xxx xxx"><button class="btn btn-primary" type="button" onclick="trackOrderWithLiveRider()"><span class="en-copy">Verify & track live</span><span class="fa-copy">تأیید و پیگیری زنده</span></button></div><div id="trackNotice" class="muted" style="margin-top:8px"></div></div><div id="orderMeta" class="notice"></div><div id="timelineSteps"></div><div id="orderCancelControl"></div><div id="liveDelivery"></div><section id="aeAccountDeliveryTracking" class="ae-lastmile hidden" aria-live="polite"><h3>✓ <span class="en-copy">Signed-in account tracking</span><span class="fa-copy">پیگیری با حساب واردشده</span></h3><div id="aeAccountDeliveryTrackingBody"></div></section><div class="safety-note"><span class="en-copy">Signed-in tracking is account-scoped and does not reveal precise rider coordinates. Phone-verified live GPS remains available only to the customer who verifies the checkout phone. Location sharing stops when the delivery ends.</span><span class="fa-copy">پیگیری با حساب فقط برای همان حساب است و مختصات دقیق پیک را نمایش نمی‌دهد. GPS زنده با تأیید شماره تماس فقط برای مشتری سفارش قابل مشاهده است و با پایان تحویل متوقف می‌شود.</span></div></div></div></main><script src="/assets/app.js"></script><script src="/assets/advanced.js"></script><script src="/assets/portal.js"></script><script src="/assets/reliability.js"></script><script src="/assets/account-delivery-tracking.js"></script><script>document.addEventListener('DOMContentLoaded',()=>{try{const id=new URLSearchParams(location.search).get('id'),o=JSON.parse(localStorage.getItem('ae_last_order')||'null');if(o?.customerPhone&&(o.orderId===id||o.id===id)){document.getElementById('trackPhone').value=o.customerPhone;setTimeout(()=>{if(typeof trackOrderWithLiveRider==='function')trackOrderWithLiveRider()},700)}}catch{}})</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Track order | Afghan Eats</title>
+  <meta name="robots" content="noindex,follow">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/advanced.css">
+  <link rel="stylesheet" href="/assets/operations.css">
+  <link rel="stylesheet" href="/assets/portal.css">
+  <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-13">
+  <script src="/config.js"></script>
+</head>
+<body class="premium-customer tracking-page">
+<header class="header"><div class="container nav">
+  <a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a>
+  <nav class="navlinks"><a href="/restaurants" data-i18n="restaurants"></a><a href="/orders" data-i18n="orders"></a></nav>
+  <div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a></div>
+</div></header>
+
+<main class="section soft"><div class="container tracking-container">
+  <div class="tracking-page-head">
+    <div>
+      <span class="tracking-eyebrow"><span class="en-copy">Live order journey</span><span class="fa-copy">روند زنده سفارش</span></span>
+      <h1 data-i18n="track"></h1>
+      <p class="en-copy">See where your order is in the restaurant and delivery journey.</p>
+      <p class="fa-copy">ببینید سفارش شما در کدام مرحله آماده‌سازی و تحویل قرار دارد.</p>
+    </div>
+    <a class="tracking-back" href="/orders"><span aria-hidden="true">←</span><span class="en-copy">All orders</span><span class="fa-copy">همه سفارش‌ها</span></a>
+  </div>
+
+  <section id="trackGate" class="track-gate tracking-verify-card">
+    <div class="tracking-verify-icon" aria-hidden="true">🔒</div>
+    <div class="tracking-verify-copy">
+      <b><span class="en-copy">Verify this order</span><span class="fa-copy">این سفارش را تأیید کنید</span></b>
+      <p><span class="en-copy">Enter the phone number used at checkout. Signed-in linked orders can also show an account-only summary.</span><span class="fa-copy">شماره تماسی را که هنگام سفارش استفاده کردید وارد کنید. سفارش‌های متصل به حساب نیز می‌توانند خلاصه مخصوص حساب را نشان دهند.</span></p>
+      <div class="track-gate-row"><input id="trackPhone" type="tel" placeholder="+93 7xx xxx xxx"><button class="btn btn-primary" type="button" onclick="trackOrderWithLiveRider()"><span class="en-copy">Verify & track</span><span class="fa-copy">تأیید و پیگیری</span></button></div>
+      <div id="trackNotice" class="tracking-verify-notice"></div>
+    </div>
+  </section>
+
+  <div id="trackingExperience" class="tracking-experience is-locked">
+    <section id="orderMeta" class="tracking-status-hero" aria-live="polite"></section>
+
+    <div class="tracking-layout">
+      <div class="tracking-main-column">
+        <section class="tracking-card tracking-progress-card">
+          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Progress</span><span class="fa-copy">پیشرفت</span></span><h2><span class="en-copy">Your order journey</span><span class="fa-copy">روند سفارش شما</span></h2></div><span class="tracking-live-pill"><span></span><span class="en-copy">Live</span><span class="fa-copy">زنده</span></span></div>
+          <div id="timelineSteps" class="premium-tracking-steps"></div>
+        </section>
+
+        <div id="liveDelivery" class="tracking-live-slot"></div>
+
+        <section id="aeAccountDeliveryTracking" class="ae-lastmile tracking-card tracking-account-card hidden" aria-live="polite">
+          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Account view</span><span class="fa-copy">نمای حساب</span></span><h2><span class="en-copy">Signed-in delivery tracking</span><span class="fa-copy">پیگیری تحویل با حساب</span></h2></div><span class="tracking-secure-mark">✓</span></div>
+          <div id="aeAccountDeliveryTrackingBody"></div>
+        </section>
+
+        <div id="orderCancelControl" class="tracking-cancel-slot"></div>
+
+        <section class="tracking-help-card">
+          <div class="tracking-help-icon" aria-hidden="true">?</div>
+          <div><b><span class="en-copy">Need help with this order?</span><span class="fa-copy">برای این سفارش کمک می‌خواهید؟</span></b><p class="en-copy">Get support without losing your place in tracking.</p><p class="fa-copy">بدون خروج از روند پیگیری، از پشتیبانی کمک بگیرید.</p></div>
+          <div class="tracking-help-actions"><a class="btn btn-light" href="/help"><span class="en-copy">Get help</span><span class="fa-copy">دریافت کمک</span></a><button class="btn btn-light" type="button" onclick="secureTrackOrder()"><span aria-hidden="true">↻</span><span class="en-copy">Refresh</span><span class="fa-copy">تازه‌سازی</span></button></div>
+        </section>
+      </div>
+
+      <aside class="tracking-side-column">
+        <section id="trackingOrderSummary" class="tracking-card tracking-order-summary"></section>
+        <section id="trackingDeliveryDetails" class="tracking-card tracking-delivery-details"></section>
+        <section class="tracking-privacy-card"><span aria-hidden="true">🛡️</span><div><b><span class="en-copy">Private tracking</span><span class="fa-copy">پیگیری خصوصی</span></b><p class="en-copy">Precise rider location is shown only after phone verification. Location sharing stops when delivery ends.</p><p class="fa-copy">موقعیت دقیق پیک فقط پس از تأیید شماره نمایش داده می‌شود و با پایان تحویل متوقف می‌گردد.</p></div></section>
+      </aside>
+    </div>
+  </div>
+</div></main>
+
+<script src="/assets/app.js"></script>
+<script src="/assets/advanced.js?v=20260828-13"></script>
+<script src="/assets/portal.js"></script>
+<script src="/assets/reliability.js"></script>
+<script src="/assets/account-delivery-tracking.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{try{const id=new URLSearchParams(location.search).get('id'),o=JSON.parse(localStorage.getItem('ae_last_order')||'null');if(o?.customerPhone&&(o.orderId===id||o.id===id)){document.getElementById('trackPhone').value=o.customerPhone;setTimeout(()=>{if(typeof trackOrderWithLiveRider==='function')trackOrderWithLiveRider()},700)}}catch{}})
+</script>
+</body></html>
