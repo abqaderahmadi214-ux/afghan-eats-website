@@ -186,7 +186,7 @@
       "phone_numbers": ["+93 728 778 355", "+93 728 213 595", "+93 790 810 167"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Jumeirah%20Fast%20Food-mfc9yctriszkz9-1-medium.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -204,10 +204,89 @@
       "listing_mode": "directory",
       "source_label": "Official Instagram profile",
       "source_url": "https://www.instagram.com/jumeirah____fastfood/",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/jumeirah-fast-food",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/jumeirah-fast-food",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"jumeirah-cakes","name":"Cakes","name_dari":"کیک‌ها","sort_order":1},
+      {"id":"jumeirah-appetizers","name":"Appetizers","name_dari":"پیش‌غذاها","sort_order":2},
+      {"id":"jumeirah-burgers","name":"Burgers","name_dari":"برگرها","sort_order":3},
+      {"id":"jumeirah-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":4},
+      {"id":"jumeirah-sandwiches","name":"Sandwiches","name_dari":"ساندویچ‌ها","sort_order":5},
+      {"id":"jumeirah-packs","name":"Meal packs","name_dari":"پکیج‌های غذایی","sort_order":6},
+      {"id":"jumeirah-teas","name":"Tea","name_dari":"چای‌ها","sort_order":7},
+      {"id":"jumeirah-juices","name":"Juices & drinks","name_dari":"جوس و نوشیدنی‌ها","sort_order":8},
+      {"id":"jumeirah-shakes","name":"Shakes & mocktails","name_dari":"شیک و موکتل‌ها","sort_order":9}
+    ],
+    "items": [
+      {"id":"jumeirah-special-cake","category_id":"jumeirah-cakes","name":"Jumeirah Special Cake","price":120,"image_url":"https://mizbanapp.com/images/dish/Jumeirah-Special-Cake-mf4zm04xbtlb1f-1-small.webp","sort_order":1},
+      {"id":"jumeirah-vanilla-cake","category_id":"jumeirah-cakes","name":"Vanilla Cake","price":60,"image_url":"https://mizbanapp.com/images/dish/Vanilla-Cake-mf4zq2rld3tz1r-1-small.webp","sort_order":2},
+      {"id":"jumeirah-chocolate-cream-cake","category_id":"jumeirah-cakes","name":"Chocolate Cream Cake","price":100,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Cream-Cake-mf4zsr7dkjhcuc-1-small.webp","sort_order":3},
+      {"id":"jumeirah-nescafe-cake","category_id":"jumeirah-cakes","name":"Nescafe Cake","price":70,"image_url":"https://mizbanapp.com/images/dish/Nescafe-Cake-mf4zwelwpyiyim-1-small.webp","sort_order":4},
+      {"id":"jumeirah-chocolate-cake","category_id":"jumeirah-cakes","name":"Chocolate Cake","price":60,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Cake-mf4zz61cprw8ur-1-small.webp","sort_order":5},
+      {"id":"jumeirah-sweet-cake","category_id":"jumeirah-cakes","name":"Sweet Cake","price":80,"image_url":"https://mizbanapp.com/images/dish/Sweet-Cake-mf50307jr2v4y6-1-small.webp","sort_order":6},
+      {"id":"jumeirah-special-croissant","category_id":"jumeirah-cakes","name":"Special Croissant","price":100,"image_url":"https://mizbanapp.com/images/dish/Special-Croissant-mf505qih011gm4-1-small.webp","sort_order":7},
+
+      {"id":"jumeirah-special-mantu","category_id":"jumeirah-appetizers","name":"Special Mantu","price":170,"sort_order":1},
+      {"id":"jumeirah-ashak","category_id":"jumeirah-appetizers","name":"Ashak","price":150,"sort_order":2},
+      {"id":"jumeirah-indian-momos","category_id":"jumeirah-appetizers","name":"Indian Momos","price":160,"sort_order":3},
+      {"id":"jumeirah-lebanese-shawarma","category_id":"jumeirah-appetizers","name":"Lebanese Shawarma","price":120,"sort_order":4},
+      {"id":"jumeirah-cheese-pasta","category_id":"jumeirah-appetizers","name":"Cheese Pasta","price":180,"sort_order":5},
+
+      {"id":"jumeirah-special-burger","category_id":"jumeirah-burgers","name":"Jumeirah Special Burger","price":200,"sort_order":1},
+      {"id":"jumeirah-wrapped-burger","category_id":"jumeirah-burgers","name":"Wrapped Burger","price":200,"sort_order":2},
+      {"id":"jumeirah-cheeseburger","category_id":"jumeirah-burgers","name":"Cheeseburger","price":150,"sort_order":3},
+      {"id":"jumeirah-double-cheeseburger","category_id":"jumeirah-burgers","name":"Double Cheeseburger","price":250,"sort_order":4},
+      {"id":"jumeirah-special-zinger","category_id":"jumeirah-burgers","name":"Special Zinger","price":150,"sort_order":5},
+      {"id":"jumeirah-plain-zinger","category_id":"jumeirah-burgers","name":"Plain Zinger","price":100,"sort_order":6},
+      {"id":"jumeirah-mushroom-burger","category_id":"jumeirah-burgers","name":"Mushroom Burger","price":180,"sort_order":7},
+      {"id":"jumeirah-plain-burger","category_id":"jumeirah-burgers","name":"Plain Burger","price":80,"sort_order":8},
+
+      {"id":"jumeirah-special-pizza","category_id":"jumeirah-pizza","name":"Special Pizza","price":250,"price_sizes":[250,350,600],"sort_order":1},
+      {"id":"jumeirah-chicken-pizza","category_id":"jumeirah-pizza","name":"Chicken Pizza","price":200,"price_sizes":[200,300,550],"sort_order":2},
+      {"id":"jumeirah-vegetable-pizza","category_id":"jumeirah-pizza","name":"Vegetable Pizza","price":180,"price_sizes":[180,280,450],"sort_order":3},
+      {"id":"jumeirah-steak-pizza","category_id":"jumeirah-pizza","name":"Steak Pizza","price":250,"price_sizes":[250,350,600],"sort_order":4},
+      {"id":"jumeirah-mini-pizza","category_id":"jumeirah-pizza","name":"Mini Pizza (chicken or meat)","price":150,"sort_order":5},
+
+      {"id":"jumeirah-hot-dog","category_id":"jumeirah-sandwiches","name":"Hot Dog","price":120,"sort_order":1},
+      {"id":"jumeirah-cold-sandwich","category_id":"jumeirah-sandwiches","name":"Cold Sandwich","price":100,"sort_order":2},
+      {"id":"jumeirah-sausage-sandwich","category_id":"jumeirah-sandwiches","name":"Sausage Sandwich","price":80,"sort_order":3},
+
+      {"id":"jumeirah-special-pack","category_id":"jumeirah-packs","name":"Special Pack","description":"Cheeseburger, fillet, fried chips and Pepsi.","price":250,"sort_order":1},
+      {"id":"jumeirah-single-pack","category_id":"jumeirah-packs","name":"Single Pack","description":"Mini pizza, Zinger burger, fried chips and Pepsi.","price":350,"sort_order":2},
+      {"id":"jumeirah-double-pack","category_id":"jumeirah-packs","name":"Double Pack","description":"Single pizza, plain burger, Zinger burger, two fillet pieces, fried chips and two Pepsi.","price":500,"sort_order":3},
+      {"id":"jumeirah-triple-pack","category_id":"jumeirah-packs","name":"Triple Pack","description":"Special double pizza, three fillet pieces, cheeseburger, Zinger burger, special burger, plain burger, fried chips and three Pepsi.","price":900,"sort_order":4},
+
+      {"id":"jumeirah-lemon-honey-tea","category_id":"jumeirah-teas","name":"Lemon & Honey Tea","price":120,"sort_order":1},
+      {"id":"jumeirah-black-tea","category_id":"jumeirah-teas","name":"Black Tea","price":80,"sort_order":2},
+      {"id":"jumeirah-mint-tea","category_id":"jumeirah-teas","name":"Mint Tea","price":80,"sort_order":3},
+      {"id":"jumeirah-saffron-tea","category_id":"jumeirah-teas","name":"Saffron Tea","price":100,"sort_order":4},
+      {"id":"jumeirah-green-tea","category_id":"jumeirah-teas","name":"Green Tea","price":80,"sort_order":5},
+      {"id":"jumeirah-vip-tea","category_id":"jumeirah-teas","name":"Jumeirah VIP Tea Service","description":"Saffron tea, nuts, cocoa, two Nescafe cakes and milk cake.","price":500,"sort_order":6},
+
+      {"id":"jumeirah-mojito","category_id":"jumeirah-juices","name":"Mojito","price":100,"sort_order":1},
+      {"id":"jumeirah-lemonade","category_id":"jumeirah-juices","name":"Lemonade","price":100,"sort_order":2},
+      {"id":"jumeirah-orange-juice","category_id":"jumeirah-juices","name":"Orange Juice","price":100,"sort_order":3},
+      {"id":"jumeirah-sour-cherry-juice","category_id":"jumeirah-juices","name":"Sour Cherry Juice","price":100,"sort_order":4},
+      {"id":"jumeirah-melon-juice","category_id":"jumeirah-juices","name":"Melon Juice","price":100,"sort_order":5},
+      {"id":"jumeirah-strawberry-juice","category_id":"jumeirah-juices","name":"Strawberry Juice","price":120,"sort_order":6},
+      {"id":"jumeirah-pineapple-juice","category_id":"jumeirah-juices","name":"Pineapple Juice","price":100,"sort_order":7},
+      {"id":"jumeirah-carrot-juice","category_id":"jumeirah-juices","name":"Carrot Juice","price":79,"sort_order":8},
+      {"id":"jumeirah-mango-juice","category_id":"jumeirah-juices","name":"Mango Juice","price":120,"sort_order":9},
+      {"id":"jumeirah-banana-milk","category_id":"jumeirah-juices","name":"Banana Milk","price":100,"sort_order":10},
+
+      {"id":"jumeirah-strawberry-shake","category_id":"jumeirah-shakes","name":"Strawberry Shake","price":150,"sort_order":1},
+      {"id":"jumeirah-nutella-shake","category_id":"jumeirah-shakes","name":"Nutella Shake","price":150,"sort_order":2},
+      {"id":"jumeirah-oreo-shake","category_id":"jumeirah-shakes","name":"Oreo Shake","price":150,"sort_order":3},
+      {"id":"jumeirah-vanilla-shake","category_id":"jumeirah-shakes","name":"Vanilla Shake","price":150,"sort_order":4},
+      {"id":"jumeirah-banana-milkshake","category_id":"jumeirah-shakes","name":"Banana Milkshake","price":120,"sort_order":5},
+      {"id":"jumeirah-blue-curacao","category_id":"jumeirah-shakes","name":"Blue Curacao Mocktail","price":120,"sort_order":6},
+      {"id":"jumeirah-orange-mocktail","category_id":"jumeirah-shakes","name":"Orange Mocktail","price":120,"sort_order":7},
+      {"id":"jumeirah-cherry-mocktail","category_id":"jumeirah-shakes","name":"Cherry Mocktail","price":120,"sort_order":8}
+    ]
   },
   {
     "restaurant": {
