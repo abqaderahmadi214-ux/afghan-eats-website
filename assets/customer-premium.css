@@ -1589,3 +1589,313 @@
 @media(prefers-reduced-motion:reduce){
   .restaurant-page .menu-category-panel.active{animation:none}
 }
+
+/* Menu v5 — explicit RTL/LTR geometry and quieter basket */
+.restaurant-page main.section{
+  padding-top:28px;
+  background:#fffdf9;
+}
+.restaurant-page main.section>.container.menu-layout{
+  width:min(1380px,94%);
+  max-width:1380px;
+}
+
+/* Outer ordering canvas: deterministic geometry */
+.restaurant-page .menu-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  grid-template-areas:"menu cart";
+  gap:24px;
+  align-items:start;
+  direction:ltr;
+}
+.restaurant-page #menuContent{
+  grid-area:menu;
+  min-width:0;
+}
+.restaurant-page .cart-panel{
+  grid-area:cart;
+  direction:ltr;
+}
+.restaurant-page.rtl .menu-layout{
+  grid-template-columns:300px minmax(0,1fr);
+  grid-template-areas:"cart menu";
+  direction:ltr;
+}
+.restaurant-page.rtl #menuContent,
+.restaurant-page.rtl .cart-panel{
+  direction:rtl;
+  text-align:right;
+}
+
+/* Category rail geometry is also explicit, so RTL cannot reverse grid lines */
+.restaurant-page .menu-category-browser{
+  direction:ltr;
+  grid-template-columns:170px minmax(0,1fr);
+  gap:22px;
+}
+.restaurant-page .menu-category-browser .menu-category-rail{
+  grid-column:1;
+  grid-row:1;
+  direction:ltr;
+}
+.restaurant-page .menu-category-browser .menu-category-content{
+  grid-column:2;
+  grid-row:1;
+  direction:ltr;
+}
+.restaurant-page.rtl .menu-category-browser{
+  direction:ltr;
+  grid-template-columns:minmax(0,1fr) 170px;
+}
+.restaurant-page.rtl .menu-category-browser .menu-category-rail{
+  grid-column:2;
+  grid-row:1;
+  direction:rtl;
+  text-align:right;
+}
+.restaurant-page.rtl .menu-category-browser .menu-category-content{
+  grid-column:1;
+  grid-row:1;
+  direction:rtl;
+  text-align:right;
+}
+.restaurant-page.rtl .menu-category-option{
+  direction:rtl;
+  text-align:right;
+}
+.restaurant-page.rtl .menu-category-option>span{
+  text-align:right;
+}
+.restaurant-page.rtl .menu-category-option small{
+  direction:ltr;
+  unicode-bidi:isolate;
+}
+
+/* More deliberate spacing and hierarchy */
+.restaurant-page .menu-category-rail{
+  top:86px;
+  padding:10px;
+  border-radius:14px;
+  background:#f8f7f3;
+  box-shadow:none;
+}
+.restaurant-page .menu-category-label{
+  padding:3px 8px 9px;
+  font-size:.64rem;
+}
+.restaurant-page .menu-category-option{
+  min-height:42px;
+  padding:8px 9px;
+  border-radius:9px;
+}
+.restaurant-page .menu-category-option.active{
+  box-shadow:none;
+  background:#fff;
+  border:1px solid #ebe4dc;
+}
+.restaurant-page .menu-category-option.active:before{
+  width:3px;
+  height:20px;
+}
+.restaurant-page .menu-section-heading{
+  margin-bottom:13px;
+}
+.restaurant-page .menu-section-heading h2,
+.restaurant-page .menu-section-heading h3{
+  font-size:1.25rem;
+}
+.restaurant-page.rtl .menu-section-heading h2,
+.restaurant-page.rtl .menu-section-heading h3{
+  font-family:Tahoma,Arial,sans-serif;
+  font-size:1.28rem;
+  line-height:1.6;
+}
+.restaurant-page.rtl .premium-menu-card .menu-item-copy{
+  font-family:Tahoma,Arial,sans-serif;
+}
+.restaurant-page.rtl .premium-menu-card .menu-item-copy h3{
+  line-height:1.65;
+}
+.restaurant-page.rtl .premium-menu-card .menu-item-copy p{
+  line-height:1.75;
+}
+
+/* Two strong food cards, never a squeezed 3-column matrix */
+.restaurant-page .active-category-browser .menu-card-grid,
+.restaurant-page .directory-category-browser .directory-menu-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.restaurant-page .premium-menu-card .menu-item-media{
+  height:190px;
+}
+.restaurant-page .premium-menu-card .menu-item-copy{
+  padding:14px 15px 15px;
+}
+
+/* Basket becomes a quiet utility panel rather than a competing feature */
+.restaurant-page .cart-panel{
+  top:84px;
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 8px 26px rgba(23,63,52,.055);
+  background:#fff;
+}
+.restaurant-page .cart-panel-head{
+  margin-bottom:10px;
+}
+.restaurant-page .cart-panel-head h2{
+  font-size:1.08rem;
+}
+.restaurant-page.rtl .cart-panel-head h2{
+  font-family:Tahoma,Arial,sans-serif;
+  line-height:1.5;
+}
+.restaurant-page .basket-status-dot{
+  width:7px;
+  height:7px;
+  box-shadow:0 0 0 4px rgba(53,165,102,.10);
+}
+.restaurant-page #cartItems{
+  max-height:250px;
+  overflow:auto;
+}
+.restaurant-page .cart-row{
+  padding:10px 0;
+  font-size:.78rem;
+}
+.restaurant-page .sum-row{
+  padding:7px 0;
+  font-size:.78rem;
+}
+.restaurant-page .sum-row.total{
+  margin-top:3px;
+  padding-top:10px;
+  font-size:.98rem;
+}
+.restaurant-page .cart-panel>a.btn-primary{
+  min-height:44px;
+  margin-top:6px;
+  border-radius:11px;
+}
+.restaurant-page .group-order{
+  margin-top:12px;
+  padding:10px 11px;
+  border-radius:12px;
+  background:#faf9f6;
+}
+.restaurant-page .group-order p{
+  display:none;
+}
+.restaurant-page .group-order strong{
+  display:block;
+  margin-bottom:7px;
+  font-size:.76rem;
+}
+.restaurant-page .group-order .btn{
+  min-height:34px;
+  width:100%;
+  padding:7px 9px;
+  font-size:.72rem;
+}
+.restaurant-page .group-order .btn.btn-primary{
+  margin-top:6px;
+}
+.restaurant-page .safety-note{
+  padding-top:8px;
+  font-size:.62rem;
+  line-height:1.45;
+}
+
+/* Keep the hero subordinate to ordering */
+.restaurant-page .store-hero,
+.restaurant-page .store-hero-loading{
+  min-height:300px;
+}
+.restaurant-page .store-hero{
+  height:305px;
+}
+.restaurant-page .store-title{
+  padding:26px 0;
+}
+.restaurant-page .store-title h1{
+  font-size:clamp(2rem,3.3vw,3rem);
+}
+.restaurant-page.rtl .store-title{
+  direction:rtl;
+  text-align:right;
+  font-family:Tahoma,Arial,sans-serif;
+}
+.restaurant-page.rtl .store-title h1{
+  line-height:1.35;
+}
+.restaurant-page.rtl .store-title p{
+  line-height:1.7;
+}
+
+/* Tablet: basket moves below, categories remain beside menu */
+@media(max-width:1080px){
+  .restaurant-page .menu-layout,
+  .restaurant-page.rtl .menu-layout{
+    grid-template-columns:1fr;
+    grid-template-areas:"menu" "cart";
+  }
+  .restaurant-page .cart-panel{
+    position:relative;
+    top:auto;
+    max-width:none;
+  }
+  .restaurant-page .cart-panel .group-order{
+    max-width:420px;
+  }
+}
+
+/* Mobile: horizontal categories + one-column food cards */
+@media(max-width:700px){
+  .restaurant-page main.section>.container.menu-layout{
+    width:min(100% - 28px,1380px);
+  }
+  .restaurant-page .menu-category-browser,
+  .restaurant-page.rtl .menu-category-browser{
+    display:block;
+    direction:inherit;
+  }
+  .restaurant-page .menu-category-rail{
+    direction:inherit!important;
+    text-align:inherit!important;
+  }
+  .restaurant-page .menu-category-content{
+    direction:inherit!important;
+    text-align:inherit!important;
+  }
+  .restaurant-page .menu-category-options{
+    display:flex;
+    gap:7px;
+  }
+  .restaurant-page.rtl .menu-category-options{
+    direction:rtl;
+  }
+  .restaurant-page .menu-category-option{
+    min-height:38px;
+    padding:7px 10px;
+  }
+  .restaurant-page .active-category-browser .menu-card-grid,
+  .restaurant-page .directory-category-browser .directory-menu-grid{
+    grid-template-columns:1fr;
+    gap:13px;
+  }
+  .restaurant-page .premium-menu-card .menu-item-media{
+    height:210px;
+  }
+  .restaurant-page .cart-panel{
+    display:none;
+  }
+  .restaurant-page .store-hero,
+  .restaurant-page .store-hero-loading{
+    min-height:230px;
+  }
+  .restaurant-page .store-hero{
+    height:235px;
+  }
+}
