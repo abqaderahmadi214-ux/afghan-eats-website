@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Verify email | Afghan Eats</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/verify-email.css?v=20260829-1">
+  <script src="/config.js"></script>
+</head>
+<body class="verify-email-page">
+<header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><div class="actions"><button class="lang" type="button" onclick="toggleLang()">دری</button></div></div></header>
+<main class="section"><div class="container verify-email-container">
+  <section class="verify-email-card">
+    <span class="verify-email-icon" aria-hidden="true">✉</span>
+    <span class="verify-email-kicker"><span class="en-copy">Secure verification</span><span class="fa-copy">تأیید امن</span></span>
+    <h1 class="en-copy">Verify your email</h1><h1 class="fa-copy">ایمیل خود را تأیید کنید</h1>
+    <p class="en-copy">We are confirming that this email belongs to the Afghan Eats account or restaurant registration that requested it.</p>
+    <p class="fa-copy">در حال تأیید هستیم که این ایمیل مربوط به حساب یا ثبت رستورانت افغان ایتس است.</p>
+    <div id="verifyEmailLoading" class="verify-email-loading"><span class="verify-spinner"></span><span class="en-copy">Checking secure link…</span><span class="fa-copy">در حال بررسی لینک امن…</span></div>
+    <div id="verifyEmailResult" class="notice hidden" role="status" aria-live="polite"></div>
+    <div id="verifyEmailActions" class="verify-email-actions hidden">
+      <a id="verifyEmailPrimary" class="btn btn-primary" href="/account"><span class="en-copy">Continue</span><span class="fa-copy">ادامه</span></a>
+      <a class="btn btn-light" href="/"><span class="en-copy">Afghan Eats home</span><span class="fa-copy">صفحه اصلی</span></a>
+    </div>
+    <div class="verify-email-security"><span>🛡️</span><div><b><span class="en-copy">Your password stays private</span><span class="fa-copy">رمز شما خصوصی می‌ماند</span></b><p class="en-copy">Afghan Eats never sends passwords by email. Verification and password-setting links are one-time and expire automatically.</p><p class="fa-copy">افغان ایتس هرگز رمز عبور را از طریق ایمیل ارسال نمی‌کند. لینک‌های تأیید و تعیین رمز یک‌بارمصرف بوده و خودکار منقضی می‌شوند.</p></div></div>
+  </section>
+</div></main>
+<script src="/assets/app.js"></script>
+<script src="/assets/verify-email.js?v=20260829-1"></script>
+</body>
+</html>
