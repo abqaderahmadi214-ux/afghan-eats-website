@@ -782,3 +782,215 @@
   .restaurant-page .store-image-note{right:14px;top:14px}
   .restaurant-page.rtl .store-image-note{right:auto;left:14px}
 }
+
+/* Restaurants v2 — calm, customer-first discovery */
+.restaurants-page .brand-home{display:inline-flex;align-items:center;gap:10px}
+.restaurants-page .brand-emblem{width:38px;height:38px;display:inline-flex;flex:none;color:var(--ae-red)}
+.restaurants-page .brand-emblem svg{width:100%;height:100%;display:block}
+.restaurants-page .brand-wordmark{color:var(--ae-deep);font-size:1.32rem;font-weight:900;letter-spacing:-.035em}
+.restaurants-page .brand-mark{display:none!important}
+.restaurants-page .nav{height:66px}
+.restaurants-page .navlinks a{padding:23px 0}
+.restaurants-page main.section{padding:40px 0 68px}
+.restaurants-page .restaurant-page-head{
+  margin-bottom:24px;
+}
+.restaurants-page .restaurant-page-kicker{
+  display:inline-block;
+  margin-bottom:6px;
+  color:var(--ae-red-dark);
+  font-size:.74rem;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.restaurants-page .restaurant-page-head h1{
+  margin:0;
+  color:var(--ae-deep);
+  font-size:clamp(2.3rem,4vw,3.25rem);
+  line-height:1.03;
+  letter-spacing:-.045em;
+}
+.restaurants-page.rtl .restaurant-page-head h1{letter-spacing:0}
+.restaurants-page .restaurant-page-head p{
+  margin:8px 0 0;
+  color:var(--ae-muted);
+  font-size:.95rem;
+}
+.restaurants-page .restaurant-discovery-bar{
+  margin-bottom:17px;
+  padding:12px;
+  border:1px solid var(--ae-line);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:none;
+}
+.restaurants-page .restaurant-service-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 0 11px;
+  border-bottom:1px solid #f0ede7;
+}
+.restaurants-page .restaurant-service-row .mode-tabs{
+  margin:0;
+  flex:none;
+}
+.restaurants-page .address-summary{
+  min-width:0;
+  margin:0;
+  padding:0;
+  color:#58655f;
+  font-size:.86rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.restaurants-page .restaurant-filter-row{
+  display:grid;
+  grid-template-columns:minmax(280px,1fr) 170px auto auto;
+  gap:9px;
+  margin:11px 0 0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+.restaurants-page .restaurant-search-wrap{
+  min-width:0;
+  height:46px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:0 13px;
+  border:1px solid var(--ae-line);
+  border-radius:12px;
+  background:#faf9f6;
+  color:#89928d;
+}
+.restaurants-page .restaurant-search-wrap:focus-within{
+  border-color:rgba(214,64,50,.42);
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(214,64,50,.055);
+}
+.restaurants-page .restaurant-search-wrap input[type=search]{
+  width:100%;
+  height:44px;
+  padding:0;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  outline:0;
+}
+.restaurants-page .restaurant-filter-row select{
+  height:46px;
+  background:#faf9f6;
+}
+.restaurants-page .restaurant-filter-row .chip{
+  min-height:46px;
+  padding:9px 13px;
+  border-radius:12px;
+}
+.restaurants-page .restaurant-result-summary{
+  margin:0 1px 18px;
+}
+.restaurants-page .result-count{
+  color:#65716b;
+  font-size:.82rem;
+  font-weight:750;
+}
+.restaurants-page .restaurant-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:22px;
+}
+.restaurants-page .browse-restaurant-card{
+  border:0;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 1px 0 rgba(23,63,52,.05),0 8px 24px rgba(23,63,52,.045);
+}
+.restaurants-page .browse-restaurant-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 32px rgba(23,63,52,.08);
+}
+.restaurants-page .browse-restaurant-card .restaurant-image{
+  height:205px;
+  background:#f3eee6;
+}
+.restaurants-page .browse-restaurant-card .restaurant-body{
+  padding:16px 17px 17px;
+}
+.restaurants-page .browse-restaurant-card .title-row{
+  align-items:center;
+}
+.restaurants-page .browse-restaurant-card .title-row h3{
+  margin:0;
+  color:var(--ae-deep);
+  font-size:1.02rem;
+  line-height:1.25;
+}
+.restaurants-page .browse-restaurant-card .tagline{
+  margin-top:5px;
+  color:#737d77;
+  font-size:.82rem;
+  line-height:1.45;
+}
+.restaurants-page .browse-card-meta{
+  min-height:20px;
+  margin-top:11px;
+  color:#59665f;
+  font-size:.77rem;
+  font-weight:700;
+}
+.restaurants-page .browse-restaurant-card .status-pill{
+  top:12px;
+  left:12px;
+  padding:6px 9px;
+  border:0;
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  color:#53615a;
+  font-size:.7rem;
+  box-shadow:0 3px 12px rgba(23,63,52,.08);
+}
+.restaurants-page.rtl .browse-restaurant-card .status-pill{left:auto;right:12px}
+.restaurants-page .browse-restaurant-card .fav{
+  top:12px;
+  right:12px;
+  width:36px;
+  height:36px;
+  background:rgba(255,255,255,.94);
+}
+.restaurants-page.rtl .browse-restaurant-card .fav{right:auto;left:12px}
+.restaurants-page .browse-restaurant-card .verify,
+.restaurants-page .browse-restaurant-card .meta{display:none!important}
+.restaurants-page .browse-restaurant-card .image-note{
+  right:10px;
+  bottom:10px;
+  padding:5px 8px;
+  font-size:.62rem;
+}
+@media(max-width:960px){
+  .restaurants-page .restaurant-filter-row{
+    grid-template-columns:minmax(220px,1fr) 150px auto;
+  }
+  .restaurants-page .restaurant-filter-row .chip[data-filter="favorites"]{display:none}
+  .restaurants-page .restaurant-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .restaurants-page main.section{padding:28px 0 52px}
+  .restaurants-page .restaurant-page-head h1{font-size:2.35rem}
+  .restaurants-page .restaurant-discovery-bar{padding:10px;border-radius:15px}
+  .restaurants-page .restaurant-service-row{display:grid;gap:9px}
+  .restaurants-page .restaurant-service-row .mode-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .restaurants-page .restaurant-filter-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    margin:9px 0 0;
+  }
+  .restaurants-page .restaurant-search-wrap{grid-column:1/-1}
+  .restaurants-page .restaurant-filter-row select{min-width:0}
+  .restaurants-page .restaurant-filter-row .chip[data-filter="favorites"]{display:none}
+  .restaurants-page .restaurant-grid{grid-template-columns:1fr;gap:16px}
+  .restaurants-page .browse-restaurant-card .restaurant-image{height:195px}
+}
