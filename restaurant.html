@@ -14,12 +14,12 @@
   <link rel="stylesheet" href="/assets/advanced.css">
   <link rel="stylesheet" href="/assets/trust.css">
   <script src="/config.js"></script>
-  <link rel="stylesheet" href="/assets/customer-premium.css">
+  <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-5">
 </head>
 <body class="premium-customer restaurant-page">
   <header class="header">
     <div class="container nav">
-      <a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a>
+      <a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a>
       <nav class="navlinks"><a href="/restaurants" data-i18n="restaurants"></a><a href="/orders" data-i18n="orders"></a></nav>
       <div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a><a class="btn btn-primary" href="/checkout">🛒 <span class="cart-count badge-count">0</span></a></div>
     </div>
@@ -45,7 +45,7 @@
   <a id="mobileBasketBar" class="mobile-basket-bar" href="/checkout" aria-hidden="true"><span><b><span class="en-copy">View basket</span><span class="fa-copy">مشاهده سبد</span></b> · <span data-basket-count>0</span></span><strong data-basket-total>؋ 0</strong></a>
   <div class="modal" id="itemModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" onclick="if(event.target===this)closeModal()"><div class="modal-card"><button class="btn btn-light modal-close" type="button" onclick="closeModal()" data-aria-en="Close" data-aria-fa="بستن" aria-label="Close">×</button><h2 id="modalTitle"></h2><p id="modalDesc" class="muted"></p><h3 id="modalPrice"></h3><button class="btn btn-primary" type="button" style="width:100%" onclick="addCurrent()" data-i18n="add"></button></div></div>
   <nav class="mobile-nav"><a href="/"><span>⌂</span><b data-i18n="home"></b></a><a href="/restaurants"><span>⌕</span><b data-i18n="restaurants"></b></a><a href="/orders"><span>☷</span><b data-i18n="orders"></b></a><a href="/account"><span>☺</span><b data-i18n="account"></b></a></nav>
-  <script src="/assets/app.js"></script>
+  <script src="/assets/app.js?v=20260828-5"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>initRestaurantPage().catch(error=>{console.error(error);const host=document.getElementById('menuContent');if(host)host.innerHTML='<div class="notice error">Menu could not be loaded. Please try again.</div>'}))</script>
   <script src="/assets/advanced.js"></script>
   <script src="/assets/trust.js"></script>
