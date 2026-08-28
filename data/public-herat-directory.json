@@ -106,7 +106,7 @@
       "phone_numbers": ["+93 794 121 654"],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Lala%20Omid-mkm7bw97lz7cop-1-medium.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -124,10 +124,46 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/en/herat/restaurant/lala-omid/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-28",
+      "public_media_source_url": "https://www.mizbanapp.com/fa/herat/restaurant/lala-omid/menu",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://www.mizbanapp.com/fa/herat/restaurant/lala-omid/menu",
+      "public_menu_checked_at": "2026-08-28"
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {"id":"lala-pizza","name":"Pizza","name_dari":"پیتزا ها","sort_order":1},
+      {"id":"lala-italian","name":"Italian dishes","name_dari":"غذا های ایتالیایی","sort_order":2},
+      {"id":"lala-appetizers","name":"Appetizers","name_dari":"پیش غذا ها","sort_order":3},
+      {"id":"lala-burgers","name":"Burgers","name_dari":"برگرها","sort_order":4}
+    ],
+    "items": [
+      {"id":"lala-mixed-pizza","category_id":"lala-pizza","name":"Mixed Pizza","name_dari":"پیتزا مخلوط","price":150,"price_sizes":[150,280],"image_url":"https://mizbanapp.com/images/dish/Mixed%20Pizza-mkm7zbvzj6z32w-1-small.webp","sort_order":1},
+      {"id":"lala-chicken-pizza","category_id":"lala-pizza","name":"Chicken Pizza","name_dari":"پیتزا چکن","price":200,"price_sizes":[200,330],"image_url":"https://mizbanapp.com/images/dish/Chicken%20Pizza-mkm80m9qn5x7g8-1-small.webp","sort_order":2},
+      {"id":"lala-chicken-bbq-pizza","category_id":"lala-pizza","name":"Chicken BBQ Pizza","name_dari":"پیتزا چکن باربیکیو","price":230,"price_sizes":[230,350],"image_url":"https://mizbanapp.com/images/dish/Chicken%20BBQ%20Pizza-mkm82h1tm4hzek-1-small.webp","sort_order":3},
+      {"id":"lala-chicken-stroganoff-pizza","category_id":"lala-pizza","name":"Chicken Stroganoff Pizza","name_dari":"پیتزا چکن استراگانف","price":240,"price_sizes":[240,360],"image_url":"https://mizbanapp.com/images/dish/Chicken%20Stroganoff%20Pizza-mkm845sbpyahkx-1-small.webp","sort_order":4},
+      {"id":"lala-pepperoni-pizza","category_id":"lala-pizza","name":"Pepperoni Pizza","name_dari":"پیتزا پیرونی","price":220,"price_sizes":[220,350],"image_url":"https://mizbanapp.com/images/dish/Pepperoni%20Pizza-mkm85i10wf8cq-1-small.webp","sort_order":5},
+      {"id":"lala-roast-beef-pizza","category_id":"lala-pizza","name":"Roast Beef Pizza","name_dari":"پیتزا رست بیف","price":250,"price_sizes":[250,380],"sort_order":6},
+      {"id":"lala-special-pizza","category_id":"lala-pizza","name":"Lala Omid Special Pizza","name_dari":"پیتزا مخصوص لالا امید","price":270,"price_sizes":[270,400],"sort_order":7},
+      {"id":"lala-extra-special-pizza","category_id":"lala-pizza","name":"Special Pizza","name_dari":"پیتزا اسپیشال","price":250,"price_sizes":[250,400],"sort_order":8},
+      {"id":"lala-vegetable-pizza","category_id":"lala-pizza","name":"Vegetable Pizza","name_dari":"پیتزا سبزیجات","price":150,"price_sizes":[150,250],"sort_order":9},
+      {"id":"lala-four-seasons-pizza","category_id":"lala-pizza","name":"Four Seasons Pizza","name_dari":"پیتزا چهار فصل","price":400,"sort_order":10},
+
+      {"id":"lala-chicken-alfredo","category_id":"lala-italian","name":"Chicken Alfredo Pasta","name_dari":"پاستا چکن آلفردو","price":150,"sort_order":1},
+      {"id":"lala-cheese-pasta","category_id":"lala-italian","name":"Cheese Pasta","name_dari":"پاستا پنیری","price":200,"sort_order":2},
+      {"id":"lala-special-pasta","category_id":"lala-italian","name":"Special Pasta","name_dari":"پاستا مخصوص","price":200,"sort_order":3},
+      {"id":"lala-lasagna","category_id":"lala-italian","name":"Lasagna","name_dari":"لازانیا","price":250,"sort_order":4},
+
+      {"id":"lala-plain-fries","category_id":"lala-appetizers","name":"Plain Fries","name_dari":"چپس ساده","price":50,"sort_order":1},
+      {"id":"lala-cheese-fries","category_id":"lala-appetizers","name":"Cheese Fries","name_dari":"چپس پنیری","price":100,"sort_order":2},
+      {"id":"lala-special-fries","category_id":"lala-appetizers","name":"Special Fries","name_dari":"چپس مخصوص","price":150,"sort_order":3},
+      {"id":"lala-soup","category_id":"lala-appetizers","name":"Soup","name_dari":"سوپ","price":50,"sort_order":4},
+
+      {"id":"lala-classic-burger","category_id":"lala-burgers","name":"Classic Burger","name_dari":"برگر کلاسیک","price":60,"price_sizes":[60,130],"sort_order":1},
+      {"id":"lala-cheeseburger","category_id":"lala-burgers","name":"Cheeseburger","name_dari":"چیز برگر","price":80,"price_sizes":[80,160],"sort_order":2},
+      {"id":"lala-special-burger","category_id":"lala-burgers","name":"Special Burger","name_dari":"برگر مخصوص","price":100,"price_sizes":[100,180],"sort_order":3},
+      {"id":"lala-chicken-cheeseburger","category_id":"lala-burgers","name":"Chicken Cheeseburger","name_dari":"چکن چیز برگر","price":130,"price_sizes":[130,200],"sort_order":4},
+      {"id":"lala-chicken-burger","category_id":"lala-burgers","name":"Chicken Burger","name_dari":"جکن برگر","price":140,"sort_order":5}
+    ]
   },
   {
     "restaurant": {
