@@ -58,6 +58,8 @@ jobs:
             retry_contains "https://afghaneats.net/" "id=\"cuisinePhotoGrid\"" /tmp/ae-home-cuisine.html
             retry_contains "https://afghaneats.net/assets/cuisine-motion.js" "IntersectionObserver" /tmp/ae-cuisine-motion.js
             retry_contains "https://afghaneats.net/" "support@afghaneats.net" /tmp/ae-footer-support.html
+            retry_contains "https://afghaneats.net/" "class=\"brand-emblem\"" /tmp/ae-brand-v3.html
+            retry_contains "https://afghaneats.net/assets/app.js" "Order food in Herat" /tmp/ae-app-v3.js
             retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
             retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
             retry_contains "https://afghaneats.net/assets/app-downloads.js" "customerAndroidDownload" /tmp/ae-app-downloads.js
