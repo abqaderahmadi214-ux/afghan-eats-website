@@ -11,38 +11,133 @@
   <link rel="stylesheet" href="/assets/trust.css">
   <link rel="stylesheet" href="/assets/customer.css">
   <script src="/config.js"></script>
-  <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-7">
+  <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-12">
 </head>
 <body class="premium-customer checkout-page">
-  <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a><a class="btn btn-light" href="/restaurants" data-i18n="restaurants"></a></div></div></header>
-  <main class="section soft"><div class="container checkout-container"><div class="form-card checkout-card">
-    <div class="checkout-progress"><div class="checkout-step done">1 · <span class="en-copy">Basket</span><span class="fa-copy">سبد</span></div><div class="checkout-step active">2 · <span class="en-copy">Delivery details</span><span class="fa-copy">معلومات تحویل</span></div><div class="checkout-step">3 · <span class="en-copy">Confirmation</span><span class="fa-copy">تأیید</span></div></div>
-    <div class="checkout-title-row"><div><span class="checkout-eyebrow"><span class="en-copy">Almost there</span><span class="fa-copy">تقریباً تمام شد</span></span><h1 data-i18n="checkout"></h1></div><a class="checkout-back" href="/restaurants"><span aria-hidden="true">←</span><span class="en-copy">Keep browsing</span><span class="fa-copy">ادامه جستجو</span></a></div>
-    <p class="muted en-copy">Choose delivery or pickup. For delivery, Afghan Eats checks your address and fee before you place the order.</p>
-    <p class="muted fa-copy">ارسال یا دریافت حضوری را انتخاب کنید. برای ارسال، افغان ایتس پیش از ثبت سفارش آدرس و هزینه را بررسی می‌کند.</p>
-    <section id="checkoutIdentity" class="checkout-identity-card" aria-live="polite"></section><div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
-    <div id="checkoutError" class="notice error hidden"></div>
-    <form onsubmit="placeOrder(event); return false"><div class="grid2">
-      <div class="field full"><span><span class="en-copy">How would you like your order?</span><span class="fa-copy">سفارش را چگونه دریافت می‌کنید؟</span></span><div class="fulfillment-card"><label><input type="radio" name="fulfillment" value="delivery" checked><span>🛵 <span data-i18n="delivery"></span></span></label><label><input type="radio" name="fulfillment" value="pickup"><span>🏪 <span data-i18n="pickup"></span></span></label></div></div>
-      <div id="deliveryQuotePanel" class="delivery-quote-panel notice full"><span class="en-copy">Enter your address to check delivery coverage and fee.</span><span class="fa-copy">آدرس را وارد کنید تا محدوده و هزینه ارسال بررسی شود.</span></div>
-      <label class="field"><span data-i18n="name"></span><input name="name" required minlength="2" maxlength="120" autocomplete="name"></label>
-      <label class="field"><span data-i18n="phone"></span><input name="phone" type="tel" required placeholder="+93 7xx xxx xxx" autocomplete="tel"></label>
-      <label class="field delivery-only"><span data-i18n="district"></span><select name="district" data-delivery-required><option data-en="Herat City" data-fa="شهر هرات">Herat City</option><option data-en="Jebrael" data-fa="جبرئیل">Jebrael</option><option data-en="Injil" data-fa="انجیل">Injil</option><option data-en="Guzara" data-fa="گذره">Guzara</option><option data-en="Tank Markaz" data-fa="تانک مرکز">Tank Markaz</option><option data-en="Gulha" data-fa="گل‌ها">Gulha</option><option data-en="Mustofiat" data-fa="مستوفیت">Mustofiat</option><option data-en="Airport Road" data-fa="جاده میدان هوایی">Airport Road</option><option data-en="Bagh-e-Mellat" data-fa="باغ ملت">Bagh-e-Mellat</option></select></label>
-      <div class="field"><span data-i18n="schedule"></span><div class="fulfillment-card"><label><input type="radio" name="scheduleMode" value="asap" checked onchange="aeToggleSchedule()"><span data-i18n="asap"></span></label><label><input type="radio" name="scheduleMode" value="later" onchange="aeToggleSchedule()"><span><span class="en-copy">Schedule</span><span class="fa-copy">زمان‌بندی</span></span></label></div><div id="schedulePanel" class="schedule-panel"><input name="scheduledFor" type="datetime-local"><small class="muted"><span class="en-copy">At least 30 minutes ahead, up to 7 days.</span><span class="fa-copy">حداقل ۳۰ دقیقه بعد و تا ۷ روز آینده.</span></small></div></div>
-      <label class="field full delivery-only"><span data-i18n="address2"></span><input name="address" list="checkoutLandmarks" data-delivery-required minlength="5" autocomplete="street-address" data-ph-en="Street, area or nearby landmark" data-ph-fa="سرک، ساحه یا نشانی نزدیک"><datalist id="checkoutLandmarks"><option value="Jami Mosque"><option value="Gulha Circle"><option value="Tank Markaz"><option value="Mustofiat Crossroads"><option value="Bagh-e-Mellat"><option value="Airport Road"></datalist></label>
-      <div id="savedAddressChoices" class="field full delivery-only saved-address-choices"></div>
-      <label class="field full delivery-only"><span><span class="en-copy">Landmark</span><span class="fa-copy">نشانی نزدیک</span></span><input name="landmark" data-ph-en="Mosque, school, clinic, market, etc." data-ph-fa="مسجد، مکتب، کلینیک، بازار و غیره"></label>
-      <label class="field full delivery-only"><span data-i18n="instructions"></span><textarea name="instructions" rows="3" maxlength="800" data-ph-en="Gate colour, floor, contact person or other useful directions" data-ph-fa="رنگ دروازه، منزل، شخص تماس یا راهنمای مفید دیگر"></textarea></label>
-      <label class="field"><span data-i18n="payment"></span><select name="payment"><option value="cash_on_delivery" data-i18n="cash"></option></select><small class="muted"><span class="en-copy">Digital payments will be added after local payment integrations are verified.</span><span class="fa-copy">پرداخت دیجیتال پس از تأیید درگاه‌های محلی اضافه می‌شود.</span></small></label>
-      <label class="field"><span data-i18n="promo"></span><div class="promo-entry"><input id="promo" autocomplete="off" data-ph-en="Enter a promo code" data-ph-fa="کد تخفیف را وارد کنید"><button class="btn btn-light" type="button" onclick="applyPromo()" data-i18n="apply"></button></div><small id="promoMsg" class="muted"><span class="en-copy">Use a code only if Afghan Eats has shared one with you.</span><span class="fa-copy">فقط کدی را وارد کنید که افغان ایتس با شما شریک کرده باشد.</span></small></label>
-      <div class="field full"><span><span class="en-copy">Optional rider tip</span><span class="fa-copy">انعام اختیاری برای پیک</span></span><div class="tip-row"><label class="tip-pill active"><input type="radio" name="tipAmount" value="0" checked onchange="aeSetTip(this)" hidden><span class="en-copy">No tip</span><span class="fa-copy">بدون انعام</span></label><label class="tip-pill"><input type="radio" name="tipAmount" value="30" onchange="aeSetTip(this)" hidden>؋30</label><label class="tip-pill"><input type="radio" name="tipAmount" value="50" onchange="aeSetTip(this)" hidden>؋50</label><label class="tip-pill"><input type="radio" name="tipAmount" value="100" onchange="aeSetTip(this)" hidden>؋100</label></div></div>
+<header class="header"><div class="container nav">
+  <a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a>
+  <nav class="navlinks"><a href="/restaurants" data-i18n="restaurants"></a></nav>
+  <div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a></div>
+</div></header>
+
+<main class="section soft"><div class="container checkout-container">
+  <div class="checkout-page-head">
+    <div>
+      <span class="checkout-eyebrow"><span class="en-copy">Secure checkout</span><span class="fa-copy">پرداخت امن</span></span>
+      <h1 data-i18n="checkout"></h1>
+      <p class="en-copy">Complete the details below. Final prices and delivery are verified before your order is accepted.</p>
+      <p class="fa-copy">معلومات زیر را تکمیل کنید. قیمت نهایی و ارسال پیش از پذیرش سفارش دوباره تأیید می‌شود.</p>
     </div>
-    <div class="checkout-order-heading"><h2 data-i18n="cart"></h2><span class="checkout-secure"><span aria-hidden="true">✓</span><span class="en-copy">Server-verified totals</span><span class="fa-copy">مجموع تأییدشده در سرور</span></span></div><div id="cartItems"></div>
-    <div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div><div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div><div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div><div class="sum-row"><span data-i18n="discount"></span><span id="cartDiscount"></span></div><div class="sum-row"><span><span class="en-copy">Tip</span><span class="fa-copy">انعام</span></span><span id="tipPreview">؋ 0</span></div><div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
-    <div class="server-price-note">🛡️ <span class="en-copy">The order server rechecks menu prices, delivery coverage, delivery fee, service fee, promotions and tip before accepting the order.</span><span class="fa-copy">سرور پیش از پذیرش سفارش، قیمت منو، محدوده و هزینه ارسال، خدمات، تخفیف و انعام را دوباره بررسی می‌کند.</span></div>
-    <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px" data-i18n="place"></button><div id="orderSubmitState" class="order-submit-state"></div>
-    </form>
-  </div></div></main>
-  <script src="/assets/app.js"></script><script src="/assets/advanced.js"></script><script src="/assets/trust.js"></script><script src="/assets/customer.js"></script>
-<script src="/assets/checkout-membership.js?v=20260828-7"></script></body>
+    <a class="checkout-back" href="/restaurants"><span aria-hidden="true">←</span><span class="en-copy">Back to restaurants</span><span class="fa-copy">بازگشت به رستورانت‌ها</span></a>
+  </div>
+
+  <div class="checkout-progress" aria-label="Checkout progress">
+    <div class="checkout-step done"><span>1</span><b class="en-copy">Basket</b><b class="fa-copy">سبد</b></div>
+    <div class="checkout-step active"><span>2</span><b class="en-copy">Details</b><b class="fa-copy">معلومات</b></div>
+    <div class="checkout-step"><span>3</span><b class="en-copy">Confirmation</b><b class="fa-copy">تأیید</b></div>
+  </div>
+
+  <div id="checkoutError" class="notice error hidden"></div>
+
+  <form class="checkout-shell" onsubmit="placeOrder(event); return false">
+    <section class="checkout-main-column">
+      <section class="checkout-section checkout-member-section">
+        <div class="checkout-section-head">
+          <span class="checkout-section-number">1</span>
+          <div><h2><span class="en-copy">Your checkout</span><span class="fa-copy">پرداخت شما</span></h2><p class="en-copy">Order as a guest or use your Afghan Eats account.</p><p class="fa-copy">به‌عنوان مهمان سفارش دهید یا از حساب افغان ایتس استفاده کنید.</p></div>
+        </div>
+        <section id="checkoutIdentity" class="checkout-identity-card" aria-live="polite"></section>
+        <div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
+      </section>
+
+      <section class="checkout-section">
+        <div class="checkout-section-head">
+          <span class="checkout-section-number">2</span>
+          <div><h2><span class="en-copy">Delivery or pickup</span><span class="fa-copy">ارسال یا دریافت حضوری</span></h2><p class="en-copy">Choose how and when you want the order.</p><p class="fa-copy">روش و زمان دریافت سفارش را انتخاب کنید.</p></div>
+        </div>
+        <div class="checkout-choice-stack">
+          <div class="fulfillment-card checkout-choice-card">
+            <label><input type="radio" name="fulfillment" value="delivery" checked><span>🛵 <span data-i18n="delivery"></span></span></label>
+            <label><input type="radio" name="fulfillment" value="pickup"><span>🏪 <span data-i18n="pickup"></span></span></label>
+          </div>
+          <div id="deliveryQuotePanel" class="delivery-quote-panel notice"><span class="en-copy">Enter your address to check delivery coverage and fee.</span><span class="fa-copy">آدرس را وارد کنید تا محدوده و هزینه ارسال بررسی شود.</span></div>
+          <div class="checkout-schedule-row">
+            <div><b data-i18n="schedule"></b><small class="en-copy">ASAP or choose a later time.</small><small class="fa-copy">همین حالا یا برای زمان دیگری.</small></div>
+            <div class="fulfillment-card checkout-schedule-choice">
+              <label><input type="radio" name="scheduleMode" value="asap" checked onchange="aeToggleSchedule()"><span data-i18n="asap"></span></label>
+              <label><input type="radio" name="scheduleMode" value="later" onchange="aeToggleSchedule()"><span><span class="en-copy">Later</span><span class="fa-copy">بعداً</span></span></label>
+            </div>
+          </div>
+          <div id="schedulePanel" class="schedule-panel"><input name="scheduledFor" type="datetime-local"><small class="muted"><span class="en-copy">At least 30 minutes ahead, up to 7 days.</span><span class="fa-copy">حداقل ۳۰ دقیقه بعد و تا ۷ روز آینده.</span></small></div>
+        </div>
+      </section>
+
+      <section class="checkout-section">
+        <div class="checkout-section-head">
+          <span class="checkout-section-number">3</span>
+          <div><h2><span class="en-copy">Contact details</span><span class="fa-copy">معلومات تماس</span></h2><p class="en-copy">Used only to manage this order and delivery.</p><p class="fa-copy">برای هماهنگی همین سفارش و تحویل استفاده می‌شود.</p></div>
+        </div>
+        <div class="checkout-fields-grid">
+          <label class="field"><span data-i18n="name"></span><input name="name" required minlength="2" maxlength="120" autocomplete="name"></label>
+          <label class="field"><span data-i18n="phone"></span><input name="phone" type="tel" required placeholder="+93 7xx xxx xxx" autocomplete="tel"></label>
+        </div>
+      </section>
+
+      <section class="checkout-section delivery-only">
+        <div class="checkout-section-head">
+          <span class="checkout-section-number">4</span>
+          <div><h2><span class="en-copy">Delivery address</span><span class="fa-copy">آدرس تحویل</span></h2><p class="en-copy">Give the rider enough detail to find you easily.</p><p class="fa-copy">معلومات کافی بدهید تا پیک شما را به‌آسانی پیدا کند.</p></div>
+        </div>
+        <div class="checkout-fields-grid">
+          <label class="field"><span data-i18n="district"></span><select name="district" data-delivery-required><option data-en="Herat City" data-fa="شهر هرات">Herat City</option><option data-en="Jebrael" data-fa="جبرئیل">Jebrael</option><option data-en="Injil" data-fa="انجیل">Injil</option><option data-en="Guzara" data-fa="گذره">Guzara</option><option data-en="Tank Markaz" data-fa="تانک مرکز">Tank Markaz</option><option data-en="Gulha" data-fa="گل‌ها">Gulha</option><option data-en="Mustofiat" data-fa="مستوفیت">Mustofiat</option><option data-en="Airport Road" data-fa="جاده میدان هوایی">Airport Road</option><option data-en="Bagh-e-Mellat" data-fa="باغ ملت">Bagh-e-Mellat</option></select></label>
+          <label class="field"><span><span class="en-copy">Landmark</span><span class="fa-copy">نشانی نزدیک</span></span><input name="landmark" data-ph-en="Mosque, school, clinic, market, etc." data-ph-fa="مسجد، مکتب، کلینیک، بازار و غیره"></label>
+          <label class="field full"><span data-i18n="address2"></span><input name="address" list="checkoutLandmarks" data-delivery-required minlength="5" autocomplete="street-address" data-ph-en="Street, area or nearby landmark" data-ph-fa="سرک، ساحه یا نشانی نزدیک"><datalist id="checkoutLandmarks"><option value="Jami Mosque"><option value="Gulha Circle"><option value="Tank Markaz"><option value="Mustofiat Crossroads"><option value="Bagh-e-Mellat"><option value="Airport Road"></datalist></label>
+          <div id="savedAddressChoices" class="field full saved-address-choices"></div>
+          <label class="field full"><span data-i18n="instructions"></span><textarea name="instructions" rows="3" maxlength="800" data-ph-en="Gate colour, floor, contact person or other useful directions" data-ph-fa="رنگ دروازه، منزل، شخص تماس یا راهنمای مفید دیگر"></textarea></label>
+        </div>
+      </section>
+
+      <section class="checkout-section">
+        <div class="checkout-section-head">
+          <span class="checkout-section-number">5</span>
+          <div><h2><span class="en-copy">Payment & savings</span><span class="fa-copy">پرداخت و تخفیف</span></h2><p class="en-copy">Choose payment, apply an eligible code and optionally tip your rider.</p><p class="fa-copy">روش پرداخت، کد تخفیف واجد شرایط و انعام اختیاری را انتخاب کنید.</p></div>
+        </div>
+        <div class="checkout-payment-grid">
+          <label class="field checkout-payment-method"><span data-i18n="payment"></span><select name="payment"><option value="cash_on_delivery" data-i18n="cash"></option></select><small class="muted"><span class="en-copy">Cash on delivery is currently available.</span><span class="fa-copy">فعلاً پرداخت نقدی هنگام تحویل فعال است.</span></small></label>
+          <label class="field checkout-promo-field"><span data-i18n="promo"></span><div class="promo-entry"><input id="promo" autocomplete="off" data-ph-en="Enter promo code" data-ph-fa="کد تخفیف را وارد کنید"><button class="btn btn-light" type="button" onclick="applyPromo()" data-i18n="apply"></button></div><small id="promoMsg" class="muted"><span class="en-copy">Only valid Afghan Eats codes are applied.</span><span class="fa-copy">فقط کدهای معتبر افغان ایتس اعمال می‌شوند.</span></small></label>
+        </div>
+        <div class="checkout-tip-block">
+          <div><b><span class="en-copy">Optional rider tip</span><span class="fa-copy">انعام اختیاری برای پیک</span></b><small class="en-copy">100% optional.</small><small class="fa-copy">کاملاً اختیاری است.</small></div>
+          <div class="tip-row"><label class="tip-pill active"><input type="radio" name="tipAmount" value="0" checked onchange="aeSetTip(this)" hidden><span class="en-copy">No tip</span><span class="fa-copy">بدون انعام</span></label><label class="tip-pill"><input type="radio" name="tipAmount" value="30" onchange="aeSetTip(this)" hidden>؋30</label><label class="tip-pill"><input type="radio" name="tipAmount" value="50" onchange="aeSetTip(this)" hidden>؋50</label><label class="tip-pill"><input type="radio" name="tipAmount" value="100" onchange="aeSetTip(this)" hidden>؋100</label></div>
+        </div>
+      </section>
+    </section>
+
+    <aside class="checkout-summary-panel">
+      <div class="checkout-summary-head">
+        <div><span class="checkout-summary-kicker"><span class="en-copy">Your order</span><span class="fa-copy">سفارش شما</span></span><h2 data-i18n="cart"></h2></div>
+        <span class="checkout-secure"><span aria-hidden="true">✓</span><span class="en-copy">Verified</span><span class="fa-copy">تأییدشده</span></span>
+      </div>
+      <div id="cartItems" class="checkout-cart-items"></div>
+      <div class="checkout-totals">
+        <div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div>
+        <div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div>
+        <div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div>
+        <div class="sum-row"><span data-i18n="discount"></span><span id="cartDiscount"></span></div>
+        <div class="sum-row"><span><span class="en-copy">Tip</span><span class="fa-copy">انعام</span></span><span id="tipPreview">؋ 0</span></div>
+        <div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
+      </div>
+      <div class="server-price-note"><span aria-hidden="true">🛡️</span><span class="en-copy">Final menu prices, fees, delivery coverage, rewards and promotions are checked again by the server.</span><span class="fa-copy">قیمت نهایی، هزینه‌ها، محدوده ارسال، امتیازها و تخفیف‌ها دوباره در سرور بررسی می‌شوند.</span></div>
+      <button class="btn btn-primary checkout-place-order" type="submit" data-i18n="place"></button>
+      <div id="orderSubmitState" class="order-submit-state"></div>
+    </aside>
+  </form>
+</div></main>
+
+<script src="/assets/app.js"></script>
+<script src="/assets/advanced.js"></script>
+<script src="/assets/trust.js"></script>
+<script src="/assets/customer.js"></script>
+<script src="/assets/checkout-membership.js?v=20260828-7"></script>
+</body>
 </html>
