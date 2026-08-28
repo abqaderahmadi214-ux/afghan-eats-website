@@ -2624,3 +2624,171 @@
   .checkout-page .tip-pill{flex:1;text-align:center}
   .checkout-page .checkout-summary-panel{padding:18px 16px;border-radius:17px}
 }
+
+/* Tracking v2 — premium, exciting customer journey */
+.tracking-page{background:#fbfaf7}
+.tracking-page .brand-home{display:inline-flex;align-items:center;gap:10px}
+.tracking-page .brand-emblem{width:38px;height:38px;display:inline-flex;flex:none;color:var(--ae-red)}
+.tracking-page .brand-emblem svg{width:100%;height:100%;display:block}
+.tracking-page .brand-wordmark{color:var(--ae-deep);font-size:1.32rem;font-weight:900;letter-spacing:-.035em}
+.tracking-page .brand-mark{display:none!important}
+.tracking-page .nav{height:66px}
+.tracking-page main.section{padding:36px 0 72px}
+.tracking-page .tracking-container{max-width:1180px}
+.tracking-page .tracking-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;margin-bottom:22px}
+.tracking-page .tracking-page-head h1{margin:0;color:var(--ae-deep);font-size:clamp(2.35rem,4vw,3.3rem);line-height:1.05;letter-spacing:-.045em}
+.tracking-page.rtl .tracking-page-head h1{letter-spacing:0;line-height:1.35}
+.tracking-page .tracking-page-head p{max-width:620px;margin:8px 0 0;color:var(--ae-muted);font-size:.9rem;line-height:1.6}
+.tracking-page .tracking-eyebrow{display:inline-block;margin-bottom:7px;color:var(--ae-red-dark);font-size:.7rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+.tracking-page .tracking-back{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:1px solid var(--ae-line);border-radius:10px;background:#fff;color:#53615a;font-size:.78rem;font-weight:800;text-decoration:none}
+.tracking-page.rtl .tracking-back span[aria-hidden="true"]{transform:rotate(180deg)}
+
+.tracking-page .tracking-verify-card{display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px;max-width:760px;margin:0 auto 24px;padding:22px;border:1px solid #e8e2da;border-radius:20px;background:#fff;box-shadow:0 10px 30px rgba(23,63,52,.055)}
+.tracking-page .tracking-verify-card.hidden{display:none!important}
+.tracking-page .tracking-verify-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#fff0ec;font-size:1.25rem}
+.tracking-page .tracking-verify-copy b{color:var(--ae-deep);font-size:1.05rem}
+.tracking-page .tracking-verify-copy p{max-width:620px;margin:5px 0 13px;color:#748079;font-size:.8rem;line-height:1.55}
+.tracking-page .track-gate-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.tracking-page .track-gate-row input{min-height:47px;border:1px solid #ded9d1;border-radius:11px;background:#faf9f6}
+.tracking-page .track-gate-row .btn{min-height:47px}
+.tracking-page .tracking-verify-notice{margin-top:8px;color:#b34337;font-size:.74rem}
+.tracking-page.rtl .tracking-verify-card{direction:rtl;text-align:right}
+
+.tracking-page .tracking-experience.is-locked{display:none}
+.tracking-page .tracking-confirmation-strip{max-width:1180px;margin:0 auto 13px;padding:8px 11px!important;border:0!important;border-radius:10px!important;background:#edf7f1!important;color:#2f714f!important;box-shadow:none!important;font-size:.72rem}
+.tracking-page .tracking-confirmation-strip small{margin-inline-start:7px;color:#648072}
+
+.tracking-page .tracking-status-hero{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;margin-bottom:20px;padding:28px 30px;border:0;border-radius:24px;background:linear-gradient(135deg,#143f34 0%,#1e5949 68%,#d85b3f 150%);color:#fff;box-shadow:0 20px 46px rgba(23,63,52,.13);overflow:hidden;position:relative}
+.tracking-page .tracking-status-hero:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-70px;top:-105px;background:rgba(244,180,63,.13);pointer-events:none}
+.tracking-page.rtl .tracking-status-hero:after{right:auto;left:-70px}
+.tracking-page .tracking-hero-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:18px;background:rgba(255,255,255,.13);font-size:1.45rem;font-weight:900;backdrop-filter:blur(4px)}
+.tracking-page .tracking-hero-copy{min-width:0;position:relative;z-index:1}
+.tracking-page .tracking-status-chip{display:inline-flex;margin-bottom:8px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.14);color:#fff4d4;font-size:.68rem;font-weight:850}
+.tracking-page .tracking-hero-copy h2{margin:0;color:#fff;font-size:clamp(1.65rem,2.8vw,2.35rem);line-height:1.12;letter-spacing:-.03em}
+.tracking-page.rtl .tracking-hero-copy h2{font-family:Tahoma,Arial,sans-serif;line-height:1.55;letter-spacing:0}
+.tracking-page .tracking-hero-copy>p{margin:6px 0 0;color:#dbe9e4;font-size:.83rem;line-height:1.55}
+.tracking-page .tracking-hero-reference{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;color:#fff;font-size:.74rem}
+.tracking-page .tracking-hero-facts{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;color:#bdd4ca;font-size:.68rem}
+.tracking-page .tracking-hero-total{position:relative;z-index:1;min-width:125px;text-align:right}
+.tracking-page.rtl .tracking-hero-total{text-align:left}
+.tracking-page .tracking-hero-total small{display:block;color:#c7d9d1;font-size:.66rem}
+.tracking-page .tracking-hero-total strong{display:block;margin-top:4px;color:#fff;font-size:1.45rem}
+
+.tracking-page .tracking-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;align-items:start}
+.tracking-page.rtl .tracking-layout{grid-template-columns:330px minmax(0,1fr)}
+.tracking-page.rtl .tracking-main-column{grid-column:2;grid-row:1}
+.tracking-page.rtl .tracking-side-column{grid-column:1;grid-row:1}
+.tracking-page .tracking-main-column{display:grid;gap:16px;min-width:0}
+.tracking-page .tracking-side-column{display:grid;gap:16px;position:sticky;top:84px}
+.tracking-page .tracking-card{padding:20px;border:1px solid #e9e4dc;border-radius:19px;background:#fff;box-shadow:0 5px 20px rgba(23,63,52,.045)}
+.tracking-page .tracking-card:empty{display:none}
+.tracking-page .tracking-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+.tracking-page .tracking-card-kicker{display:block;margin-bottom:4px;color:#8a948f;font-size:.64rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+.tracking-page .tracking-card-head h2{margin:0;color:var(--ae-deep);font-size:1.08rem}
+.tracking-page.rtl .tracking-card-head h2{font-family:Tahoma,Arial,sans-serif;line-height:1.65}
+.tracking-page .tracking-live-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;background:#edf7f1;color:#26734d;font-size:.65rem;font-weight:850}
+.tracking-page .tracking-live-pill>span:first-child{width:7px;height:7px;border-radius:50%;background:#29a266;box-shadow:0 0 0 4px rgba(41,162,102,.1)}
+.tracking-page .tracking-secure-mark{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#edf7f1;color:#26734d;font-weight:900}
+
+.tracking-page .premium-tracking-steps{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;position:relative;padding-top:2px}
+.tracking-page .premium-tracking-steps:before{content:"";position:absolute;top:18px;left:7%;right:7%;height:2px;background:#e9e6e0}
+.tracking-page .premium-track-step{display:grid;justify-items:center;gap:8px;position:relative;z-index:1;color:#9a9f9c;text-align:center}
+.tracking-page .premium-track-node{width:36px;height:36px;display:grid;place-items:center;border:4px solid #fff;border-radius:50%;background:#eceae5;color:#8b918e;font-size:.75rem;font-weight:900}
+.tracking-page .premium-track-step.done .premium-track-node{background:#27865a;color:#fff}
+.tracking-page .premium-track-step.active .premium-track-node{background:var(--ae-red);color:#fff;box-shadow:0 0 0 5px rgba(223,67,55,.11)}
+.tracking-page .premium-track-step.active{color:var(--ae-deep)}
+.tracking-page .premium-track-copy{display:grid;gap:2px}
+.tracking-page .premium-track-copy b{font-size:.66rem;line-height:1.35}
+.tracking-page .premium-track-copy small{color:var(--ae-red-dark);font-size:.58rem;font-weight:800}
+.tracking-page.rtl .premium-track-copy{font-family:Tahoma,Arial,sans-serif}
+.tracking-page.rtl .premium-track-copy b{line-height:1.7}
+
+.tracking-page .tracking-live-slot:empty{display:none}
+.tracking-page .tracking-live-slot .live-delivery{margin:0;padding:19px;border:1px solid #dfe8e3;border-radius:19px;background:linear-gradient(135deg,#f4faf6,#fff);box-shadow:0 5px 20px rgba(23,63,52,.04)}
+.tracking-page .tracking-live-slot .live-rider{grid-template-columns:auto 1fr auto}
+.tracking-page .tracking-live-slot .rider-avatar{width:48px;height:48px;background:#e7f4ec}
+.tracking-page .tracking-live-slot .live-location{margin-top:13px;background:#fff;border:1px solid #e7ece9}
+.tracking-page .tracking-live-slot .notice.error{margin:0}
+
+.tracking-page .tracking-item-list{display:grid;gap:9px}
+.tracking-page .tracking-item-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:9px;border-bottom:1px solid #f0ede8;font-size:.75rem}
+.tracking-page .tracking-item-row:last-child{border-bottom:0}
+.tracking-page .tracking-item-row b{color:#3f4d46;line-height:1.5}
+.tracking-page .tracking-item-row>span{white-space:nowrap;color:#65716b;font-weight:800}
+.tracking-page .tracking-price-list{display:grid;gap:6px;margin-top:14px;padding-top:13px;border-top:1px solid #ece8e2}
+.tracking-page .tracking-price-list>div{display:flex;justify-content:space-between;gap:12px;color:#6d7771;font-size:.72rem}
+.tracking-page .tracking-price-list .discount{color:#28734e}
+.tracking-page .tracking-price-total{margin-top:5px;padding-top:10px;border-top:1px solid #ece8e2!important;color:var(--ae-deep)!important}
+.tracking-page .tracking-price-total strong{font-size:1.05rem}
+
+.tracking-page .tracking-detail-list{display:grid;gap:12px}
+.tracking-page .tracking-detail-list>div{display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:flex-start}
+.tracking-page .tracking-detail-list>div>span{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#f6f2ec;font-size:.8rem}
+.tracking-page .tracking-detail-list p{margin:0;min-width:0}
+.tracking-page .tracking-detail-list small{display:block;color:#89928d;font-size:.62rem}
+.tracking-page .tracking-detail-list b{display:block;margin-top:2px;color:#45534c;font-size:.75rem;line-height:1.5;overflow-wrap:anywhere}
+
+.tracking-page .tracking-help-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:13px;align-items:center;padding:17px 18px;border:1px solid #e7e2da;border-radius:17px;background:#fff}
+.tracking-page .tracking-help-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#fff2ee;color:var(--ae-red-dark);font-weight:900}
+.tracking-page .tracking-help-card b{color:var(--ae-deep);font-size:.86rem}
+.tracking-page .tracking-help-card p{margin:3px 0 0;color:#79837e;font-size:.7rem}
+.tracking-page .tracking-help-actions{display:flex;gap:7px}
+.tracking-page .tracking-help-actions .btn{white-space:nowrap}
+.tracking-page .tracking-cancel-slot:empty{display:none}
+.tracking-page .tracking-cancel-slot .cancel-card{margin:0}
+.tracking-page .tracking-privacy-card{display:flex;gap:10px;padding:14px;border-radius:14px;background:#f6f5f1;color:#69736d}
+.tracking-page .tracking-privacy-card>b{color:var(--ae-deep)}
+.tracking-page .tracking-privacy-card p{margin:4px 0 0;font-size:.64rem;line-height:1.5}
+.tracking-page .tracking-privacy-card b{font-size:.72rem}
+.tracking-page .safety-note{display:none}
+
+.tracking-page .tracking-account-card{margin:0!important}
+.tracking-page .tracking-account-card h3{display:none}
+.tracking-page .tracking-account-card .ae-location-state{margin-bottom:10px}
+.tracking-page .tracking-account-card p{font-size:.73rem;line-height:1.55}
+
+.tracking-page.rtl .tracking-status-hero,
+.tracking-page.rtl .tracking-card,
+.tracking-page.rtl .tracking-help-card,
+.tracking-page.rtl .tracking-privacy-card{direction:rtl;text-align:right}
+.tracking-page.rtl .tracking-item-row,
+.tracking-page.rtl .tracking-price-list>div{direction:rtl}
+.tracking-page.rtl .tracking-item-row>span,
+.tracking-page.rtl .tracking-price-list b,
+.tracking-page.rtl .tracking-price-list strong{direction:ltr;unicode-bidi:isolate}
+
+@media(max-width:900px){
+  .tracking-page .tracking-layout,
+  .tracking-page.rtl .tracking-layout{grid-template-columns:1fr}
+  .tracking-page.rtl .tracking-main-column,
+  .tracking-page.rtl .tracking-side-column{grid-column:1;grid-row:auto}
+  .tracking-page .tracking-side-column{position:static;grid-template-columns:1fr 1fr}
+  .tracking-page .tracking-privacy-card{grid-column:1/-1}
+}
+@media(max-width:700px){
+  .tracking-page main.section{padding:26px 0 52px}
+  .tracking-page .tracking-container{width:min(100% - 28px,1180px)}
+  .tracking-page .tracking-page-head{align-items:flex-start;flex-direction:column;gap:13px}
+  .tracking-page .tracking-page-head h1{font-size:2.25rem}
+  .tracking-page .tracking-verify-card{grid-template-columns:1fr;padding:18px 16px}
+  .tracking-page .tracking-verify-icon{width:44px;height:44px}
+  .tracking-page .track-gate-row{grid-template-columns:1fr}
+  .tracking-page .tracking-status-hero{grid-template-columns:48px minmax(0,1fr);padding:22px 18px;gap:13px;border-radius:20px}
+  .tracking-page .tracking-hero-icon{width:48px;height:48px;border-radius:15px}
+  .tracking-page .tracking-hero-total{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;text-align:left;padding-top:13px;border-top:1px solid rgba(255,255,255,.13)}
+  .tracking-page.rtl .tracking-hero-total{text-align:right}
+  .tracking-page .premium-tracking-steps{grid-template-columns:1fr;gap:0;padding-left:5px}
+  .tracking-page.rtl .premium-tracking-steps{padding-left:0;padding-right:5px}
+  .tracking-page .premium-tracking-steps:before{top:16px;bottom:16px;left:22px;right:auto;width:2px;height:auto}
+  .tracking-page.rtl .premium-tracking-steps:before{left:auto;right:22px}
+  .tracking-page .premium-track-step{grid-template-columns:36px 1fr;justify-items:start;align-items:center;gap:12px;text-align:left;padding:5px 0}
+  .tracking-page.rtl .premium-track-step{grid-template-columns:1fr 36px;text-align:right}
+  .tracking-page.rtl .premium-track-node{grid-column:2}
+  .tracking-page.rtl .premium-track-copy{grid-column:1;grid-row:1}
+  .tracking-page .premium-track-copy b{font-size:.76rem}
+  .tracking-page .tracking-side-column{grid-template-columns:1fr}
+  .tracking-page .tracking-privacy-card{grid-column:auto}
+  .tracking-page .tracking-help-card{grid-template-columns:42px 1fr}
+  .tracking-page .tracking-help-actions{grid-column:1/-1}
+  .tracking-page .tracking-help-actions .btn{flex:1}
+}
