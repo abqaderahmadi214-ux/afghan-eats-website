@@ -28,7 +28,7 @@
           <label class="field"><span class="en-copy">Your role</span><span class="fa-copy">نقش شما</span><select name="claimantRole"><option value="owner">Owner / مالک</option><option value="manager">Manager / مدیر</option><option value="authorized_representative">Authorized representative / نماینده مجاز</option></select></label>
           <label class="field"><span class="en-copy">Phone</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required minlength="9" maxlength="50" placeholder="+93"></label>
           <label class="field"><span>WhatsApp</span><input name="whatsapp" type="tel" maxlength="50" placeholder="+93"></label>
-          <label class="field full"><span>Email</span><input name="email" type="email" maxlength="320" placeholder="optional"></label>
+          <label class="field full"><span><span class="en-copy">Email address</span><span class="fa-copy">آدرس ایمیل</span> *</span><input name="email" type="email" maxlength="320" required placeholder="name@example.com"><small class="muted en-copy">This email must be verified before ownership can be approved.</small><small class="muted fa-copy">این ایمیل باید پیش از تأیید مالکیت تأیید شود.</small></label>
           <label class="field full"><span class="en-copy">How can Afghan Eats verify your connection to this restaurant?</span><span class="fa-copy">افغان ایتس چگونه ارتباط شما با این رستورانت را تأیید کند؟</span><textarea name="evidenceNotes" required minlength="10" maxlength="1500" rows="5" placeholder="Your position, the published number we should call, and a suitable time to contact the restaurant"></textarea></label>
           <div class="claim-note field full"><span class="en-copy">For security, Afghan Eats will call one of the phone numbers already published for this restaurant. Never send passwords, database keys, national-ID numbers or bank details in this form.</span><span class="fa-copy">برای امنیت، افغان ایتس با یکی از شماره‌های عمومی همین رستورانت تماس می‌گیرد. رمز عبور، کلید دیتابیس، شماره تذکره یا معلومات بانکی را در این فورم ننویسید.</span></div>
           <button class="btn btn-primary field full" type="submit"><span class="en-copy">Submit verified claim</span><span class="fa-copy">ارسال درخواست تأیید</span></button>
@@ -51,6 +51,6 @@
     </div>
   </main>
   <script src="/assets/app.js"></script>
-  <script src="/assets/claims.js"></script>
+  <script src="/assets/claims.js?v=email-verification-1"></script>
 </body>
 </html>
