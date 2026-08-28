@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/assets/trust.css">
   <link rel="stylesheet" href="/assets/customer.css">
   <script src="/config.js"></script>
-  <link rel="stylesheet" href="/assets/customer-premium.css">
+  <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-7">
 </head>
 <body class="premium-customer checkout-page">
   <header class="header"><div class="container nav"><a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a><div class="actions"><button class="lang" onclick="toggleLang()">دری</button><a class="btn btn-light" href="/account" data-i18n="account"></a><a class="btn btn-light" href="/restaurants" data-i18n="restaurants"></a></div></div></header>
@@ -20,7 +20,7 @@
     <div class="checkout-title-row"><div><span class="checkout-eyebrow"><span class="en-copy">Almost there</span><span class="fa-copy">تقریباً تمام شد</span></span><h1 data-i18n="checkout"></h1></div><a class="checkout-back" href="/restaurants"><span aria-hidden="true">←</span><span class="en-copy">Keep browsing</span><span class="fa-copy">ادامه جستجو</span></a></div>
     <p class="muted en-copy">Choose delivery or pickup. For delivery, Afghan Eats checks your address and fee before you place the order.</p>
     <p class="muted fa-copy">ارسال یا دریافت حضوری را انتخاب کنید. برای ارسال، افغان ایتس پیش از ثبت سفارش آدرس و هزینه را بررسی می‌کند.</p>
-    <div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
+    <section id="checkoutIdentity" class="checkout-identity-card" aria-live="polite"></section><div id="customerCheckoutNote" class="customer-checkout-note hidden"></div>
     <div id="checkoutError" class="notice error hidden"></div>
     <form onsubmit="placeOrder(event); return false"><div class="grid2">
       <div class="field full"><span><span class="en-copy">How would you like your order?</span><span class="fa-copy">سفارش را چگونه دریافت می‌کنید؟</span></span><div class="fulfillment-card"><label><input type="radio" name="fulfillment" value="delivery" checked><span>🛵 <span data-i18n="delivery"></span></span></label><label><input type="radio" name="fulfillment" value="pickup"><span>🏪 <span data-i18n="pickup"></span></span></label></div></div>
@@ -44,5 +44,5 @@
     </form>
   </div></div></main>
   <script src="/assets/app.js"></script><script src="/assets/advanced.js"></script><script src="/assets/trust.js"></script><script src="/assets/customer.js"></script>
-</body>
+<script src="/assets/checkout-membership.js?v=20260828-7"></script></body>
 </html>
