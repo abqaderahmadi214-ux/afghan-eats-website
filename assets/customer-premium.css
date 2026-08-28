@@ -3027,3 +3027,15 @@
   .account-page .account-order-end{align-items:flex-end;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){.account-page .account-panel.active{animation:none}}
+
+/* Email verification v1 */
+.account-page .account-email-verify-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  margin-top:15px;padding:12px 14px;border:1px solid rgba(244,180,63,.32);
+  border-radius:13px;background:rgba(255,248,229,.12);color:#fff
+}
+.account-page .account-email-verify-banner.hidden{display:none!important}
+.account-page .account-email-verify-banner b{font-size:.76rem;color:#fff6da}
+.account-page .account-email-verify-banner p{margin:2px 0 0;color:#dce8e2;font-size:.65rem;line-height:1.5}
+.account-page .account-email-verify-banner .btn{min-height:36px;white-space:nowrap}
+@media(max-width:620px){.account-page .account-email-verify-banner{align-items:flex-start;flex-direction:column}.account-page .account-email-verify-banner .btn{width:100%}}
