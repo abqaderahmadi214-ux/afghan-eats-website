@@ -72,6 +72,8 @@ jobs:
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Menu v3" /tmp/ae-menu-css-v3.css
             retry_contains "https://afghaneats.net/assets/app.js" "selectMenuCategory" /tmp/ae-menu-category-v4.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Menu v4" /tmp/ae-menu-category-css-v4.css
+            retry_contains "https://afghaneats.net/assets/customer-premium.css" "Menu v5" /tmp/ae-menu-rtl-v5.css
+            retry_contains "https://afghaneats.net/assets/customer-premium.css" "grid-template-areas:\"cart menu\"" /tmp/ae-menu-rtl-geometry-v5.css
             retry_contains "https://afghaneats.net/assets/app.js" "browseRestaurantMedia" /tmp/ae-restaurants-app-v2.js
             retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
             retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
