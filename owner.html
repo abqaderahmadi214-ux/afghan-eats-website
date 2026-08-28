@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
-  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260829-1">
+  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260829-2">
   <link rel="stylesheet" href="/assets/notifications.css">
   <script src="/config.js"></script>
 </head>
@@ -49,6 +49,7 @@
               <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerOrdersPanel" onclick="showOwnerPanel('ownerOrdersPanel',this)"><span>▤</span><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></button>
               <button class="owner-tab owner-nav-item" type="button" aria-label="Menu" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span>☷</span><span class="en-copy">Menu</span><span class="fa-copy">منو و آیتم‌ها</span></button>
               <button class="owner-tab owner-nav-item" type="button" aria-label="Store & profile" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span>⚙</span><span class="en-copy">Store & profile</span><span class="fa-copy">تنظیمات رستورانت</span></button>
+              <button class="owner-tab owner-nav-item" type="button" aria-label="Business tools" data-owner-panel="ownerToolsPanel" onclick="showOwnerPanel('ownerToolsPanel',this)"><span>◈</span><span class="en-copy">Business tools</span><span class="fa-copy">ابزارهای کسب‌وکار</span></button>
             </nav>
             <div class="owner-side-support">
               <a href="/help"><span>?</span><span class="en-copy">Support</span><span class="fa-copy">پشتیبانی</span></a>
@@ -156,13 +157,25 @@
           </div>
         </section>
 
+        <section id="ownerToolsPanel" class="owner-panel hidden">
+          <div class="owner-panel-heading">
+            <div>
+              <span class="owner-card-kicker"><span class="en-copy">Business tools</span><span class="fa-copy">ابزارهای کسب‌وکار</span></span>
+              <h2><span class="en-copy">Operate, improve and grow your restaurant</span><span class="fa-copy">مدیریت، بهبود و رشد رستورانت</span></h2>
+              <p class="en-copy">Advanced tools are grouped here so your main dashboard stays clean. Use only the tools relevant to your daily operations.</p>
+              <p class="fa-copy">ابزارهای پیشرفته در این بخش گروه‌بندی شده‌اند تا داشبورد اصلی ساده و منظم بماند. فقط ابزارهای مورد نیاز کار روزانه را استفاده کنید.</p>
+            </div>
+          </div>
+          <div id="ownerBusinessTools" class="owner-business-tools"></div>
+        </section>
+
           </div>
         </div>
       </section>
     </div>
   </main>
   <script src="/assets/app.js"></script>
-  <script src="/assets/portal.js?v=owner-premium-1"></script>
+  <script src="/assets/portal.js?v=owner-premium-2"></script>
   <script src="/assets/notifications.js"></script>
 </body>
 </html>
