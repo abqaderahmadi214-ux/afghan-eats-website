@@ -279,6 +279,26 @@ async function operationsToolsData() {
   const get = index => result[index].status === 'fulfilled' ? result[index].value : null;
   return { promotions: asArray(get(0)), supportCases: asArray(get(1)), audit: asArray(get(2)), provider: get(3) || {} };
 }
+async function renderPromotionsView() {
+  const data = await operationsToolsData(); state.cache.promotions = data;
+  root.innerHTML = `<p class="section-intro">Create, pause and reactivate promotion campaigns. Checkout validates every discount on the server.</p><div class="section-grid"><section class="panel"><div class="panel-head"><div><h2>Create promotion</h2><p>The full campaign controls from the former Operations portal are preserved here.</p></div></div><div class="panel-body">${promotionForm()}</div></section><section class="panel wide"><div class="panel-head"><div><h2>Promotion campaigns</h2><p>Review discount type, value, minimum order, usage and activation state.</p></div></div><div class="panel-body">${promotionTable(data.promotions)}</div></section></div>`;
+}
+async function renderCommunicationsView() {
+  const data = await operationsToolsData(); state.cache.communications = data;
+  root.innerHTML = `<p class="section-intro">Send server-recorded in-app service announcements and opt-in promotional broadcasts.</p><section class="panel wide"><div class="panel-head"><div><h2>Customer communications</h2><p>Promotional messages remain limited to customers who explicitly opted in.</p></div>${badge(data.provider.configured ? 'enabled' : 'inactive')}</div><div class="panel-body"><div class="safety-card"><strong>${data.provider.configured ? 'External messaging provider configured' : 'External SMS / WhatsApp provider not configured'}</strong><p>${data.provider.configured ? `Provider: ${esc(data.provider.providerName || 'configured')} · ${esc(asArray(data.provider.channels).join(', '))}` : 'In-app messaging remains available. External channels cannot report success unless a real backend provider is configured.'}</p></div>${broadcastForm()}</div></section>`;
+}
+async function renderSupportView() {
+  const data = await operationsToolsData(); state.cache.support = data;
+  root.innerHTML = `<p class="section-intro">Review customer cases linked to verified order records and move them through the support workflow.</p><section class="panel wide"><div class="panel-head"><div><h2>Customer support queue</h2><p>New, in-progress, waiting-customer, resolved and closed states are preserved from the former Operations portal.</p></div></div><div class="panel-body">${customerSupportTable(data.supportCases)}</div></section>`;
+}
+async function renderSecurityView() {
+  root.innerHTML = `<p class="section-intro">Manage administrator credentials. Changing the password invalidates earlier administrator sessions.</p><section class="panel"><div class="panel-head"><div><h2>Administrator security</h2><p>Use a unique strong password for this restricted workspace.</p></div></div><div class="panel-body">${adminPasswordForm()}<div class="safety-card space-top-sm"><strong>Private reset-link compatibility</strong><p>The former one-time admin reset-link flow is preserved at <a href="/admin-reset" target="_blank" rel="noopener noreferrer">/admin-reset ↗</a>.</p></div></div></section>`;
+}
+async function renderAuditView() {
+  const data = await operationsToolsData(); state.cache.audit = data;
+  root.innerHTML = `<p class="section-intro">Review administrator actions, affected entities, timestamps and recorded action details.</p><section class="panel wide"><div class="panel-head"><div><h2>Operations audit</h2><p>Campaign, support, portal-access, rewards, broadcast and marketplace-control actions are recorded here.</p></div></div><div class="panel-body">${auditTable(data.audit)}</div></section>`;
+}
+
 async function renderOperationsTools() {
   const data = await operationsToolsData(); state.cache.ops = data;
   root.innerHTML = `<p class="section-intro">Functions from the former Operations portal are consolidated here so admin.afghaneats.net remains the single Afghan Eats administrator workspace.</p><div class="section-grid">
