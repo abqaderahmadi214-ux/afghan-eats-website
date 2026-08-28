@@ -1135,3 +1135,28 @@
   .restaurant-page .directory-owner-v2{align-items:flex-start;flex-direction:column}
   .restaurant-page .directory-owner-v2 .btn{width:100%}
 }
+
+.restaurant-page .directory-phone-link{
+  min-height:36px;
+  display:inline-flex;
+  align-items:center;
+  padding:7px 10px;
+  border:1px solid var(--ae-line);
+  border-radius:10px;
+  background:#fff;
+  color:#53615a;
+  font-size:.73rem;
+  font-weight:750;
+  text-decoration:none;
+}
+.restaurant-page .directory-phone-link:hover{
+  border-color:#d9d1c7;
+  background:#faf8f4;
+  color:var(--ae-deep);
+}
+@media(max-width:700px){
+  .restaurant-page .directory-phone-link{
+    width:auto;
+    min-height:34px;
+  }
+}
