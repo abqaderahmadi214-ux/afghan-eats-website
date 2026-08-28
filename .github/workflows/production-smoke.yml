@@ -55,6 +55,8 @@ jobs:
             retry_contains "https://afghaneats.net/assets/home-premium.css" "homepage v2" /tmp/ae-home-premium.css
             retry_contains "https://afghaneats.net/" "id=\"heroCarousel\"" /tmp/ae-home-carousel.html
             retry_contains "https://afghaneats.net/assets/hero-carousel.js" "AUTOPLAY_MS = 3500" /tmp/ae-hero-carousel.js
+            retry_contains "https://afghaneats.net/" "id=\"cuisinePhotoGrid\"" /tmp/ae-home-cuisine.html
+            retry_contains "https://afghaneats.net/assets/cuisine-motion.js" "IntersectionObserver" /tmp/ae-cuisine-motion.js
             if grep -Fq 'journey-section' /tmp/ae-home-premium.html || grep -Fq 'Ordering that fits Herat' /tmp/ae-home-premium.html; then
               echo 'Legacy hidden homepage content is still present in production HTML.' >&2
               exit 1
