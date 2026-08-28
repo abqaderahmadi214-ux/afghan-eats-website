@@ -53,6 +53,8 @@ jobs:
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
             retry_contains "https://afghaneats.net/" "class=\"premium-home\"" /tmp/ae-home-premium.html
             retry_contains "https://afghaneats.net/assets/home-premium.css" "homepage v2" /tmp/ae-home-premium.css
+            retry_contains "https://afghaneats.net/" "id=\"heroCarousel\"" /tmp/ae-home-carousel.html
+            retry_contains "https://afghaneats.net/assets/hero-carousel.js" "AUTOPLAY_MS = 3500" /tmp/ae-hero-carousel.js
             if grep -Fq 'journey-section' /tmp/ae-home-premium.html || grep -Fq 'Ordering that fits Herat' /tmp/ae-home-premium.html; then
               echo 'Legacy hidden homepage content is still present in production HTML.' >&2
               exit 1
