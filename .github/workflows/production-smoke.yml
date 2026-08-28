@@ -53,6 +53,10 @@ jobs:
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
             retry_contains "https://afghaneats.net/" "class=\"premium-home\"" /tmp/ae-home-premium.html
             retry_contains "https://afghaneats.net/assets/home-premium.css" "premium homepage" /tmp/ae-home-premium.css
+            if grep -Fq 'journey-section' /tmp/ae-home-premium.html || grep -Fq 'Ordering that fits Herat' /tmp/ae-home-premium.html; then
+              echo 'Legacy hidden homepage content is still present in production HTML.' >&2
+              exit 1
+            fi
             retry_contains "https://afghaneats.net/assets/app.js" "directoryContactMarkup" /tmp/ae-app-v46.js
             retry_contains "https://afghaneats.net/data/public-herat-directory.json" "jumeirah-fast-food-herat" /tmp/ae-directory-v46.json
             retry_contains "https://afghaneats.net/admin-reset.html" "adminResetForm" /tmp/ae-admin-reset-v47.html
