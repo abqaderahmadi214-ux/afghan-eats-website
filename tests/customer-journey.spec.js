@@ -36,7 +36,7 @@ async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRow
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
     else if(path.endsWith('/cities.publicCatalog'))data=[];
     else if(path.endsWith('/discovery.trending'))data=[];
-    else if(path.endsWith('/operations.applyRestaurantClaim'))data={success:true,duplicate:false,reference:'AEC-20260811-TEST01',status:'pending',restaurantName:directoryListing.name};
+    else if(path.endsWith('/operations.applyRestaurantClaim'))data={success:true,duplicate:false,reference:'AEC-20260811-TEST01',status:'pending',restaurantName:directoryListing.name,emailVerified:false,verificationEmailSent:true};
     else if(path.endsWith('/operations.restaurantClaimStatus'))data={reference:'AEC-20260811-TEST01',status:'pending',restaurant_name:directoryListing.name};
     await route.fulfill({status:200,contentType:'application/json',body:trpc(data)});
   });
@@ -153,6 +153,7 @@ test('a public listing can be claimed without creating or activating another res
   await expect(page.locator('#claimRestaurantSummary')).toContainText('Jumeirah Fast Food');
   await page.locator('input[name="claimantName"]').fill('Restaurant Owner');
   await page.locator('#restaurantClaimForm input[name="phone"]').fill('+93 700 000 001');
+  await page.locator('#restaurantClaimForm input[name="email"]').fill('owner@example.com');
   await page.locator('textarea[name="evidenceNotes"]').fill('I own this restaurant. Please call the published restaurant number in the afternoon.');
   await page.getByRole('button',{name:'Submit verified claim'}).click();
   await expect(page.locator('#restaurantClaimResult')).toContainText('AEC-20260811-TEST01');
