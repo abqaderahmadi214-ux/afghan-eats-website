@@ -717,3 +717,68 @@
   .account-page .customer-stats{grid-template-columns:1fr}
   .account-page .customer-auth-tabs{margin-bottom:18px}
 }
+
+/* Public restaurant media and owner-confirmation preview */
+.premium-customer .restaurant-image .image-note{
+  right:12px;
+  bottom:12px;
+  background:rgba(15,48,40,.78);
+  backdrop-filter:blur(7px);
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:.68rem;
+  letter-spacing:.01em;
+}
+.premium-customer.rtl .restaurant-image .image-note{right:auto;left:12px}
+.restaurant-page .store-image-note{
+  position:absolute;
+  right:22px;
+  top:22px;
+  z-index:2;
+  color:#fff;
+  background:rgba(15,48,40,.72);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(9px);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:.72rem;
+  font-weight:800;
+}
+.restaurant-page.rtl .store-image-note{right:auto;left:22px}
+.restaurant-page .directory-detail{
+  border-color:var(--ae-line);
+  background:#fff;
+  border-radius:24px;
+  box-shadow:var(--ae-shadow);
+}
+.restaurant-page .directory-kicker{
+  background:#fff4dc;
+  color:#6c4b13;
+}
+.restaurant-page .directory-public-menu{
+  border-color:var(--ae-line);
+}
+.restaurant-page .directory-menu-section h3{
+  color:var(--ae-deep);
+  font-size:1.28rem;
+  margin-top:28px;
+}
+.restaurant-page .public-menu-item{
+  border:1px solid var(--ae-line);
+  border-radius:18px;
+  box-shadow:0 7px 22px rgba(23,63,52,.035);
+  margin-bottom:12px;
+}
+.restaurant-page .public-menu-status{
+  background:#fff4dc;
+  color:#6c4b13;
+}
+.restaurant-page .directory-owner{
+  border-color:#ead8cf;
+  background:#fff8f4;
+  border-radius:16px;
+}
+@media(max-width:700px){
+  .restaurant-page .store-image-note{right:14px;top:14px}
+  .restaurant-page.rtl .store-image-note{right:auto;left:14px}
+}
