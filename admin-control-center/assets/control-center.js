@@ -21,7 +21,7 @@ function money(value) { return `AFN ${number(value)}`; }
 function shortDate(value) { if (!value) return '—'; try { return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value)); } catch { return '—'; } }
 function afghanDate(value) { if (!value) return '—'; try { return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kabul', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(value)); } catch { return '—'; } }
 function kabulIso(value) { const raw = String(value || '').trim(); if (!raw) throw new Error('Choose the shift date and time.'); const normalized = raw.length === 16 ? `${raw}:00` : raw; const date = new Date(`${normalized}+04:30`); if (Number.isNaN(date.getTime())) throw new Error('The Afghanistan shift date/time is invalid.'); return date.toISOString(); }
-function statusClass(value) { const key = String(value || '').toLowerCase(); if (['active','approved','open','delivered','resolved','enabled'].includes(key)) return 'badge-active'; if (['pending','reviewing','new','preparing','monitoring','assigned','accepted','on_the_way'].includes(key)) return 'badge-pending'; if (['inactive','suspended','rejected','cancelled','paused','failed','closed'].includes(key)) return 'badge-suspended'; return 'badge-neutral'; }
+function statusClass(value) { const key = String(value || '').toLowerCase(); if (['active','approved','open','delivered','resolved','enabled'].includes(key)) return 'badge-active'; if (['pending','reviewing','waitlisted','new','preparing','monitoring','assigned','accepted','on_the_way'].includes(key)) return 'badge-pending'; if (['inactive','suspended','rejected','cancelled','paused','failed','closed'].includes(key)) return 'badge-suspended'; return 'badge-neutral'; }
 function badge(value) { return `<span class="badge ${statusClass(value)}">${esc(String(value || 'unknown').replaceAll('_', ' '))}</span>`; }
 function title(value) { return String(value || '').replace(/\b\w/g, char => char.toUpperCase()); }
 
@@ -63,9 +63,14 @@ const VIEW_META = {
   dispatch: ['Live operations', 'Orders & dispatch'],
   restaurants: ['Partner operations', 'Restaurants'],
   riders: ['Delivery operations', 'Riders'],
-  customers: ['Customer operations', 'Customers'],
-  ops: ['Support & governance', 'Support & operations'],
+  customers: ['Customer operations', 'Customers & rewards'],
+  promotions: ['Commercial operations', 'Promotions'],
+  communications: ['Customer operations', 'Communications'],
+  support: ['Customer operations', 'Customer support'],
   access: ['Identity & access', 'Portal access'],
+  security: ['Identity & access', 'Administrator security'],
+  audit: ['Governance', 'Operations audit'],
+  ops: ['Support & governance', 'Support & operations'],
   careers: ['People operations', 'Careers'],
   website: ['Public-site control', 'Website reliability'],
 };
@@ -88,6 +93,11 @@ async function renderView() {
     if (state.view === 'restaurants') await renderRestaurants();
     if (state.view === 'riders') await renderRiders();
     if (state.view === 'customers') await renderCustomers();
+    if (state.view === 'promotions') await renderPromotionsView();
+    if (state.view === 'communications') await renderCommunicationsView();
+    if (state.view === 'support') await renderSupportView();
+    if (state.view === 'security') await renderSecurityView();
+    if (state.view === 'audit') await renderAuditView();
     if (state.view === 'ops') await renderOperationsTools();
     if (state.view === 'access') await renderAccess();
     if (state.view === 'careers') await renderCareers();
@@ -158,7 +168,7 @@ function dispatchRow(order, riders, assignment) {
   const riderOptions = activeRiders.map(rider => `<option value="${attr(rider.id)}">${esc(rider.full_name)} · on shift · available</option>`).join('');
   const assignmentStatuses = ['assigned','accepted','at_restaurant','picked_up','on_the_way','delivered','cancelled'];
   const control = assignment ? `<div class="button-stack"><select class="inline-select" data-assignment-status="${attr(assignment.id)}">${assignmentStatuses.map(status => `<option value="${status}" ${assignment.status === status ? 'selected' : ''}>${esc(status.replaceAll('_',' '))}</option>`).join('')}</select><button class="button button-primary button-small" type="button" data-action="update-assignment" data-id="${attr(assignment.id)}">Update</button></div>` : `<div class="button-stack"><select class="inline-select" data-order-rider="${attr(order.id)}"><option value="">Choose rider</option>${riderOptions}</select><button class="button button-primary button-small" type="button" data-action="assign-rider" data-id="${attr(order.id)}">Assign</button></div>`;
-  return `<tr><td><span class="row-title">${esc(order.order_number || order.id)}</span><span class="row-sub">${money(order.total)}</span></td><td>${esc(order.customer_name || 'Customer')}<span class="row-sub">${esc(order.delivery_address || 'No delivery address')}</span></td><td>${badge(order.status)}</td><td>${assignment ? `<span class="row-title">${esc(assignment.rider_name || 'Assigned rider')}</span><span class="row-sub">${badge(assignment.status)}</span>` : '<span class="row-sub">Unassigned</span>'}</td><td>${control}</td></tr>`;
+  return `<tr><td><span class="row-title">${esc(order.order_number || order.id)}</span><span class="row-sub">${money(order.total)}</span></td><td>${esc(order.customer_name || 'Customer')}<span class="row-sub">${esc(order.customer_phone || 'No phone')} · ${esc(order.delivery_address || 'No delivery address')}</span></td><td>${badge(order.status)}</td><td>${assignment ? `<span class="row-title">${esc(assignment.rider_name || 'Assigned rider')}</span><span class="row-sub">${badge(assignment.status)}</span>` : '<span class="row-sub">Unassigned</span>'}</td><td>${control}</td></tr>`;
 }
 
 async function restaurantData() { const [restaurants, partners, accounts, setupSubmissions] = await Promise.all([query('restaurants.adminList', { limit: 100 }), query('operations.adminPartnerApplications', { limit: 100 }), query('portal.adminAccounts', null), query('portal.adminSetupSubmissions', { status: 'submitted' })]); return { restaurants: asArray(restaurants), partners: asArray(partners), accounts: asArray(accounts), setupSubmissions: asArray(setupSubmissions) }; }
