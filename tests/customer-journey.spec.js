@@ -129,7 +129,8 @@ test('public Herat directory listings can show sourced menus without becoming or
   await listing.click();
   await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
-  await expect(page.locator('.directory-detail a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
+  await expect(page.locator('.directory-contact-list a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
+  await expect(page.locator('.directory-menu-head a[target="_blank"]')).toHaveAttribute('href',/mizbanapp\.com\/en\/herat\/restaurant\/jumeirah-fast-food/);
   await expect(page.locator('.directory-detail')).toContainText('Public menu');
   await expect(page.locator('.directory-detail')).toContainText('Jumeirah Special Burger');
   await expect(page.locator('.directory-detail')).toContainText('؋ 200');
