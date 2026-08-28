@@ -190,7 +190,7 @@ jobs:
               'riderOperations.adminReviewAvailability','riderOperations.adminReviewTimeOff',
               'riderChat.adminSupportThreads','riderChat.adminSupportReply'
           ]
-          required_parity=['waitlisted','phone_verified','referral_code','restaurant_status','usage_limit','auditDetails','portal-listing-status']
+          required_parity=['waitlisted','applicationDetails','assignmentHistoryTable','phone_verified','referral_code','restaurant_status','usage_limit','auditDetails','portal-listing-status']
           missing=[item for item in required_views if item not in index]
           missing += [item for item in required_api if item not in app]
           missing += [item for item in required_parity if item not in app]
