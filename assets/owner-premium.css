@@ -449,3 +449,214 @@ html[dir="rtl"] .owner-premium .owner-business-list b{line-height:1.7}
 @media(prefers-reduced-motion:reduce){
   .owner-premium *{scroll-behavior:auto!important}
 }
+
+/* Owner layout containment & advanced tools v2 */
+.owner-premium,
+.owner-premium *{box-sizing:border-box}
+.owner-premium .owner-app-shell,
+.owner-premium .owner-workspace,
+.owner-premium .owner-panel,
+.owner-premium .portal-grid,
+.owner-premium .owner-studio-grid,
+.owner-premium .portal-card,
+.owner-premium .owner-premium-card,
+.owner-premium .owner-side-nav,
+.owner-premium .owner-business-tools,
+.owner-premium .owner-business-tools>*{min-width:0;max-width:100%}
+.owner-premium .owner-workspace,
+.owner-premium .owner-panel,
+.owner-premium .portal-card,
+.owner-premium .owner-premium-card,
+.owner-premium .owner-business-tools{overflow-wrap:anywhere;word-break:normal}
+.owner-premium input,
+.owner-premium select,
+.owner-premium textarea,
+.owner-premium button{
+  max-width:100%;
+  min-width:0;
+  font:inherit
+}
+.owner-premium input,
+.owner-premium select,
+.owner-premium textarea{width:100%}
+.owner-premium textarea{resize:vertical}
+.owner-premium .field,
+.owner-premium .field>*,
+.owner-premium form,
+.owner-premium form>*,
+.owner-premium .portal-top,
+.owner-premium .portal-top>*,
+.owner-premium .portal-actions,
+.owner-premium .switch-row,
+.owner-premium .switch-row>*{min-width:0}
+.owner-premium .portal-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap
+}
+.owner-premium .portal-top>div:first-child{flex:1 1 280px;min-width:0}
+.owner-premium .portal-top h2,
+.owner-premium .portal-top h3,
+.owner-premium .portal-top p,
+.owner-premium .portal-card h2,
+.owner-premium .portal-card h3,
+.owner-premium .portal-card p,
+.owner-premium .portal-card small,
+.owner-premium .portal-card b,
+.owner-premium .portal-card span{
+  max-width:100%;
+  overflow-wrap:anywhere
+}
+.owner-premium .portal-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+.owner-premium .portal-actions .btn{
+  width:auto;
+  white-space:normal;
+  line-height:1.35
+}
+.owner-premium .btn{white-space:normal;text-align:center}
+
+/* Keep the navigation itself clean: no injected cards inside it */
+.owner-premium .owner-side-nav>.portal-card,
+.owner-premium .owner-side-nav>section:not(.owner-side-support){display:none!important}
+
+/* Business tools get one spacious, controlled workspace */
+.owner-premium .owner-business-tools{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:16px
+}
+.owner-premium .owner-business-tools>.portal-card{
+  width:100%;
+  margin:0;
+  padding:20px;
+  overflow:hidden;
+  border:1px solid var(--op-line);
+  border-radius:19px;
+  background:#fff;
+  box-shadow:var(--op-shadow-soft)
+}
+.owner-premium .owner-business-tools>.portal-card+ .portal-card{margin-top:0}
+.owner-premium .owner-business-tools .catalog-studio-grid,
+.owner-premium .owner-business-tools .kitchen-grid,
+.owner-premium .owner-business-tools .growth-form,
+.owner-premium .owner-business-tools .mf30-grid,
+.owner-premium .owner-business-tools .fc-metrics,
+.owner-premium .owner-business-tools .fs-admin-grid{
+  max-width:100%;
+  min-width:0
+}
+.owner-premium .owner-business-tools .catalog-studio-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.owner-premium .owner-business-tools .catalog-form,
+.owner-premium .owner-business-tools .growth-form{min-width:0}
+.owner-premium .owner-business-tools .catalog-row,
+.owner-premium .owner-business-tools .catalog-option,
+.owner-premium .owner-business-tools .merchant-stock-row,
+.owner-premium .owner-business-tools .fs-row,
+.owner-premium .owner-business-tools .inv-row,
+.owner-premium .owner-business-tools .mf30-card,
+.owner-premium .owner-business-tools .growth-campaign{max-width:100%;min-width:0}
+.owner-premium .owner-business-tools .fc-heat,
+.owner-premium .owner-business-tools .fc-horizons,
+.owner-premium .owner-business-tools .inv-list,
+.owner-premium .owner-business-tools .mf30-list{
+  max-width:100%;
+  overflow-x:auto;
+  overscroll-behavior-inline:contain
+}
+.owner-premium .owner-business-tools table{max-width:100%}
+.owner-premium .owner-business-tools .merchant-hour-row{
+  grid-template-columns:minmax(80px,1.05fr) minmax(78px,.8fr) minmax(92px,1fr) 18px minmax(92px,1fr)
+}
+.owner-premium .owner-business-tools .merchant-hour-row>*{min-width:0}
+.owner-premium .owner-business-tools .merchant-hour-row input[type=time]{width:100%;min-width:0}
+.owner-premium .owner-business-tools .ae-quality-grid,
+.owner-premium .owner-business-tools .kitchen-kpis,
+.owner-premium .owner-business-tools .fc-metrics,
+.owner-premium .owner-business-tools .fs-admin-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr))
+}
+
+/* Forms should feel like product UI, not squeezed admin controls */
+.owner-premium .owner-editor-form,
+.owner-premium .store-controls,
+.owner-premium .merchant-owner-grid,
+.owner-premium .kitchen-settings-grid,
+.owner-premium .catalog-form,
+.owner-premium .growth-form{
+  width:100%
+}
+.owner-premium .owner-editor-form .field,
+.owner-premium .store-controls .field,
+.owner-premium .merchant-owner-grid .field,
+.owner-premium .catalog-form>*,
+.owner-premium .growth-form>*{min-width:0}
+.owner-premium .switch-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+.owner-premium .switch-row input[type=checkbox]{width:auto;flex:none}
+.owner-premium .owner-form-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+.owner-premium .owner-category-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 90px auto}
+
+/* Dari gets extra breathing room */
+html[dir="rtl"] .owner-premium .portal-card,
+.owner-premium.rtl .portal-card{line-height:1.75}
+html[dir="rtl"] .owner-premium label,
+html[dir="rtl"] .owner-premium small,
+html[dir="rtl"] .owner-premium p,
+.owner-premium.rtl label,
+.owner-premium.rtl small,
+.owner-premium.rtl p{line-height:1.85}
+html[dir="rtl"] .owner-premium .btn,
+.owner-premium.rtl .btn{line-height:1.5}
+html[dir="rtl"] .owner-premium input,
+html[dir="rtl"] .owner-premium textarea,
+.owner-premium.rtl input,
+.owner-premium.rtl textarea{text-align:right}
+html[dir="rtl"] .owner-premium input[type=number],
+html[dir="rtl"] .owner-premium input[type=time],
+html[dir="rtl"] .owner-premium input[type=url],
+html[dir="rtl"] .owner-premium input[type=tel],
+.owner-premium.rtl input[type=number],
+.owner-premium.rtl input[type=time],
+.owner-premium.rtl input[type=url],
+.owner-premium.rtl input[type=tel]{direction:ltr;text-align:left}
+
+/* Responsive containment for older advanced modules */
+@media(max-width:1180px){
+  .owner-premium .owner-business-tools .catalog-studio-grid,
+  .owner-premium .owner-business-tools .kitchen-grid{grid-template-columns:1fr}
+  .owner-premium .owner-business-tools .ae-quality-grid,
+  .owner-premium .owner-business-tools .kitchen-kpis,
+  .owner-premium .owner-business-tools .fc-metrics,
+  .owner-premium .owner-business-tools .fs-admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .owner-premium .owner-form-row,
+  .owner-premium .owner-category-form,
+  .owner-premium .merchant-owner-grid,
+  .owner-premium .kitchen-settings-grid,
+  .owner-premium .catalog-form,
+  .owner-premium .growth-form{grid-template-columns:1fr!important}
+  .owner-premium .owner-category-form>*,
+  .owner-premium .catalog-form .wide,
+  .owner-premium .growth-form .wide,
+  .owner-premium .growth-form .half{grid-column:auto!important;width:100%}
+  .owner-premium .owner-business-tools .merchant-hour-row{grid-template-columns:1fr 1fr}
+  .owner-premium .owner-business-tools .merchant-hour-row>span{display:none}
+  .owner-premium .owner-business-tools>.portal-card{padding:15px}
+}
+@media(max-width:520px){
+  .owner-premium .owner-business-tools .ae-quality-grid,
+  .owner-premium .owner-business-tools .kitchen-kpis,
+  .owner-premium .owner-business-tools .fc-metrics,
+  .owner-premium .owner-business-tools .fs-admin-grid{grid-template-columns:1fr}
+}
