@@ -47,8 +47,8 @@
             <nav class="owner-side-links" aria-label="Restaurant workspace">
               <button class="owner-tab owner-nav-item active" type="button" data-owner-panel="ownerOverviewPanel" onclick="showOwnerPanel('ownerOverviewPanel',this)"><span>⌂</span><span class="en-copy">Overview</span><span class="fa-copy">داشبورد</span></button>
               <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerOrdersPanel" onclick="showOwnerPanel('ownerOrdersPanel',this)"><span>▤</span><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></button>
-              <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span>☷</span><span class="en-copy">Menu & items</span><span class="fa-copy">منو و آیتم‌ها</span></button>
-              <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span>⚙</span><span class="en-copy">Restaurant settings</span><span class="fa-copy">تنظیمات رستورانت</span></button>
+              <button class="owner-tab owner-nav-item" type="button" aria-label="Menu" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span>☷</span><span class="en-copy">Menu</span><span class="fa-copy">منو و آیتم‌ها</span></button>
+              <button class="owner-tab owner-nav-item" type="button" aria-label="Store & profile" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span>⚙</span><span class="en-copy">Store & profile</span><span class="fa-copy">تنظیمات رستورانت</span></button>
             </nav>
             <div class="owner-side-support">
               <a href="/help"><span>?</span><span class="en-copy">Support</span><span class="fa-copy">پشتیبانی</span></a>
@@ -70,7 +70,7 @@
                 <p class="fa-copy">سفارش‌ها، منو، وضعیت زنده و پروفایل رستورانت را از یک محل مدیریت کنید.</p>
                 <div class="owner-hero-actions">
                   <button class="btn btn-primary" type="button" onclick="ownerGoPanel('ownerOrdersPanel')"><span class="en-copy">View orders</span><span class="fa-copy">مشاهده سفارش‌ها</span></button>
-                  <button class="btn btn-light" type="button" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span></button>
+                  <button class="btn btn-light" type="button" aria-label="Open item editor" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span></button>
                   <a id="ownerPublicLink" class="btn btn-light" href="/restaurants" target="_blank" rel="noopener"><span class="en-copy">View public listing</span><span class="fa-copy">مشاهده صفحه عمومی</span></a>
                 </div>
               </div>
@@ -93,7 +93,7 @@
               </div>
 
               <section class="owner-premium-card owner-menu-preview-card">
-                <div class="owner-premium-head"><div><span class="owner-card-kicker"><span class="en-copy">Menu</span><span class="fa-copy">منو</span></span><h2><span class="en-copy">Menu highlights</span><span class="fa-copy">آیتم‌های منو</span></h2></div><button class="owner-text-action" type="button" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span> →</button></div>
+                <div class="owner-premium-head"><div><span class="owner-card-kicker"><span class="en-copy">Menu</span><span class="fa-copy">منو</span></span><h2><span class="en-copy">Menu highlights</span><span class="fa-copy">آیتم‌های منو</span></h2></div><button class="owner-text-action" type="button" aria-label="Open item editor" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span> →</button></div>
                 <div id="ownerOverviewMenu" class="owner-menu-preview-grid"></div>
               </section>
 
