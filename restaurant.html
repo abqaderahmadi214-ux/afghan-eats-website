@@ -14,8 +14,9 @@
   <link rel="stylesheet" href="/assets/advanced.css">
   <link rel="stylesheet" href="/assets/trust.css">
   <script src="/config.js"></script>
+  <link rel="stylesheet" href="/assets/customer-premium.css">
 </head>
-<body>
+<body class="premium-customer restaurant-page">
   <header class="header">
     <div class="container nav">
       <a class="brand" href="/"><span class="brand-mark">AE</span>Afghan Eats</a>
@@ -29,14 +30,14 @@
     <div class="container menu-layout">
       <section id="menuContent" aria-live="polite"><div class="menu-loading"><div></div><div></div><div></div></div></section>
       <aside class="cart-panel">
-        <div class="cart-panel-head"><h2 data-i18n="cart"></h2><span class="advanced-badge">✦ <span class="en-copy">Live basket</span><span class="fa-copy">سبد زنده</span></span></div>
+        <div class="cart-panel-head"><h2 data-i18n="cart"></h2><span class="basket-status-dot" aria-hidden="true"></span></div>
         <div id="cartItems"></div>
         <div class="sum-row"><span data-i18n="subtotal"></span><span id="cartSubtotal"></span></div>
         <div class="sum-row"><span data-i18n="fee"></span><span id="cartDelivery"></span></div>
         <div class="sum-row"><span data-i18n="service"></span><span id="cartService"></span></div>
         <div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
         <a class="btn btn-primary" style="width:100%" href="/checkout" data-i18n="checkout"></a>
-        <div class="group-order"><strong>👥 <span class="en-copy">Group basket</span><span class="fa-copy">سبد گروهی</span></strong><p class="en-copy">Share this basket with family, friends or colleagues so they can continue from the same items.</p><p class="fa-copy">این سبد را با خانواده، دوستان یا همکاران شریک کنید تا از همان اقلام ادامه دهند.</p><button class="btn btn-light" type="button" onclick="shareCart()"><span class="en-copy">Share basket link</span><span class="fa-copy">اشتراک لینک سبد</span></button></div>
+        <div class="group-order"><strong><span class="en-copy">Ordering together?</span><span class="fa-copy">سفارش گروهی دارید؟</span></strong><p class="en-copy">Share this basket with family, friends or colleagues so they can continue from the same items.</p><p class="fa-copy">این سبد را با خانواده، دوستان یا همکاران شریک کنید تا از همان اقلام ادامه دهند.</p><button class="btn btn-light" type="button" onclick="shareCart()"><span class="en-copy">Share basket link</span><span class="fa-copy">اشتراک لینک سبد</span></button></div>
         <div class="safety-note"><span class="en-copy">Final prices and menu availability are rechecked by the order server at checkout.</span><span class="fa-copy">قیمت نهایی و موجودیت منو هنگام پرداخت دوباره در سرور بررسی می‌شود.</span></div>
       </aside>
     </div>
