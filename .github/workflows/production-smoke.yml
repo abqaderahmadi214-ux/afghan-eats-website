@@ -73,6 +73,8 @@ jobs:
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Tracking v2" /tmp/ae-tracking-css-v2.css
             retry_contains "https://afghaneats.net/account" "class=\"account-hero\"" /tmp/ae-account-v2.html
             retry_contains "https://afghaneats.net/owner" "class=\"owner-app-shell\"" /tmp/ae-owner-premium-v1.html
+            retry_contains "https://afghaneats.net/owner" "id=\"ownerBusinessTools\"" /tmp/ae-owner-tools-v2.html
+            retry_contains "https://afghaneats.net/assets/owner-premium.css" "Owner layout containment & advanced tools v2" /tmp/ae-owner-containment-v2.css
             retry_contains "https://afghaneats.net/owner" "id=\"ownerOverviewPanel\"" /tmp/ae-owner-overview-v1.html
             retry_contains "https://afghaneats.net/assets/owner-premium.css" "Premium Dashboard v1" /tmp/ae-owner-premium-css-v1.css
             retry_contains "https://afghaneats.net/activate.html" "ae_portal_activation_token" /tmp/ae-activate-token-v2.html
