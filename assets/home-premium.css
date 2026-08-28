@@ -49,6 +49,7 @@
 .premium-home .navlinks a:hover{color:var(--ae-deep)}
 .premium-home .navlinks a:hover:after{display:none}
 .premium-home .actions{gap:8px}
+.premium-home .ae-city-select{display:none}
 .premium-home .lang,
 .premium-home .btn-light{
   border:1px solid var(--ae-line);
