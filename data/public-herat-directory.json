@@ -1635,10 +1635,391 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/fa/herat/restaurant/pizza-99/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/pizza-99",
+      "public_menu_checked_at": "2026-09-01",
+      "menu_preview_only": true
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {
+        "id": "p99-chelow-kebab",
+        "name": "Chelow Kebab",
+        "name_dari": "چلو کباب",
+        "sort_order": 1
+      },
+      {
+        "id": "p99-sandwiches",
+        "name": "Sandwiches",
+        "name_dari": "ساندویچ",
+        "sort_order": 2
+      },
+      {
+        "id": "p99-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 3
+      },
+      {
+        "id": "p99-teapots",
+        "name": "99 Teapots",
+        "name_dari": "دیگ‌های ۹۹",
+        "sort_order": 4
+      }
+    ],
+    "items": [
+      {
+        "id": "p99-qabili-neck",
+        "category_id": "p99-chelow-kebab",
+        "name": "Kabuli Pulao with Neck Meat",
+        "name_dari": "قابلی با گردن",
+        "price": 450,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "p99-rice-shank",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow or Qabili with Lamb Shank",
+        "name_dari": "چلو یا قابلی با ماهیچه",
+        "price": 400,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "p99-rice-back",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow or Qabili with Lamb Back Meat",
+        "name_dari": "چلو یا قابلی با گوشت پشتی",
+        "price": 350,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "p99-rice-shank-back",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow or Qabili with Lamb Shank and Back Meat",
+        "name_dari": "چلو یا قابلی با ماهیچه و پشتی",
+        "price": 400,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "p99-special-rice-mix",
+        "category_id": "p99-chelow-kebab",
+        "name": "Special Challow or Qabili (Mixed Meat Platter)",
+        "name_dari": "چلو یا قابلی مخصوص",
+        "price": 280,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "p99-challow-chicken",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow with Chicken",
+        "name_dari": "چلو مرغ",
+        "price": 200,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "p99-rice-mixed-kebab",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow with Mixed Kebab",
+        "name_dari": "چلو کباب میکس",
+        "price": 250,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "p99-rice-joojeh",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow with Joojeh Kebab",
+        "name_dari": "چلو جوجه",
+        "price": 200,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "p99-rice-koobideh",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow with Koobideh Kebab",
+        "name_dari": "چلو کوبیده",
+        "price": 180,
+        "sort_order": 9,
+        "available": true
+      },
+      {
+        "id": "p99-rice-gheimeh",
+        "category_id": "p99-chelow-kebab",
+        "name": "Challow Gheimeh",
+        "name_dari": "چلو قیمه",
+        "price": 70,
+        "sort_order": 10,
+        "available": true
+      },
+      {
+        "id": "p99-pot-chicken",
+        "category_id": "p99-chelow-kebab",
+        "name": "Pot-Cooked Chicken",
+        "name_dari": "مرغ دیگی",
+        "price": 150,
+        "sort_order": 11,
+        "available": true
+      },
+      {
+        "id": "p99-natural-handmade",
+        "category_id": "p99-sandwiches",
+        "name": "Natural Handmade Sandwich",
+        "name_dari": "ساندویچ دست‌ساز طبیعی",
+        "price": 180,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "p99-corned-beef",
+        "category_id": "p99-sandwiches",
+        "name": "Corned Beef Sandwich",
+        "name_dari": "ساندویچ گوشت کورن",
+        "price": 150,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "p99-charcoal-burger",
+        "category_id": "p99-sandwiches",
+        "name": "Charcoal-Grilled Burger",
+        "name_dari": "برگر ذغالی",
+        "price": 140,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "p99-special-99-sandwich",
+        "category_id": "p99-sandwiches",
+        "name": "Special 99 Sandwich",
+        "name_dari": "ساندویچ مخصوص ۹۹",
+        "price": 120,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "p99-corned-chicken",
+        "category_id": "p99-sandwiches",
+        "name": "Corned Chicken Sandwich",
+        "name_dari": "ساندویچ مرغ کورن",
+        "price": 120,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "p99-kofte-pashan",
+        "category_id": "p99-sandwiches",
+        "name": "Kofte Pashan Sandwich",
+        "name_dari": "ساندویچ کوفته‌پاشان",
+        "price": 100,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "p99-handmade-chicken-burger",
+        "category_id": "p99-sandwiches",
+        "name": "Handmade Chicken Burger",
+        "name_dari": "چکن برگر دست‌ساز",
+        "price": 90,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "p99-cheeseburger",
+        "category_id": "p99-sandwiches",
+        "name": "Cheeseburger",
+        "name_dari": "چیز برگر",
+        "price": 80,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "p99-mixed-burger",
+        "category_id": "p99-sandwiches",
+        "name": "Mixed Burger",
+        "name_dari": "برگر میکس",
+        "price": 80,
+        "sort_order": 9,
+        "available": true
+      },
+      {
+        "id": "p99-simple-burger",
+        "category_id": "p99-sandwiches",
+        "name": "Simple Burger",
+        "name_dari": "برگر ساده",
+        "price": 50,
+        "sort_order": 10,
+        "available": true
+      },
+      {
+        "id": "p99-special-chips",
+        "category_id": "p99-sandwiches",
+        "name": "Special Chips",
+        "name_dari": "چپس مخصوص",
+        "price": 120,
+        "sort_order": 11,
+        "available": true
+      },
+      {
+        "id": "p99-chips",
+        "category_id": "p99-sandwiches",
+        "name": "Chips",
+        "name_dari": "چپس",
+        "price": 60,
+        "sort_order": 12,
+        "available": true
+      },
+      {
+        "id": "p99-pizza99-sauce",
+        "category_id": "p99-pizza",
+        "name": "Pizza 99 with Sauce",
+        "name_dari": "پیتزا ۹۹ با سس",
+        "price": 120,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "p99-chicken-toronto",
+        "category_id": "p99-pizza",
+        "name": "Chicken Toronto Pizza",
+        "name_dari": "پیتزا تورنتو مرغ",
+        "price": 400,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "p99-fish-pizza",
+        "category_id": "p99-pizza",
+        "name": "Fish Pizza",
+        "name_dari": "پیتزا ماهی",
+        "price": 450,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "p99-chicken-mushroom",
+        "category_id": "p99-pizza",
+        "name": "Chicken and Mushroom Pizza",
+        "name_dari": "پیتزا مرغ و قارچ",
+        "price": 450,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "p99-meat-pizza",
+        "category_id": "p99-pizza",
+        "name": "Meat Pizza",
+        "name_dari": "پیتزا گوشت",
+        "price": 500,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "p99-kofte-pashan-pizza",
+        "category_id": "p99-pizza",
+        "name": "Kofte Pashan Pizza",
+        "name_dari": "پیتزا کوفته‌پاشان",
+        "price": 500,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "p99-canadian-olive",
+        "category_id": "p99-pizza",
+        "name": "Canadian Pizza with Olives",
+        "name_dari": "پیتزا کانادایی با زیتون",
+        "price": 550,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "p99-mexican-spicy",
+        "category_id": "p99-pizza",
+        "name": "Spicy Mexican Pizza",
+        "name_dari": "پیتزا مکزیکی تند",
+        "price": 550,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "p99-turkish-pizza",
+        "category_id": "p99-pizza",
+        "name": "Turkish Pizza",
+        "name_dari": "پیتزا ترکی",
+        "price": 550,
+        "sort_order": 9,
+        "available": true
+      },
+      {
+        "id": "p99-russian-beef",
+        "category_id": "p99-pizza",
+        "name": "Russian Beef Pizza",
+        "name_dari": "پیتزا بیف روسی",
+        "price": 550,
+        "sort_order": 10,
+        "available": true
+      },
+      {
+        "id": "p99-steak-pizza",
+        "category_id": "p99-pizza",
+        "name": "Steak Pizza",
+        "name_dari": "پیتزا استیک",
+        "price": 600,
+        "sort_order": 11,
+        "available": true
+      },
+      {
+        "id": "p99-oscar-pizza",
+        "category_id": "p99-pizza",
+        "name": "Oscar Pizza",
+        "name_dari": "پیتزا اسکار",
+        "price": 600,
+        "sort_order": 12,
+        "available": true
+      },
+      {
+        "id": "p99-family-special",
+        "category_id": "p99-pizza",
+        "name": "Family Special Pizza",
+        "name_dari": "پیتزا مخصوص خانواده",
+        "price": 750,
+        "sort_order": 13,
+        "available": true
+      },
+      {
+        "id": "p99-premium-pot",
+        "category_id": "p99-teapots",
+        "name": "Pot 99 Premium",
+        "name_dari": "دیگ ۹۹ پریمیوم",
+        "price": 1000,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "p99-second-grade-pot",
+        "category_id": "p99-teapots",
+        "name": "Pot 99 Second Grade",
+        "name_dari": "دیگ ۹۹ درجه دوم",
+        "price": 700,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "p99-third-grade-pot",
+        "category_id": "p99-teapots",
+        "name": "Pot 99 Third Grade",
+        "name_dari": "دیگ ۹۹ درجه سوم",
+        "price": 500,
+        "sort_order": 3,
+        "available": true
+      }
+    ]
   },
   {
     "restaurant": {
