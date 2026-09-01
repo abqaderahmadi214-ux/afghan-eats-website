@@ -1752,10 +1752,325 @@
       "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud",
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud",
-      "public_menu_checked_at": "2026-09-01"
+      "public_menu_checked_at": "2026-09-01",
+      "menu_preview_only": true
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {
+        "id": "burger-masoud-burgers",
+        "name": "Burgers",
+        "name_dari": "برگرها",
+        "sort_order": 1
+      },
+      {
+        "id": "burger-masoud-sandwiches",
+        "name": "Sandwiches",
+        "name_dari": "ساندویچ‌ها",
+        "sort_order": 2
+      },
+      {
+        "id": "burger-masoud-kebab",
+        "name": "Kebab",
+        "name_dari": "کباب",
+        "sort_order": 3
+      },
+      {
+        "id": "burger-masoud-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 4
+      }
+    ],
+    "items": [
+      {
+        "id": "bm-special-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Special Burger",
+        "name_dari": "برگر مخصوص",
+        "price": 100,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "bm-premium-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Premium Burger",
+        "name_dari": "برگر پریمیوم",
+        "price": 120,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "bm-french-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "French Burger",
+        "name_dari": "فرانس برگر",
+        "price": 150,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "bm-zinger-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Zinger Burger",
+        "name_dari": "زینگر برگر",
+        "price": 130,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "bm-cheese-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Cheese Burger",
+        "name_dari": "چیز برگر",
+        "price": 80,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "bm-chicken-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Chicken Burger",
+        "name_dari": "چکن برگر",
+        "price": 100,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "bm-double-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Double Burger",
+        "name_dari": "دابل برگر",
+        "price": 140,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "bm-oven-cheese-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Oven-Baked Cheese Burger",
+        "name_dari": "چیز برگر تنوری",
+        "price": 100,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "bm-oven-chicken-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Oven-Baked Chicken Burger",
+        "name_dari": "چکن برگر تنوری",
+        "price": 110,
+        "sort_order": 9,
+        "available": true
+      },
+      {
+        "id": "bm-simple-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Simple Burger",
+        "name_dari": "برگر ساده",
+        "price": 50,
+        "sort_order": 10,
+        "available": true
+      },
+      {
+        "id": "bm-sausage-cheese-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Sausage & Cheese Burger",
+        "name_dari": "برگر سوسیس و پنیر",
+        "price": 70,
+        "sort_order": 11,
+        "available": true
+      },
+      {
+        "id": "bm-chips-cheese-burger",
+        "category_id": "burger-masoud-burgers",
+        "name": "Chips & Cheese Burger",
+        "name_dari": "برگر چپس و پنیر",
+        "price": 60,
+        "sort_order": 12,
+        "available": true
+      },
+      {
+        "id": "bm-oven-hot-dog",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Oven-Baked Hot Dog",
+        "name_dari": "هات‌داگ تنوری",
+        "price": 120,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "bm-cocktail",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Cocktail Sandwich",
+        "name_dari": "ساندویچ کوکتل",
+        "price": 100,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "bm-oven-chicken",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Oven-Baked Chicken Sandwich",
+        "name_dari": "ساندویچ مرغ تنوری",
+        "price": 120,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "bm-chicken",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Chicken Sandwich",
+        "name_dari": "ساندویچ مرغ",
+        "price": 100,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "bm-cold-sausage",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Cold Sausage Sandwich",
+        "name_dari": "ساندویچ سوسیس سرد",
+        "price": 50,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "bm-hot-sausage",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Hot Sausage Sandwich",
+        "name_dari": "ساندویچ سوسیس گرم",
+        "price": 60,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "bm-chicken-mushroom",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Chicken & Mushroom Sandwich",
+        "name_dari": "ساندویچ مرغ و قارچ",
+        "price": 100,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "bm-meat-mushroom",
+        "category_id": "burger-masoud-sandwiches",
+        "name": "Meat & Mushroom Sandwich",
+        "name_dari": "ساندویچ گوشت و قارچ",
+        "price": 120,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "bm-liver-kebab",
+        "category_id": "burger-masoud-kebab",
+        "name": "Liver Kebab",
+        "name_dari": "کباب جگر",
+        "price": 150,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "bm-plain-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Plain Pizza",
+        "name_dari": "پیتزا ساده",
+        "price": 160,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "bm-mixed-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Mixed Pizza",
+        "name_dari": "پیتزا مخلوط",
+        "price": 200,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "bm-chicken-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Chicken Pizza",
+        "name_dari": "پیتزا مرغ",
+        "price": 200,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "bm-meat-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Meat Pizza",
+        "name_dari": "پیتزا گوشت",
+        "price": 250,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "bm-vegetable-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Vegetable Pizza",
+        "name_dari": "پیتزا سبزیجات",
+        "price": 230,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "bm-chicken-mushroom-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Chicken & Mushroom Pizza",
+        "name_dari": "پیتزا مرغ و قارچ",
+        "price": 200,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "bm-pepperoni-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Pepperoni Pizza",
+        "name_dari": "پیتزا پپرونی",
+        "price": 200,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "bm-special-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Special Pizza",
+        "name_dari": "پیتزا مخصوص",
+        "price": 250,
+        "sort_order": 8,
+        "available": true
+      },
+      {
+        "id": "bm-family-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Family Pizza",
+        "name_dari": "پیتزا خانواده",
+        "price": 500,
+        "sort_order": 9,
+        "available": true
+      },
+      {
+        "id": "bm-family-chicken-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Family Chicken Pizza",
+        "name_dari": "پیتزا مرغ خانواده",
+        "price": 400,
+        "sort_order": 10,
+        "available": true
+      },
+      {
+        "id": "bm-family-meat-pizza",
+        "category_id": "burger-masoud-pizza",
+        "name": "Family Meat Pizza",
+        "name_dari": "پیتزا گوشت خانواده",
+        "price": 500,
+        "sort_order": 11,
+        "available": true
+      }
+    ]
   },
   {
     "restaurant": {
