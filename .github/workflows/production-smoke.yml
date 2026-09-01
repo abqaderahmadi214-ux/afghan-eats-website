@@ -126,6 +126,8 @@ jobs:
             retry_contains "https://afghaneats.net/owner.html" "ownerItemForm" /tmp/ae-owner-v49.html
             retry_contains "https://afghaneats.net/assets/portal.js" "ownerUpsertMenuItem" /tmp/ae-portal-v49.js
             retry_contains "https://afghaneats.net/rider-portal.html" "riderPerformancePanel" /tmp/ae-rider-v50.html
+            retry_contains "https://afghaneats.net/rider.html" "Private verification documents" /tmp/ae-rider-application-verification.html
+            retry_contains "https://afghaneats.net/assets/operations.js" "uploadRiderApplicationDocument" /tmp/ae-rider-application-upload.js
             retry_contains "https://afghaneats.net/assets/portal.js" "lastmile.riderVerifyPin" /tmp/ae-portal-v50.js
             retry_contains "https://afghaneats.net/privacy" "Effective date: 27 August 2026." /tmp/ae-play-privacy.html
             retry_contains "https://afghaneats.net/terms" "Effective date: 27 August 2026." /tmp/ae-play-terms.html
@@ -163,6 +165,8 @@ jobs:
               && grep -Fq 'market-toggle' /tmp/admin-control-center.js \
               && grep -Fq 'setupReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'partnerApplicationReviewWorkspace' /tmp/admin-control-center.js \
+              && grep -Fq 'riderApplicationReviewWorkspace' /tmp/admin-control-center.js \
+              && grep -Fq 'adminReviewRiderDocument' /tmp/admin-control-center.js \
               && grep -Fq 'Review application' /tmp/admin-control-center.js \
               && grep -Fq 'Review details' /tmp/admin-control-center.js \
               && grep -Fq 'Afghan Eats Control Center' /tmp/admin-health.json; then
