@@ -187,6 +187,10 @@ jobs:
               && grep -Fq 'setupReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'partnerApplicationReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq "if (type === 'open-partner-application-review')" /tmp/admin-control-center.js \
+              && grep -Fq 'operations.adminPartnerApplicationDetail' /tmp/admin-control-center.js \
+              && grep -Fq 'Complete restaurant application dossier' /tmp/admin-control-center.js \
+              && grep -Fq 'Menu & pricing' /tmp/admin-control-center.js \
+              && grep -Fq 'Owner portal & onboarding history' /tmp/admin-control-center.js \
               && grep -Fq "if (type === 'close-partner-application-review')" /tmp/admin-control-center.js \
               && grep -Fq 'riderApplicationReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'adminReviewRiderDocument' /tmp/admin-control-center.js \
