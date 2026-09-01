@@ -186,6 +186,8 @@ jobs:
               && grep -Fq 'market-toggle' /tmp/admin-control-center.js \
               && grep -Fq 'setupReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'partnerApplicationReviewWorkspace' /tmp/admin-control-center.js \
+              && grep -Fq "if (type === 'open-partner-application-review')" /tmp/admin-control-center.js \
+              && grep -Fq "if (type === 'close-partner-application-review')" /tmp/admin-control-center.js \
               && grep -Fq 'riderApplicationReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'adminReviewRiderDocument' /tmp/admin-control-center.js \
               && grep -Fq 'email not verified' /tmp/admin-control-center.js \
