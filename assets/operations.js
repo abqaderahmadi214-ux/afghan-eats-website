@@ -94,28 +94,153 @@ async function submitPartnerApplication(event) {
   }
 }
 
+function updateRiderDriverRequirements() {
+  const vehicle = document.getElementById('riderVehicle')?.value || 'motorcycle';
+  const required = vehicle === 'motorcycle' || vehicle === 'car';
+  document.querySelectorAll('.rider-driver-only').forEach(el => el.classList.toggle('hidden', !required));
+  document.querySelectorAll('[data-driver-required]').forEach(el => { el.required = required; });
+}
+window.updateRiderDriverRequirements = updateRiderDriverRequirements;
+
+function bytesToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, Math.min(i + chunk, bytes.length)));
+  }
+  return btoa(binary);
+}
+
+async function imageElementFromFile(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.decoding = 'async';
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error('This image could not be read.'));
+      image.src = url;
+    });
+    return image;
+  } finally {
+    // revoke after canvas draw by caller
+  }
+}
+
+async function prepareRiderDocument(file) {
+  if (!file) return null;
+  const allowed = new Set(['image/jpeg','image/png','image/webp','application/pdf']);
+  if (!allowed.has(file.type)) throw new Error(`${file.name}: use JPG, PNG, WebP or PDF.`);
+  if (file.type === 'application/pdf') {
+    if (file.size > 620000) throw new Error(`${file.name}: PDF must be smaller than about 600 KB.`);
+    return { fileName: file.name, mimeType: file.type, base64: bytesToBase64(await file.arrayBuffer()) };
+  }
+  if (file.size > 12 * 1024 * 1024) throw new Error(`${file.name}: image is too large.`);
+
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.decoding = 'async';
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error(`${file.name}: image could not be read.`));
+      image.src = url;
+    });
+
+    let maxSide = 1600;
+    let quality = 0.82;
+    let blob = null;
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const scale = Math.min(1, maxSide / Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height));
+      const width = Math.max(1, Math.round((image.naturalWidth || image.width) * scale));
+      const height = Math.max(1, Math.round((image.naturalHeight || image.height) * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d', { alpha: false });
+      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,width,height); ctx.drawImage(image,0,0,width,height);
+      blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+      if (blob && blob.size <= 620000) break;
+      maxSide = Math.max(850, Math.round(maxSide * 0.82));
+      quality = Math.max(0.58, quality - 0.08);
+    }
+    if (!blob || blob.size > 620000) throw new Error(`${file.name}: could not compress below the secure upload limit.`);
+    return { fileName: file.name.replace(/\.[^.]+$/, '') + '.jpg', mimeType: 'image/jpeg', base64: bytesToBase64(await blob.arrayBuffer()) };
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+async function uploadRiderDocuments(form, reference, phone) {
+  const fields = [
+    ['profilePhoto','profile_photo'],
+    ['nationalIdFront','national_id_front'],
+    ['nationalIdBack','national_id_back'],
+    ['drivingLicenseFront','driving_license_front'],
+    ['drivingLicenseBack','driving_license_back'],
+    ['vehicleRegistration','vehicle_registration'],
+  ];
+  let uploaded = 0;
+  for (const [field, documentType] of fields) {
+    const input = form.elements[field];
+    const file = input?.files?.[0];
+    if (!file) continue;
+    const prepared = await prepareRiderDocument(file);
+    await opsMutation('operations.uploadRiderApplicationDocument', {
+      reference, phone, documentType,
+      fileName: prepared.fileName,
+      mimeType: prepared.mimeType,
+      base64: prepared.base64,
+    });
+    uploaded += 1;
+  }
+  return uploaded;
+}
+
 async function submitRiderApplication(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const out = document.getElementById('riderResult');
+  updateRiderDriverRequirements();
+  if (!form.reportValidity()) return;
   setSubmitState(form, true);
   out.className = 'notice hidden';
   try {
     const f = new FormData(form);
+    const vehicle = String(f.get('vehicle') || 'motorcycle');
+    if ((vehicle === 'motorcycle' || vehicle === 'car') && !form.elements.drivingLicenseFront?.files?.[0]) {
+      throw new Error(lang === 'fa' ? 'برای موترسایکل یا موتر، عکس جواز رانندگی الزامی است.' : 'Driving licence evidence is required for motorcycle or car riders.');
+    }
+    const phone = String(f.get('phone') || '');
     const result = await opsMutation('operations.applyRider', {
       fullName: String(f.get('fullName') || ''),
-      phone: String(f.get('phone') || ''),
+      fatherName: String(f.get('fatherName') || ''),
+      dateOfBirth: String(f.get('dateOfBirth') || ''),
+      email: String(f.get('email') || ''),
+      phone,
       whatsapp: String(f.get('whatsapp') || ''),
-      vehicle: String(f.get('vehicle') || 'motorcycle'),
+      currentAddress: String(f.get('currentAddress') || ''),
+      nationalIdNumber: String(f.get('nationalIdNumber') || ''),
+      vehicle,
+      vehicleMakeModel: String(f.get('vehicleMakeModel') || ''),
+      vehiclePlate: String(f.get('vehiclePlate') || ''),
+      drivingLicenseNumber: String(f.get('drivingLicenseNumber') || '') || undefined,
+      drivingLicenseExpiry: String(f.get('drivingLicenseExpiry') || '') || undefined,
       serviceArea: String(f.get('serviceArea') || ''),
-      emergencyContact: String(f.get('emergencyContact') || ''),
+      emergencyContactName: String(f.get('emergencyContactName') || ''),
+      emergencyContactPhone: String(f.get('emergencyContactPhone') || ''),
+      emergencyContact: String(f.get('emergencyContactPhone') || ''),
       experience: String(f.get('experience') || ''),
       notes: String(f.get('notes') || ''),
     });
+    out.className = 'notice notice-working';
+    out.textContent = lang === 'fa' ? 'درخواست ثبت شد. در حال ارسال امن اسناد…' : 'Application saved. Uploading documents securely…';
+    const uploaded = await uploadRiderDocuments(form, result.reference, phone);
     out.className = 'notice success';
-    out.innerHTML = `${result.duplicate ? '✓ Existing application found.' : '✓ Rider application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${lang === 'fa' ? 'این شماره پیگیری را نگه دارید.' : 'Keep this reference to check your application status.'}</span>`;
+    out.innerHTML = `${result.duplicate ? '✓ Existing application updated.' : '✓ Rider application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${esc(lang === 'fa' ? `${uploaded} سند خصوصی ارسال شد. درخواست پس از بررسی معلومات و اسناد توسط مدیر تصمیم‌گیری می‌شود.` : `${uploaded} private document${uploaded === 1 ? '' : 's'} uploaded. An administrator will review your information and documents before approval.`)}</span>`;
     localStorage.setItem('ae_rider_reference', result.reference);
-    if (!result.duplicate) form.reset();
+    form.reset();
+    updateRiderDriverRequirements();
   } catch (error) {
     out.className = 'notice error';
     out.textContent = error.message || 'Application could not be submitted.';
