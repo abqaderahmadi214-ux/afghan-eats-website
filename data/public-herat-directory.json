@@ -7,7 +7,11 @@
       "slug": "50-50-restaurant",
       "description": "A public fast-food listing in Herat for half-metre sandwiches and burgers. Details and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی یک رستورانت فست‌فود در هرات با ساندویچ‌های نیم‌متری و برگر. جزئیات و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Sandwiches"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Sandwiches"
+      ],
       "category_primary": "Fast Food",
       "address": "Chaharahi Mustofiat, Herat",
       "address_dari": "هرات، چهارراهی مستوفیت",
@@ -15,7 +19,10 @@
       "district": "Mustofiat",
       "city": "Herat",
       "phone": "+93 793 335 050",
-      "phone_numbers": ["+93 793 335 050", "+93 747 425 050"],
+      "phone_numbers": [
+        "+93 793 335 050",
+        "+93 747 425 050"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754995839101-448556745-1-large.webp",
@@ -43,48 +50,311 @@
       "public_menu_checked_at": "2026-08-28"
     },
     "categories": [
-      {"id":"fifty-glass-desserts","name":"Glass desserts","name_dari":"دسرهای گیلاسی","sort_order":1},
-      {"id":"fifty-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":2},
-      {"id":"fifty-special-sandwiches","name":"Special sandwiches","name_dari":"ساندویچ‌های ویژه","sort_order":3}
+      {
+        "id": "fifty-glass-desserts",
+        "name": "Glass desserts",
+        "name_dari": "دسرهای گیلاسی",
+        "sort_order": 1
+      },
+      {
+        "id": "fifty-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 2
+      },
+      {
+        "id": "fifty-special-sandwiches",
+        "name": "Special sandwiches",
+        "name_dari": "ساندویچ‌های ویژه",
+        "sort_order": 3
+      }
     ],
     "items": [
-      {"id":"fifty-coffee-glass-dessert","category_id":"fifty-glass-desserts","name":"Coffee Glass Dessert","description":"A cold drink made with coffee, milk and ice cream.","price":90,"image_url":"https://mizbanapp.com/images/dish/Coffee-Glass-Dessert-medx5qb3ys7bh9-1-small.webp","sort_order":1},
-      {"id":"fifty-pineapple-glass-dessert","category_id":"fifty-glass-desserts","name":"Pineapple Glass Dessert","description":"A cold, refreshing pineapple drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Pineapple-Glass-Dessert-medxp5rytikj7m-1-small.webp","sort_order":2},
-      {"id":"fifty-chocolate-glass-dessert","category_id":"fifty-glass-desserts","name":"Chocolate Glass Dessert","description":"A cold, creamy chocolate drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Glass-Dessert-medxrgdx1mlpmj-1-small.webp","sort_order":3},
-      {"id":"fifty-banana-glass-dessert","category_id":"fifty-glass-desserts","name":"Banana Glass Dessert","description":"A cold, creamy banana drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Banana-Glass-Dessert-medxud8bdwap1j-1-small.webp","sort_order":4},
-      {"id":"fifty-mango-glass-dessert","category_id":"fifty-glass-desserts","name":"Mango Glass Dessert","description":"A cold, sweet mango drink.","price":90,"image_url":"https://mizbanapp.com/images/dish/Mango-Glass-Dessert-medxx34b625wjq-1-small.webp","sort_order":5},
-      {"id":"fifty-orange-glass-dessert","category_id":"fifty-glass-desserts","name":"Orange Glass Dessert","description":"Fresh orange juice, cold and naturally refreshing.","price":90,"sort_order":6},
-
-      {"id":"fifty-chefs-special-pizza","category_id":"fifty-pizza","name":"Chef’s Special Pizza","description":"Chicken breast, minced meat, cheese, bell pepper, tomato and olive.","price":200,"sort_order":1},
-      {"id":"fifty-special-pizza","category_id":"fifty-pizza","name":"Special Pizza","description":"Chicken breast and sausage, cheese, bell pepper, tomato and olive.","price":180,"sort_order":2},
-      {"id":"fifty-chicken-pizza","category_id":"fifty-pizza","name":"Chicken Pizza","description":"Chicken breast, cheese, bell pepper, tomato and olive.","price":180,"sort_order":3},
-      {"id":"fifty-meat-pizza","category_id":"fifty-pizza","name":"Meat Pizza","description":"Beef, cheese, bell pepper, tomato and olive.","price":200,"sort_order":4},
-      {"id":"fifty-tuna-pizza","category_id":"fifty-pizza","name":"Tuna Pizza","description":"Tuna, cheese, bell pepper, tomato and olive.","price":180,"sort_order":5},
-      {"id":"fifty-vegetable-pizza","category_id":"fifty-pizza","name":"Vegetable Pizza","description":"Vegetables, cheese, bell pepper, tomato and olive.","price":150,"sort_order":6},
-      {"id":"fifty-hawaiian-pizza","category_id":"fifty-pizza","name":"Hawaiian Pizza","description":"Chicken breast, pineapple, cheese, bell pepper, tomato and olive.","price":200,"sort_order":7},
-      {"id":"fifty-four-seasons-pizza","category_id":"fifty-pizza","name":"Four Seasons Pizza","description":"Chicken breast, beef, vegetables and sausage.","price":200,"sort_order":8},
-      {"id":"fifty-pepperoni-pizza","category_id":"fifty-pizza","name":"Pepperoni Pizza","description":"Special sauce, pepperoni and cheese.","price":150,"sort_order":9},
-      {"id":"fifty-baalbaki-pizza","category_id":"fifty-pizza","name":"Baalbaki Pizza","description":"Chicken shawarma, bell pepper, cheese and sesame.","price":250,"sort_order":10},
-      {"id":"fifty-alfredo-pizza","category_id":"fifty-pizza","name":"Alfredo Pizza","description":"Chicken fillet, basil, Alfredo sauce and parmesan cheese.","price":200,"sort_order":11},
-      {"id":"fifty-chicken-roll-pizza","category_id":"fifty-pizza","name":"Chicken Roll Pizza","description":"Chicken breast, cheese, egg yolk and sesame.","price":200,"sort_order":12},
-      {"id":"fifty-margherita-pizza","category_id":"fifty-pizza","name":"Margherita Pizza","description":"Special sauce, tomato and cheese.","price":150,"sort_order":13},
-      {"id":"fifty-supreme-pizza","category_id":"fifty-pizza","name":"Supreme Pizza","description":"Minced meat, roast beef, chicken breast and bell pepper.","price":200,"sort_order":14},
-
-      {"id":"fifty-royal-sandwich","category_id":"fifty-special-sandwiches","name":"Royal Sandwich","description":"Round bread, handmade meat burger, special sauce, lettuce, pickles and tomato.","price":150,"sort_order":1},
-      {"id":"fifty-mixed-sandwich","category_id":"fifty-special-sandwiches","name":"Mixed Sandwich","description":"Burger, chicken breast, sausage, pickles, lettuce and tomato.","price":70,"sort_order":2},
-      {"id":"fifty-hot-dog-sandwich","category_id":"fifty-special-sandwiches","name":"Hot Dog Sandwich","description":"Hot dog sausage, special sauce, lettuce, tomato and pickles.","price":70,"sort_order":3},
-      {"id":"fifty-popcorn-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Popcorn Chicken Sandwich","description":"Chicken breast, ketchup, saffron, pickles, lettuce and tomato.","price":80,"sort_order":4},
-      {"id":"fifty-yang-sandwich","category_id":"fifty-special-sandwiches","name":"Yang Sandwich","description":"Burger, sausage, cheese, tomato and lettuce.","price":80,"sort_order":5},
-      {"id":"fifty-cheesy-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Cheesy Chicken Sandwich","description":"Chicken breast, cheese, tomato, lettuce and pickles.","price":100,"sort_order":6},
-      {"id":"fifty-special-chicken-sandwich","category_id":"fifty-special-sandwiches","name":"Special Chicken Sandwich","description":"Chicken breast, special sauce, tomato, lettuce and pickles.","price":80,"sort_order":7},
-      {"id":"fifty-bs-burger","category_id":"fifty-special-sandwiches","name":"BS Burger","description":"Beef, cheese, ketchup, tomato and pickles.","price":80,"sort_order":8},
-      {"id":"fifty-cs-burger","category_id":"fifty-special-sandwiches","name":"CS Burger","description":"Chicken breast, cheese, ketchup, tomato and pickles.","price":80,"sort_order":9},
-      {"id":"fifty-double-burger-sandwich","category_id":"fifty-special-sandwiches","name":"Double Burger Sandwich","description":"Double burger, cheese, mushrooms, pepper, ketchup, lettuce, pickles and tomato.","price":100,"sort_order":10},
-      {"id":"fifty-beef-shawarma","category_id":"fifty-special-sandwiches","name":"Beef Shawarma","description":"Beef, marinated mix, tomato, lettuce and pickles.","price":100,"sort_order":11},
-      {"id":"fifty-chicken-shawarma","category_id":"fifty-special-sandwiches","name":"Chicken Shawarma","description":"Chicken breast, marinated mix, tomato, lettuce and pickles.","price":100,"sort_order":12},
-      {"id":"fifty-roast-beef-sandwich","category_id":"fifty-special-sandwiches","name":"Roast Beef Sandwich","description":"Roast beef, mushroom sauce, tomato, lettuce and pickles.","price":100,"sort_order":13},
-      {"id":"fifty-chicken-mushroom-sandwich","category_id":"fifty-special-sandwiches","name":"Chicken Mushroom Sandwich","description":"Chicken breast, mushroom sauce, tomato, lettuce and pickles.","price":100,"sort_order":14},
-      {"id":"fifty-fifty-sandwich","category_id":"fifty-special-sandwiches","name":"Fifty Sandwich","description":"Chicken fillet, Fifty special sauce, tomato, lettuce and pickles.","price":100,"sort_order":15}
+      {
+        "id": "fifty-coffee-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Coffee Glass Dessert",
+        "description": "A cold drink made with coffee, milk and ice cream.",
+        "price": 90,
+        "image_url": "https://mizbanapp.com/images/dish/Coffee-Glass-Dessert-medx5qb3ys7bh9-1-small.webp",
+        "sort_order": 1
+      },
+      {
+        "id": "fifty-pineapple-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Pineapple Glass Dessert",
+        "description": "A cold, refreshing pineapple drink.",
+        "price": 90,
+        "image_url": "https://mizbanapp.com/images/dish/Pineapple-Glass-Dessert-medxp5rytikj7m-1-small.webp",
+        "sort_order": 2
+      },
+      {
+        "id": "fifty-chocolate-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Chocolate Glass Dessert",
+        "description": "A cold, creamy chocolate drink.",
+        "price": 90,
+        "image_url": "https://mizbanapp.com/images/dish/Chocolate-Glass-Dessert-medxrgdx1mlpmj-1-small.webp",
+        "sort_order": 3
+      },
+      {
+        "id": "fifty-banana-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Banana Glass Dessert",
+        "description": "A cold, creamy banana drink.",
+        "price": 90,
+        "image_url": "https://mizbanapp.com/images/dish/Banana-Glass-Dessert-medxud8bdwap1j-1-small.webp",
+        "sort_order": 4
+      },
+      {
+        "id": "fifty-mango-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Mango Glass Dessert",
+        "description": "A cold, sweet mango drink.",
+        "price": 90,
+        "image_url": "https://mizbanapp.com/images/dish/Mango-Glass-Dessert-medxx34b625wjq-1-small.webp",
+        "sort_order": 5
+      },
+      {
+        "id": "fifty-orange-glass-dessert",
+        "category_id": "fifty-glass-desserts",
+        "name": "Orange Glass Dessert",
+        "description": "Fresh orange juice, cold and naturally refreshing.",
+        "price": 90,
+        "sort_order": 6
+      },
+      {
+        "id": "fifty-chefs-special-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Chef’s Special Pizza",
+        "description": "Chicken breast, minced meat, cheese, bell pepper, tomato and olive.",
+        "price": 200,
+        "sort_order": 1
+      },
+      {
+        "id": "fifty-special-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Special Pizza",
+        "description": "Chicken breast and sausage, cheese, bell pepper, tomato and olive.",
+        "price": 180,
+        "sort_order": 2
+      },
+      {
+        "id": "fifty-chicken-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Chicken Pizza",
+        "description": "Chicken breast, cheese, bell pepper, tomato and olive.",
+        "price": 180,
+        "sort_order": 3
+      },
+      {
+        "id": "fifty-meat-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Meat Pizza",
+        "description": "Beef, cheese, bell pepper, tomato and olive.",
+        "price": 200,
+        "sort_order": 4
+      },
+      {
+        "id": "fifty-tuna-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Tuna Pizza",
+        "description": "Tuna, cheese, bell pepper, tomato and olive.",
+        "price": 180,
+        "sort_order": 5
+      },
+      {
+        "id": "fifty-vegetable-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Vegetable Pizza",
+        "description": "Vegetables, cheese, bell pepper, tomato and olive.",
+        "price": 150,
+        "sort_order": 6
+      },
+      {
+        "id": "fifty-hawaiian-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Hawaiian Pizza",
+        "description": "Chicken breast, pineapple, cheese, bell pepper, tomato and olive.",
+        "price": 200,
+        "sort_order": 7
+      },
+      {
+        "id": "fifty-four-seasons-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Four Seasons Pizza",
+        "description": "Chicken breast, beef, vegetables and sausage.",
+        "price": 200,
+        "sort_order": 8
+      },
+      {
+        "id": "fifty-pepperoni-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Pepperoni Pizza",
+        "description": "Special sauce, pepperoni and cheese.",
+        "price": 150,
+        "sort_order": 9
+      },
+      {
+        "id": "fifty-baalbaki-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Baalbaki Pizza",
+        "description": "Chicken shawarma, bell pepper, cheese and sesame.",
+        "price": 250,
+        "sort_order": 10
+      },
+      {
+        "id": "fifty-alfredo-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Alfredo Pizza",
+        "description": "Chicken fillet, basil, Alfredo sauce and parmesan cheese.",
+        "price": 200,
+        "sort_order": 11
+      },
+      {
+        "id": "fifty-chicken-roll-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Chicken Roll Pizza",
+        "description": "Chicken breast, cheese, egg yolk and sesame.",
+        "price": 200,
+        "sort_order": 12
+      },
+      {
+        "id": "fifty-margherita-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Margherita Pizza",
+        "description": "Special sauce, tomato and cheese.",
+        "price": 150,
+        "sort_order": 13
+      },
+      {
+        "id": "fifty-supreme-pizza",
+        "category_id": "fifty-pizza",
+        "name": "Supreme Pizza",
+        "description": "Minced meat, roast beef, chicken breast and bell pepper.",
+        "price": 200,
+        "sort_order": 14
+      },
+      {
+        "id": "fifty-royal-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Royal Sandwich",
+        "description": "Round bread, handmade meat burger, special sauce, lettuce, pickles and tomato.",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "fifty-mixed-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Mixed Sandwich",
+        "description": "Burger, chicken breast, sausage, pickles, lettuce and tomato.",
+        "price": 70,
+        "sort_order": 2
+      },
+      {
+        "id": "fifty-hot-dog-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Hot Dog Sandwich",
+        "description": "Hot dog sausage, special sauce, lettuce, tomato and pickles.",
+        "price": 70,
+        "sort_order": 3
+      },
+      {
+        "id": "fifty-popcorn-chicken-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Popcorn Chicken Sandwich",
+        "description": "Chicken breast, ketchup, saffron, pickles, lettuce and tomato.",
+        "price": 80,
+        "sort_order": 4
+      },
+      {
+        "id": "fifty-yang-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Yang Sandwich",
+        "description": "Burger, sausage, cheese, tomato and lettuce.",
+        "price": 80,
+        "sort_order": 5
+      },
+      {
+        "id": "fifty-cheesy-chicken-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Cheesy Chicken Sandwich",
+        "description": "Chicken breast, cheese, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 6
+      },
+      {
+        "id": "fifty-special-chicken-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Special Chicken Sandwich",
+        "description": "Chicken breast, special sauce, tomato, lettuce and pickles.",
+        "price": 80,
+        "sort_order": 7
+      },
+      {
+        "id": "fifty-bs-burger",
+        "category_id": "fifty-special-sandwiches",
+        "name": "BS Burger",
+        "description": "Beef, cheese, ketchup, tomato and pickles.",
+        "price": 80,
+        "sort_order": 8
+      },
+      {
+        "id": "fifty-cs-burger",
+        "category_id": "fifty-special-sandwiches",
+        "name": "CS Burger",
+        "description": "Chicken breast, cheese, ketchup, tomato and pickles.",
+        "price": 80,
+        "sort_order": 9
+      },
+      {
+        "id": "fifty-double-burger-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Double Burger Sandwich",
+        "description": "Double burger, cheese, mushrooms, pepper, ketchup, lettuce, pickles and tomato.",
+        "price": 100,
+        "sort_order": 10
+      },
+      {
+        "id": "fifty-beef-shawarma",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Beef Shawarma",
+        "description": "Beef, marinated mix, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 11
+      },
+      {
+        "id": "fifty-chicken-shawarma",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Chicken Shawarma",
+        "description": "Chicken breast, marinated mix, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 12
+      },
+      {
+        "id": "fifty-roast-beef-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Roast Beef Sandwich",
+        "description": "Roast beef, mushroom sauce, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 13
+      },
+      {
+        "id": "fifty-chicken-mushroom-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Chicken Mushroom Sandwich",
+        "description": "Chicken breast, mushroom sauce, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 14
+      },
+      {
+        "id": "fifty-fifty-sandwich",
+        "category_id": "fifty-special-sandwiches",
+        "name": "Fifty Sandwich",
+        "description": "Chicken fillet, Fifty special sauce, tomato, lettuce and pickles.",
+        "price": 100,
+        "sort_order": 15
+      }
     ]
   },
   {
@@ -95,7 +365,11 @@
       "slug": "lala-omid-fast-food",
       "description": "A public fast-food listing on Welayat Street in Herat for pizza, burgers and quick meals. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود لالا امید در سرک ولایت هرات برای پیتزا، برگر و غذای سریع. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Burgers"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Burgers"
+      ],
       "category_primary": "Fast Food",
       "address": "Welayat Street, opposite Soltan High School, Herat",
       "address_dari": "هرات، سرک ولایت، مقابل لیسه سلطان",
@@ -103,7 +377,9 @@
       "district": "Welayat Street",
       "city": "Herat",
       "phone": "+93 794 121 654",
-      "phone_numbers": ["+93 794 121 654"],
+      "phone_numbers": [
+        "+93 794 121 654"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": "https://mizbanapp.com/images/restaurant/Lala%20Omid-mkm7bw97lz7cop-1-medium.webp",
@@ -131,38 +407,273 @@
       "public_menu_checked_at": "2026-08-28"
     },
     "categories": [
-      {"id":"lala-pizza","name":"Pizza","name_dari":"پیتزا ها","sort_order":1},
-      {"id":"lala-italian","name":"Italian dishes","name_dari":"غذا های ایتالیایی","sort_order":2},
-      {"id":"lala-appetizers","name":"Appetizers","name_dari":"پیش غذا ها","sort_order":3},
-      {"id":"lala-burgers","name":"Burgers","name_dari":"برگرها","sort_order":4}
+      {
+        "id": "lala-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا ها",
+        "sort_order": 1
+      },
+      {
+        "id": "lala-italian",
+        "name": "Italian dishes",
+        "name_dari": "غذا های ایتالیایی",
+        "sort_order": 2
+      },
+      {
+        "id": "lala-appetizers",
+        "name": "Appetizers",
+        "name_dari": "پیش غذا ها",
+        "sort_order": 3
+      },
+      {
+        "id": "lala-burgers",
+        "name": "Burgers",
+        "name_dari": "برگرها",
+        "sort_order": 4
+      }
     ],
     "items": [
-      {"id":"lala-mixed-pizza","category_id":"lala-pizza","name":"Mixed Pizza","name_dari":"پیتزا مخلوط","price":150,"price_sizes":[150,280],"image_url":"https://mizbanapp.com/images/dish/Mixed%20Pizza-mkm7zbvzj6z32w-1-small.webp","sort_order":1},
-      {"id":"lala-chicken-pizza","category_id":"lala-pizza","name":"Chicken Pizza","name_dari":"پیتزا چکن","price":200,"price_sizes":[200,330],"image_url":"https://mizbanapp.com/images/dish/Chicken%20Pizza-mkm80m9qn5x7g8-1-small.webp","sort_order":2},
-      {"id":"lala-chicken-bbq-pizza","category_id":"lala-pizza","name":"Chicken BBQ Pizza","name_dari":"پیتزا چکن باربیکیو","price":230,"price_sizes":[230,350],"image_url":"https://mizbanapp.com/images/dish/Chicken%20BBQ%20Pizza-mkm82h1tm4hzek-1-small.webp","sort_order":3},
-      {"id":"lala-chicken-stroganoff-pizza","category_id":"lala-pizza","name":"Chicken Stroganoff Pizza","name_dari":"پیتزا چکن استراگانف","price":240,"price_sizes":[240,360],"image_url":"https://mizbanapp.com/images/dish/Chicken%20Stroganoff%20Pizza-mkm845sbpyahkx-1-small.webp","sort_order":4},
-      {"id":"lala-pepperoni-pizza","category_id":"lala-pizza","name":"Pepperoni Pizza","name_dari":"پیتزا پیرونی","price":220,"price_sizes":[220,350],"image_url":"https://mizbanapp.com/images/dish/Pepperoni%20Pizza-mkm85i10wf8cq-1-small.webp","sort_order":5},
-      {"id":"lala-roast-beef-pizza","category_id":"lala-pizza","name":"Roast Beef Pizza","name_dari":"پیتزا رست بیف","price":250,"price_sizes":[250,380],"sort_order":6},
-      {"id":"lala-special-pizza","category_id":"lala-pizza","name":"Lala Omid Special Pizza","name_dari":"پیتزا مخصوص لالا امید","price":270,"price_sizes":[270,400],"sort_order":7},
-      {"id":"lala-extra-special-pizza","category_id":"lala-pizza","name":"Special Pizza","name_dari":"پیتزا اسپیشال","price":250,"price_sizes":[250,400],"sort_order":8},
-      {"id":"lala-vegetable-pizza","category_id":"lala-pizza","name":"Vegetable Pizza","name_dari":"پیتزا سبزیجات","price":150,"price_sizes":[150,250],"sort_order":9},
-      {"id":"lala-four-seasons-pizza","category_id":"lala-pizza","name":"Four Seasons Pizza","name_dari":"پیتزا چهار فصل","price":400,"sort_order":10},
-
-      {"id":"lala-chicken-alfredo","category_id":"lala-italian","name":"Chicken Alfredo Pasta","name_dari":"پاستا چکن آلفردو","price":150,"sort_order":1},
-      {"id":"lala-cheese-pasta","category_id":"lala-italian","name":"Cheese Pasta","name_dari":"پاستا پنیری","price":200,"sort_order":2},
-      {"id":"lala-special-pasta","category_id":"lala-italian","name":"Special Pasta","name_dari":"پاستا مخصوص","price":200,"sort_order":3},
-      {"id":"lala-lasagna","category_id":"lala-italian","name":"Lasagna","name_dari":"لازانیا","price":250,"sort_order":4},
-
-      {"id":"lala-plain-fries","category_id":"lala-appetizers","name":"Plain Fries","name_dari":"چپس ساده","price":50,"sort_order":1},
-      {"id":"lala-cheese-fries","category_id":"lala-appetizers","name":"Cheese Fries","name_dari":"چپس پنیری","price":100,"sort_order":2},
-      {"id":"lala-special-fries","category_id":"lala-appetizers","name":"Special Fries","name_dari":"چپس مخصوص","price":150,"sort_order":3},
-      {"id":"lala-soup","category_id":"lala-appetizers","name":"Soup","name_dari":"سوپ","price":50,"sort_order":4},
-
-      {"id":"lala-classic-burger","category_id":"lala-burgers","name":"Classic Burger","name_dari":"برگر کلاسیک","price":60,"price_sizes":[60,130],"sort_order":1},
-      {"id":"lala-cheeseburger","category_id":"lala-burgers","name":"Cheeseburger","name_dari":"چیز برگر","price":80,"price_sizes":[80,160],"sort_order":2},
-      {"id":"lala-special-burger","category_id":"lala-burgers","name":"Special Burger","name_dari":"برگر مخصوص","price":100,"price_sizes":[100,180],"sort_order":3},
-      {"id":"lala-chicken-cheeseburger","category_id":"lala-burgers","name":"Chicken Cheeseburger","name_dari":"چکن چیز برگر","price":130,"price_sizes":[130,200],"sort_order":4},
-      {"id":"lala-chicken-burger","category_id":"lala-burgers","name":"Chicken Burger","name_dari":"جکن برگر","price":140,"sort_order":5}
+      {
+        "id": "lala-mixed-pizza",
+        "category_id": "lala-pizza",
+        "name": "Mixed Pizza",
+        "name_dari": "پیتزا مخلوط",
+        "price": 150,
+        "price_sizes": [
+          150,
+          280
+        ],
+        "image_url": "https://mizbanapp.com/images/dish/Mixed%20Pizza-mkm7zbvzj6z32w-1-small.webp",
+        "sort_order": 1
+      },
+      {
+        "id": "lala-chicken-pizza",
+        "category_id": "lala-pizza",
+        "name": "Chicken Pizza",
+        "name_dari": "پیتزا چکن",
+        "price": 200,
+        "price_sizes": [
+          200,
+          330
+        ],
+        "image_url": "https://mizbanapp.com/images/dish/Chicken%20Pizza-mkm80m9qn5x7g8-1-small.webp",
+        "sort_order": 2
+      },
+      {
+        "id": "lala-chicken-bbq-pizza",
+        "category_id": "lala-pizza",
+        "name": "Chicken BBQ Pizza",
+        "name_dari": "پیتزا چکن باربیکیو",
+        "price": 230,
+        "price_sizes": [
+          230,
+          350
+        ],
+        "image_url": "https://mizbanapp.com/images/dish/Chicken%20BBQ%20Pizza-mkm82h1tm4hzek-1-small.webp",
+        "sort_order": 3
+      },
+      {
+        "id": "lala-chicken-stroganoff-pizza",
+        "category_id": "lala-pizza",
+        "name": "Chicken Stroganoff Pizza",
+        "name_dari": "پیتزا چکن استراگانف",
+        "price": 240,
+        "price_sizes": [
+          240,
+          360
+        ],
+        "image_url": "https://mizbanapp.com/images/dish/Chicken%20Stroganoff%20Pizza-mkm845sbpyahkx-1-small.webp",
+        "sort_order": 4
+      },
+      {
+        "id": "lala-pepperoni-pizza",
+        "category_id": "lala-pizza",
+        "name": "Pepperoni Pizza",
+        "name_dari": "پیتزا پیرونی",
+        "price": 220,
+        "price_sizes": [
+          220,
+          350
+        ],
+        "image_url": "https://mizbanapp.com/images/dish/Pepperoni%20Pizza-mkm85i10wf8cq-1-small.webp",
+        "sort_order": 5
+      },
+      {
+        "id": "lala-roast-beef-pizza",
+        "category_id": "lala-pizza",
+        "name": "Roast Beef Pizza",
+        "name_dari": "پیتزا رست بیف",
+        "price": 250,
+        "price_sizes": [
+          250,
+          380
+        ],
+        "sort_order": 6
+      },
+      {
+        "id": "lala-special-pizza",
+        "category_id": "lala-pizza",
+        "name": "Lala Omid Special Pizza",
+        "name_dari": "پیتزا مخصوص لالا امید",
+        "price": 270,
+        "price_sizes": [
+          270,
+          400
+        ],
+        "sort_order": 7
+      },
+      {
+        "id": "lala-extra-special-pizza",
+        "category_id": "lala-pizza",
+        "name": "Special Pizza",
+        "name_dari": "پیتزا اسپیشال",
+        "price": 250,
+        "price_sizes": [
+          250,
+          400
+        ],
+        "sort_order": 8
+      },
+      {
+        "id": "lala-vegetable-pizza",
+        "category_id": "lala-pizza",
+        "name": "Vegetable Pizza",
+        "name_dari": "پیتزا سبزیجات",
+        "price": 150,
+        "price_sizes": [
+          150,
+          250
+        ],
+        "sort_order": 9
+      },
+      {
+        "id": "lala-four-seasons-pizza",
+        "category_id": "lala-pizza",
+        "name": "Four Seasons Pizza",
+        "name_dari": "پیتزا چهار فصل",
+        "price": 400,
+        "sort_order": 10
+      },
+      {
+        "id": "lala-chicken-alfredo",
+        "category_id": "lala-italian",
+        "name": "Chicken Alfredo Pasta",
+        "name_dari": "پاستا چکن آلفردو",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "lala-cheese-pasta",
+        "category_id": "lala-italian",
+        "name": "Cheese Pasta",
+        "name_dari": "پاستا پنیری",
+        "price": 200,
+        "sort_order": 2
+      },
+      {
+        "id": "lala-special-pasta",
+        "category_id": "lala-italian",
+        "name": "Special Pasta",
+        "name_dari": "پاستا مخصوص",
+        "price": 200,
+        "sort_order": 3
+      },
+      {
+        "id": "lala-lasagna",
+        "category_id": "lala-italian",
+        "name": "Lasagna",
+        "name_dari": "لازانیا",
+        "price": 250,
+        "sort_order": 4
+      },
+      {
+        "id": "lala-plain-fries",
+        "category_id": "lala-appetizers",
+        "name": "Plain Fries",
+        "name_dari": "چپس ساده",
+        "price": 50,
+        "sort_order": 1
+      },
+      {
+        "id": "lala-cheese-fries",
+        "category_id": "lala-appetizers",
+        "name": "Cheese Fries",
+        "name_dari": "چپس پنیری",
+        "price": 100,
+        "sort_order": 2
+      },
+      {
+        "id": "lala-special-fries",
+        "category_id": "lala-appetizers",
+        "name": "Special Fries",
+        "name_dari": "چپس مخصوص",
+        "price": 150,
+        "sort_order": 3
+      },
+      {
+        "id": "lala-soup",
+        "category_id": "lala-appetizers",
+        "name": "Soup",
+        "name_dari": "سوپ",
+        "price": 50,
+        "sort_order": 4
+      },
+      {
+        "id": "lala-classic-burger",
+        "category_id": "lala-burgers",
+        "name": "Classic Burger",
+        "name_dari": "برگر کلاسیک",
+        "price": 60,
+        "price_sizes": [
+          60,
+          130
+        ],
+        "sort_order": 1
+      },
+      {
+        "id": "lala-cheeseburger",
+        "category_id": "lala-burgers",
+        "name": "Cheeseburger",
+        "name_dari": "چیز برگر",
+        "price": 80,
+        "price_sizes": [
+          80,
+          160
+        ],
+        "sort_order": 2
+      },
+      {
+        "id": "lala-special-burger",
+        "category_id": "lala-burgers",
+        "name": "Special Burger",
+        "name_dari": "برگر مخصوص",
+        "price": 100,
+        "price_sizes": [
+          100,
+          180
+        ],
+        "sort_order": 3
+      },
+      {
+        "id": "lala-chicken-cheeseburger",
+        "category_id": "lala-burgers",
+        "name": "Chicken Cheeseburger",
+        "name_dari": "چکن چیز برگر",
+        "price": 130,
+        "price_sizes": [
+          130,
+          200
+        ],
+        "sort_order": 4
+      },
+      {
+        "id": "lala-chicken-burger",
+        "category_id": "lala-burgers",
+        "name": "Chicken Burger",
+        "name_dari": "جکن برگر",
+        "price": 140,
+        "sort_order": 5
+      }
     ]
   },
   {
@@ -173,7 +684,11 @@
       "slug": "mr-burger-herat",
       "description": "A public burger and fast-food listing near Smart Parking at Park-e Taraqi. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی مستر برگر در گرده پارک ترقی، جنب پارکینگ هوشمند. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Sandwiches"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Sandwiches"
+      ],
       "category_primary": "Burgers",
       "address": "Park-e Taraqi, beside Smart Parking, Herat",
       "address_dari": "هرات، گرده پارک ترقی، جنب پارکینگ هوشمند",
@@ -181,7 +696,9 @@
       "district": "Park-e Taraqi",
       "city": "Herat",
       "phone": "+93 729 700 706",
-      "phone_numbers": ["+93 729 700 706"],
+      "phone_numbers": [
+        "+93 729 700 706"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -215,7 +732,11 @@
       "slug": "mansoor-fast-food-herat",
       "description": "A public fast-food listing on Mahtab Street with burgers and pizza. Details and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود منصور در جاده مهتاب با برگر و پیتزا. جزئیات و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Pizza"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Pizza"
+      ],
       "category_primary": "Fast Food",
       "address": "Mahtab Street, near Nazar Qalanwi Road, Herat",
       "address_dari": "هرات، جاده مهتاب، نزدیک جاده نظر قلعه‌نوی",
@@ -223,7 +744,9 @@
       "district": "Mahtab Street",
       "city": "Herat",
       "phone": "+93 793 105 013",
-      "phone_numbers": ["+93 793 105 013"],
+      "phone_numbers": [
+        "+93 793 105 013"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -257,7 +780,12 @@
       "slug": "jumeirah-fast-food-herat",
       "description": "A public fast-food listing on Mokhaberat Road for burgers, pizza and drinks. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود جمیرا در جاده مخابرات برای برگر، پیتزا و نوشیدنی. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Pizza", "Beverages"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Pizza",
+        "Beverages"
+      ],
       "category_primary": "Fast Food",
       "address": "Mokhaberat Road, opposite Ferdowsi 12, Herat",
       "address_dari": "هرات، جاده مخابرات، روبه‌روی فردوسی ۱۲",
@@ -265,7 +793,11 @@
       "district": "Jade Mokhaberat",
       "city": "Herat",
       "phone": "+93 728 778 355",
-      "phone_numbers": ["+93 728 778 355", "+93 728 213 595", "+93 790 810 167"],
+      "phone_numbers": [
+        "+93 728 778 355",
+        "+93 728 213 595",
+        "+93 790 810 167"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": "https://mizbanapp.com/images/restaurant/Jumeirah%20Fast%20Food-mfc9yctriszkz9-1-medium.webp",
@@ -293,81 +825,486 @@
       "public_menu_checked_at": "2026-08-28"
     },
     "categories": [
-      {"id":"jumeirah-cakes","name":"Cakes","name_dari":"کیک‌ها","sort_order":1},
-      {"id":"jumeirah-appetizers","name":"Appetizers","name_dari":"پیش‌غذاها","sort_order":2},
-      {"id":"jumeirah-burgers","name":"Burgers","name_dari":"برگرها","sort_order":3},
-      {"id":"jumeirah-pizza","name":"Pizza","name_dari":"پیتزا","sort_order":4},
-      {"id":"jumeirah-sandwiches","name":"Sandwiches","name_dari":"ساندویچ‌ها","sort_order":5},
-      {"id":"jumeirah-packs","name":"Meal packs","name_dari":"پکیج‌های غذایی","sort_order":6},
-      {"id":"jumeirah-teas","name":"Tea","name_dari":"چای‌ها","sort_order":7},
-      {"id":"jumeirah-juices","name":"Juices & drinks","name_dari":"جوس و نوشیدنی‌ها","sort_order":8},
-      {"id":"jumeirah-shakes","name":"Shakes & mocktails","name_dari":"شیک و موکتل‌ها","sort_order":9}
+      {
+        "id": "jumeirah-cakes",
+        "name": "Cakes",
+        "name_dari": "کیک‌ها",
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-appetizers",
+        "name": "Appetizers",
+        "name_dari": "پیش‌غذاها",
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-burgers",
+        "name": "Burgers",
+        "name_dari": "برگرها",
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-sandwiches",
+        "name": "Sandwiches",
+        "name_dari": "ساندویچ‌ها",
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-packs",
+        "name": "Meal packs",
+        "name_dari": "پکیج‌های غذایی",
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-teas",
+        "name": "Tea",
+        "name_dari": "چای‌ها",
+        "sort_order": 7
+      },
+      {
+        "id": "jumeirah-juices",
+        "name": "Juices & drinks",
+        "name_dari": "جوس و نوشیدنی‌ها",
+        "sort_order": 8
+      },
+      {
+        "id": "jumeirah-shakes",
+        "name": "Shakes & mocktails",
+        "name_dari": "شیک و موکتل‌ها",
+        "sort_order": 9
+      }
     ],
     "items": [
-      {"id":"jumeirah-special-cake","category_id":"jumeirah-cakes","name":"Jumeirah Special Cake","price":120,"image_url":"https://mizbanapp.com/images/dish/Jumeirah-Special-Cake-mf4zm04xbtlb1f-1-small.webp","sort_order":1},
-      {"id":"jumeirah-vanilla-cake","category_id":"jumeirah-cakes","name":"Vanilla Cake","price":60,"image_url":"https://mizbanapp.com/images/dish/Vanilla-Cake-mf4zq2rld3tz1r-1-small.webp","sort_order":2},
-      {"id":"jumeirah-chocolate-cream-cake","category_id":"jumeirah-cakes","name":"Chocolate Cream Cake","price":100,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Cream-Cake-mf4zsr7dkjhcuc-1-small.webp","sort_order":3},
-      {"id":"jumeirah-nescafe-cake","category_id":"jumeirah-cakes","name":"Nescafe Cake","price":70,"image_url":"https://mizbanapp.com/images/dish/Nescafe-Cake-mf4zwelwpyiyim-1-small.webp","sort_order":4},
-      {"id":"jumeirah-chocolate-cake","category_id":"jumeirah-cakes","name":"Chocolate Cake","price":60,"image_url":"https://mizbanapp.com/images/dish/Chocolate-Cake-mf4zz61cprw8ur-1-small.webp","sort_order":5},
-      {"id":"jumeirah-sweet-cake","category_id":"jumeirah-cakes","name":"Sweet Cake","price":80,"image_url":"https://mizbanapp.com/images/dish/Sweet-Cake-mf50307jr2v4y6-1-small.webp","sort_order":6},
-      {"id":"jumeirah-special-croissant","category_id":"jumeirah-cakes","name":"Special Croissant","price":100,"image_url":"https://mizbanapp.com/images/dish/Special-Croissant-mf505qih011gm4-1-small.webp","sort_order":7},
-
-      {"id":"jumeirah-special-mantu","category_id":"jumeirah-appetizers","name":"Special Mantu","price":170,"sort_order":1},
-      {"id":"jumeirah-ashak","category_id":"jumeirah-appetizers","name":"Ashak","price":150,"sort_order":2},
-      {"id":"jumeirah-indian-momos","category_id":"jumeirah-appetizers","name":"Indian Momos","price":160,"sort_order":3},
-      {"id":"jumeirah-lebanese-shawarma","category_id":"jumeirah-appetizers","name":"Lebanese Shawarma","price":120,"sort_order":4},
-      {"id":"jumeirah-cheese-pasta","category_id":"jumeirah-appetizers","name":"Cheese Pasta","price":180,"sort_order":5},
-
-      {"id":"jumeirah-special-burger","category_id":"jumeirah-burgers","name":"Jumeirah Special Burger","price":200,"sort_order":1},
-      {"id":"jumeirah-wrapped-burger","category_id":"jumeirah-burgers","name":"Wrapped Burger","price":200,"sort_order":2},
-      {"id":"jumeirah-cheeseburger","category_id":"jumeirah-burgers","name":"Cheeseburger","price":150,"sort_order":3},
-      {"id":"jumeirah-double-cheeseburger","category_id":"jumeirah-burgers","name":"Double Cheeseburger","price":250,"sort_order":4},
-      {"id":"jumeirah-special-zinger","category_id":"jumeirah-burgers","name":"Special Zinger","price":150,"sort_order":5},
-      {"id":"jumeirah-plain-zinger","category_id":"jumeirah-burgers","name":"Plain Zinger","price":100,"sort_order":6},
-      {"id":"jumeirah-mushroom-burger","category_id":"jumeirah-burgers","name":"Mushroom Burger","price":180,"sort_order":7},
-      {"id":"jumeirah-plain-burger","category_id":"jumeirah-burgers","name":"Plain Burger","price":80,"sort_order":8},
-
-      {"id":"jumeirah-special-pizza","category_id":"jumeirah-pizza","name":"Special Pizza","price":250,"price_sizes":[250,350,600],"sort_order":1},
-      {"id":"jumeirah-chicken-pizza","category_id":"jumeirah-pizza","name":"Chicken Pizza","price":200,"price_sizes":[200,300,550],"sort_order":2},
-      {"id":"jumeirah-vegetable-pizza","category_id":"jumeirah-pizza","name":"Vegetable Pizza","price":180,"price_sizes":[180,280,450],"sort_order":3},
-      {"id":"jumeirah-steak-pizza","category_id":"jumeirah-pizza","name":"Steak Pizza","price":250,"price_sizes":[250,350,600],"sort_order":4},
-      {"id":"jumeirah-mini-pizza","category_id":"jumeirah-pizza","name":"Mini Pizza (chicken or meat)","price":150,"sort_order":5},
-
-      {"id":"jumeirah-hot-dog","category_id":"jumeirah-sandwiches","name":"Hot Dog","price":120,"sort_order":1},
-      {"id":"jumeirah-cold-sandwich","category_id":"jumeirah-sandwiches","name":"Cold Sandwich","price":100,"sort_order":2},
-      {"id":"jumeirah-sausage-sandwich","category_id":"jumeirah-sandwiches","name":"Sausage Sandwich","price":80,"sort_order":3},
-
-      {"id":"jumeirah-special-pack","category_id":"jumeirah-packs","name":"Special Pack","description":"Cheeseburger, fillet, fried chips and Pepsi.","price":250,"sort_order":1},
-      {"id":"jumeirah-single-pack","category_id":"jumeirah-packs","name":"Single Pack","description":"Mini pizza, Zinger burger, fried chips and Pepsi.","price":350,"sort_order":2},
-      {"id":"jumeirah-double-pack","category_id":"jumeirah-packs","name":"Double Pack","description":"Single pizza, plain burger, Zinger burger, two fillet pieces, fried chips and two Pepsi.","price":500,"sort_order":3},
-      {"id":"jumeirah-triple-pack","category_id":"jumeirah-packs","name":"Triple Pack","description":"Special double pizza, three fillet pieces, cheeseburger, Zinger burger, special burger, plain burger, fried chips and three Pepsi.","price":900,"sort_order":4},
-
-      {"id":"jumeirah-lemon-honey-tea","category_id":"jumeirah-teas","name":"Lemon & Honey Tea","price":120,"sort_order":1},
-      {"id":"jumeirah-black-tea","category_id":"jumeirah-teas","name":"Black Tea","price":80,"sort_order":2},
-      {"id":"jumeirah-mint-tea","category_id":"jumeirah-teas","name":"Mint Tea","price":80,"sort_order":3},
-      {"id":"jumeirah-saffron-tea","category_id":"jumeirah-teas","name":"Saffron Tea","price":100,"sort_order":4},
-      {"id":"jumeirah-green-tea","category_id":"jumeirah-teas","name":"Green Tea","price":80,"sort_order":5},
-      {"id":"jumeirah-vip-tea","category_id":"jumeirah-teas","name":"Jumeirah VIP Tea Service","description":"Saffron tea, nuts, cocoa, two Nescafe cakes and milk cake.","price":500,"sort_order":6},
-
-      {"id":"jumeirah-mojito","category_id":"jumeirah-juices","name":"Mojito","price":100,"sort_order":1},
-      {"id":"jumeirah-lemonade","category_id":"jumeirah-juices","name":"Lemonade","price":100,"sort_order":2},
-      {"id":"jumeirah-orange-juice","category_id":"jumeirah-juices","name":"Orange Juice","price":100,"sort_order":3},
-      {"id":"jumeirah-sour-cherry-juice","category_id":"jumeirah-juices","name":"Sour Cherry Juice","price":100,"sort_order":4},
-      {"id":"jumeirah-melon-juice","category_id":"jumeirah-juices","name":"Melon Juice","price":100,"sort_order":5},
-      {"id":"jumeirah-strawberry-juice","category_id":"jumeirah-juices","name":"Strawberry Juice","price":120,"sort_order":6},
-      {"id":"jumeirah-pineapple-juice","category_id":"jumeirah-juices","name":"Pineapple Juice","price":100,"sort_order":7},
-      {"id":"jumeirah-carrot-juice","category_id":"jumeirah-juices","name":"Carrot Juice","price":79,"sort_order":8},
-      {"id":"jumeirah-mango-juice","category_id":"jumeirah-juices","name":"Mango Juice","price":120,"sort_order":9},
-      {"id":"jumeirah-banana-milk","category_id":"jumeirah-juices","name":"Banana Milk","price":100,"sort_order":10},
-
-      {"id":"jumeirah-strawberry-shake","category_id":"jumeirah-shakes","name":"Strawberry Shake","price":150,"sort_order":1},
-      {"id":"jumeirah-nutella-shake","category_id":"jumeirah-shakes","name":"Nutella Shake","price":150,"sort_order":2},
-      {"id":"jumeirah-oreo-shake","category_id":"jumeirah-shakes","name":"Oreo Shake","price":150,"sort_order":3},
-      {"id":"jumeirah-vanilla-shake","category_id":"jumeirah-shakes","name":"Vanilla Shake","price":150,"sort_order":4},
-      {"id":"jumeirah-banana-milkshake","category_id":"jumeirah-shakes","name":"Banana Milkshake","price":120,"sort_order":5},
-      {"id":"jumeirah-blue-curacao","category_id":"jumeirah-shakes","name":"Blue Curacao Mocktail","price":120,"sort_order":6},
-      {"id":"jumeirah-orange-mocktail","category_id":"jumeirah-shakes","name":"Orange Mocktail","price":120,"sort_order":7},
-      {"id":"jumeirah-cherry-mocktail","category_id":"jumeirah-shakes","name":"Cherry Mocktail","price":120,"sort_order":8}
+      {
+        "id": "jumeirah-special-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Jumeirah Special Cake",
+        "price": 120,
+        "image_url": "https://mizbanapp.com/images/dish/Jumeirah-Special-Cake-mf4zm04xbtlb1f-1-small.webp",
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-vanilla-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Vanilla Cake",
+        "price": 60,
+        "image_url": "https://mizbanapp.com/images/dish/Vanilla-Cake-mf4zq2rld3tz1r-1-small.webp",
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-chocolate-cream-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Chocolate Cream Cake",
+        "price": 100,
+        "image_url": "https://mizbanapp.com/images/dish/Chocolate-Cream-Cake-mf4zsr7dkjhcuc-1-small.webp",
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-nescafe-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Nescafe Cake",
+        "price": 70,
+        "image_url": "https://mizbanapp.com/images/dish/Nescafe-Cake-mf4zwelwpyiyim-1-small.webp",
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-chocolate-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Chocolate Cake",
+        "price": 60,
+        "image_url": "https://mizbanapp.com/images/dish/Chocolate-Cake-mf4zz61cprw8ur-1-small.webp",
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-sweet-cake",
+        "category_id": "jumeirah-cakes",
+        "name": "Sweet Cake",
+        "price": 80,
+        "image_url": "https://mizbanapp.com/images/dish/Sweet-Cake-mf50307jr2v4y6-1-small.webp",
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-special-croissant",
+        "category_id": "jumeirah-cakes",
+        "name": "Special Croissant",
+        "price": 100,
+        "image_url": "https://mizbanapp.com/images/dish/Special-Croissant-mf505qih011gm4-1-small.webp",
+        "sort_order": 7
+      },
+      {
+        "id": "jumeirah-special-mantu",
+        "category_id": "jumeirah-appetizers",
+        "name": "Special Mantu",
+        "price": 170,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-ashak",
+        "category_id": "jumeirah-appetizers",
+        "name": "Ashak",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-indian-momos",
+        "category_id": "jumeirah-appetizers",
+        "name": "Indian Momos",
+        "price": 160,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-lebanese-shawarma",
+        "category_id": "jumeirah-appetizers",
+        "name": "Lebanese Shawarma",
+        "price": 120,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-cheese-pasta",
+        "category_id": "jumeirah-appetizers",
+        "name": "Cheese Pasta",
+        "price": 180,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-special-burger",
+        "category_id": "jumeirah-burgers",
+        "name": "Jumeirah Special Burger",
+        "price": 200,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-wrapped-burger",
+        "category_id": "jumeirah-burgers",
+        "name": "Wrapped Burger",
+        "price": 200,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-cheeseburger",
+        "category_id": "jumeirah-burgers",
+        "name": "Cheeseburger",
+        "price": 150,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-double-cheeseburger",
+        "category_id": "jumeirah-burgers",
+        "name": "Double Cheeseburger",
+        "price": 250,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-special-zinger",
+        "category_id": "jumeirah-burgers",
+        "name": "Special Zinger",
+        "price": 150,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-plain-zinger",
+        "category_id": "jumeirah-burgers",
+        "name": "Plain Zinger",
+        "price": 100,
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-mushroom-burger",
+        "category_id": "jumeirah-burgers",
+        "name": "Mushroom Burger",
+        "price": 180,
+        "sort_order": 7
+      },
+      {
+        "id": "jumeirah-plain-burger",
+        "category_id": "jumeirah-burgers",
+        "name": "Plain Burger",
+        "price": 80,
+        "sort_order": 8
+      },
+      {
+        "id": "jumeirah-special-pizza",
+        "category_id": "jumeirah-pizza",
+        "name": "Special Pizza",
+        "price": 250,
+        "price_sizes": [
+          250,
+          350,
+          600
+        ],
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-chicken-pizza",
+        "category_id": "jumeirah-pizza",
+        "name": "Chicken Pizza",
+        "price": 200,
+        "price_sizes": [
+          200,
+          300,
+          550
+        ],
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-vegetable-pizza",
+        "category_id": "jumeirah-pizza",
+        "name": "Vegetable Pizza",
+        "price": 180,
+        "price_sizes": [
+          180,
+          280,
+          450
+        ],
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-steak-pizza",
+        "category_id": "jumeirah-pizza",
+        "name": "Steak Pizza",
+        "price": 250,
+        "price_sizes": [
+          250,
+          350,
+          600
+        ],
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-mini-pizza",
+        "category_id": "jumeirah-pizza",
+        "name": "Mini Pizza (chicken or meat)",
+        "price": 150,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-hot-dog",
+        "category_id": "jumeirah-sandwiches",
+        "name": "Hot Dog",
+        "price": 120,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-cold-sandwich",
+        "category_id": "jumeirah-sandwiches",
+        "name": "Cold Sandwich",
+        "price": 100,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-sausage-sandwich",
+        "category_id": "jumeirah-sandwiches",
+        "name": "Sausage Sandwich",
+        "price": 80,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-special-pack",
+        "category_id": "jumeirah-packs",
+        "name": "Special Pack",
+        "description": "Cheeseburger, fillet, fried chips and Pepsi.",
+        "price": 250,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-single-pack",
+        "category_id": "jumeirah-packs",
+        "name": "Single Pack",
+        "description": "Mini pizza, Zinger burger, fried chips and Pepsi.",
+        "price": 350,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-double-pack",
+        "category_id": "jumeirah-packs",
+        "name": "Double Pack",
+        "description": "Single pizza, plain burger, Zinger burger, two fillet pieces, fried chips and two Pepsi.",
+        "price": 500,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-triple-pack",
+        "category_id": "jumeirah-packs",
+        "name": "Triple Pack",
+        "description": "Special double pizza, three fillet pieces, cheeseburger, Zinger burger, special burger, plain burger, fried chips and three Pepsi.",
+        "price": 900,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-lemon-honey-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Lemon & Honey Tea",
+        "price": 120,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-black-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Black Tea",
+        "price": 80,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-mint-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Mint Tea",
+        "price": 80,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-saffron-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Saffron Tea",
+        "price": 100,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-green-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Green Tea",
+        "price": 80,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-vip-tea",
+        "category_id": "jumeirah-teas",
+        "name": "Jumeirah VIP Tea Service",
+        "description": "Saffron tea, nuts, cocoa, two Nescafe cakes and milk cake.",
+        "price": 500,
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-mojito",
+        "category_id": "jumeirah-juices",
+        "name": "Mojito",
+        "price": 100,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-lemonade",
+        "category_id": "jumeirah-juices",
+        "name": "Lemonade",
+        "price": 100,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-orange-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Orange Juice",
+        "price": 100,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-sour-cherry-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Sour Cherry Juice",
+        "price": 100,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-melon-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Melon Juice",
+        "price": 100,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-strawberry-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Strawberry Juice",
+        "price": 120,
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-pineapple-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Pineapple Juice",
+        "price": 100,
+        "sort_order": 7
+      },
+      {
+        "id": "jumeirah-carrot-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Carrot Juice",
+        "price": 79,
+        "sort_order": 8
+      },
+      {
+        "id": "jumeirah-mango-juice",
+        "category_id": "jumeirah-juices",
+        "name": "Mango Juice",
+        "price": 120,
+        "sort_order": 9
+      },
+      {
+        "id": "jumeirah-banana-milk",
+        "category_id": "jumeirah-juices",
+        "name": "Banana Milk",
+        "price": 100,
+        "sort_order": 10
+      },
+      {
+        "id": "jumeirah-strawberry-shake",
+        "category_id": "jumeirah-shakes",
+        "name": "Strawberry Shake",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "jumeirah-nutella-shake",
+        "category_id": "jumeirah-shakes",
+        "name": "Nutella Shake",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "jumeirah-oreo-shake",
+        "category_id": "jumeirah-shakes",
+        "name": "Oreo Shake",
+        "price": 150,
+        "sort_order": 3
+      },
+      {
+        "id": "jumeirah-vanilla-shake",
+        "category_id": "jumeirah-shakes",
+        "name": "Vanilla Shake",
+        "price": 150,
+        "sort_order": 4
+      },
+      {
+        "id": "jumeirah-banana-milkshake",
+        "category_id": "jumeirah-shakes",
+        "name": "Banana Milkshake",
+        "price": 120,
+        "sort_order": 5
+      },
+      {
+        "id": "jumeirah-blue-curacao",
+        "category_id": "jumeirah-shakes",
+        "name": "Blue Curacao Mocktail",
+        "price": 120,
+        "sort_order": 6
+      },
+      {
+        "id": "jumeirah-orange-mocktail",
+        "category_id": "jumeirah-shakes",
+        "name": "Orange Mocktail",
+        "price": 120,
+        "sort_order": 7
+      },
+      {
+        "id": "jumeirah-cherry-mocktail",
+        "category_id": "jumeirah-shakes",
+        "name": "Cherry Mocktail",
+        "price": 120,
+        "sort_order": 8
+      }
     ]
   },
   {
@@ -378,7 +1315,12 @@
       "slug": "dehkadeh-fast-food",
       "description": "A public fast-food listing on Bagh-e Azadi Road for burgers, sandwiches and drinks. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود دهکده در سرک باغ آزادی برای برگر، ساندویچ و نوشیدنی. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Sandwiches", "Beverages"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Sandwiches",
+        "Beverages"
+      ],
       "category_primary": "Fast Food",
       "address": "Bagh-e Azadi Road, opposite Tajroby High School, Herat",
       "address_dari": "هرات، سرک باغ آزادی، مقابل لیسه تجربوی",
@@ -386,7 +1328,11 @@
       "district": "Bagh-e-Hazadi",
       "city": "Herat",
       "phone": "+93 799 240 625",
-      "phone_numbers": ["+93 799 240 625", "+93 702 469 903", "+93 728 248 508"],
+      "phone_numbers": [
+        "+93 799 240 625",
+        "+93 702 469 903",
+        "+93 728 248 508"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -420,7 +1366,12 @@
       "slug": "pizza-99-herat",
       "description": "A public Herat listing for pizza, sandwiches, burgers and fast food. The exact address and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی پیتزا ۹۹ در هرات برای پیتزا، ساندویچ، برگر و فست‌فود. آدرس دقیق و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Burgers", "Sandwiches"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Burgers",
+        "Sandwiches"
+      ],
       "category_primary": "Pizza",
       "address": "Herat, Afghanistan",
       "address_dari": "هرات، افغانستان",
@@ -428,7 +1379,10 @@
       "district": null,
       "city": "Herat",
       "phone": "+93 798 505 016",
-      "phone_numbers": ["+93 798 505 016", "+93 798 990 099"],
+      "phone_numbers": [
+        "+93 798 505 016",
+        "+93 798 990 099"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -462,7 +1416,12 @@
       "slug": "biroun-bar-fast-food",
       "description": "A public fast-food listing near Chaharahi Ameriat for pizza, burgers and takeaway meals. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود بیرون‌بَر در چهارراهی آمریت برای پیتزا، برگر و غذای بیرون‌بر. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Burgers", "Takeaway"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Burgers",
+        "Takeaway"
+      ],
       "category_primary": "Fast Food",
       "address": "Chaharahi Ameriat, toward Panj Rah Aab Bakhsh, Herat",
       "address_dari": "هرات، چهارراهی آمریت، به سمت پنج‌راه آب‌بخش",
@@ -470,7 +1429,10 @@
       "district": "Ameriat",
       "city": "Herat",
       "phone": "+93 799 111 650",
-      "phone_numbers": ["+93 799 111 650", "+93 784 001 614"],
+      "phone_numbers": [
+        "+93 799 111 650",
+        "+93 784 001 614"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -504,7 +1466,11 @@
       "slug": "sorush-burger-vip",
       "description": "A public burger and pizza listing at Park-e Taraqi. Details and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی برگر و پیتزای سروش VIP در گرده پارک ترقی. جزئیات و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Pizza"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Pizza"
+      ],
       "category_primary": "Burgers & Pizza",
       "address": "Park-e Taraqi, opposite Navid Restaurant, start of Malekyar 8, Herat",
       "address_dari": "هرات، گرده پارک ترقی، مقابل رستورانت نوید، ابتدای جاده ملکیار ۸",
@@ -512,7 +1478,9 @@
       "district": "Park-e Taraqi",
       "city": "Herat",
       "phone": "+93 790 902 800",
-      "phone_numbers": ["+93 790 902 800"],
+      "phone_numbers": [
+        "+93 790 902 800"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -546,7 +1514,12 @@
       "slug": "golbarg-restaurant-branch-1",
       "description": "A public restaurant listing at Golha Square for Afghan rice dishes and traditional meals. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی شعبه اول رستورانت گلبرگ در چوک گل‌ها برای غذاهای برنجی و سنتی افغانی. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Afghan", "Traditional", "Rice Dishes", "Qabeli"],
+      "cuisine_tags": [
+        "Afghan",
+        "Traditional",
+        "Rice Dishes",
+        "Qabeli"
+      ],
       "category_primary": "Afghan Traditional",
       "address": "Golha Square, under Mowafaq Hotel, Herat",
       "address_dari": "هرات، چوک گل‌ها، زیر هوتل موفق",
@@ -554,7 +1527,10 @@
       "district": "Gulha",
       "city": "Herat",
       "phone": "+93 797 909 898",
-      "phone_numbers": ["+93 797 909 898", "+93 707 909 898"],
+      "phone_numbers": [
+        "+93 797 909 898",
+        "+93 707 909 898"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -588,7 +1564,11 @@
       "slug": "jaspin-burger-pizza",
       "description": "A public burger and pizza listing at Park-e Taraqi. Details and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی برگر و پیتزا جاسپین در گرده پارک ترقی. جزئیات و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Pizza"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Pizza"
+      ],
       "category_primary": "Burgers & Pizza",
       "address": "Park-e Taraqi, opposite Arbabezada Road, Herat",
       "address_dari": "هرات، گرده پارک ترقی، مقابل جاده ارباب‌زاده‌ها",
@@ -596,7 +1576,10 @@
       "district": "Park-e Taraqi",
       "city": "Herat",
       "phone": "+93 799 318 884",
-      "phone_numbers": ["+93 799 318 884", "+93 789 495 181"],
+      "phone_numbers": [
+        "+93 799 318 884",
+        "+93 789 495 181"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -630,7 +1613,11 @@
       "slug": "food-box-branch-2",
       "description": "A public listing for Food Box Branch 2 on Bagh-e Azadi's 30 Metre Street. Afghan Eats ordering is awaiting branch confirmation.",
       "description_dari": "فهرست عمومی شعبه دوم فود باکس در سرک ۳۰ متره باغ آزادی. سفارش از افغان ایتس پس از تأیید شعبه فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers", "Sandwiches"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers",
+        "Sandwiches"
+      ],
       "category_primary": "Fast Food",
       "address": "Bagh-e Azadi, 30 Metre Street, Herat",
       "address_dari": "هرات، باغ آزادی، سرک ۳۰ متره",
@@ -638,7 +1625,9 @@
       "district": "Bagh-e-Hazadi",
       "city": "Herat",
       "phone": "+93 791 706 870",
-      "phone_numbers": ["+93 791 706 870"],
+      "phone_numbers": [
+        "+93 791 706 870"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -672,7 +1661,11 @@
       "slug": "padidah-now-pizza-burger",
       "description": "A public pizza and burger listing at Park-e Taraqi, opposite Navid Restaurant. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی پیتزا و برگر پدیده نو در گرده پارک ترقی، مقابل رستورانت نوید. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Burgers"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Burgers"
+      ],
       "category_primary": "Burgers & Pizza",
       "address": "Park-e Taraqi, opposite Navid Restaurant, Herat",
       "address_dari": "هرات، گرده پارک ترقی، مقابل رستورانت نوید",
@@ -680,7 +1673,9 @@
       "district": "Park-e Taraqi",
       "city": "Herat",
       "phone": "+93 796 508 507",
-      "phone_numbers": ["+93 796 508 507"],
+      "phone_numbers": [
+        "+93 796 508 507"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -714,7 +1709,10 @@
       "slug": "burger-masoud-herat",
       "description": "A public Herat listing for burgers and fast food. The exact address and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی برگر مسعود در هرات برای برگر و فست‌فود. آدرس دقیق و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Burgers"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Burgers"
+      ],
       "category_primary": "Burgers",
       "address": "Herat, Afghanistan",
       "address_dari": "هرات، افغانستان",
@@ -722,7 +1720,9 @@
       "district": null,
       "city": "Herat",
       "phone": "+93 799 363 674",
-      "phone_numbers": ["+93 799 363 674"],
+      "phone_numbers": [
+        "+93 799 363 674"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -756,7 +1756,11 @@
       "slug": "maza-biryani-herat",
       "description": "A public biryani restaurant listing at Park-e Taraqi, opposite Majidi Road. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی رستورانت بریانی مزه در گرده پارک ترقی، مقابل جاده مجیدی. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Biryani", "Rice Dishes", "Traditional"],
+      "cuisine_tags": [
+        "Biryani",
+        "Rice Dishes",
+        "Traditional"
+      ],
       "category_primary": "Biryani",
       "address": "Park-e Taraqi, opposite Majidi Road, Herat",
       "address_dari": "هرات، گرده پارک ترقی، مقابل جاده مجیدی",
@@ -764,7 +1768,9 @@
       "district": "Park-e Taraqi",
       "city": "Herat",
       "phone": "+93 799 807 808",
-      "phone_numbers": ["+93 799 807 808"],
+      "phone_numbers": [
+        "+93 799 807 808"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -798,7 +1804,13 @@
       "slug": "tanin-restaurant-herat",
       "description": "A public restaurant and fast-food listing in Shahr-e Naw for Afghan food, kebab, rice dishes, pizza and burgers. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی رستورانت طنین در شهرنو برای غذای افغانی، کباب، برنج، پیتزا و برگر. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Afghan", "Kebab", "Rice Dishes", "Pizza", "Burgers"],
+      "cuisine_tags": [
+        "Afghan",
+        "Kebab",
+        "Rice Dishes",
+        "Pizza",
+        "Burgers"
+      ],
       "category_primary": "Afghan & Fast Food",
       "address": "Shahr-e Naw, opposite Behzad Road, Herat",
       "address_dari": "هرات، شهرنو، مقابل جاده بهزاد",
@@ -806,7 +1818,9 @@
       "district": "Shar-e-Now",
       "city": "Herat",
       "phone": "+93 796 368 080",
-      "phone_numbers": ["+93 796 368 080"],
+      "phone_numbers": [
+        "+93 796 368 080"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -840,7 +1854,10 @@
       "slug": "mehrbano-pizza-herat",
       "description": "A public pizza restaurant listing in Ibrisham Plaza near Chaharahi Ameriat. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی پیتزا مهربانو در ابریشم پلازا، نزدیک چهارراهی آمریت. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza"
+      ],
       "category_primary": "Pizza",
       "address": "Ibrisham Plaza, third floor, near Chaharahi Ameriat, opposite the Agriculture Directorate, Herat",
       "address_dari": "هرات، نرسیده به چهارراهی آمریت، مقابل ریاست زراعت، ابریشم پلازا، طبقه سوم",
@@ -848,7 +1865,9 @@
       "district": "Ameriat",
       "city": "Herat",
       "phone": "+93 793 040 506",
-      "phone_numbers": ["+93 793 040 506"],
+      "phone_numbers": [
+        "+93 793 040 506"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -882,7 +1901,11 @@
       "slug": "hotbox-fast-food-herat",
       "description": "A public fast-food listing on 64 Metre Road for pizza and quick meals. Afghan Eats ordering is awaiting owner confirmation.",
       "description_dari": "فهرست عمومی فست‌فود هات باکس در سرک ۶۴ متره برای پیتزا و غذای سریع. سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Burgers"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Burgers"
+      ],
       "category_primary": "Fast Food",
       "address": "64 Metre Road, start of Imam Muslim 44, Herat",
       "address_dari": "هرات، سرک ۶۴ متره، اول جاده امام مسلم ۴۴",
@@ -890,7 +1913,10 @@
       "district": "64 Metre Road",
       "city": "Herat",
       "phone": "+93 790 467 778",
-      "phone_numbers": ["+93 790 467 778", "+93 745 319 595"],
+      "phone_numbers": [
+        "+93 790 467 778",
+        "+93 745 319 595"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
       "cover_image_url": null,
@@ -924,7 +1950,11 @@
       "slug": "char-fasl-food-complex",
       "description": "A public restaurant and fast-food listing near Ghalib University. Details and Afghan Eats ordering are awaiting owner confirmation.",
       "description_dari": "فهرست عمومی مجموعه غذایی چهار فصل نزدیک پوهنتون غالب. جزئیات و سفارش از افغان ایتس پس از تأیید مالک فعال می‌شود.",
-      "cuisine_tags": ["Fast Food", "Pizza", "Afghan"],
+      "cuisine_tags": [
+        "Fast Food",
+        "Pizza",
+        "Afghan"
+      ],
       "category_primary": "Restaurant & Fast Food",
       "address": "Near Ghalib University, Herat",
       "address_dari": "هرات، نزدیک پوهنتون غالب",
@@ -932,10 +1962,12 @@
       "district": null,
       "city": "Herat",
       "phone": "+93 798 811 414",
-      "phone_numbers": ["+93 798 811 414"],
+      "phone_numbers": [
+        "+93 798 811 414"
+      ],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754472731444-204850720-1-small.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -953,9 +1985,277 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/char-fasl-food/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-09-01",
+      "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/char-fasl-food/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/char-fasl-food",
+      "public_menu_checked_at": "2026-09-01",
+      "menu_preview_only": true
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {
+        "id": "charfasl-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-sandwiches",
+        "name": "Special sandwiches",
+        "name_dari": "ساندویچ‌های مخصوص",
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-kebab",
+        "name": "Kebab",
+        "name_dari": "کباب",
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-rice",
+        "name": "Rice & main dishes",
+        "name_dari": "برنج و غذاهای اصلی",
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-salad-tea",
+        "name": "Salads & tea",
+        "name_dari": "سالاد و چای",
+        "sort_order": 5
+      }
+    ],
+    "items": [
+      {
+        "id": "charfasl-special-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Special Pizza",
+        "name_dari": "پیتزا مخصوص",
+        "description": "Dough, cheese, ham, sausage, chicken, mushroom, bell pepper, corn and olives.",
+        "price": 220,
+        "price_sizes": [
+          220,
+          450
+        ],
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-vegetable-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Vegetable Pizza",
+        "name_dari": "پیتزا سبزیجات",
+        "description": "Dough, cheese, mushroom, bell pepper, corn, olives, tomato and vegetables.",
+        "price": 150,
+        "price_sizes": [
+          150,
+          300
+        ],
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-margherita-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Margherita Pizza",
+        "name_dari": "پیتزا مارگاریتا",
+        "price": 150,
+        "price_sizes": [
+          150,
+          300
+        ],
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-roast-beef-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Roast Beef Pizza",
+        "name_dari": "پیتزا رست بیف",
+        "description": "Cooked beef, cheese, mushroom, bell pepper, corn and special sauce.",
+        "price": 200,
+        "price_sizes": [
+          200,
+          400
+        ],
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-chicken-mushroom-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Chicken & Mushroom Pizza",
+        "name_dari": "پیتزا مرغ و قارچ",
+        "price": 200,
+        "price_sizes": [
+          200,
+          400
+        ],
+        "sort_order": 5
+      },
+      {
+        "id": "charfasl-four-seasons-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Four Seasons Pizza",
+        "name_dari": "پیتزا چهار فصل",
+        "price": 250,
+        "price_sizes": [
+          250,
+          500
+        ],
+        "sort_order": 6
+      },
+      {
+        "id": "charfasl-party-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Special Four Seasons Party Pizza",
+        "name_dari": "پیتزا پارتی مخصوص چهار فصل",
+        "price": 600,
+        "price_sizes": [
+          600,
+          1000
+        ],
+        "sort_order": 7
+      },
+      {
+        "id": "charfasl-fish-burger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Fish Burger Sandwich",
+        "name_dari": "ساندویچ فیش برگر",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-chicken-burger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Chicken Burger Sandwich",
+        "name_dari": "ساندویچ چکن برگر",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-special-sandwich",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Special Four Seasons Sandwich",
+        "name_dari": "ساندویچ مخصوص چهار فصل",
+        "price": 130,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-zinger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Zinger Burger Sandwich",
+        "name_dari": "ساندویچ زینگر برگر",
+        "price": 130,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-koobideh",
+        "category_id": "charfasl-kebab",
+        "name": "Plain Koobideh Kebab",
+        "name_dari": "کباب کوبیده ساده",
+        "price": 120,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-koobideh",
+        "category_id": "charfasl-kebab",
+        "name": "Special Koobideh Kebab",
+        "name_dari": "کباب کوبیده مخصوص",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-chopan",
+        "category_id": "charfasl-kebab",
+        "name": "Chopan Kebab",
+        "name_dari": "کباب چوپان",
+        "price": 650,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-shishlik",
+        "category_id": "charfasl-kebab",
+        "name": "Shishlik Kebab",
+        "name_dari": "کباب شیشلیک",
+        "price": 600,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-simple-qabili",
+        "category_id": "charfasl-rice",
+        "name": "Simple Qabili",
+        "name_dari": "قابلی ساده",
+        "price": 100,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-kofteh-rice",
+        "category_id": "charfasl-rice",
+        "name": "Kofteh Rice",
+        "name_dari": "چلو کوفته",
+        "price": 200,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-ghormeh-rice",
+        "category_id": "charfasl-rice",
+        "name": "Rice with Ghormeh Sabzi",
+        "name_dari": "چلو قورمه سبزی",
+        "price": 150,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-two-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Two-Person Platter",
+        "name_dari": "سینی مخصوص دو نفره",
+        "price": 950,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-three-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Three-Person Platter",
+        "name_dari": "سینی مخصوص سه نفره",
+        "price": 1350,
+        "sort_order": 5
+      },
+      {
+        "id": "charfasl-four-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Four-Person Platter",
+        "name_dari": "سینی مخصوص چهار نفره",
+        "price": 1500,
+        "sort_order": 6
+      },
+      {
+        "id": "charfasl-five-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Five-Person Platter",
+        "name_dari": "سینی پنج نفره",
+        "price": 2000,
+        "sort_order": 7
+      },
+      {
+        "id": "charfasl-caesar-salad",
+        "category_id": "charfasl-salad-tea",
+        "name": "Caesar Salad",
+        "name_dari": "سالاد سزار",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-salad",
+        "category_id": "charfasl-salad-tea",
+        "name": "Special Salad",
+        "name_dari": "سالاد مخصوص",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-green-tea",
+        "category_id": "charfasl-salad-tea",
+        "name": "Green Tea",
+        "name_dari": "چای سبز",
+        "price": 100,
+        "sort_order": 3
+      }
+    ]
   }
 ]
