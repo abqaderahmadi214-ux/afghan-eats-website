@@ -1582,7 +1582,7 @@
       ],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Jaspin%20Burger%20%26%20Pizza-mep8b6k15hqyve-1-medium.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -1600,7 +1600,11 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/fa/herat/restaurant/68aa9e906f914a8a20f45c84/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-09-01",
+      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/jaspin-burger-and-pizza/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/jaspin-burger-and-pizza",
+      "public_menu_checked_at": "2026-09-01"
     },
     "categories": [],
     "items": []
@@ -1630,7 +1634,7 @@
       ],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Food%20box%20branch%202-mizk50aizioez7-1-small.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -1648,7 +1652,8 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/food-box-2/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-09-01",
+      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/food-box/overview"
     },
     "categories": [],
     "items": []
@@ -1725,7 +1730,7 @@
       ],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/Burger%20Masoud-mknnsn5kwb1hnw-1-small.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -1743,7 +1748,11 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-09-01",
+      "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud",
+      "public_menu_checked_at": "2026-09-01"
     },
     "categories": [],
     "items": []
@@ -1773,7 +1782,7 @@
       ],
       "whatsapp_number": null,
       "logo_url": null,
-      "cover_image_url": null,
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754710379243-862419294-1-medium.webp",
       "has_delivery": false,
       "has_dine_in": null,
       "has_takeaway": false,
@@ -1791,7 +1800,8 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/maza-biryani/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-09-01",
+      "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/maza-biryani/overview"
     },
     "categories": [],
     "items": []
