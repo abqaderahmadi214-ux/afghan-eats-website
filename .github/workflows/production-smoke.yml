@@ -93,6 +93,8 @@ jobs:
             retry_contains "https://afghaneats.net/account" "customerEmailVerifyBanner" /tmp/ae-account-email-verification.html
             retry_contains "https://afghaneats.net/verify-email.html" "Verify your email" /tmp/ae-verify-email.html
             retry_contains "https://afghaneats.net/assets/verify-email.js" "operations.verifyRestaurantEmail" /tmp/ae-verify-email-js.js
+            retry_contains "https://afghaneats.net/assets/verify-email.js" "operations.verifyRiderEmail" /tmp/ae-rider-email-verification-js.js
+            retry_contains "https://afghaneats.net/assets/operations.js" "verificationEmailSent" /tmp/ae-rider-email-submit-js.js
             retry_contains "https://afghaneats.net/partner.html" "A verification link will be sent here." /tmp/ae-partner-email-verification.html
             retry_contains "https://afghaneats.net/claim.html" "This email must be verified before ownership can be approved." /tmp/ae-claim-email-verification.html
             retry_contains "https://afghaneats.net/assets/account-dashboard.js" "data-account-tab" /tmp/ae-account-dashboard-v2.js
@@ -170,6 +172,8 @@ jobs:
               && grep -Fq 'partnerApplicationReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'riderApplicationReviewWorkspace' /tmp/admin-control-center.js \
               && grep -Fq 'adminReviewRiderDocument' /tmp/admin-control-center.js \
+              && grep -Fq 'email not verified' /tmp/admin-control-center.js \
+              && grep -Fq 'riderAccess' /tmp/admin-control-center.js \
               && grep -Fq 'Review application' /tmp/admin-control-center.js \
               && grep -Fq 'Review details' /tmp/admin-control-center.js \
               && grep -Fq 'Afghan Eats Control Center' /tmp/admin-health.json; then
