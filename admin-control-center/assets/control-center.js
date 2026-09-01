@@ -512,6 +512,52 @@ async function action(event) {
   if (type === 'review-owner-setup') { const decision = target.dataset.decision; const name = target.dataset.name || 'this restaurant'; const note = String(document.querySelector(`[data-setup-review-note="${CSS.escape(id)}"]`)?.value || '').trim(); if (decision === 'changes_requested' && !note) return toast('Explain the required changes before returning this setup to the restaurant owner.', 'error'); const approve = decision === 'approved'; return openConfirm(approve ? 'Approve and activate restaurant' : 'Request restaurant setup changes', approve ? `Approve ${name}'s submitted profile, menu, pricing, delivery and images, then activate its public listing for customer ordering?` : `Return ${name}'s submitted setup to the owner with your required changes. The restaurant will remain inactive until it is corrected and resubmitted.`, async () => { const result = await mutate('portal.adminReviewSetupSubmission', { id, decision, adminNote: note || null, activateListing: approve }); state.setupReviewId=null; toast(result?.listingActivated ? 'Restaurant setup approved and public listing activated.' : 'Restaurant setup returned for changes.'); renderView(); }); }
   if (type === 'remove-restaurant') { const name = target.dataset.name || 'this restaurant'; return openConfirm('Remove restaurant from marketplace', `Remove ${name} from customer ordering? This safely deactivates its public listing and preserves historical orders and operational records.`, async () => { await mutate('restaurants.adminToggleStatus', { id, status: 'inactive' }); toast('Restaurant removed from customer ordering.'); renderView(); }); }
   if (type === 'toggle-listing') { const next = target.dataset.status; return openConfirm('Restore public listing', 'Make this restaurant available for customer ordering after its menu, pricing, delivery and owner setup have been checked.', async () => { await mutate('restaurants.adminToggleStatus', { id, status: next }); toast('Restaurant listing restored.'); renderView(); }); }
+  if (type === 'open-rider-application-review') {
+    state.riderReviewId=id;
+    loading('Loading private rider verification…');
+    try {
+      state.riderReviewDetail=await query('operations.adminRiderApplicationDetail',{id});
+      await renderRiders();
+      document.getElementById('rider-application-review-workspace')?.scrollIntoView({behavior:'smooth',block:'start'});
+    } catch(error) {
+      state.riderReviewId=null;
+      state.riderReviewDetail=null;
+      setNotice(error.message||'Rider verification could not be loaded.');
+    }
+    return;
+  }
+  if (type === 'close-rider-application-review') {
+    state.riderReviewId=null;
+    state.riderReviewDetail=null;
+    await renderRiders();
+    return;
+  }
+  if (type === 'open-rider-document') {
+    const doc=asArray(state.riderReviewDetail?.documents).find(item=>String(item.id)===String(id));
+    try { openPrivateRiderDocument(doc); } catch(error) { toast(error.message||'Private document could not be opened.','error'); }
+    return;
+  }
+  if (type === 'review-rider-document') {
+    const status=target.dataset.status;
+    const note=String(document.querySelector(`[data-rider-document-note="${CSS.escape(id)}"]`)?.value||'').trim();
+    if(status==='rejected'&&!note)return toast('Explain why this rider document is being rejected.','error');
+    const doc=asArray(state.riderReviewDetail?.documents).find(item=>String(item.id)===String(id));
+    const label=riderDocumentLabel(doc?.document_type);
+    return openConfirm(
+      status==='approved'?'Approve rider document':'Reject rider document',
+      status==='approved'
+        ?`Confirm that you reviewed ${label} and it matches the applicant information.`
+        :`Reject ${label} and record the reason for the applicant/operations record.`,
+      async()=>{
+        await mutate('operations.adminReviewRiderDocument',{id,status,note:note||undefined});
+        state.riderReviewDetail=await query('operations.adminRiderApplicationDetail',{id:state.riderReviewId});
+        toast(`${label} marked ${status}.`,status==='approved'?'success':'error');
+        await renderRiders();
+        document.getElementById('rider-application-review-workspace')?.scrollIntoView({behavior:'smooth',block:'start'});
+      },
+      status==='rejected'
+    );
+  }
   if (type === 'application-status') { const status=target.dataset.status,isPartner=target.dataset.type==='partner',isRider=target.dataset.type==='rider',domain=isPartner?'restaurant application':'rider application',endpoint=isPartner?'operations.adminUpdatePartnerApplication':'operations.adminUpdateRiderApplication'; const note=isPartner?String(document.querySelector(`[data-partner-review-note="${CSS.escape(id)}"]`)?.value||'').trim():isRider?String(document.querySelector(`[data-rider-review-note="${CSS.escape(id)}"]`)?.value||'').trim():''; if(isRider&&status==='rejected'&&!note)return toast('Record why the rider application is being rejected.','error'); return openConfirm(`${title(status)} ${domain}`,status==='approved'&&isRider?'Approve this Rider only after confirming personal information, National ID and required driving licence evidence.':`Confirm that this ${domain} should be marked “${status}”.`,async()=>{ const result=await mutate(endpoint,{id,status,adminNotes:note||undefined}); if(isPartner){if(status==='approved'&&result?.ownerAccess){const access=result.ownerAccess;toast(access.emailSent?(access.alreadyActivated?'Restaurant approved. Owner was notified by email and can sign in with the existing portal password.':'Restaurant approved. Owner activation email sent with username and secure set-password link.'):'Restaurant approved and owner portal access created, but the approval email was not delivered. Reissue the activation link from Portal access.',access.emailSent?'success':'error')}else toast(`${title(domain)} updated.`);if(status!=='reviewing')state.partnerReviewId=null;}else if(isRider){toast(status==='approved'?'Rider approved after identity and document verification.':`${title(domain)} updated.`);if(status==='reviewing'&&state.riderReviewId){state.riderReviewDetail=await query('operations.adminRiderApplicationDetail',{id:state.riderReviewId})}else{state.riderReviewId=null;state.riderReviewDetail=null}}else toast(`${title(domain)} updated.`);renderView();},status!=='reviewing'); }
   if (type === 'rider-availability') { const available = target.dataset.available === 'true'; return openConfirm(available ? 'Set rider available' : 'Set rider busy', available ? 'This rider will become selectable for appropriate dispatch assignments.' : 'This rider will not be presented as available for new dispatch assignments.', async () => { await mutate('operations.adminUpdateRider', { id, isAvailable: available }); toast(`Rider set ${available ? 'available' : 'busy'}.`); renderView(); }, false); }
   if (type === 'customer-active') { const active = target.dataset.active === 'true'; return openConfirm(active ? 'Enable customer account' : 'Disable customer account', active ? 'Restore this customer’s ability to use authenticated account services.' : 'Disable this customer account and invalidate its customer API session.', async () => { await mutate('customer.adminSetActive', { userId: Number(id), active }); toast(`Customer account ${active ? 'enabled' : 'disabled'}.`); renderView(); }); }
