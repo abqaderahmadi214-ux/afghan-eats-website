@@ -1353,10 +1353,242 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/fa/herat/restaurant/dehkadeh-fast-food",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/ps/herat/restaurant/dehkadeh-fast-food",
+      "public_menu_checked_at": "2026-09-01",
+      "menu_preview_only": true
     },
-    "categories": [],
-    "items": []
+    "categories": [
+      {
+        "id": "dehkadeh-burgers",
+        "name": "Burgers",
+        "name_dari": "برگر",
+        "sort_order": 1
+      },
+      {
+        "id": "dehkadeh-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 2
+      },
+      {
+        "id": "dehkadeh-sandwiches",
+        "name": "Sandwiches",
+        "name_dari": "ساندویچ",
+        "sort_order": 3
+      },
+      {
+        "id": "dehkadeh-drinks",
+        "name": "Drinks",
+        "name_dari": "نوشیدنی",
+        "sort_order": 4
+      }
+    ],
+    "items": [
+      {
+        "id": "dk-cheeseburger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Cheeseburger",
+        "name_dari": "چیز برگر",
+        "price": 60,
+        "sort_order": 1,
+        "available": true,
+        "price_sizes": [
+          60,
+          100
+        ]
+      },
+      {
+        "id": "dk-simple-burger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Simple Burger",
+        "name_dari": "برگر ساده",
+        "price": 50,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "dk-special-burger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Special Burger",
+        "name_dari": "برگر مخصوص",
+        "price": 80,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "dk-double-burger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Double Burger",
+        "name_dari": "دابل برگر",
+        "price": 100,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "dk-beef-burger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Beef Burger",
+        "name_dari": "بیف برگر",
+        "price": 150,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "dk-dehkadeh-special",
+        "category_id": "dehkadeh-burgers",
+        "name": "Dehkadeh Special Burger",
+        "name_dari": "مخصوص دهکده",
+        "price": 130,
+        "sort_order": 6,
+        "available": true
+      },
+      {
+        "id": "dk-chicken-burger",
+        "category_id": "dehkadeh-burgers",
+        "name": "Chicken Burger",
+        "name_dari": "چکن برگر",
+        "price": 120,
+        "sort_order": 7,
+        "available": true
+      },
+      {
+        "id": "dk-two-person-pizza",
+        "category_id": "dehkadeh-pizza",
+        "name": "Pizza for Two",
+        "name_dari": "پیتزا ۲ نفره",
+        "price": 200,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "dk-chicken-mushroom-single",
+        "category_id": "dehkadeh-pizza",
+        "name": "Chicken & Mushroom Pizza — Single",
+        "name_dari": "پیتزا قارچ مرغ تک نفره",
+        "price": 150,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "dk-family-pizza-350",
+        "category_id": "dehkadeh-pizza",
+        "name": "Family Pizza",
+        "name_dari": "پیتزا خانواده",
+        "price": 350,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "dk-family-pizza-400",
+        "category_id": "dehkadeh-pizza",
+        "name": "Family Pizza",
+        "name_dari": "پیتزا خانواده",
+        "price": 400,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "dk-mixed-pizza",
+        "category_id": "dehkadeh-pizza",
+        "name": "Mixed Pizza",
+        "name_dari": "پیتزا مخلوط",
+        "price": 250,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "dk-bandari-sausage",
+        "category_id": "dehkadeh-sandwiches",
+        "name": "Bandari Sausage Sandwich",
+        "name_dari": "سوسیس بندری",
+        "price": 50,
+        "sort_order": 1,
+        "available": true
+      },
+      {
+        "id": "dk-special-chicken",
+        "category_id": "dehkadeh-sandwiches",
+        "name": "Special Chicken Sandwich",
+        "name_dari": "مرغ مخصوص",
+        "price": 100,
+        "sort_order": 2,
+        "available": true
+      },
+      {
+        "id": "dk-simple-chicken",
+        "category_id": "dehkadeh-sandwiches",
+        "name": "Simple Chicken Sandwich",
+        "name_dari": "مرغ ساده",
+        "price": 80,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "dk-cold-sandwich",
+        "category_id": "dehkadeh-sandwiches",
+        "name": "Cold Sandwich",
+        "name_dari": "ساندویچ سرد",
+        "price": 50,
+        "sort_order": 4,
+        "available": true
+      },
+      {
+        "id": "dk-tandoori",
+        "category_id": "dehkadeh-sandwiches",
+        "name": "Tandoori Sandwich",
+        "name_dari": "تنوری",
+        "price": 100,
+        "sort_order": 5,
+        "available": true
+      },
+      {
+        "id": "dk-water",
+        "category_id": "dehkadeh-drinks",
+        "name": "Mineral Water",
+        "name_dari": "آب معدنی",
+        "price": 10,
+        "sort_order": 1,
+        "available": true,
+        "price_sizes": [
+          10,
+          20
+        ]
+      },
+      {
+        "id": "dk-soft-drink",
+        "category_id": "dehkadeh-drinks",
+        "name": "Soft Drink",
+        "name_dari": "نوشابه",
+        "price": 10,
+        "sort_order": 2,
+        "available": true,
+        "price_sizes": [
+          10,
+          20,
+          50
+        ]
+      },
+      {
+        "id": "dk-pepsi",
+        "category_id": "dehkadeh-drinks",
+        "name": "Pepsi",
+        "name_dari": "پیپسی",
+        "price": 20,
+        "sort_order": 3,
+        "available": true
+      },
+      {
+        "id": "dk-alkozy-energy",
+        "category_id": "dehkadeh-drinks",
+        "name": "Alokozay Energy Drink",
+        "name_dari": "انرژی الکوزی",
+        "price": 60,
+        "sort_order": 4,
+        "available": true
+      }
+    ]
   },
   {
     "restaurant": {
