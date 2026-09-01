@@ -162,6 +162,8 @@ jobs:
               && grep -Fq 'riderOperations.adminCreateShift' /tmp/admin-control-center.js \
               && grep -Fq 'market-toggle' /tmp/admin-control-center.js \
               && grep -Fq 'setupReviewWorkspace' /tmp/admin-control-center.js \
+              && grep -Fq 'partnerApplicationReviewWorkspace' /tmp/admin-control-center.js \
+              && grep -Fq 'Review application' /tmp/admin-control-center.js \
               && grep -Fq 'Review details' /tmp/admin-control-center.js \
               && grep -Fq 'Afghan Eats Control Center' /tmp/admin-health.json; then
               break
