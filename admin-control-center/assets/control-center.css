@@ -7,3 +7,82 @@
 .space-top-md { margin-top: 16px; }
 .notice-block { display: block; }
 .compact-copy { margin: 5px 0; }
+
+/* Full restaurant owner submission review v1 */
+.setup-review-workspace{grid-column:1/-1;overflow:hidden;border-color:#cfded5;box-shadow:0 12px 34px rgba(23,52,43,.07)}
+.setup-review-toolbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:start;padding:20px 22px;border-bottom:1px solid #e8efea;background:linear-gradient(135deg,#f8fcf9,#fffaf0)}
+.setup-review-toolbar h2{margin:3px 0 4px;font-size:1.35rem;letter-spacing:-.035em}
+.setup-review-toolbar p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.55}
+.setup-review-body{display:grid;gap:15px;padding:18px 22px 24px;background:#fbfcfa}
+.setup-review-section{border:1px solid var(--line);border-radius:15px;background:#fff;padding:17px}
+.setup-review-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.setup-review-section-head>div{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.setup-review-section-head h3{margin:0;color:#244438;font-size:1rem;letter-spacing:-.02em}
+.setup-review-section-head p{margin:3px 0 0;color:var(--muted);font-size:.76rem;line-height:1.5}
+.setup-review-number{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:9px;background:#eaf4ed;color:#226746;font-size:.7rem;font-weight:900}
+.setup-review-count{flex:0 0 auto;border-radius:999px;padding:5px 8px;background:#f1f5f2;color:#65766d;font-size:.68rem;font-weight:800}
+.setup-review-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.setup-review-field{min-width:0;padding:10px 11px;border:1px solid #edf1ee;border-radius:10px;background:#fafcfb}
+.setup-review-field small{display:block;margin-bottom:3px;color:#718178;font-size:.61rem;font-weight:800;text-transform:uppercase;letter-spacing:.045em}
+.setup-review-field strong{display:block;min-width:0;color:#2d453a;font-size:.78rem;line-height:1.5;overflow-wrap:anywhere}
+.review-yes{color:#1f7a50}.review-no{color:#8c6855}
+.setup-review-copy-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.setup-review-copy-grid>div{min-width:0;padding:12px;border:1px solid #edf1ee;border-radius:10px;background:#fafcfb}
+.setup-review-copy-grid small{display:block;color:#718178;font-size:.62rem;font-weight:800}
+.setup-review-copy-grid p{margin:5px 0 0;color:#394b43;font-size:.77rem;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.setup-review-copy-grid [dir="rtl"]{font-family:Tahoma,Arial,sans-serif;text-align:right}
+.setup-owner-note{margin-top:10px;padding:12px 13px;border:1px solid #efdcae;border-radius:11px;background:#fffaf0}
+.setup-owner-note b{color:#6f5117}.setup-owner-note p{margin:4px 0 0;color:#735d31;font-size:.78rem;line-height:1.55}
+.setup-review-media{display:grid;grid-template-columns:220px minmax(0,1fr);gap:12px}
+.setup-review-media article{display:grid;gap:7px;min-width:0}
+.setup-review-media small{color:#718178;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.setup-review-media img{width:100%;height:190px;object-fit:cover;border:1px solid #e7ece8;border-radius:12px;background:#f3f5f3}
+.setup-review-media article:first-child img{object-fit:contain;background:#fff}
+.setup-review-media a{color:#246a4b;font-size:.69rem;font-weight:800}
+.setup-review-image-missing{height:190px;display:grid;place-items:center;border:1px dashed #d9e0dc;border-radius:12px;background:#f8faf8;color:#88948d;font-size:.75rem}
+.setup-review-hours{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.setup-review-hours>div{padding:9px 8px;border-radius:9px;background:#f5f8f6;text-align:center}
+.setup-review-hours span,.setup-review-hours strong{display:block}
+.setup-review-hours span{color:#718178;font-size:.58rem;font-weight:800}.setup-review-hours strong{margin-top:3px;color:#30493e;font-size:.68rem}
+.setup-menu-category{margin-top:12px;border:1px solid #edf1ee;border-radius:12px;overflow:hidden}
+.setup-menu-category:first-of-type{margin-top:0}
+.setup-menu-category-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#f7f9f7;border-bottom:1px solid #edf1ee}
+.setup-menu-category-head h4{margin:0;color:#334b40;font-size:.82rem}.setup-menu-category-head span{color:#7b8a83;font-size:.65rem}
+.setup-review-menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
+.setup-review-menu-item{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;min-width:0;padding:9px;border:1px solid #edf1ee;border-radius:10px;background:#fff}
+.setup-review-menu-item>img,.setup-review-menu-placeholder{width:92px;height:92px;border-radius:9px;object-fit:cover;background:#f1f3ef}
+.setup-review-menu-placeholder{display:grid;place-items:center;color:#759083;font-weight:900}
+.setup-review-menu-item h5{margin:0;color:#2d453a;font-size:.77rem}.setup-review-menu-item p{margin:3px 0;color:#738079;font-size:.65rem;line-height:1.45}
+.setup-dari{font-family:Tahoma,Arial,sans-serif;text-align:right}
+.setup-menu-meta{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:7px}
+.setup-menu-meta>strong{color:#244b3b;font-size:.75rem}.setup-menu-meta>span{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
+.setup-menu-meta i{font-style:normal;padding:3px 5px;border-radius:999px;background:#eef4f0;color:#587064;font-size:.5rem;font-weight:800}
+.setup-review-decision{border-color:#d7e4dc;background:linear-gradient(180deg,#fff,#fbfdfb)}
+.setup-review-decision .field textarea{min-height:92px}
+.setup-review-decision-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:12px;padding-top:12px;border-top:1px solid #edf1ee}
+.setup-review-decision-bar b,.setup-review-decision-bar small{display:block}
+.setup-review-decision-bar b{color:#2f493d;font-size:.78rem}.setup-review-decision-bar small{margin-top:2px;color:var(--muted);font-size:.66rem}
+.review-card.selected{border-color:#97b9a6;box-shadow:0 0 0 2px rgba(80,139,105,.09)}
+.review-card-action{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:4px}
+.setup-review-empty{padding:18px}
+@media(max-width:1100px){
+  .setup-review-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .setup-review-hours{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .setup-review-menu-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .setup-review-toolbar{grid-template-columns:1fr;padding:16px}
+  .setup-review-toolbar>.badge{justify-self:start}
+  .setup-review-body{padding:12px}
+  .setup-review-section{padding:13px}
+  .setup-review-fields,.setup-review-copy-grid,.setup-review-media{grid-template-columns:1fr}
+  .setup-review-media img,.setup-review-image-missing{height:210px}
+  .setup-review-hours{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .setup-review-decision-bar,.review-card-action{align-items:stretch;flex-direction:column}
+  .setup-review-decision-bar .button-stack,.review-card-action .button{width:100%}
+  .setup-review-decision-bar .button{flex:1}
+}
+@media(max-width:440px){
+  .setup-review-menu-item{grid-template-columns:72px minmax(0,1fr)}
+  .setup-review-menu-item>img,.setup-review-menu-placeholder{width:72px;height:72px}
+}
