@@ -86,3 +86,11 @@
   .setup-review-menu-item{grid-template-columns:72px minmax(0,1fr)}
   .setup-review-menu-item>img,.setup-review-menu-placeholder{width:72px;height:72px}
 }
+
+/* Restaurant application review v1 */
+.partner-application-review .setup-review-body{background:#fcfcfa}
+.partner-application-review .notice-block{margin-bottom:12px}
+.review-email-ok{color:#23704b;font-weight:800}
+.review-email-warn{color:#a14b3f;font-weight:800}
+.data-table tr.is-selected td{background:#f4faf6}
+.button:disabled,.button[aria-disabled="true"]{cursor:not-allowed;opacity:.48;filter:saturate(.65)}
