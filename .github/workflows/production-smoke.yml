@@ -87,8 +87,8 @@ jobs:
             retry_contains "https://afghaneats.net/account" "customerEmailVerifyBanner" /tmp/ae-account-email-verification.html
             retry_contains "https://afghaneats.net/verify-email.html" "Verify your email" /tmp/ae-verify-email.html
             retry_contains "https://afghaneats.net/assets/verify-email.js" "operations.verifyRestaurantEmail" /tmp/ae-verify-email-js.js
-            retry_contains "https://afghaneats.net/partner.html" "verification required" /tmp/ae-partner-email-verification.html
-            retry_contains "https://afghaneats.net/claim.html" "email verification" /tmp/ae-claim-email-verification.html
+            retry_contains "https://afghaneats.net/partner.html" "A verification link will be sent here." /tmp/ae-partner-email-verification.html
+            retry_contains "https://afghaneats.net/claim.html" "This email must be verified before ownership can be approved." /tmp/ae-claim-email-verification.html
             retry_contains "https://afghaneats.net/assets/account-dashboard.js" "data-account-tab" /tmp/ae-account-dashboard-v2.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Account v2" /tmp/ae-account-css-v2.css
             retry_contains "https://afghaneats.net/orders" "id=\"ordersMembership\"" /tmp/ae-orders-member.html
