@@ -1,0 +1,613 @@
+[
+  {
+    "restaurant": {
+      "research_key": "char-fasl-herat",
+      "aliases": [
+        "Char Fasl Restaurant",
+        "Char Fasl Food",
+        "Char Fasl Food Complex",
+        "مجموعه غذایی چهار فصل",
+        "رستورانت چهار فصل",
+        "چهار فصل"
+      ],
+      "phones": [
+        "0798811414",
+        "+93798811414"
+      ],
+      "name": "Char Fasl Restaurant",
+      "name_dari": "رستورانت چهار فصل",
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754472731444-204850720-1-small.webp",
+      "logo_url": "https://mizbanapp.com/images/restaurant/Char%20Fasl%20main%20branch-mg1r78knwu411w-1-medium.webp",
+      "gallery_images": [
+        "https://mizbanapp.com/images/restaurant/restaurant-img-1754472731444-204850720-1-small.webp",
+        "https://mizbanapp.com/images/restaurant/Char%20Fasl%20main%20branch-mg1r78knwu411w-1-medium.webp"
+      ],
+      "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/char-fasl-food/overview",
+      "public_menu_source_label": "Mizban public menu",
+      "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/char-fasl-food",
+      "public_menu_checked_at": "2026-09-01",
+      "source_checked_at": "2026-09-01",
+      "menu_preview_only": true
+    },
+    "categories": [
+      {
+        "id": "charfasl-pizza",
+        "name": "Pizza",
+        "name_dari": "پیتزا",
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-sandwiches",
+        "name": "Special sandwiches",
+        "name_dari": "ساندویچ‌های مخصوص",
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-kebab",
+        "name": "Kebab",
+        "name_dari": "کباب",
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-rice",
+        "name": "Rice & main dishes",
+        "name_dari": "برنج و غذاهای اصلی",
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-salad-tea",
+        "name": "Salads & tea",
+        "name_dari": "سالاد و چای",
+        "sort_order": 5
+      }
+    ],
+    "items": [
+      {
+        "id": "charfasl-special-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Special Pizza",
+        "name_dari": "پیتزا مخصوص",
+        "description": "Dough, cheese, ham, sausage, chicken, mushroom, bell pepper, corn and olives.",
+        "price": 220,
+        "price_sizes": [
+          220,
+          450
+        ],
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-vegetable-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Vegetable Pizza",
+        "name_dari": "پیتزا سبزیجات",
+        "description": "Dough, cheese, mushroom, bell pepper, corn, olives, tomato and vegetables.",
+        "price": 150,
+        "price_sizes": [
+          150,
+          300
+        ],
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-margherita-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Margherita Pizza",
+        "name_dari": "پیتزا مارگاریتا",
+        "price": 150,
+        "price_sizes": [
+          150,
+          300
+        ],
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-roast-beef-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Roast Beef Pizza",
+        "name_dari": "پیتزا رست بیف",
+        "description": "Cooked beef, cheese, mushroom, bell pepper, corn and special sauce.",
+        "price": 200,
+        "price_sizes": [
+          200,
+          400
+        ],
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-chicken-mushroom-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Chicken & Mushroom Pizza",
+        "name_dari": "پیتزا مرغ و قارچ",
+        "price": 200,
+        "price_sizes": [
+          200,
+          400
+        ],
+        "sort_order": 5
+      },
+      {
+        "id": "charfasl-four-seasons-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Four Seasons Pizza",
+        "name_dari": "پیتزا چهار فصل",
+        "price": 250,
+        "price_sizes": [
+          250,
+          500
+        ],
+        "sort_order": 6
+      },
+      {
+        "id": "charfasl-party-pizza",
+        "category_id": "charfasl-pizza",
+        "name": "Special Four Seasons Party Pizza",
+        "name_dari": "پیتزا پارتی مخصوص چهار فصل",
+        "price": 600,
+        "price_sizes": [
+          600,
+          1000
+        ],
+        "sort_order": 7
+      },
+      {
+        "id": "charfasl-fish-burger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Fish Burger Sandwich",
+        "name_dari": "ساندویچ فیش برگر",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-chicken-burger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Chicken Burger Sandwich",
+        "name_dari": "ساندویچ چکن برگر",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-special-sandwich",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Special Four Seasons Sandwich",
+        "name_dari": "ساندویچ مخصوص چهار فصل",
+        "price": 130,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-zinger",
+        "category_id": "charfasl-special-sandwiches",
+        "name": "Zinger Burger Sandwich",
+        "name_dari": "ساندویچ زینگر برگر",
+        "price": 130,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-koobideh",
+        "category_id": "charfasl-kebab",
+        "name": "Plain Koobideh Kebab",
+        "name_dari": "کباب کوبیده ساده",
+        "price": 120,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-koobideh",
+        "category_id": "charfasl-kebab",
+        "name": "Special Koobideh Kebab",
+        "name_dari": "کباب کوبیده مخصوص",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-chopan",
+        "category_id": "charfasl-kebab",
+        "name": "Chopan Kebab",
+        "name_dari": "کباب چوپان",
+        "price": 650,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-shishlik",
+        "category_id": "charfasl-kebab",
+        "name": "Shishlik Kebab",
+        "name_dari": "کباب شیشلیک",
+        "price": 600,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-simple-qabili",
+        "category_id": "charfasl-rice",
+        "name": "Simple Qabili",
+        "name_dari": "قابلی ساده",
+        "price": 100,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-kofteh-rice",
+        "category_id": "charfasl-rice",
+        "name": "Kofteh Rice",
+        "name_dari": "چلو کوفته",
+        "price": 200,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-ghormeh-rice",
+        "category_id": "charfasl-rice",
+        "name": "Rice with Ghormeh Sabzi",
+        "name_dari": "چلو قورمه سبزی",
+        "price": 150,
+        "sort_order": 3
+      },
+      {
+        "id": "charfasl-two-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Two-Person Platter",
+        "name_dari": "سینی مخصوص دو نفره",
+        "price": 950,
+        "sort_order": 4
+      },
+      {
+        "id": "charfasl-three-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Three-Person Platter",
+        "name_dari": "سینی مخصوص سه نفره",
+        "price": 1350,
+        "sort_order": 5
+      },
+      {
+        "id": "charfasl-four-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Special Four-Person Platter",
+        "name_dari": "سینی مخصوص چهار نفره",
+        "price": 1500,
+        "sort_order": 6
+      },
+      {
+        "id": "charfasl-five-person-platter",
+        "category_id": "charfasl-rice",
+        "name": "Five-Person Platter",
+        "name_dari": "سینی پنج نفره",
+        "price": 2000,
+        "sort_order": 7
+      },
+      {
+        "id": "charfasl-caesar-salad",
+        "category_id": "charfasl-salad-tea",
+        "name": "Caesar Salad",
+        "name_dari": "سالاد سزار",
+        "price": 150,
+        "sort_order": 1
+      },
+      {
+        "id": "charfasl-special-salad",
+        "category_id": "charfasl-salad-tea",
+        "name": "Special Salad",
+        "name_dari": "سالاد مخصوص",
+        "price": 150,
+        "sort_order": 2
+      },
+      {
+        "id": "charfasl-green-tea",
+        "category_id": "charfasl-salad-tea",
+        "name": "Green Tea",
+        "name_dari": "چای سبز",
+        "price": 100,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "restaurant": {
+      "research_key": "darbar-herat",
+      "aliases": [
+        "Darbar Herat Restaurant",
+        "Darbar Herat",
+        "دربار هرات",
+        "رستورانت دربار هرات"
+      ],
+      "phones": [
+        "0799616606",
+        "+93799616606",
+        "0700415150",
+        "+93700415150"
+      ],
+      "name": "Darbar Herat Restaurant",
+      "name_dari": "رستورانت دربار هرات",
+      "cover_image_url": "https://img5.findglocal.com/094/423/122182301420944238.jpg",
+      "gallery_images": [
+        "https://img5.findglocal.com/094/423/122182301420944238.jpg",
+        "https://img4.findglocal.com/294/423/122182036502944238.jpg",
+        "https://img4.findglocal.com/294/423/122181798752944238.jpg"
+      ],
+      "instagram_url": "https://www.instagram.com/darbareherat/",
+      "public_media_source_url": "https://www.findglocal.com/AF/Herat/726025043923993/%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1-%D9%87%D8%B1%D8%A7%D8%AA-Darbar-herat",
+      "public_menu_source_label": "Recent Darbar Herat social posts",
+      "public_menu_source_url": "https://www.findglocal.com/AF/Herat/726025043923993/%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1-%D9%87%D8%B1%D8%A7%D8%AA-Darbar-herat",
+      "public_menu_checked_at": "2026-09-01",
+      "source_checked_at": "2026-09-01",
+      "menu_preview_only": true
+    },
+    "categories": [
+      {
+        "id": "darbar-trays",
+        "name": "Sharing trays",
+        "name_dari": "سینی‌ها",
+        "sort_order": 1
+      },
+      {
+        "id": "darbar-kebab",
+        "name": "Kebab",
+        "name_dari": "کباب",
+        "sort_order": 2
+      }
+    ],
+    "items": [
+      {
+        "id": "darbar-two-person-tray",
+        "category_id": "darbar-trays",
+        "name": "Two-Person Tray",
+        "name_dari": "سینی دو نفره",
+        "price": 850,
+        "image_url": "https://img4.findglocal.com/294/423/122181798752944238.jpg",
+        "sort_order": 1
+      },
+      {
+        "id": "darbar-three-person-tray",
+        "category_id": "darbar-trays",
+        "name": "Three-Person Tray",
+        "name_dari": "سینی سه نفره",
+        "price": 0,
+        "sort_order": 2
+      },
+      {
+        "id": "darbar-four-person-tray",
+        "category_id": "darbar-trays",
+        "name": "Four-Person Special Tray",
+        "name_dari": "سینی چهار نفره مخصوص",
+        "price": 0,
+        "sort_order": 3
+      },
+      {
+        "id": "darbar-five-person-tray",
+        "category_id": "darbar-trays",
+        "name": "Five-Person Special Tray",
+        "name_dari": "سینی ویژه پنج نفره",
+        "price": 0,
+        "image_url": "https://img5.findglocal.com/094/423/122182301420944238.jpg",
+        "sort_order": 4
+      },
+      {
+        "id": "darbar-turkish-kebab",
+        "category_id": "darbar-kebab",
+        "name": "Turkish Kebab",
+        "name_dari": "کباب ترکی",
+        "price": 600,
+        "image_url": "https://img4.findglocal.com/294/423/122182036502944238.jpg",
+        "sort_order": 1
+      },
+      {
+        "id": "darbar-shishlik",
+        "category_id": "darbar-kebab",
+        "name": "Shishlik Kebab",
+        "name_dari": "کباب شیشلیک",
+        "price": 0,
+        "sort_order": 2
+      }
+    ]
+  },
+  {
+    "restaurant": {
+      "research_key": "istanbul-doner-herat",
+      "aliases": [
+        "Istanbul Doner & Pizza House",
+        "Istanbul Doner and Pizza House",
+        "دونر و پیتزا سرای استانبول",
+        "دونر و پیتزا سراى استانبول"
+      ],
+      "phones": [
+        "0790907222",
+        "+93790907222"
+      ],
+      "name": "Istanbul Doner & Pizza House",
+      "name_dari": "دونر و پیتزا سرای استانبول",
+      "cover_image_url": "https://mizbanapp.com/images/restaurant/restaurant-img-1754809148862-465256802-1-medium.webp",
+      "gallery_images": [
+        "https://mizbanapp.com/images/restaurant/restaurant-img-1754809148862-465256802-1-medium.webp"
+      ],
+      "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/688ae831d18b1a34282bb019/photos",
+      "public_menu_source_label": "Mizban public restaurant listing",
+      "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/688ae831d18b1a34282bb019/overview",
+      "public_menu_checked_at": "2026-09-01",
+      "source_checked_at": "2026-09-01",
+      "menu_preview_only": true
+    },
+    "categories": [
+      {
+        "id": "istanbul-turkish",
+        "name": "Turkish specialties",
+        "name_dari": "غذاهای ترکی",
+        "sort_order": 1
+      }
+    ],
+    "items": [
+      {
+        "id": "istanbul-doner",
+        "category_id": "istanbul-turkish",
+        "name": "Traditional Turkish Doner",
+        "name_dari": "دونر ترکی سنتی",
+        "price": 0,
+        "sort_order": 1
+      },
+      {
+        "id": "istanbul-pide",
+        "category_id": "istanbul-turkish",
+        "name": "Turkish Pide",
+        "name_dari": "پیده ترکی",
+        "price": 0,
+        "sort_order": 2
+      },
+      {
+        "id": "istanbul-turkish-pizza",
+        "category_id": "istanbul-turkish",
+        "name": "Turkish Pizza",
+        "name_dari": "پیتزای ترکی",
+        "price": 0,
+        "sort_order": 3
+      }
+    ]
+  },
+  {
+    "restaurant": {
+      "research_key": "mawlana-herat",
+      "aliases": [
+        "Mawlana Restaurant",
+        "Mawlana",
+        "رستورانت مولانا",
+        "رستورانت و دیزی سرای مولانا"
+      ],
+      "phones": [
+        "0799698560",
+        "+93799698560",
+        "0711698560",
+        "0787298877",
+        "0778698560"
+      ],
+      "name": "Mawlana Restaurant",
+      "name_dari": "رستورانت مولانا",
+      "cover_image_url": "https://img5.findglocal.com/873/733/1368888688737337.jpg",
+      "gallery_images": [
+        "https://img5.findglocal.com/873/733/1368888688737337.jpg",
+        "https://img4.findglocal.com/016/310/1354631040163102.jpg"
+      ],
+      "instagram_url": "https://www.instagram.com/mawlanarest/",
+      "whatsapp_number": "+93799698560",
+      "public_media_source_url": "https://www.findglocal.com/AF/Herat/105579095063306/%D8%B1%D8%B3%D8%AA%D9%88%D8%B1%D8%A7%D9%86%D8%AA-%D9%85%D9%88%D9%84%D8%A7%D9%86%D8%A7--Mawlana-Restaurant",
+      "public_menu_source_label": "Recent Mawlana social posts and Mizban public listing",
+      "public_menu_source_url": "https://mizbanapp.com/fa/herat",
+      "public_menu_checked_at": "2026-09-01",
+      "source_checked_at": "2026-09-01",
+      "menu_preview_only": true
+    },
+    "categories": [
+      {
+        "id": "mawlana-trays",
+        "name": "Sharing trays",
+        "name_dari": "سینی‌ها",
+        "sort_order": 1
+      },
+      {
+        "id": "mawlana-traditional",
+        "name": "Traditional dishes",
+        "name_dari": "غذاهای سنتی",
+        "sort_order": 2
+      },
+      {
+        "id": "mawlana-breakfast",
+        "name": "Breakfast & specials",
+        "name_dari": "صبحانه و غذاهای ویژه",
+        "sort_order": 3
+      }
+    ],
+    "items": [
+      {
+        "id": "mawlana-three-person-discount-tray",
+        "category_id": "mawlana-trays",
+        "name": "Three-Person Discount Tray",
+        "name_dari": "سینی تخفیفی سه نفره مولانا",
+        "price": 1100,
+        "sort_order": 1
+      },
+      {
+        "id": "mawlana-two-person-special-tray",
+        "category_id": "mawlana-trays",
+        "name": "Two-Person Special Tray",
+        "name_dari": "سینی دو نفره مخصوص",
+        "description": "Public post describes Qabili rice, white rice, kebab, chicken, lamb, chicken kebab and koobideh.",
+        "price": 0,
+        "sort_order": 2
+      },
+      {
+        "id": "mawlana-four-person-special-tray",
+        "category_id": "mawlana-trays",
+        "name": "Four-Person Special Tray",
+        "name_dari": "سینی چهار نفره مخصوص",
+        "description": "Public post lists four rice preparations, lamb, chicken, back-meat dish, chicken, wings, negini koobideh, local doogh and pot yogurt.",
+        "price": 0,
+        "sort_order": 3
+      },
+      {
+        "id": "mawlana-five-person-tray",
+        "category_id": "mawlana-trays",
+        "name": "Five-Person Tray",
+        "name_dari": "سینی پنج نفره",
+        "price": 0,
+        "sort_order": 4
+      },
+      {
+        "id": "mawlana-roasted-arm-tray",
+        "category_id": "mawlana-traditional",
+        "name": "Tandoori Lamb Arm Tray",
+        "name_dari": "سینی سر دست تنوری",
+        "price": 0,
+        "image_url": "https://img5.findglocal.com/873/733/1368888688737337.jpg",
+        "sort_order": 1
+      },
+      {
+        "id": "mawlana-double-ribs",
+        "category_id": "mawlana-traditional",
+        "name": "Double-Sided Tandoori Ribs",
+        "name_dari": "قبرغه دوطرفه تنوری",
+        "price": 0,
+        "sort_order": 2
+      },
+      {
+        "id": "mawlana-rosh-kozeh",
+        "category_id": "mawlana-traditional",
+        "name": "Pot Rosh",
+        "name_dari": "رُش کوزه‌ای",
+        "price": 0,
+        "sort_order": 3
+      },
+      {
+        "id": "mawlana-dizi",
+        "category_id": "mawlana-traditional",
+        "name": "Dizi",
+        "name_dari": "دیزی",
+        "price": 0,
+        "image_url": "https://img4.findglocal.com/016/310/1354631040163102.jpg",
+        "sort_order": 4
+      },
+      {
+        "id": "mawlana-trout",
+        "category_id": "mawlana-traditional",
+        "name": "Trout",
+        "name_dari": "ماهی قزل‌آلا",
+        "price": 0,
+        "sort_order": 5
+      },
+      {
+        "id": "mawlana-mutton-egg-kebab",
+        "category_id": "mawlana-traditional",
+        "name": "Mutton Egg Kebab",
+        "name_dari": "کباب تخم مرغ گوسفندی",
+        "price": 180,
+        "sort_order": 6
+      },
+      {
+        "id": "mawlana-lamb-egg-kebab",
+        "category_id": "mawlana-traditional",
+        "name": "Lamb Egg Kebab",
+        "name_dari": "کباب تخم مرغ بره",
+        "price": 180,
+        "sort_order": 7
+      },
+      {
+        "id": "mawlana-animal-fat-omelette",
+        "category_id": "mawlana-breakfast",
+        "name": "Omelette with Animal Fat",
+        "name_dari": "آملت روغن حیوانی",
+        "price": 150,
+        "sort_order": 1
+      }
+    ]
+  }
+]
