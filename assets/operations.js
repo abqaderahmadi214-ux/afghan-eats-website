@@ -236,8 +236,13 @@ async function submitRiderApplication(event) {
     out.className = 'notice notice-working';
     out.textContent = lang === 'fa' ? 'درخواست ثبت شد. در حال ارسال امن اسناد…' : 'Application saved. Uploading documents securely…';
     const uploaded = await uploadRiderDocuments(form, result.reference, phone);
-    out.className = 'notice success';
-    out.innerHTML = `${result.duplicate ? '✓ Existing application updated.' : '✓ Rider application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${esc(lang === 'fa' ? `${uploaded} سند خصوصی ارسال شد. درخواست پس از بررسی معلومات و اسناد توسط مدیر تصمیم‌گیری می‌شود.` : `${uploaded} private document${uploaded === 1 ? '' : 's'} uploaded. An administrator will review your information and documents before approval.`)}</span>`;
+    out.className = result.emailVerified || result.verificationEmailSent ? 'notice success' : 'notice error';
+    const emailState = result.emailVerified
+      ? (lang === 'fa' ? 'ایمیل شما قبلاً تأیید شده است.' : 'Your email is already verified.')
+      : result.verificationEmailSent
+        ? (lang === 'fa' ? 'ایمیل تأیید ارسال شد. لطفاً پیش از تأیید نهایی مدیر، لینک داخل ایمیل را باز کنید.' : 'A verification email was sent. Open the secure link before final admin approval.')
+        : (lang === 'fa' ? 'درخواست ذخیره شد، اما ایمیل تأیید ارسال نشد. همین درخواست را با همان شماره و ایمیل دوباره ثبت کنید تا لینک تازه ارسال شود.' : 'The application was saved, but the verification email was not delivered. Submit the same application again with the same phone and email to request a fresh link.');
+    out.innerHTML = `${result.duplicate ? '✓ Existing application updated.' : '✓ Rider application received.'} <b>${esc(result.reference)}</b><br><span class="muted">${esc(lang === 'fa' ? `${uploaded} سند خصوصی ارسال شد. ${emailState} پس از تأیید ایمیل، مدیر معلومات و اسناد شما را بررسی می‌کند.` : `${uploaded} private document${uploaded === 1 ? '' : 's'} uploaded. ${emailState} After email verification, an administrator will review your information and documents.`)}</span>`;
     localStorage.setItem('ae_rider_reference', result.reference);
     form.reset();
     updateRiderDriverRequirements();
@@ -261,7 +266,7 @@ async function checkApplicationStatus(event, type) {
       phone: String(f.get('phone') || ''),
     });
     out.className = 'notice success application-status-result';
-    out.innerHTML = `<b>${esc(result.reference)}</b> · <span class="status-badge status-${esc(result.status)}">${esc(result.status)}</span>`;
+    const emailState = type === 'rider' ? `<br><span class="muted">${result.email_verified ? (lang === 'fa' ? '✓ ایمیل تأیید شده است' : '✓ Email verified') : (lang === 'fa' ? '⚠ تأیید ایمیل در انتظار است' : '⚠ Email verification pending')}</span>` : ''; out.innerHTML = `<b>${esc(result.reference)}</b> · <span class="status-badge status-${esc(result.status)}">${esc(result.status)}</span>${emailState}`;
   } catch (error) {
     out.className = 'notice error application-status-result';
     out.textContent = error.message || 'Application not found.';
