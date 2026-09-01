@@ -94,3 +94,24 @@
 .review-email-warn{color:#a14b3f;font-weight:800}
 .data-table tr.is-selected td{background:#f4faf6}
 .button:disabled,.button[aria-disabled="true"]{cursor:not-allowed;opacity:.48;filter:saturate(.65)}
+
+/* Rider identity and private document review v1 */
+.rider-review-workspace .setup-review-body{background:#fbfcfb}
+.rider-document-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rider-document-card{min-width:0;padding:12px;border:1px solid #e2e9e4;border-radius:13px;background:#fbfdfb;display:grid;gap:10px}
+.rider-document-head{display:flex;align-items:flex-start;justify-content:space-between;gap:9px}
+.rider-document-head h4{margin:0;color:#2d493c;font-size:.84rem;line-height:1.4}
+.rider-document-head h4 em{display:inline-flex;margin-left:5px;padding:2px 5px;border-radius:999px;background:#fff0df;color:#8b5b16;font-size:.5rem;font-style:normal;text-transform:uppercase;letter-spacing:.04em;vertical-align:middle}
+.rider-document-head p{margin:3px 0 0;color:#7b8881;font-size:.64rem}
+.rider-document-preview{width:100%;height:260px;padding:0;border:1px solid #dbe4de;border-radius:11px;overflow:hidden;background:#edf2ef;cursor:zoom-in}
+.rider-document-preview img{width:100%;height:100%;object-fit:contain;background:#161a18}
+.rider-document-pdf{display:grid;place-items:center;align-content:center;gap:6px;cursor:pointer;background:linear-gradient(135deg,#f7f8f7,#eef2ef)}
+.rider-document-pdf span{display:grid;place-items:center;width:64px;height:76px;border-radius:8px;background:#fff;border:1px solid #dce3df;color:#a33c32;font-size:1rem;font-weight:950;box-shadow:0 5px 15px rgba(23,52,43,.06)}
+.rider-document-pdf small{color:#64766d;font-size:.7rem;font-weight:800}
+.rider-document-card .field textarea{min-height:58px;background:#fff}
+.rider-document-review-note{padding:9px 10px;border-radius:9px;background:#f4f6f4;border:1px solid #e5e9e6}
+.rider-document-review-note b{display:block;color:#586b61;font-size:.64rem}.rider-document-review-note p{margin:3px 0 0;color:#66756e;font-size:.68rem;line-height:1.45}
+.rider-review-workspace .notice-block{margin-bottom:12px}
+.rider-review-workspace .setup-owner-note{margin-top:10px}
+@media(max-width:1050px){.rider-document-grid{grid-template-columns:1fr}.rider-document-preview{height:320px}}
+@media(max-width:620px){.rider-document-preview{height:230px}.rider-document-head{display:grid}.rider-document-head>.badge{justify-self:start}}
