@@ -72,6 +72,9 @@ jobs:
             retry_contains "https://afghaneats.net/assets/advanced.js" "tracking-status-chip" /tmp/ae-tracking-render-v2.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Tracking v2" /tmp/ae-tracking-css-v2.css
             retry_contains "https://afghaneats.net/account" "class=\"account-hero\"" /tmp/ae-account-v2.html
+            retry_contains "https://afghaneats.net/rider" "name=\"nationalIdFront\"" /tmp/ae-rider-id-upload-v1.html
+            retry_contains "https://afghaneats.net/rider" "name=\"drivingLicenseFront\"" /tmp/ae-rider-license-upload-v1.html
+            retry_contains "https://afghaneats.net/assets/operations.js" "uploadRiderApplicationDocument" /tmp/ae-rider-private-upload-js-v1.js
             retry_contains "https://afghaneats.net/owner" "class=\"owner-app-shell\"" /tmp/ae-owner-premium-v1.html
             retry_contains "https://afghaneats.net/owner" "id=\"ownerBusinessTools\"" /tmp/ae-owner-tools-v2.html
             retry_contains "https://afghaneats.net/owner" "id=\"ownerOnboardingGuide\"" /tmp/ae-owner-onboarding-v1.html
