@@ -111,6 +111,15 @@ jobs:
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "grid-template-columns:210px minmax(0,1fr)" /tmp/ae-menu-spacing-v6.css
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "grid-template-areas:\"cart menu\"" /tmp/ae-menu-rtl-geometry-v5.css
             retry_contains "https://afghaneats.net/assets/app.js" "browseRestaurantMedia" /tmp/ae-restaurants-app-v2.js
+            retry_contains "https://afghaneats.net/assets/app.js" "researched-herat-restaurants.json" /tmp/ae-restaurant-research-js.js
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Darbar Herat Restaurant" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Istanbul Doner & Pizza House" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Mawlana Restaurant" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "restaurant-img-1754472731444-204850720-1-small.webp" /tmp/ae-restaurant-research.json
+            if grep -Fq 'function browseFallbackImage' /tmp/ae-restaurant-research-js.js || grep -Fq 'images.unsplash.com/photo-' /tmp/ae-restaurant-research-js.js; then
+              echo 'Generic restaurant stock-photo fallbacks must not return to customer restaurant cards.' >&2
+              exit 1
+            fi
             retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
             retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
             retry_contains "https://afghaneats.net/assets/app-downloads.js" "customerAndroidDownload" /tmp/ae-app-downloads.js
