@@ -115,7 +115,14 @@ jobs:
             retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Darbar Herat Restaurant" /tmp/ae-restaurant-research.json
             retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Istanbul Doner & Pizza House" /tmp/ae-restaurant-research.json
             retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Mawlana Restaurant" /tmp/ae-restaurant-research.json
-            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "restaurant-img-1754472731444-204850720-1-small.webp" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "Char%20Fasl%20main%20branch-mg1r78knwu411w-1-medium.webp" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/researched-herat-restaurants.json" "restaurant-img-1753680612010-662917091-1-medium.webp" /tmp/ae-restaurant-research.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "Burger%20Masoud-mknnsn5kwb1hnw-1-small.webp" /tmp/ae-directory-media.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "Jaspin%20Burger%20%26%20Pizza-mep8b6k15hqyve-1-medium.webp" /tmp/ae-directory-media.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "Food%20box%20branch%202-mizk50aizioez7-1-small.webp" /tmp/ae-directory-media.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "bm-special-burger" /tmp/ae-directory-menus.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "p99-family-special" /tmp/ae-directory-menus.json
+            retry_contains "https://afghaneats.net/data/public-herat-directory.json" "dk-dehkadeh-special" /tmp/ae-directory-menus.json
             if grep -Fq 'function browseFallbackImage' /tmp/ae-restaurant-research-js.js || grep -Fq 'images.unsplash.com/photo-' /tmp/ae-restaurant-research-js.js; then
               echo 'Generic restaurant stock-photo fallbacks must not return to customer restaurant cards.' >&2
               exit 1
