@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="referrer" content="same-origin">
   <title>Afghan Eats Control Center</title>
-  <link rel="stylesheet" href="assets/control-center.css?v=restaurant-dossier-1">
+  <link rel="stylesheet" href="assets/control-center.css?v=staff-rbac-1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -15,14 +15,14 @@
       <div class="brand-lockup"><span class="brand-mark">AE</span><div><strong>Afghan Eats</strong><span>Control Center</span></div></div>
       <p class="eyebrow">Restricted operations workspace</p>
       <h1 id="login-title">Sign in to manage the marketplace.</h1>
-      <p class="auth-copy">This workspace is limited to Afghan Eats administrators. Your session is stored only in this browser tab.</p>
+      <p class="auth-copy">This workspace is limited to authorized Afghan Eats administrators and operations staff. Your session is stored only in this browser tab.</p>
       <form id="login-form" novalidate>
         <label class="field"><span>Username</span><input id="login-username" name="username" autocomplete="username" required></label>
         <label class="field"><span>Password</span><input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
         <button class="button button-primary button-wide" type="submit">Sign in securely</button>
       </form>
       <p id="login-error" class="notice notice-error hidden" role="alert"></p>
-      <p class="auth-note">Do not share administrator credentials or activation links. All control actions are authorized by the Afghan Eats backend.</p>
+      <p class="auth-note">Do not share Control Center credentials or activation links. Access is restricted by role and enforced by the Afghan Eats backend.</p>
     </section>
     <aside class="auth-aside" aria-hidden="true"><div class="auth-aside-orbit orbit-one"></div><div class="auth-aside-orbit orbit-two"></div><p>Built for dependable marketplace operations in Herat.</p></aside>
   </main>
@@ -63,6 +63,6 @@
   </dialog>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
-  <script src="assets/control-center.js?v=restaurant-dossier-1"></script>
+  <script src="assets/control-center.js?v=staff-rbac-1"></script>
 </body>
 </html>
