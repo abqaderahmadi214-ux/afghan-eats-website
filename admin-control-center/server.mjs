@@ -8,8 +8,8 @@ const port = Number(process.env.PORT || 10000);
 const host = "0.0.0.0";
 
 const securityHeaders = {
-  "Content-Security-Policy": "default-src 'self'; connect-src 'self' https://afghaneats-api.onrender.com; img-src 'self' data: https:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
-  "Cross-Origin-Opener-Policy": "same-origin",
+  "Content-Security-Policy": "default-src 'self'; connect-src 'self' https://afghaneats-api.onrender.com https://accounts.google.com https://oauth2.googleapis.com; img-src 'self' data: https:; style-src 'self'; script-src 'self' https://accounts.google.com; frame-src https://accounts.google.com; font-src 'self'; form-action 'self' https://accounts.google.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+  "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
   "Cross-Origin-Resource-Policy": "same-origin",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   "Referrer-Policy": "same-origin",
