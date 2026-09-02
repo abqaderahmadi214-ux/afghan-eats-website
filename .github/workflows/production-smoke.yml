@@ -146,6 +146,10 @@ jobs:
             retry_contains "https://afghaneats.net/assets/claims.js" "adminCreateClaimInvite" /tmp/ae-claims-v48.js
             retry_contains "https://afghaneats.net/owner.html" "ownerItemForm" /tmp/ae-owner-v49.html
             retry_contains "https://afghaneats.net/assets/portal.js" "ownerUpsertMenuItem" /tmp/ae-portal-v49.js
+            retry_contains "https://afghaneats.net/owner" "for=\"ownerItemImageFile\"" /tmp/ae-owner-image-upload.html
+            retry_contains "https://afghaneats.net/owner" "for=\"ownerLogoFile\"" /tmp/ae-owner-logo-upload.html
+            retry_contains "https://afghaneats.net/owner" "for=\"ownerCoverFile\"" /tmp/ae-owner-cover-upload.html
+            retry_contains "https://afghaneats.net/assets/portal.js" "ownerUploadImage" /tmp/ae-owner-image-upload.js
             retry_contains "https://afghaneats.net/rider-portal.html" "riderPerformancePanel" /tmp/ae-rider-v50.html
             retry_contains "https://afghaneats.net/rider.html" "Private verification documents" /tmp/ae-rider-application-verification.html
             retry_contains "https://afghaneats.net/assets/operations.js" "uploadRiderApplicationDocument" /tmp/ae-rider-application-upload.js
