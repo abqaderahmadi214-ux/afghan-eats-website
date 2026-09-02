@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
-  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260901-setup-1">
+  <link rel="stylesheet" href="/assets/owner-premium.css?v=20260902-image-upload-1">
   <link rel="stylesheet" href="/assets/notifications.css">
   <script src="/config.js"></script>
 </head>
@@ -151,7 +151,17 @@
                   <label class="field"><span class="en-copy">English description</span><span class="fa-copy">توضیحات انگلیسی</span><textarea name="description" maxlength="1500" rows="3"></textarea></label>
                   <label class="field"><span class="en-copy">Dari description</span><span class="fa-copy">توضیحات دری</span><textarea name="descriptionDari" maxlength="1500" rows="3" dir="rtl"></textarea></label>
                   <div class="owner-form-row"><label class="field"><span class="en-copy">Price (AFN)</span><span class="fa-copy">قیمت (افغانی)</span><input name="price" type="number" min="0" max="100000" step="1" required></label><label class="field"><span class="en-copy">Display order</span><span class="fa-copy">ترتیب نمایش</span><input name="sortOrder" type="number" min="0" max="999" value="0"></label></div>
-                  <label class="field"><span class="en-copy">Dish image URL (HTTPS)</span><span class="fa-copy">لینک عکس غذا (HTTPS)</span><input name="imageUrl" type="url" inputmode="url" placeholder="https://..."></label>
+                  <div class="owner-upload-field">
+                    <div class="owner-upload-title"><span class="en-copy">Dish photo</span><span class="fa-copy">عکس غذا</span></div>
+                    <input name="imageUrl" type="hidden">
+                    <div id="ownerItemImagePreview" class="owner-image-preview owner-image-preview-dish"><span aria-hidden="true">🍽️</span><small class="en-copy">No dish photo selected</small><small class="fa-copy">عکس غذا انتخاب نشده است</small></div>
+                    <div class="owner-upload-actions">
+                      <label class="btn btn-light owner-upload-button" for="ownerItemImageFile"><span class="en-copy">Choose photo</span><span class="fa-copy">انتخاب عکس</span></label>
+                      <input id="ownerItemImageFile" class="owner-file-input" type="file" accept="image/jpeg,image/png,image/webp" onchange="ownerUploadImage(this,'ownerItemForm','imageUrl','menu_item','ownerItemImagePreview','ownerItemImageStatus')">
+                      <button class="btn btn-light" type="button" onclick="clearOwnerUploadedImage('ownerItemForm','imageUrl','ownerItemImagePreview','ownerItemImageStatus')"><span class="en-copy">Remove</span><span class="fa-copy">حذف</span></button>
+                    </div>
+                    <small id="ownerItemImageStatus" class="owner-upload-help"><span class="en-copy">JPG, PNG or WebP. Large phone photos are resized automatically.</span><span class="fa-copy">JPG، PNG یا WebP. عکس‌های بزرگ موبایل به‌صورت خودکار کوچک می‌شوند.</span></small>
+                  </div>
                   <div class="owner-check-grid"><label><input name="isAvailable" type="checkbox" checked> <span class="en-copy">Available</span><span class="fa-copy">موجود</span></label><label><input name="isPopular" type="checkbox"> <span class="en-copy">Popular</span><span class="fa-copy">محبوب</span></label><label><input name="isVegetarian" type="checkbox"> <span class="en-copy">Vegetarian</span><span class="fa-copy">گیاهی</span></label><label><input name="isSpicy" type="checkbox"> <span class="en-copy">Spicy</span><span class="fa-copy">تند</span></label></div>
                   <div class="portal-actions"><button class="btn btn-primary" type="submit"><span class="en-copy">Save item</span><span class="fa-copy">ذخیره آیتم</span></button><button class="btn btn-light" type="button" onclick="startNewOwnerItem()"><span class="en-copy">Clear</span><span class="fa-copy">پاک‌کردن</span></button></div>
                 </form>
@@ -165,7 +175,30 @@
             <section id="ownerStorePanel" class="owner-panel hidden">
           <div class="portal-grid">
             <div>
-              <section class="portal-card"><h2 class="en-copy">Restaurant profile for review</h2><h2 class="fa-copy">پروفایل رستورانت برای بررسی</h2><p class="muted en-copy">Complete these details yourself. Afghan Eats reviews your submitted setup before customer ordering can be activated.</p><p class="muted fa-copy">این معلومات را خودتان تکمیل کنید. افغان ایتس پیش از فعال‌شدن سفارش مشتریان، اطلاعات ارسال‌شده را بررسی می‌کند.</p><form id="ownerProfileForm" class="owner-editor-form"><div class="owner-form-row"><label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="name" maxlength="200" required></label><label class="field"><span class="en-copy">Restaurant name — Dari</span><span class="fa-copy">نام رستورانت — دری</span><input name="nameDari" maxlength="200" dir="rtl"></label></div><label class="field"><span>English description</span><textarea name="description" maxlength="2000" rows="4" required></textarea></label><label class="field"><span>توضیحات دری</span><textarea name="descriptionDari" maxlength="2000" rows="4" dir="rtl"></textarea></label><label class="field"><span class="en-copy">Street address</span><span class="fa-copy">آدرس</span><textarea name="address" maxlength="1000" rows="2" required></textarea></label><label class="field"><span class="en-copy">Address — Dari</span><span class="fa-copy">آدرس — دری</span><textarea name="addressDari" maxlength="1000" rows="2" dir="rtl"></textarea></label><div class="owner-form-row"><label class="field"><span class="en-copy">District</span><span class="fa-copy">ناحیه</span><input name="district" maxlength="100" required></label><label class="field"><span class="en-copy">Neighborhood</span><span class="fa-copy">محله</span><input name="neighborhood" maxlength="100"></label></div><label class="field"><span class="en-copy">Restaurant phone</span><span class="fa-copy">شماره تماس رستورانت</span><input name="phone" type="tel" maxlength="50" required></label><label class="field"><span class="en-copy">Logo image URL (HTTPS)</span><span class="fa-copy">لینک لوگو (HTTPS)</span><input name="logoUrl" type="url" placeholder="https://..." required></label><label class="field"><span class="en-copy">Cover image URL (HTTPS)</span><span class="fa-copy">لینک عکس روی جلد (HTTPS)</span><input name="coverImageUrl" type="url" placeholder="https://..." required></label><button class="btn btn-primary" type="submit"><span class="en-copy">Save restaurant profile</span><span class="fa-copy">ذخیره پروفایل رستورانت</span></button></form></section>
+              <section class="portal-card"><h2 class="en-copy">Restaurant profile for review</h2><h2 class="fa-copy">پروفایل رستورانت برای بررسی</h2><p class="muted en-copy">Complete these details yourself. Afghan Eats reviews your submitted setup before customer ordering can be activated.</p><p class="muted fa-copy">این معلومات را خودتان تکمیل کنید. افغان ایتس پیش از فعال‌شدن سفارش مشتریان، اطلاعات ارسال‌شده را بررسی می‌کند.</p><form id="ownerProfileForm" class="owner-editor-form"><div class="owner-form-row"><label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="name" maxlength="200" required></label><label class="field"><span class="en-copy">Restaurant name — Dari</span><span class="fa-copy">نام رستورانت — دری</span><input name="nameDari" maxlength="200" dir="rtl"></label></div><label class="field"><span>English description</span><textarea name="description" maxlength="2000" rows="4" required></textarea></label><label class="field"><span>توضیحات دری</span><textarea name="descriptionDari" maxlength="2000" rows="4" dir="rtl"></textarea></label><label class="field"><span class="en-copy">Street address</span><span class="fa-copy">آدرس</span><textarea name="address" maxlength="1000" rows="2" required></textarea></label><label class="field"><span class="en-copy">Address — Dari</span><span class="fa-copy">آدرس — دری</span><textarea name="addressDari" maxlength="1000" rows="2" dir="rtl"></textarea></label><div class="owner-form-row"><label class="field"><span class="en-copy">District</span><span class="fa-copy">ناحیه</span><input name="district" maxlength="100" required></label><label class="field"><span class="en-copy">Neighborhood</span><span class="fa-copy">محله</span><input name="neighborhood" maxlength="100"></label></div><label class="field"><span class="en-copy">Restaurant phone</span><span class="fa-copy">شماره تماس رستورانت</span><input name="phone" type="tel" maxlength="50" required></label><div class="owner-branding-upload-grid">
+                  <div class="owner-upload-field">
+                    <div class="owner-upload-title"><span class="en-copy">Restaurant logo</span><span class="fa-copy">لوگوی رستورانت</span></div>
+                    <input name="logoUrl" type="hidden">
+                    <div id="ownerLogoPreview" class="owner-image-preview owner-image-preview-logo"><span class="owner-preview-placeholder">AE</span></div>
+                    <div class="owner-upload-actions">
+                      <label class="btn btn-light owner-upload-button" for="ownerLogoFile"><span class="en-copy">Upload logo</span><span class="fa-copy">آپلود لوگو</span></label>
+                      <input id="ownerLogoFile" class="owner-file-input" type="file" accept="image/jpeg,image/png,image/webp" onchange="ownerUploadImage(this,'ownerProfileForm','logoUrl','restaurant_logo','ownerLogoPreview','ownerLogoStatus')">
+                      <button class="btn btn-light" type="button" onclick="clearOwnerUploadedImage('ownerProfileForm','logoUrl','ownerLogoPreview','ownerLogoStatus')"><span class="en-copy">Remove</span><span class="fa-copy">حذف</span></button>
+                    </div>
+                    <small id="ownerLogoStatus" class="owner-upload-help"><span class="en-copy">Square logo recommended. JPG, PNG or WebP.</span><span class="fa-copy">لوگوی مربعی پیشنهاد می‌شود. JPG، PNG یا WebP.</span></small>
+                  </div>
+                  <div class="owner-upload-field">
+                    <div class="owner-upload-title"><span class="en-copy">Restaurant cover photo</span><span class="fa-copy">عکس روی جلد رستورانت</span></div>
+                    <input name="coverImageUrl" type="hidden">
+                    <div id="ownerCoverPreview" class="owner-image-preview owner-image-preview-cover"><span class="owner-preview-placeholder">Restaurant cover</span></div>
+                    <div class="owner-upload-actions">
+                      <label class="btn btn-light owner-upload-button" for="ownerCoverFile"><span class="en-copy">Upload cover</span><span class="fa-copy">آپلود عکس روی جلد</span></label>
+                      <input id="ownerCoverFile" class="owner-file-input" type="file" accept="image/jpeg,image/png,image/webp" onchange="ownerUploadImage(this,'ownerProfileForm','coverImageUrl','restaurant_cover','ownerCoverPreview','ownerCoverStatus')">
+                      <button class="btn btn-light" type="button" onclick="clearOwnerUploadedImage('ownerProfileForm','coverImageUrl','ownerCoverPreview','ownerCoverStatus')"><span class="en-copy">Remove</span><span class="fa-copy">حذف</span></button>
+                    </div>
+                    <small id="ownerCoverStatus" class="owner-upload-help"><span class="en-copy">Landscape photo recommended. Large photos are resized automatically.</span><span class="fa-copy">عکس افقی پیشنهاد می‌شود. عکس‌های بزرگ به‌صورت خودکار کوچک می‌شوند.</span></small>
+                  </div>
+                </div><button class="btn btn-primary" type="submit"><span class="en-copy">Save restaurant profile</span><span class="fa-copy">ذخیره پروفایل رستورانت</span></button></form></section>
               <section class="portal-card"><h2 class="en-copy">Weekly opening hours</h2><h2 class="fa-copy">ساعات کاری هفتگی</h2><p class="muted en-copy">Use 24-hour times. Mark a day closed when the restaurant does not open.</p><p class="muted fa-copy">از ساعت ۲۴ ساعته استفاده کنید. روزهای تعطیل را بسته مشخص کنید.</p><div id="ownerHours" class="owner-hours"></div><button class="btn btn-primary" type="button" onclick="saveOwnerProfile()"><span class="en-copy">Save opening hours</span><span class="fa-copy">ذخیره ساعات کاری</span></button></section>
             </div>
             <aside>
@@ -194,7 +227,7 @@
     </div>
   </main>
   <script src="/assets/app.js"></script>
-  <script src="/assets/portal.js?v=owner-setup-guide-2"></script>
+  <script src="/assets/portal.js?v=owner-image-upload-1"></script>
   <script src="/assets/notifications.js"></script>
 </body>
 </html>
