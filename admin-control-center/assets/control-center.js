@@ -116,6 +116,48 @@ async function verifySession() {
   state.user = user; sessionStorage.setItem(USER_KEY, JSON.stringify(user)); applyRoleNavigation(); return true;
 }
 
+
+async function handleGoogleStaffCredential(response) {
+  const error = document.getElementById('login-error');
+  error.className = 'notice hidden';
+  error.textContent = '';
+  try {
+    const result = await request('auth.googleStaffSignIn', { credential: String(response?.credential || '') }, 'POST', false);
+    if (result?.status === 'approved' && result?.token) {
+      saveSession(result.token, result.admin || {});
+      await verifySession();
+      setShell();
+      setView(location.hash.slice(1) || 'overview');
+      return;
+    }
+    error.textContent = result?.message || 'Your staff access request is pending administrator approval.';
+    error.className = result?.status === 'rejected' ? 'notice notice-error' : 'notice notice-success';
+  } catch (err) {
+    error.textContent = err.message || 'Google staff sign-in failed.';
+    error.className = 'notice notice-error';
+  }
+}
+window.handleGoogleStaffCredential = handleGoogleStaffCredential;
+
+async function initGoogleStaffSignIn(attempt = 0) {
+  const mount = document.getElementById('google-staff-signin');
+  if (!mount || state.token) return;
+  if (!window.google?.accounts?.id) {
+    if (attempt < 20) window.setTimeout(() => initGoogleStaffSignIn(attempt + 1), 250);
+    return;
+  }
+  try {
+    const config = await request('identity.googleConfig', null, 'GET', false);
+    const clientId = config?.webClientId || config?.clientId;
+    if (!clientId) return;
+    mount.innerHTML = '';
+    window.google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleStaffCredential, auto_select: false, cancel_on_tap_outside: true });
+    window.google.accounts.id.renderButton(mount, { theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', width: 320 });
+  } catch (err) {
+    mount.innerHTML = '<small>Google staff sign-in is temporarily unavailable. Username/password sign-in remains available.</small>';
+  }
+}
+
 async function renderView() {
   loading();
   try {
@@ -597,14 +639,21 @@ async function renderSupportView() {
   root.innerHTML = `<p class="section-intro">Review customer cases linked to verified order records and move them through the support workflow.</p><section class="panel wide"><div class="panel-head"><div><h2>Customer support queue</h2><p>New, in-progress, waiting-customer, resolved and closed states are preserved from the former Operations portal.</p></div></div><div class="panel-body">${customerSupportTable(data.supportCases)}</div></section>`;
 }
 function staffRoleLabel(role){
-  return ({restaurant_staff:'Restaurant staff',rider_staff:'Rider operations staff',operations_staff:'Restaurant + rider operations'})[role]||title(String(role||'staff').replaceAll('_',' '));
+  return ({restaurant_staff:'Restaurant staff',rider_staff:'Rider operations staff',operations_staff:'Restaurant + rider operations',staff_pending:'Pending Google request',staff_rejected:'Rejected Google request'})[role]||title(String(role||'staff').replaceAll('_',' '));
 }
 function staffCreateForm(){
   return `<form id="staff-create-form" class="form-grid"><label class="field"><span>Username</span><input name="username" required minlength="3" maxlength="64" autocomplete="off" placeholder="e.g. herat.ops1"></label><label class="field"><span>Email</span><input name="email" type="email" required maxlength="320" autocomplete="off"></label><label class="field"><span>Access role</span><select name="role"><option value="restaurant_staff">Restaurant staff — restaurants only</option><option value="rider_staff">Rider staff — riders, shifts and support</option><option value="operations_staff">Operations staff — restaurants + riders</option></select></label><label class="field"><span>Temporary password</span><input name="password" type="password" required minlength="14" maxlength="200" autocomplete="new-password"></label><div class="safety-card full"><strong>Restricted by the server</strong><p>Staff accounts cannot access customers, finance, promotions, careers, audit, platform master controls, portal recovery, or administrator management. Changing a role or disabling an account invalidates its active sessions.</p></div><button class="button button-primary full" type="submit">Create restricted staff account</button></form>`;
 }
 function staffTable(items){
-  if(!items.length)return '<div class="empty-state">No restricted staff accounts have been created yet.</div>';
-  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>Account</th><th>Access</th><th>Status</th><th>Last sign-in</th><th>Controls</th></tr></thead><tbody>${items.map(item=>`<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td><select class="inline-select" data-staff-role="${attr(item.id)}"><option value="restaurant_staff" ${item.role==='restaurant_staff'?'selected':''}>Restaurant staff</option><option value="rider_staff" ${item.role==='rider_staff'?'selected':''}>Rider staff</option><option value="operations_staff" ${item.role==='operations_staff'?'selected':''}>Restaurant + rider</option></select></td><td>${badge(item.is_active?'active':'inactive')}<span class="row-sub">${esc(staffRoleLabel(item.role))}</span></td><td>${shortDate(item.last_login_at)}</td><td><div class="button-stack"><button class="button button-secondary button-small" type="button" data-action="staff-role-save" data-id="${attr(item.id)}">Save role</button><button class="button ${item.is_active?'button-danger':'button-primary'} button-small" type="button" data-action="staff-active" data-id="${attr(item.id)}" data-active="${item.is_active?'false':'true'}">${item.is_active?'Disable':'Enable'}</button></div><div class="button-stack space-top-sm"><input class="inline-select" data-staff-password="${attr(item.id)}" type="password" minlength="14" maxlength="200" autocomplete="new-password" placeholder="New strong password"><button class="button button-secondary button-small" type="button" data-action="staff-reset-password" data-id="${attr(item.id)}">Reset password</button></div></td></tr>`).join('')}</tbody></table></div>`;
+  if(!items.length)return '<div class="empty-state">No staff accounts or Google access requests yet.</div>';
+  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>Account</th><th>Access</th><th>Status</th><th>Last sign-in</th><th>Controls</th></tr></thead><tbody>${items.map(item=>{
+    const pending=item.role==='staff_pending',rejected=item.role==='staff_rejected';
+    const roleSelect=`<select class="inline-select" data-staff-role="${attr(item.id)}"><option value="restaurant_staff" ${item.role==='restaurant_staff'?'selected':''}>Restaurant staff</option><option value="rider_staff" ${item.role==='rider_staff'?'selected':''}>Rider staff</option><option value="operations_staff" ${item.role==='operations_staff'?'selected':''}>Restaurant + rider</option></select>`;
+    if(pending||rejected){
+      return `<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td>${roleSelect}</td><td>${badge(pending?'pending':'rejected')}<span class="row-sub">Google staff request</span></td><td>—</td><td><div class="button-stack"><button class="button button-primary button-small" type="button" data-action="staff-google-approve" data-id="${attr(item.id)}">${rejected?'Approve now':'Approve access'}</button>${pending?'<button class="button button-danger button-small" type="button" data-action="staff-google-reject" data-id="'+attr(item.id)+'">Reject</button>':''}</div></td></tr>`;
+    }
+    return `<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td>${roleSelect}</td><td>${badge(item.is_active?'active':'inactive')}<span class="row-sub">${esc(staffRoleLabel(item.role))}</span></td><td>${shortDate(item.last_login_at)}</td><td><div class="button-stack"><button class="button button-secondary button-small" type="button" data-action="staff-role-save" data-id="${attr(item.id)}">Save role</button><button class="button ${item.is_active?'button-danger':'button-primary'} button-small" type="button" data-action="staff-active" data-id="${attr(item.id)}" data-active="${item.is_active?'false':'true'}">${item.is_active?'Disable':'Enable'}</button></div><div class="button-stack space-top-sm"><input class="inline-select" data-staff-password="${attr(item.id)}" type="password" minlength="14" maxlength="200" autocomplete="new-password" placeholder="New strong password"><button class="button button-secondary button-small" type="button" data-action="staff-reset-password" data-id="${attr(item.id)}">Reset password</button></div></td></tr>`;
+  }).join('')}</tbody></table></div>`;
 }
 async function renderSecurityView() {
   const staff=isFullAdmin()?asArray(await query('auth.staffList',null)):[];
@@ -677,6 +726,8 @@ async function action(event) {
     const enabled = target.dataset.enabled === 'true';
     return openConfirm(enabled ? 'Enable automatic Rider assignment' : 'Disable automatic Rider assignment', enabled ? 'New eligible delivery orders may be assigned automatically to a free Rider who is inside an active approved shift.' : 'Stop automatic Rider assignment. Manual dispatch remains available.', async () => { await mutate('dispatch.adminUpdateSettings', { autoDispatchEnabled: enabled }); toast(`Automatic dispatch ${enabled ? 'enabled' : 'disabled'}.`); renderView(); }, enabled ? false : true);
   }
+  if (type === 'staff-google-approve') { const role=document.querySelector(`[data-staff-role="${CSS.escape(id)}"]`)?.value; if(!role)return; return openConfirm('Approve Google staff access',`Approve this Google account as ${staffRoleLabel(role)}? The account will be able to sign in immediately after approval.`,async()=>{await mutate('auth.staffApprove',{id:Number(id),role});toast('Google staff access approved.');renderView();},false); }
+  if (type === 'staff-google-reject') { return openConfirm('Reject Google staff request','Reject this pending Google staff access request? The account will not be able to enter the Control Center.',async()=>{await mutate('auth.staffReject',{id:Number(id)});toast('Google staff request rejected.');renderView();},true); }
   if (type === 'staff-role-save') { const role=document.querySelector(`[data-staff-role="${CSS.escape(id)}"]`)?.value; if(!role)return; return openConfirm('Change staff access',`Change this account to ${staffRoleLabel(role)}? Active sessions for the account will be invalidated.`,async()=>{await mutate('auth.staffUpdate',{id:Number(id),role});toast('Staff access role updated.');renderView();},false); }
   if (type === 'staff-active') { const active=target.dataset.active==='true'; return openConfirm(active?'Enable staff account':'Disable staff account',active?'Restore this restricted staff account?':'Disable this staff account immediately and invalidate its active sessions?',async()=>{await mutate('auth.staffUpdate',{id:Number(id),active});toast(`Staff account ${active?'enabled':'disabled'}.`);renderView();},!active); }
   if (type === 'staff-reset-password') { const input=document.querySelector(`[data-staff-password="${CSS.escape(id)}"]`),newPassword=String(input?.value||''); const strong=newPassword.length>=14&&/[a-z]/.test(newPassword)&&/[A-Z]/.test(newPassword)&&/\d/.test(newPassword)&&/[^A-Za-z0-9]/.test(newPassword); if(!strong)return toast('Use at least 14 characters with uppercase and lowercase letters, a number and a symbol.','error'); return openConfirm('Reset staff password','Set this new password and invalidate all active sessions for the staff account?',async()=>{await mutate('auth.staffResetPassword',{id:Number(id),newPassword});toast('Staff password reset.');renderView();}); }
@@ -836,4 +887,4 @@ document.getElementById('logout-button').addEventListener('click', () => logout(
 document.getElementById('refresh-button').addEventListener('click', () => renderView());
 window.addEventListener('hashchange', () => setView(location.hash.slice(1) || 'overview'));
 
-document.addEventListener('DOMContentLoaded', async () => { if (!state.token) return; try { await verifySession(); setShell(); setView(state.view); } catch { logout(false); document.getElementById('login-error').textContent = 'Your session has expired. Please sign in again.'; document.getElementById('login-error').classList.remove('hidden'); } });
+document.addEventListener('DOMContentLoaded', async () => { if (!state.token) { initGoogleStaffSignIn(); return; } try { await verifySession(); setShell(); setView(state.view); } catch { logout(false); document.getElementById('login-error').textContent = 'Your session has expired. Please sign in again.'; document.getElementById('login-error').classList.remove('hidden'); initGoogleStaffSignIn(); } });
