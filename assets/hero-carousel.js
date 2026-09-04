@@ -1,11 +1,19 @@
 (() => {
+  const polishHref = '/assets/home-rtl-refresh.css?v=20260904-1';
+  if (!document.querySelector(`link[href="${polishHref}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = polishHref;
+    document.head.appendChild(link);
+  }
+
   const root = document.getElementById('heroCarousel');
   const track = document.getElementById('heroCarouselTrack');
   const dots = document.getElementById('heroCarouselDots');
   if (!root || !track || !dots) return;
 
   const state = { index: 0, timer: null, slides: [], pointerX: null };
-  const AUTOPLAY_MS = 3500;
+  const AUTOPLAY_MS = 3600;
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
   const text = (en, fa) => document.documentElement.lang === 'fa' ? (fa || en) : en;
@@ -37,13 +45,13 @@
       id: `restaurant-${r.id || index}`,
       image,
       alt: name,
-      kicker: text('Featured in Herat','ویژه در هرات'),
+      kicker: text('Restaurant in Herat','رستورانت در هرات'),
       title: name,
       subtitle: cuisine || text('Discover this restaurant on Afghan Eats','این رستورانت را در افغان ایتس ببینید'),
       href: `/restaurant.html?id=${encodeURIComponent(r.id || '')}`,
       cta: text('View restaurant','دیدن رستورانت'),
       source: real ? '' : text('Illustrative food image','تصویر نمونه غذا'),
-      priority: real ? 20 : 40
+      priority: real ? 10 : 30
     };
   }
 
@@ -71,23 +79,34 @@
       {
         id:'discover-afghan',
         image:'https://images.unsplash.com/photo-1567337710282-00832b415979?auto=format&fit=crop&w=1400&q=84',
-        alt:'Afghan food',
-        kicker:text('Discover Herat','کشف هرات'),
-        title:text('Afghan favourites, close to home','غذاهای افغانی، نزدیک شما'),
-        subtitle:text('Explore local restaurants and familiar flavours.','رستورانت‌های محلی و طعم‌های آشنا را کشف کنید.'),
+        alt:'Afghan food platter',
+        kicker:text('Afghan favourites','غذاهای افغانی'),
+        title:text('Local food, closer to you','غذای محلی، نزدیک شما'),
+        subtitle:text('Explore Afghan dishes from restaurants across Herat.','غذاهای افغانی را از رستورانت‌های سراسر هرات پیدا کنید.'),
         href:'/restaurants?c=Afghan',
         cta:text('Explore Afghan food','دیدن غذاهای افغانی'),
         priority:60
       },
       {
-        id:'discover-fast-food',
-        image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=82',
-        alt:'A table of food',
-        kicker:text('More choice','انتخاب بیشتر'),
-        title:text('Something for every craving','برای هر میل، یک انتخاب'),
-        subtitle:text('Browse restaurants, dishes and pickup options across Herat.','رستورانت‌ها، غذاها و گزینه‌های دریافت حضوری را در هرات ببینید.'),
+        id:'discover-restaurants',
+        image:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=84',
+        alt:'Restaurant dining room',
+        kicker:text('Restaurants in Herat','رستورانت‌های هرات'),
+        title:text('Discover places across the city','رستورانت‌های شهر را کشف کنید'),
+        subtitle:text('Browse restaurant pages, menus and pickup options in one place.','رستورانت‌ها، منوها و گزینه‌های دریافت حضوری را یک‌جا ببینید.'),
         href:'/restaurants',
-        cta:text('Browse all restaurants','دیدن همه رستورانت‌ها'),
+        cta:text('Browse restaurants','دیدن رستورانت‌ها'),
+        priority:65
+      },
+      {
+        id:'discover-kebab',
+        image:'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1400&q=84',
+        alt:'Grilled kebab',
+        kicker:text('Popular flavours','طعم‌های محبوب'),
+        title:text('From kebab to pizza and more','از کباب تا پیتزا و بیشتر'),
+        subtitle:text('Choose a dish, compare restaurants and order your way.','غذا را انتخاب کنید، رستورانت‌ها را مقایسه کنید و به روش خود سفارش دهید.'),
+        href:'/restaurants',
+        cta:text('Find food','پیدا کردن غذا'),
         priority:70
       }
     ];
@@ -195,10 +214,10 @@
       if (imageSet.has(s.image)) continue;
       imageSet.add(s.image);
       selectedRestaurants.push(s);
-      if (selectedRestaurants.length >= 4) break;
+      if (selectedRestaurants.length >= 3) break;
     }
 
-    const slides = [...offers.slice(0,2), ...selectedRestaurants, ...marketingFallbacks()]
+    const slides = [...offers.slice(0,1), ...selectedRestaurants, ...marketingFallbacks()]
       .filter((s, i, all) => all.findIndex(x => x.id === s.id) === i)
       .slice(0,6);
 
