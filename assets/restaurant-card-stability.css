@@ -1,0 +1,57 @@
+/* Stable restaurant discovery interactions — 2026-09-04
+   Keep the clickable card stationary so hover cannot cause pointer oscillation or cancel clicks. */
+.restaurant-card,
+.browse-restaurant-card{
+  transform:none!important;
+  cursor:pointer;
+  transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.restaurant-card:hover,
+.browse-restaurant-card:hover,
+.restaurant-card:active,
+.browse-restaurant-card:active{
+  transform:none!important;
+}
+.restaurant-card:hover,
+.browse-restaurant-card:hover{
+  border-color:#d8d4cd;
+  box-shadow:0 12px 32px rgba(23,63,52,.09);
+}
+.restaurant-image{
+  overflow:hidden;
+  transform:none!important;
+}
+.restaurant-image img{
+  transform:none!important;
+  transition:filter .18s ease!important;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.restaurant-card:hover .restaurant-image img,
+.browse-restaurant-card:hover .restaurant-image img{
+  transform:none!important;
+  filter:saturate(1.02);
+}
+.restaurant-card .status-pill,
+.browse-restaurant-card .status-pill,
+.restaurant-card .image-note,
+.browse-restaurant-card .image-note{
+  pointer-events:none;
+}
+.restaurant-card .fav,
+.browse-restaurant-card .fav{
+  pointer-events:auto;
+  z-index:4;
+}
+.restaurant-card:focus-visible,
+.browse-restaurant-card:focus-visible{
+  outline:3px solid rgba(214,64,50,.32);
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion:reduce){
+  .restaurant-card,
+  .browse-restaurant-card,
+  .restaurant-image img{transition:none!important}
+}
