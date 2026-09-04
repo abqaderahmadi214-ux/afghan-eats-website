@@ -309,3 +309,48 @@
   }
   .premium-home.rtl .mode-tabs{margin-inline-start:0;margin-inline-end:0}
 }
+
+/* Stable restaurant cards: never move the clickable hit area on hover.
+   This prevents pointer enter/leave oscillation and missed clicks. */
+.premium-home .restaurant-card,
+.premium-home .browse-restaurant-card{
+  transform:none!important;
+  cursor:pointer;
+  transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease!important;
+}
+.premium-home .restaurant-card:hover,
+.premium-home .browse-restaurant-card:hover,
+.premium-home .restaurant-card:active,
+.premium-home .browse-restaurant-card:active{
+  transform:none!important;
+}
+.premium-home .restaurant-card:hover,
+.premium-home .browse-restaurant-card:hover{
+  border-color:#d8d4cd;
+  box-shadow:0 10px 30px rgba(23,63,52,.08);
+}
+.premium-home .restaurant-image{
+  overflow:hidden;
+  transform:none!important;
+}
+.premium-home .restaurant-image img{
+  transform:none!important;
+  transition:filter .18s ease!important;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.premium-home .restaurant-card:hover .restaurant-image img,
+.premium-home .browse-restaurant-card:hover .restaurant-image img{
+  transform:none!important;
+  filter:saturate(1.02);
+}
+.premium-home .restaurant-card .status-pill,
+.premium-home .browse-restaurant-card .status-pill{
+  pointer-events:none;
+}
+.premium-home .restaurant-card .fav,
+.premium-home .browse-restaurant-card .fav{
+  pointer-events:auto;
+  z-index:4;
+}
