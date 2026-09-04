@@ -1,0 +1,250 @@
+/* Afghan Eats homepage RTL + carousel polish — 2026-09-04 */
+
+/* Keep the Dari/Farsi hero visually balanced: media on the right, ordering panel on the left. */
+.premium-home.rtl .hero-grid{
+  direction:ltr;
+  grid-template-columns:minmax(420px,1.08fr) minmax(0,.92fr);
+}
+.premium-home.rtl .hero-copy{
+  direction:rtl;
+  text-align:right;
+  justify-self:start;
+  width:100%;
+  max-width:590px;
+}
+.premium-home.rtl .hero-location,
+.premium-home.rtl .hero-copy h1,
+.premium-home.rtl .hero-copy>p,
+.premium-home.rtl .hero-order{
+  direction:rtl;
+  text-align:right;
+}
+.premium-home.rtl .hero-order{
+  width:100%;
+  max-width:590px;
+}
+.premium-home.rtl .mode-tabs{
+  margin-right:0;
+  margin-left:auto;
+}
+.premium-home.rtl .address-box{
+  direction:rtl;
+  width:100%;
+  max-width:590px;
+}
+.premium-home.rtl .address-box input{
+  direction:rtl;
+  text-align:right;
+}
+.premium-home.rtl .address-box .btn{
+  direction:rtl;
+}
+
+/* Make the hero unmistakably a real rotating food + restaurant carousel. */
+.premium-home .hero-carousel{
+  position:relative;
+  min-width:0;
+  height:430px;
+  overflow:hidden;
+  border-radius:24px;
+  background:#d9ded9;
+  box-shadow:0 18px 50px rgba(23,63,52,.12);
+  isolation:isolate;
+}
+.premium-home .hero-carousel-track{
+  position:absolute;
+  inset:0;
+}
+.premium-home .hero-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:scale(1.018);
+  transition:opacity .6s ease,transform 1.2s ease,visibility 0s linear .6s;
+}
+.premium-home .hero-slide.is-active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:scale(1);
+  transition-delay:0s;
+}
+.premium-home .hero-slide>img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+.premium-home .hero-slide-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:flex-end;
+  padding:34px 34px 38px;
+  background:linear-gradient(180deg,rgba(8,24,19,.02) 26%,rgba(8,24,19,.22) 54%,rgba(8,24,19,.88) 100%);
+  color:#fff;
+}
+.premium-home .hero-slide-overlay>div{
+  max-width:450px;
+}
+.premium-home .hero-slide-kicker,
+.premium-home .hero-slide-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:26px;
+  margin:0 0 10px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(8px);
+  color:#fff;
+  font-size:.72rem;
+  font-weight:850;
+}
+.premium-home .hero-slide-badge{
+  margin-inline-end:7px;
+  background:#df4337;
+}
+.premium-home .hero-slide h2{
+  margin:0;
+  max-width:12ch;
+  color:#fff;
+  font-size:clamp(1.8rem,3vw,2.7rem);
+  line-height:1.07;
+  letter-spacing:-.035em;
+  text-shadow:0 2px 18px rgba(0,0,0,.24);
+}
+.premium-home.rtl .hero-slide h2{
+  max-width:15ch;
+  line-height:1.2;
+  letter-spacing:0;
+}
+.premium-home .hero-slide p{
+  max-width:430px;
+  margin:10px 0 15px;
+  color:rgba(255,255,255,.88);
+  font-size:.9rem;
+  line-height:1.55;
+}
+.premium-home .hero-slide-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+  font-size:.84rem;
+  font-weight:850;
+  text-decoration:none;
+}
+.premium-home .hero-slide-cta:hover{color:#f2d17d}
+.premium-home.rtl .hero-slide-overlay{
+  direction:rtl;
+  text-align:right;
+}
+.premium-home.rtl .hero-slide-cta span[aria-hidden="true"]{
+  transform:rotate(180deg);
+}
+.premium-home .hero-slide-source{
+  display:block;
+  margin-top:8px;
+  color:rgba(255,255,255,.58);
+  font-size:.64rem;
+}
+.premium-home .hero-carousel-arrow{
+  position:absolute;
+  z-index:4;
+  top:50%;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:50%;
+  background:rgba(9,26,21,.34);
+  color:#fff;
+  font-size:1.75rem;
+  line-height:1;
+  cursor:pointer;
+  backdrop-filter:blur(9px);
+  transform:translateY(-50%);
+  transition:background .18s ease,transform .18s ease;
+}
+.premium-home .hero-carousel-arrow:hover{
+  background:rgba(9,26,21,.62);
+  transform:translateY(-50%) scale(1.04);
+}
+.premium-home .hero-carousel-prev{left:14px}
+.premium-home .hero-carousel-next{right:14px}
+.premium-home .hero-carousel-dots{
+  position:absolute;
+  z-index:5;
+  left:30px;
+  bottom:18px;
+  display:flex;
+  gap:6px;
+}
+.premium-home.rtl .hero-carousel-dots{
+  left:auto;
+  right:30px;
+}
+.premium-home .hero-carousel-dot{
+  width:8px;
+  height:8px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:rgba(255,255,255,.55);
+  cursor:pointer;
+  transition:width .2s ease,background .2s ease;
+}
+.premium-home .hero-carousel-dot.is-active{
+  width:24px;
+  background:#fff;
+}
+.premium-home .hero-carousel.is-single .hero-carousel-arrow,
+.premium-home .hero-carousel.is-single .hero-carousel-dots{display:none}
+
+@media(max-width:1000px){
+  .premium-home.rtl .hero-grid{
+    direction:rtl;
+    grid-template-columns:1fr;
+  }
+  .premium-home.rtl .hero-copy{
+    justify-self:stretch;
+    max-width:680px;
+  }
+  .premium-home .hero-carousel{height:360px}
+}
+
+@media(max-width:720px){
+  .premium-home .hero-carousel{
+    height:275px;
+    border-radius:18px;
+  }
+  .premium-home .hero-slide-overlay{
+    padding:24px 22px 28px;
+  }
+  .premium-home .hero-slide h2{
+    font-size:1.75rem;
+  }
+  .premium-home .hero-slide p{
+    display:none;
+  }
+  .premium-home .hero-carousel-arrow{
+    width:36px;
+    height:36px;
+    font-size:1.45rem;
+  }
+  .premium-home .hero-carousel-prev{left:10px}
+  .premium-home .hero-carousel-next{right:10px}
+  .premium-home .hero-carousel-dots{left:22px;bottom:14px}
+  .premium-home.rtl .hero-carousel-dots{left:auto;right:22px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .premium-home .hero-slide,
+  .premium-home .hero-carousel-arrow,
+  .premium-home .hero-carousel-dot{transition:none}
+}
