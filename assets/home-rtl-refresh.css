@@ -249,35 +249,55 @@
   .premium-home .hero-carousel-dot{transition:none}
 }
 
-/* 2026-09-04 layout correction: keep the original RTL page composition.
-   Only the ordering controls are rebalanced toward the centre; the whole hero is not relocated. */
+/* 2026-09-04 final RTL spacing correction.
+   Keep the original page composition, but enforce a clean visual gutter between
+   the restaurant/food carousel and the Dari copy/search panel. */
 @media(min-width:1001px){
   .premium-home.rtl .hero-grid{
     direction:rtl;
-    grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);
+    grid-template-columns:minmax(0,.9fr) minmax(430px,1.1fr);
+    column-gap:88px;
+    align-items:center;
   }
   .premium-home.rtl .hero-copy{
     justify-self:stretch;
     width:100%;
-    max-width:590px;
+    max-width:540px;
+    min-width:0;
+  }
+  .premium-home.rtl .hero-copy h1,
+  .premium-home.rtl .hero-copy>p{
+    max-width:100%;
   }
   .premium-home.rtl .hero-order{
-    width:min(690px,calc(100vw - 48px));
-    max-width:none;
-    margin-top:4px;
-    margin-right:0;
-    margin-left:auto;
-    transform:translateX(-54px);
+    width:100%;
+    max-width:520px;
+    margin:6px 0 0;
+    transform:none;
   }
   .premium-home.rtl .mode-tabs{
     display:flex;
     width:max-content;
-    margin:0 auto 12px;
+    margin:0 0 12px auto;
   }
   .premium-home.rtl .address-box{
     width:100%;
-    max-width:none;
+    max-width:520px;
+    margin:0;
   }
+  .premium-home.rtl .hero-carousel{
+    min-width:0;
+  }
+}
+
+@media(min-width:1001px) and (max-width:1220px){
+  .premium-home.rtl .hero-grid{
+    column-gap:56px;
+    grid-template-columns:minmax(0,.92fr) minmax(400px,1.08fr);
+  }
+  .premium-home.rtl .hero-copy{max-width:510px}
+  .premium-home.rtl .hero-order,
+  .premium-home.rtl .address-box{max-width:490px}
 }
 
 @media(max-width:1000px){
