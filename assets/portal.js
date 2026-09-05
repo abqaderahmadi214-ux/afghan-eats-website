@@ -94,7 +94,7 @@ async function loadOwnerDashboard(){
     if(err)err.classList.add('hidden');
     const r=dash.restaurant||{},stats=dash.stats||{},orders=dash.orders||[];AEOwner.restaurant=r;AEOwner.categories=menu.categories||[];AEOwner.items=menu.items||[];AEOwner.history=history||[];AEOwner.orders=orders;AEOwner.stats=stats;
     const title=document.getElementById('ownerTitle');if(title)title.textContent=portalText(r.name||'Restaurant',r.name_dari||r.name||'رستورانت');
-    const publicUrl=`/restaurant.html?id=${encodeURIComponent(r.id||'')}`;['ownerPublicLink','ownerSidePublicLink'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=publicUrl});
+    const publicUrl=`/restaurant.html?id=${encodeURIComponent(r.slug||r.id||'')}`;['ownerPublicLink','ownerSidePublicLink'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=publicUrl});
     const status=document.getElementById('ownerHeroStatus');if(status){const open=r.status==='active'&&r.is_open;status.className=`owner-status-pill ${open?'is-open':'is-closed'}`;status.textContent=r.status!=='active'?portalText('Onboarding','در حال فعال‌سازی'):open?portalText('Open & accepting','باز و فعال'):portalText('Closed','بسته')}
     const hero=document.getElementById('ownerHeroMedia'),cover=/^https:\/\//i.test(r.cover_image_url||'')?r.cover_image_url:/^https:\/\//i.test(r.logo_url||'')?r.logo_url:'';if(hero){hero.innerHTML=cover?`<img src="${portalEsc(cover)}" alt="">`:`<div class="owner-hero-placeholder">${portalEsc((r.name||'AE').slice(0,2).toUpperCase())}</div>`}
     const activeItems=AEOwner.items.filter(i=>!i.archived_at),availableItems=activeItems.filter(i=>i.is_available!==false),avg=orders.length?orders.reduce((sum,o)=>sum+Number(o.total||0),0)/orders.length:0;

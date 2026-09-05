@@ -115,6 +115,55 @@ test('Dari customer chrome and discovery stay localized', async ({page})=>{
   await expect(page.locator('#search')).toHaveAttribute('placeholder',/رستورانت/);
 });
 
+test('recommended discovery prioritizes orderable restaurants and hides test inventory', async ({page})=>{
+  const testListing={...directoryListing,id:'test-row-uuid',slug:'test-one-resturant',name:'Test One Resturant',name_dari:'رستورانت آزمایشی'};
+  await mockApi(page,{restaurants:[directoryListing,testListing,restaurant]});
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
+  await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
+  await expect(page.locator('#resultCount')).toContainText('available to order');
+});
+
+test('stable restaurant slugs resolve the live record and remain canonical', async ({page})=>{
+  const liveCharFasl={...restaurant,id:'d490f576-1690-42c9-a548-c58831a07b9c',slug:'char-fasl-restaurant',name:'Char Fasl Restaurant',name_dari:'رستورانت چهار فصل',verification_status:'public_seeded'};
+  await mockApi(page,{restaurants:[liveCharFasl]});
+  await page.goto('/restaurant.html?id=char-fasl-restaurant');
+  await expect(page.locator('#storeHero')).toContainText('Char Fasl Restaurant');
+  expect(await page.evaluate(()=>window.currentRestaurant?.id)).toBe(liveCharFasl.id);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://afghaneats.net/restaurant?id=char-fasl-restaurant');
+});
+
+test('unknown restaurant links show a real not-found state', async ({page})=>{
+  await mockApi(page);
+  await page.goto('/restaurant.html?id=missing-restaurant');
+  await expect(page.locator('.restaurant-not-found')).toContainText('Restaurant not found');
+  await expect(page.locator('.restaurant-not-found a')).toHaveAttribute('href','/restaurants');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex,follow');
+  expect(await page.evaluate(()=>window.currentRestaurant)).toBeNull();
+});
+
+test('failed restaurant images reveal a branded fallback instead of an empty card', async ({page})=>{
+  const broken={...restaurant,id:'broken-photo-restaurant',slug:'broken-photo-restaurant',name:'Broken Photo Kitchen',cover_image_url:'https://images.example.invalid/missing.jpg'};
+  await page.route('https://images.example.invalid/**',route=>route.abort());
+  await mockApi(page,{restaurants:[broken]});
+  await page.goto('/restaurants');
+  const card=page.locator('.restaurant-card').filter({hasText:'Broken Photo Kitchen'});
+  await expect(card.locator('img')).toBeHidden();
+  await expect(card.locator('.media-fallback')).toBeVisible();
+  await expect(card.locator('.media-fallback')).toContainText('Broken Photo Kitchen');
+});
+
+test('checkout schedule language does not leak across English and Dari', async ({page})=>{
+  await mockApi(page);
+  await page.goto('/checkout');
+  const later=page.locator('label:has(input[name="scheduleMode"][value="later"]) > span');
+  await expect(later).toHaveText('Later');
+  await expect(page.getByText('بعداً',{exact:true})).toHaveCount(0);
+  await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
+  await page.reload();
+  await expect(later).toHaveText('بعداً');
+});
+
 test('public Herat directory listings can show sourced menus without becoming orderable', async ({page})=>{
   await mockApi(page);
   await page.goto('/restaurants');

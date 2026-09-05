@@ -46,7 +46,8 @@
   z-index:4;
 }
 .restaurant-card:focus-visible,
-.browse-restaurant-card:focus-visible{
+.browse-restaurant-card:focus-visible,
+.restaurant-card-link:focus-visible{
   outline:3px solid rgba(214,64,50,.32);
   outline-offset:3px;
 }
