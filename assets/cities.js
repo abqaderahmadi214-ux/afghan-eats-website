@@ -169,7 +169,12 @@ function filterRestaurantsForSelectedCity() {
   }
   if (typeof renderRestaurantList === 'function') renderRestaurantList();
   if (document.getElementById('homeRestaurants') && typeof renderCards === 'function') {
-    renderCards('#homeRestaurants', restaurants.filter(r => r.status === 'active').slice(0, 6));
+    const home = restaurants.filter(r =>
+      (typeof isOrderableRestaurant === 'function' ? isOrderableRestaurant(r) : r.status === 'active') &&
+      (typeof modeEligible !== 'function' || modeEligible(r))
+    );
+    if (typeof compareRecommended === 'function') home.sort(compareRecommended);
+    renderCards('#homeRestaurants', home.slice(0, 6));
   }
   return true;
 }
