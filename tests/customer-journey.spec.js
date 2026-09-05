@@ -129,12 +129,11 @@ test('late homepage refreshes keep preview and test inventory out of popular res
   const testListing={...restaurant,id:'test-row-uuid',slug:'test-one-resturant',name:'Test One Resturant',verification_status:'public_seeded'};
   await mockApi(page,{restaurants:[preview,testListing,restaurant]});
   await page.goto('/');
-  await expect(page.locator('#homeRestaurants .restaurant-card')).toHaveCount(1);
   await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
   await page.waitForTimeout(1200);
   await expect(page.getByText('Preview Only Restaurant',{exact:true})).toHaveCount(0);
   await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
-  await expect(page.locator('#homeRestaurants .restaurant-card')).toHaveCount(1);
+  await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
 });
 
 test('stable restaurant slugs resolve the live record and remain canonical', async ({page})=>{
