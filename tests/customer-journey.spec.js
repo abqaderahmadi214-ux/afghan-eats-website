@@ -124,6 +124,18 @@ test('recommended discovery prioritizes orderable restaurants and hides test inv
   await expect(page.locator('#resultCount')).toContainText('available to order');
 });
 
+test('late homepage refreshes keep preview and test inventory out of popular restaurants', async ({page})=>{
+  const preview={...restaurant,id:'preview-only',slug:'preview-only',name:'Preview Only Restaurant',verification_status:'public_seeded',menu_preview_only:true};
+  const testListing={...restaurant,id:'test-row-uuid',slug:'test-one-resturant',name:'Test One Resturant',verification_status:'public_seeded'};
+  await mockApi(page,{restaurants:[preview,testListing,restaurant]});
+  await page.goto('/');
+  await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
+  await page.waitForTimeout(1200);
+  await expect(page.getByText('Preview Only Restaurant',{exact:true})).toHaveCount(0);
+  await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
+  await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
+});
+
 test('stable restaurant slugs resolve the live record and remain canonical', async ({page})=>{
   const liveCharFasl={...restaurant,id:'d490f576-1690-42c9-a548-c58831a07b9c',slug:'char-fasl-restaurant',name:'Char Fasl Restaurant',name_dari:'رستورانت چهار فصل',verification_status:'public_seeded'};
   await mockApi(page,{restaurants:[liveCharFasl]});
