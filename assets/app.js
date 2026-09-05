@@ -97,6 +97,8 @@ async function initRestaurantPage(){
   const candidates=restaurants.filter(isCustomerVisibleRestaurant);
   const r=id?candidates.find(item=>matchesRestaurantRoute(item,id)):(candidates.filter(isOrderableRestaurant).sort(compareRecommended)[0]||candidates[0]);
   if(!r){
+    currentRestaurant=null;
+    window.currentRestaurant=null;
     const message=lang==='fa'?'رستورانت پیدا نشد.':'Restaurant not found.';
     document.title=lang==='fa'?'رستورانت پیدا نشد | Afghan Eats':'Restaurant not found | Afghan Eats';
     setMeta('meta[name="robots"]','content','noindex,follow');
