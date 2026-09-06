@@ -1,0 +1,262 @@
+/* Afghan Eats public brand system — 2026-09-06
+   Signature palette: Herat forest + pomegranate red + saffron + warm cream.
+   Loaded only on the public/customer experience by config.js. */
+
+:root{
+  --ae-brand-forest:#123c32;
+  --ae-brand-forest-2:#0b2c24;
+  --ae-brand-forest-3:#1c5748;
+  --ae-brand-pomegranate:#e5483c;
+  --ae-brand-pomegranate-dark:#c9362d;
+  --ae-brand-saffron:#f3b23d;
+  --ae-brand-saffron-soft:#ffe8b2;
+  --ae-brand-cream:#fff8ed;
+  --ae-brand-ivory:#fffdf8;
+  --ae-brand-mint:#edf7f2;
+  --ae-brand-mint-2:#e2f1ea;
+  --ae-brand-sand:#f4eadc;
+  --ae-brand-ink:#16241f;
+  --ae-brand-muted:#68756f;
+  --ae-brand-line:rgba(18,60,50,.12);
+  --ae-brand-shadow:0 20px 55px rgba(18,60,50,.10);
+}
+
+html{background:var(--ae-brand-forest-2)}
+body{
+  background:
+    radial-gradient(circle at 8% 5%,rgba(243,178,61,.10),transparent 24rem),
+    radial-gradient(circle at 92% 14%,rgba(18,60,50,.08),transparent 28rem),
+    var(--ae-brand-cream);
+  color:var(--ae-brand-ink);
+}
+::selection{background:rgba(229,72,60,.20);color:var(--ae-brand-forest-2)}
+
+/* One recognizable chrome across the public website. */
+.header{
+  background:rgba(255,250,242,.91)!important;
+  border-bottom:1px solid rgba(18,60,50,.09)!important;
+  box-shadow:0 7px 26px rgba(18,60,50,.035);
+  backdrop-filter:blur(18px) saturate(1.08);
+}
+.header::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-1px;
+  height:2px;
+  background:linear-gradient(90deg,transparent 4%,var(--ae-brand-saffron) 25%,var(--ae-brand-pomegranate) 50%,var(--ae-brand-forest-3) 75%,transparent 96%);
+  opacity:.52;
+  pointer-events:none;
+}
+.brand,.brand-wordmark{color:var(--ae-brand-forest)!important}
+.brand-emblem{color:var(--ae-brand-pomegranate)!important}
+.navlinks a:hover{color:var(--ae-brand-pomegranate-dark)!important}
+.lang,.btn-light{
+  border-color:rgba(18,60,50,.13)!important;
+  background:rgba(255,253,248,.86)!important;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--ae-brand-pomegranate),#d94034)!important;
+  color:#fff!important;
+  box-shadow:0 9px 24px rgba(229,72,60,.18)!important;
+}
+.btn-primary:hover{
+  background:linear-gradient(135deg,#ee5749,var(--ae-brand-pomegranate-dark))!important;
+  box-shadow:0 12px 28px rgba(229,72,60,.24)!important;
+}
+
+/* Homepage: warm market energy rather than flat white. */
+.premium-home{
+  --ae-deep:var(--ae-brand-forest);
+  --ae-red:var(--ae-brand-pomegranate);
+  --ae-red-dark:var(--ae-brand-pomegranate-dark);
+  --ae-ink:var(--ae-brand-ink);
+  --ae-muted:var(--ae-brand-muted);
+  --ae-paper:var(--ae-brand-ivory);
+  --ae-soft:var(--ae-brand-mint);
+  --ae-line:var(--ae-brand-line);
+  background:var(--ae-brand-cream)!important;
+}
+.premium-home .hero{
+  background:
+    radial-gradient(circle at 6% 20%,rgba(243,178,61,.24),transparent 29%),
+    radial-gradient(circle at 95% 5%,rgba(28,87,72,.14),transparent 34%),
+    radial-gradient(circle at 72% 95%,rgba(229,72,60,.10),transparent 27%),
+    linear-gradient(135deg,#fff3df 0%,#fffaf1 42%,#eef7f2 100%)!important;
+  border-bottom:1px solid rgba(18,60,50,.07);
+}
+.premium-home .hero::before{background:radial-gradient(circle,rgba(243,178,61,.27),rgba(243,178,61,0) 70%)!important}
+.premium-home .hero::after{background:radial-gradient(circle,rgba(229,72,60,.15),rgba(229,72,60,0) 72%)!important}
+.premium-home .hero-location{
+  color:var(--ae-brand-pomegranate-dark)!important;
+  background:rgba(255,255,255,.60);
+  border:1px solid rgba(229,72,60,.13);
+  box-shadow:0 8px 24px rgba(18,60,50,.05);
+}
+.premium-home .hero h1{color:var(--ae-brand-forest)!important;text-shadow:0 1px 0 rgba(255,255,255,.65)}
+.premium-home .mode-tabs{
+  background:rgba(243,178,61,.12)!important;
+  border-color:rgba(18,60,50,.10)!important;
+}
+.premium-home .mode-tabs button.active{
+  background:#fffdf8!important;
+  box-shadow:0 4px 14px rgba(18,60,50,.08)!important;
+}
+.premium-home .address-box{
+  background:rgba(255,253,248,.95)!important;
+  border-color:rgba(18,60,50,.13)!important;
+  box-shadow:0 16px 40px rgba(18,60,50,.08)!important;
+}
+.premium-home .address-box:focus-within{
+  border-color:rgba(229,72,60,.48)!important;
+  box-shadow:0 18px 46px rgba(18,60,50,.11),0 0 0 4px rgba(229,72,60,.06)!important;
+}
+
+/* Cuisine zone: subtle saffron warmth. */
+.premium-home main>.section:not(.soft){
+  position:relative;
+  background:
+    radial-gradient(circle at 92% 18%,rgba(243,178,61,.11),transparent 24rem),
+    linear-gradient(180deg,#fffdf8 0%,#fff7ec 100%)!important;
+}
+.premium-home .section-head h2{color:var(--ae-brand-forest)!important}
+.premium-home .section-head h2::after{
+  content:"";
+  display:block;
+  width:54px;
+  height:4px;
+  margin-top:11px;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--ae-brand-pomegranate),var(--ae-brand-saffron));
+}
+.premium-home.rtl .section-head h2::after{margin-right:0;margin-left:auto}
+.premium-home .cuisine-photo-card{
+  border:1px solid rgba(18,60,50,.07)!important;
+  box-shadow:0 12px 30px rgba(18,60,50,.07)!important;
+}
+.premium-home .cuisine-photo-card:hover{box-shadow:0 24px 48px rgba(18,60,50,.15)!important}
+
+/* Restaurant zone: a cool mint field makes food photography pop. */
+.premium-home .section.soft{
+  position:relative;
+  background:
+    radial-gradient(circle at 10% 6%,rgba(28,87,72,.10),transparent 26rem),
+    radial-gradient(circle at 92% 90%,rgba(243,178,61,.10),transparent 24rem),
+    linear-gradient(180deg,#edf7f2 0%,#f7fbf8 100%)!important;
+  border-top:1px solid rgba(18,60,50,.06);
+  border-bottom:1px solid rgba(18,60,50,.07);
+}
+.premium-home .restaurant-card{
+  background:rgba(255,253,248,.97)!important;
+  border-color:rgba(18,60,50,.11)!important;
+  box-shadow:0 12px 32px rgba(18,60,50,.07)!important;
+}
+.premium-home .restaurant-card:hover,
+.premium-home .restaurant-card:focus-within{
+  border-color:rgba(229,72,60,.20)!important;
+  box-shadow:0 24px 56px rgba(18,60,50,.14)!important;
+}
+.premium-home .rating{background:var(--ae-brand-mint)!important;color:var(--ae-brand-forest)!important}
+
+/* Strong signature band: unmistakably Afghan Eats. */
+.premium-home .community-band{
+  background:
+    radial-gradient(circle at 8% 12%,rgba(243,178,61,.20),transparent 24rem),
+    radial-gradient(circle at 91% 80%,rgba(229,72,60,.16),transparent 28rem),
+    linear-gradient(125deg,#0c3027 0%,#154c3e 52%,#0a2a22 100%)!important;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.premium-home .join-eyebrow{color:#ffd77b!important}
+.premium-home .join-link{
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.045))!important;
+  border-color:rgba(255,255,255,.15)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08);
+}
+.premium-home .join-link:hover{
+  background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.07))!important;
+  border-color:rgba(243,178,61,.35)!important;
+}
+.premium-home .join-link>b{color:var(--ae-brand-saffron)!important}
+.premium-home .footer{
+  background:
+    radial-gradient(circle at 80% 0%,rgba(229,72,60,.08),transparent 24rem),
+    linear-gradient(180deg,#092820 0%,#061d18 100%)!important;
+}
+
+/* Customer journey pages inherit the same recognizable palette. */
+.premium-customer{
+  --ae-deep:var(--ae-brand-forest);
+  --ae-deep-2:var(--ae-brand-forest-2);
+  --ae-red:var(--ae-brand-pomegranate);
+  --ae-red-dark:var(--ae-brand-pomegranate-dark);
+  --ae-saffron:var(--ae-brand-saffron);
+  --ae-ink:var(--ae-brand-ink);
+  --ae-muted:var(--ae-brand-muted);
+  --ae-paper:var(--ae-brand-ivory);
+  --ae-warm:var(--ae-brand-cream);
+  --ae-soft:var(--ae-brand-mint);
+  --ae-line:var(--ae-brand-line);
+  --ae-card:#fffdf9;
+  background:
+    radial-gradient(circle at 5% 2%,rgba(243,178,61,.09),transparent 25rem),
+    linear-gradient(180deg,#fff8ed 0%,#f7fbf8 55%,#fffaf3 100%)!important;
+}
+.premium-customer main.soft,
+.premium-customer main.section.soft{
+  background:
+    radial-gradient(circle at 95% 4%,rgba(28,87,72,.09),transparent 25rem),
+    linear-gradient(180deg,#eef7f2 0%,#f8fbf9 100%)!important;
+}
+.premium-customer .restaurant-discovery-bar,
+.premium-customer .filters,
+.premium-customer .browse-context,
+.premium-customer .restaurant-card,
+.premium-customer .form-card,
+.premium-customer .checkout-card,
+.premium-customer .cart-panel,
+.premium-customer .account-nav,
+.premium-customer .saved-card,
+.premium-customer .order-card{
+  background:rgba(255,253,248,.96)!important;
+  border-color:rgba(18,60,50,.11)!important;
+}
+.premium-customer .restaurant-card{box-shadow:0 12px 30px rgba(18,60,50,.075)!important}
+.premium-customer .restaurant-card:hover,
+.premium-customer .restaurant-card:focus-within{
+  transform:none!important;
+  border-color:rgba(229,72,60,.19)!important;
+  box-shadow:0 22px 48px rgba(18,60,50,.12)!important;
+}
+.premium-customer .chip.active,
+.premium-customer .fulfillment-card input:checked+span{
+  background:#fff0e9!important;
+  border-color:rgba(229,72,60,.30)!important;
+  color:var(--ae-brand-pomegranate-dark)!important;
+}
+
+/* Generic public informational pages also feel part of the same product. */
+body:not(.premium-home):not(.premium-customer) main{
+  background:transparent;
+}
+body:not(.premium-home):not(.premium-customer) .section.soft{
+  background:linear-gradient(180deg,#eef7f2,#f8fbf9)!important;
+}
+body:not(.premium-home):not(.premium-customer) .form-card,
+body:not(.premium-home):not(.premium-customer) .benefit,
+body:not(.premium-home):not(.premium-customer) .faq details{
+  background:#fffdf9!important;
+  border-color:rgba(18,60,50,.11)!important;
+}
+
+@media(max-width:720px){
+  .premium-home .hero{
+    background:
+      radial-gradient(circle at 8% 6%,rgba(243,178,61,.18),transparent 18rem),
+      linear-gradient(160deg,#fff4e2 0%,#fffaf2 58%,#eef7f2 100%)!important;
+  }
+  .header::after{opacity:.38}
+  .premium-home .section-head h2::after{width:44px;height:3px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .header,.btn-primary,.restaurant-card{transition:none!important}
+}
