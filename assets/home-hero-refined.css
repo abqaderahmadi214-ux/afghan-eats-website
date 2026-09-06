@@ -1,0 +1,267 @@
+/* Afghan Eats homepage hero refinement — 2026-09-06
+   Goal: premium, calm, unmistakable brand presence without visual clutter.
+*/
+
+/* Header: keep the dark brand chrome, remove the loud multicolour stripe. */
+.premium-home .header::after{
+  height:1px!important;
+  background:linear-gradient(90deg,transparent 8%,rgba(244,182,63,.68) 28%,rgba(244,182,63,.68) 72%,transparent 92%)!important;
+  opacity:.7!important;
+}
+.premium-home .nav{height:72px!important}
+
+/* Hero: one calm composition, two clear columns, one action. */
+.premium-home .hero{
+  padding:64px 0 70px!important;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(244,182,63,.10),transparent 25rem),
+    radial-gradient(circle at 84% 72%,rgba(255,255,255,.035),transparent 27rem),
+    linear-gradient(118deg,#082d25 0%,#0b382e 52%,#082b24 100%)!important;
+}
+.premium-home .hero::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  width:340px!important;
+  height:340px!important;
+  left:-170px!important;
+  top:-120px!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle,transparent 54%,rgba(244,182,63,.085) 55% 56%,transparent 57%)!important;
+  opacity:1!important;
+  animation:none!important;
+  -webkit-mask:none!important;
+  mask:none!important;
+}
+.premium-home .hero::after{display:none!important}
+.premium-home .hero-grid{
+  grid-template-columns:minmax(0,.94fr) minmax(430px,1.06fr)!important;
+  column-gap:clamp(76px,7vw,112px)!important;
+  align-items:center!important;
+}
+.premium-home .hero-copy{
+  width:100%!important;
+  max-width:535px!important;
+}
+.premium-home .hero-location{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-height:auto!important;
+  padding:0!important;
+  margin:0 0 18px!important;
+  color:#f4c86d!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  font-size:.78rem!important;
+  font-weight:850!important;
+  letter-spacing:.02em!important;
+}
+.premium-home .hero-location span[aria-hidden="true"]{
+  color:#e64a3d!important;
+  font-size:.72rem!important;
+}
+.premium-home .hero h1{
+  max-width:11ch!important;
+  margin:0 0 18px!important;
+  color:#fff4df!important;
+  background:none!important;
+  -webkit-background-clip:initial!important;
+  background-clip:initial!important;
+  -webkit-text-fill-color:#fff4df!important;
+  font-size:clamp(3rem,4.45vw,4.15rem)!important;
+  line-height:1.04!important;
+  letter-spacing:-.045em!important;
+  text-shadow:none!important;
+}
+.premium-home.rtl .hero h1{
+  max-width:13ch!important;
+  line-height:1.17!important;
+  letter-spacing:0!important;
+}
+.premium-home .hero-copy>p{
+  max-width:500px!important;
+  margin:0 0 26px!important;
+  color:rgba(255,244,223,.70)!important;
+  font-size:.98rem!important;
+  line-height:1.7!important;
+}
+.premium-home .hero-order{
+  width:100%!important;
+  max-width:540px!important;
+}
+.premium-home .mode-tabs{
+  display:inline-flex!important;
+  width:max-content!important;
+  margin:0 0 13px!important;
+  padding:3px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.055)!important;
+  box-shadow:none!important;
+}
+.premium-home .mode-tabs button{
+  min-width:92px!important;
+  padding:8px 15px!important;
+  color:rgba(255,244,223,.72)!important;
+  border-radius:9px!important;
+  font-size:.82rem!important;
+  font-weight:800!important;
+}
+.premium-home .mode-tabs button.active{
+  color:#15382f!important;
+  background:#f7cc72!important;
+  box-shadow:none!important;
+}
+.premium-home .address-box{
+  width:100%!important;
+  max-width:540px!important;
+  min-height:58px!important;
+  padding:5px!important;
+  border:1px solid rgba(244,182,63,.32)!important;
+  border-radius:16px!important;
+  background:#fffaf0!important;
+  box-shadow:0 14px 34px rgba(1,16,13,.18)!important;
+}
+.premium-home .address-box:focus-within{
+  border-color:rgba(244,182,63,.72)!important;
+  box-shadow:0 16px 38px rgba(1,16,13,.22),0 0 0 3px rgba(244,182,63,.07)!important;
+}
+.premium-home .address-box input{
+  min-height:46px!important;
+  padding-inline:15px!important;
+  font-size:.93rem!important;
+}
+.premium-home .address-box .btn{
+  min-width:118px!important;
+  min-height:46px!important;
+  padding-inline:18px!important;
+  border-radius:11px!important;
+  background:#e64a3d!important;
+  box-shadow:none!important;
+}
+.premium-home .address-box .btn:hover{background:#cf3b31!important}
+
+/* Carousel: image-first, quiet chrome, no competing layers. */
+.premium-home .hero-carousel{
+  height:405px!important;
+  border:1px solid rgba(255,216,120,.28)!important;
+  border-radius:26px!important;
+  box-shadow:0 24px 58px rgba(1,17,13,.27)!important;
+}
+.premium-home .hero-carousel:hover{
+  box-shadow:0 24px 58px rgba(1,17,13,.27)!important;
+}
+.premium-home .hero-slide-overlay{
+  padding:28px 30px 30px!important;
+  background:linear-gradient(180deg,rgba(5,22,18,.01) 35%,rgba(5,22,18,.18) 58%,rgba(5,22,18,.83) 100%)!important;
+}
+.premium-home .hero-slide-overlay>div{max-width:390px!important}
+.premium-home .hero-slide-kicker,
+.premium-home .hero-slide-badge{
+  min-height:24px!important;
+  margin-bottom:9px!important;
+  padding:4px 8px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(6,37,31,.44)!important;
+  box-shadow:none!important;
+  font-size:.68rem!important;
+}
+.premium-home .hero-slide h2{
+  max-width:14ch!important;
+  font-size:clamp(1.85rem,2.5vw,2.35rem)!important;
+  line-height:1.08!important;
+  letter-spacing:-.025em!important;
+}
+.premium-home.rtl .hero-slide h2{line-height:1.18!important;letter-spacing:0!important}
+.premium-home .hero-slide p,
+.premium-home .hero-slide-source{display:none!important}
+.premium-home .hero-slide-cta{
+  margin-top:13px!important;
+  color:#f5d486!important;
+  font-size:.78rem!important;
+  font-weight:800!important;
+}
+.premium-home .hero-carousel-arrow{
+  width:38px!important;
+  height:38px!important;
+  border-color:rgba(255,255,255,.25)!important;
+  background:rgba(5,24,20,.38)!important;
+  font-size:1.45rem!important;
+  box-shadow:none!important;
+}
+.premium-home .hero-carousel-arrow:hover{
+  background:rgba(5,24,20,.62)!important;
+  transform:translateY(-50%)!important;
+}
+.premium-home .hero-carousel-prev{left:14px!important}
+.premium-home .hero-carousel-next{right:14px!important}
+.premium-home .hero-carousel-dots{
+  left:30px!important;
+  right:auto!important;
+  bottom:17px!important;
+  gap:6px!important;
+}
+.premium-home.rtl .hero-carousel-dots{left:auto!important;right:30px!important}
+.premium-home .hero-carousel-dot{
+  width:7px!important;
+  height:7px!important;
+  background:rgba(255,255,255,.42)!important;
+}
+.premium-home .hero-carousel-dot.is-active{
+  width:22px!important;
+  background:#f5d486!important;
+}
+
+/* Remove the decorative woven strip directly below the hero; spacing is the signature. */
+.premium-home main>.section:not(.soft)::before{display:none!important}
+.premium-home main>.section:not(.soft){border-top:1px solid rgba(11,51,42,.08)!important}
+
+/* RTL: preserve clear separation between copy and media. */
+@media(min-width:1001px){
+  .premium-home.rtl .hero-grid{
+    direction:rtl!important;
+    grid-template-columns:minmax(0,.94fr) minmax(430px,1.06fr)!important;
+    column-gap:clamp(76px,7vw,112px)!important;
+  }
+  .premium-home.rtl .hero-copy{
+    justify-self:stretch!important;
+    max-width:535px!important;
+  }
+  .premium-home.rtl .hero-order,
+  .premium-home.rtl .address-box{max-width:540px!important}
+}
+
+@media(max-width:1000px){
+  .premium-home .hero{padding:52px 0 58px!important}
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    grid-template-columns:1fr!important;
+    row-gap:36px!important;
+  }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{max-width:680px!important}
+  .premium-home .hero-order,
+  .premium-home.rtl .hero-order,
+  .premium-home .address-box,
+  .premium-home.rtl .address-box{max-width:620px!important}
+  .premium-home .hero-carousel{height:360px!important}
+}
+
+@media(max-width:720px){
+  .premium-home .nav{height:66px!important}
+  .premium-home .hero{padding:40px 0 44px!important}
+  .premium-home .hero h1{font-size:clamp(2.45rem,11vw,3.25rem)!important}
+  .premium-home .hero-copy>p{font-size:.92rem!important;margin-bottom:22px!important}
+  .premium-home .address-box{min-height:56px!important}
+  .premium-home .hero-carousel{height:285px!important;border-radius:20px!important}
+  .premium-home .hero-slide-overlay{padding:22px 22px 25px!important}
+  .premium-home .hero-slide h2{font-size:1.72rem!important}
+  .premium-home .hero-carousel-arrow{width:34px!important;height:34px!important;font-size:1.3rem!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .premium-home .hero::before{animation:none!important}
+}
