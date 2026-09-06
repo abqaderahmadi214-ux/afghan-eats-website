@@ -342,3 +342,226 @@
   .premium-home.motion-ready .ae-reveal{opacity:1!important;transform:none!important}
   .premium-home .hero-slide>img{transform:scale(1.01)!important}
 }
+
+/* 2026-09-06 alignment hardening — keep all homepage layers on one responsive grid. */
+.premium-home .container{
+  width:min(1160px,calc(100% - 40px));
+}
+.premium-home .nav,
+.premium-home .navlinks,
+.premium-home .actions,
+.premium-home .hero-grid,
+.premium-home .hero-copy,
+.premium-home .hero-carousel,
+.premium-home .section-head,
+.premium-home .join-strip,
+.premium-home .join-copy,
+.premium-home .join-actions,
+.premium-home .footer-main,
+.premium-home .footer-main>*{
+  min-width:0;
+}
+.premium-home .nav{
+  justify-content:flex-start;
+}
+.premium-home .brand-home{
+  flex:0 0 auto;
+}
+.premium-home .navlinks{
+  flex:1 1 auto;
+  margin-inline:0!important;
+}
+.premium-home .actions{
+  flex:0 0 auto;
+  margin-inline-start:auto;
+}
+.premium-home .address-box{
+  width:100%;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:stretch;
+}
+.premium-home .address-box input{
+  width:100%;
+  min-width:0;
+}
+.premium-home .restaurant-grid,
+.premium-home .cuisines{
+  align-items:stretch;
+}
+.premium-home .restaurant-card{
+  height:100%;
+}
+
+@media(min-width:1001px){
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    direction:ltr!important;
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;
+    column-gap:48px!important;
+    align-items:center;
+  }
+  .premium-home .hero-copy{
+    grid-column:1;
+    justify-self:start;
+    width:100%;
+    max-width:520px;
+  }
+  .premium-home .hero-carousel{
+    grid-column:2;
+    width:100%;
+    height:360px!important;
+    min-width:0;
+  }
+  .premium-home.rtl .hero-grid{
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)!important;
+  }
+  .premium-home.rtl .hero-carousel{
+    grid-column:1;
+  }
+  .premium-home.rtl .hero-copy{
+    grid-column:2;
+    justify-self:end;
+    direction:rtl;
+    text-align:right;
+    max-width:520px;
+  }
+  .premium-home.rtl .hero-order,
+  .premium-home.rtl .address-box{
+    width:100%;
+    max-width:520px;
+  }
+}
+
+@media(max-width:1000px){
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    direction:ltr!important;
+    grid-template-columns:1fr!important;
+    gap:28px!important;
+  }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy,
+  .premium-home .hero-carousel,
+  .premium-home.rtl .hero-carousel{
+    grid-column:1!important;
+    width:100%!important;
+    max-width:none;
+  }
+  .premium-home.rtl .hero-copy{
+    direction:rtl;
+    text-align:right;
+  }
+  .premium-home .hero-carousel{
+    height:330px!important;
+  }
+  .premium-home .footer-main{
+    gap:34px 38px;
+  }
+}
+
+@media(max-width:720px){
+  .premium-home .container{
+    width:min(1160px,calc(100% - 28px));
+  }
+  .premium-home .nav{
+    height:60px;
+    gap:8px;
+  }
+  .premium-home .brand-home{
+    gap:7px;
+  }
+  .premium-home .brand-emblem{
+    width:32px;
+    height:32px;
+  }
+  .premium-home .brand-wordmark{
+    font-size:1.06rem;
+    white-space:nowrap;
+  }
+  .premium-home .actions{
+    gap:6px;
+  }
+  .premium-home .lang{
+    min-width:42px;
+    padding:8px 9px;
+  }
+  .premium-home .account-link{
+    width:42px;
+    min-width:42px;
+    padding:8px;
+    font-size:0;
+  }
+  .premium-home .account-link::before{
+    content:"👤";
+    font-size:1rem;
+    line-height:1;
+  }
+  .premium-home .actions .btn-primary{
+    min-width:44px;
+    padding:8px 9px;
+  }
+  .premium-home .address-box{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+  .premium-home .hero-carousel{
+    height:235px!important;
+  }
+  .premium-home .section-head{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .premium-home .section-head>.btn{
+    align-self:flex-start;
+  }
+  .premium-home.rtl .section-head{
+    align-items:stretch;
+    text-align:right;
+  }
+  .premium-home.rtl .section-head>.btn{
+    align-self:flex-end;
+  }
+  .premium-home .join-actions,
+  .premium-home .app-downloads{
+    grid-template-columns:1fr;
+  }
+  .premium-home .app-downloads{
+    max-width:360px;
+  }
+  .premium-home .footer-support a{
+    overflow-wrap:anywhere;
+  }
+}
+
+@media(max-width:420px){
+  .premium-home .container{
+    width:min(1160px,calc(100% - 22px));
+  }
+  .premium-home .brand-wordmark{
+    font-size:.98rem;
+  }
+  .premium-home .brand-emblem{
+    width:30px;
+    height:30px;
+  }
+  .premium-home .actions{
+    gap:4px;
+  }
+  .premium-home .lang,
+  .premium-home .account-link{
+    min-width:38px;
+    width:38px;
+    padding:7px;
+  }
+  .premium-home .actions .btn-primary{
+    min-width:40px;
+    padding:7px 8px;
+  }
+  .premium-home .hero h1{
+    font-size:clamp(2rem,10vw,2.5rem);
+  }
+  .premium-home .hero-carousel{
+    height:220px!important;
+  }
+}
