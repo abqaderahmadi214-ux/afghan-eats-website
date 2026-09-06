@@ -1,0 +1,127 @@
+/* Afghan Eats homepage hero density pass — 2026-09-06
+   Goal: use wide desktop space confidently without returning to visual clutter.
+*/
+
+/* Large desktop: expand the actual composition instead of leaving a narrow island in the middle. */
+@media(min-width:1201px){
+  .premium-home .hero{
+    padding:40px 0 46px!important;
+  }
+  .premium-home .hero>.container{
+    width:min(1540px,94%)!important;
+    max-width:none!important;
+  }
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    grid-template-columns:minmax(540px,1.04fr) minmax(560px,.96fr)!important;
+    column-gap:clamp(54px,4.5vw,78px)!important;
+    align-items:center!important;
+  }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{
+    max-width:635px!important;
+    width:100%!important;
+  }
+  .premium-home .hero h1{
+    max-width:12.5ch!important;
+    font-size:clamp(3.55rem,4.6vw,4.85rem)!important;
+    line-height:1.02!important;
+    margin-bottom:20px!important;
+  }
+  .premium-home.rtl .hero h1{
+    max-width:13.8ch!important;
+    font-size:clamp(3.55rem,4.8vw,5rem)!important;
+    line-height:1.14!important;
+  }
+  .premium-home .hero-copy>p{
+    max-width:590px!important;
+    font-size:1rem!important;
+    margin-bottom:24px!important;
+  }
+  .premium-home .hero-order,
+  .premium-home.rtl .hero-order,
+  .premium-home .address-box,
+  .premium-home.rtl .address-box{
+    max-width:620px!important;
+  }
+  .premium-home .address-box{
+    min-height:62px!important;
+    border-radius:17px!important;
+  }
+  .premium-home .address-box input{font-size:.96rem!important}
+  .premium-home .address-box .btn{
+    min-width:132px!important;
+    min-height:50px!important;
+    font-size:.9rem!important;
+  }
+  .premium-home .hero-carousel{
+    height:455px!important;
+    border-radius:27px!important;
+  }
+  .premium-home .hero-slide-overlay{
+    padding:30px 34px 32px!important;
+  }
+  .premium-home .hero-slide-overlay>div{max-width:440px!important}
+  .premium-home .hero-slide h2{
+    max-width:16ch!important;
+    font-size:clamp(2.05rem,2.45vw,2.65rem)!important;
+  }
+}
+
+/* A restrained brand proof line gives the ordering block a deliberate finish. */
+.premium-home .hero-order::after{
+  content:"Herat restaurants  •  Delivery or pickup  •  Cash on delivery";
+  display:block;
+  margin-top:13px;
+  color:rgba(255,244,223,.52);
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.015em;
+  line-height:1.45;
+}
+.premium-home.rtl .hero-order::after{
+  content:"رستورانت‌های هرات  •  ارسال یا دریافت حضوری  •  پرداخت نقدی هنگام تحویل";
+  letter-spacing:0;
+  text-align:right;
+}
+
+/* Give the image more brand presence without adding more overlays. */
+.premium-home .hero-carousel{
+  position:relative;
+  isolation:isolate;
+}
+.premium-home .hero-carousel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:5;
+  border-radius:inherit;
+  pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,244,223,.08),inset 0 -72px 90px rgba(4,28,23,.08);
+}
+
+/* Mid-size desktop: still use the screen, just with gentler scaling. */
+@media(min-width:1001px) and (max-width:1200px){
+  .premium-home .hero>.container{width:min(1120px,94%)!important}
+  .premium-home .hero{
+    padding:46px 0 50px!important;
+  }
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    grid-template-columns:minmax(0,.96fr) minmax(460px,1.04fr)!important;
+    column-gap:48px!important;
+  }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{max-width:560px!important}
+  .premium-home .hero h1{font-size:clamp(3rem,5vw,4rem)!important}
+  .premium-home .hero-order,
+  .premium-home.rtl .hero-order,
+  .premium-home .address-box,
+  .premium-home.rtl .address-box{max-width:560px!important}
+  .premium-home .hero-carousel{height:410px!important}
+}
+
+/* Tablet/mobile: remove the proof line when vertical space is more valuable. */
+@media(max-width:720px){
+  .premium-home .hero-order::after{display:none!important}
+}
