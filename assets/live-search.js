@@ -1,3 +1,15 @@
+(function loadAfghanEatsHomeHeroV3(){
+  const path=location.pathname.toLowerCase();
+  if(!(path==='/'||path.endsWith('/index.html')))return;
+  const href='/assets/home-hero-v3.css?v=20260906-4';
+  if(document.querySelector(`link[href="${href}"]`))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href=href;
+  link.dataset.aeHomeHeroV3='1';
+  document.head.appendChild(link);
+})();
+
 const AEDISCOVERY={patched:false,timer:null,seq:0,trendingLoaded:false};
 function dsText(en,fa){return typeof lang!=='undefined'&&lang==='fa'?fa:en}
 function dsEsc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
