@@ -1,7 +1,8 @@
 (() => {
   const styles = [
     ['/assets/brand-theme.css?v=20260906-2', 'aeBrandTheme'],
-    ['/assets/home-signature.css?v=20260906-1', 'aeHomeSignature']
+    ['/assets/home-signature.css?v=20260906-1', 'aeHomeSignature'],
+    ['/assets/home-hero-refined.css?v=20260906-1', 'aeHomeHeroRefined']
   ];
   for (const [href, datasetKey] of styles) {
     if (document.querySelector(`link[href="${href}"]`)) continue;
