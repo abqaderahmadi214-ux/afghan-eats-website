@@ -4,7 +4,6 @@
 */
 
 @media (min-width: 1280px){
-  /* Align the header and hero to the same confident wide canvas. */
   .premium-home .header>.container,
   .premium-home .hero>.container{
     width:min(1780px,96vw)!important;
@@ -35,12 +34,14 @@
   .premium-home.rtl .hero-copy{
     position:relative!important;
     width:100%!important;
-    max-width:760px!important;
+    max-width:700px!important;
     margin:0!important;
     padding:8px 0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
   }
 
-  /* One restrained signature mark beside the copy instead of decorative clutter. */
   .premium-home .hero-copy::before{
     content:"";
     position:absolute;
@@ -61,46 +62,81 @@
     margin-bottom:16px!important;
     font-size:.82rem!important;
   }
+  .premium-home.rtl .hero-location{
+    align-self:flex-end!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+    text-align:right!important;
+  }
 
   .premium-home .hero h1{
-    max-width:12.6ch!important;
+    max-width:11.5ch!important;
     margin:0 0 18px!important;
-    font-size:clamp(4.2rem,4.8vw,5.5rem)!important;
-    line-height:.99!important;
-    letter-spacing:-.05em!important;
+    font-size:clamp(3.35rem,3.45vw,4.45rem)!important;
+    line-height:1.02!important;
+    letter-spacing:-.04em!important;
+    text-wrap:balance!important;
   }
   .premium-home.rtl .hero h1{
-    max-width:13.4ch!important;
-    font-size:clamp(4.15rem,4.7vw,5.35rem)!important;
-    line-height:1.13!important;
+    width:100%!important;
+    max-width:680px!important;
+    margin:0 0 16px auto!important;
+    font-size:clamp(3.25rem,3.35vw,4.25rem)!important;
+    line-height:1.20!important;
     letter-spacing:0!important;
+    text-align:right!important;
+    text-wrap:balance!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
   }
 
   .premium-home .hero-copy>p{
-    max-width:650px!important;
-    margin:0 0 24px!important;
-    font-size:1.05rem!important;
-    line-height:1.7!important;
+    max-width:610px!important;
+    margin:0 0 22px!important;
+    font-size:1rem!important;
+    line-height:1.68!important;
     color:rgba(255,244,223,.70)!important;
+  }
+  .premium-home.rtl .hero-copy>p{
+    width:100%!important;
+    max-width:630px!important;
+    margin:0 0 22px auto!important;
+    text-align:right!important;
+    line-height:1.85!important;
   }
 
   .premium-home .hero-order,
   .premium-home.rtl .hero-order{
     width:100%!important;
-    max-width:690px!important;
+    max-width:660px!important;
+  }
+  .premium-home.rtl .hero-order{
+    margin-left:auto!important;
+    margin-right:0!important;
   }
 
-  .premium-home .mode-tabs{
-    margin-bottom:12px!important;
+  .premium-home .mode-tabs{margin-bottom:12px!important}
+  .premium-home.rtl .mode-tabs{
+    align-self:flex-end!important;
+    margin-left:0!important;
+    margin-right:auto!important;
   }
 
   .premium-home .address-box,
   .premium-home.rtl .address-box{
     width:100%!important;
-    max-width:690px!important;
+    max-width:660px!important;
     min-height:64px!important;
     padding:6px!important;
     border-radius:18px!important;
+  }
+  .premium-home.rtl .address-box{
+    margin-left:0!important;
+    margin-right:auto!important;
+  }
+  .premium-home.rtl .address-box input{
+    text-align:right!important;
+    direction:rtl!important;
   }
   .premium-home .address-box input{
     min-height:50px!important;
@@ -115,22 +151,23 @@
     border-radius:12px!important;
   }
 
-  .premium-home .hero-order::after{
-    content:"Herat restaurants  •  Delivery or pickup  •  Cash on delivery"!important;
+  /* Replace the long proof sentence with one quiet brand accent. */
+  .premium-home .hero-order::after,
+  .premium-home.rtl .hero-order::after{
+    content:""!important;
     display:block!important;
-    margin-top:14px!important;
-    color:rgba(255,244,223,.52)!important;
-    font-size:.78rem!important;
-    font-weight:700!important;
-    letter-spacing:.01em!important;
+    width:72px!important;
+    height:3px!important;
+    margin-top:17px!important;
+    border-radius:999px!important;
+    background:linear-gradient(90deg,#e64a3d,#f4b63f)!important;
+    opacity:.86!important;
   }
   .premium-home.rtl .hero-order::after{
-    content:"رستورانت‌های هرات  •  ارسال یا دریافت حضوری  •  پرداخت نقدی هنگام تحویل"!important;
-    text-align:right!important;
-    letter-spacing:0!important;
+    margin-left:0!important;
+    margin-right:auto!important;
   }
 
-  /* The image becomes a real brand stage, not a small card floating in empty green. */
   .premium-home .hero-carousel{
     width:100%!important;
     max-width:none!important;
@@ -144,22 +181,14 @@
   .premium-home .hero-carousel:hover{
     box-shadow:0 30px 72px rgba(1,16,13,.31)!important;
   }
-  .premium-home .hero-slide-overlay{
-    padding:34px 38px 36px!important;
-  }
-  .premium-home .hero-slide-overlay>div{
-    max-width:520px!important;
-  }
+  .premium-home .hero-slide-overlay{padding:34px 38px 36px!important}
+  .premium-home .hero-slide-overlay>div{max-width:520px!important}
   .premium-home .hero-slide h2{
     max-width:16ch!important;
     font-size:clamp(2.35rem,2.65vw,3rem)!important;
   }
-  .premium-home.rtl .hero-slide h2{
-    line-height:1.16!important;
-  }
-  .premium-home .hero-slide-cta{
-    font-size:.82rem!important;
-  }
+  .premium-home.rtl .hero-slide h2{line-height:1.16!important}
+  .premium-home .hero-slide-cta{font-size:.82rem!important}
 }
 
 @media (min-width: 1680px){
@@ -172,25 +201,30 @@
     width:min(1840px,94vw)!important;
   }
   .premium-home .hero-grid,
-  .premium-home.rtl .hero-grid{
-    column-gap:82px!important;
-  }
+  .premium-home.rtl .hero-grid{column-gap:82px!important}
   .premium-home .hero-carousel{
     height:520px!important;
     min-height:520px!important;
   }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{max-width:720px!important}
+  .premium-home.rtl .hero h1{
+    max-width:700px!important;
+    font-size:clamp(3.7rem,3.3vw,4.45rem)!important;
+  }
+  .premium-home .hero-order,
+  .premium-home.rtl .hero-order,
+  .premium-home .address-box,
+  .premium-home.rtl .address-box{max-width:680px!important}
 }
 
-/* Mid desktop still uses noticeably more width than the old 1160px island. */
 @media (min-width: 1001px) and (max-width: 1279px){
   .premium-home .hero>.container,
   .premium-home .header>.container{
     width:min(1180px,94vw)!important;
     max-width:none!important;
   }
-  .premium-home .hero{
-    padding:44px 0 48px!important;
-  }
+  .premium-home .hero{padding:44px 0 48px!important}
   .premium-home .hero-grid,
   .premium-home.rtl .hero-grid{
     grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
@@ -199,12 +233,75 @@
   .premium-home .hero-copy,
   .premium-home.rtl .hero-copy{
     max-width:580px!important;
+    display:flex!important;
+    flex-direction:column!important;
   }
-  .premium-home .hero-carousel{
-    height:420px!important;
+  .premium-home .hero h1{
+    max-width:11.5ch!important;
+    font-size:clamp(2.9rem,4.2vw,3.65rem)!important;
+    line-height:1.05!important;
+    text-wrap:balance!important;
   }
+  .premium-home.rtl .hero h1{
+    width:100%!important;
+    max-width:550px!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+    font-size:clamp(2.85rem,4.1vw,3.55rem)!important;
+    line-height:1.21!important;
+    text-align:right!important;
+    letter-spacing:0!important;
+    text-wrap:balance!important;
+  }
+  .premium-home.rtl .hero-location{align-self:flex-end!important}
+  .premium-home.rtl .hero-copy>p,
+  .premium-home.rtl .hero-order{
+    max-width:550px!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+    text-align:right!important;
+  }
+  .premium-home .hero-order::after,
+  .premium-home.rtl .hero-order::after{display:none!important}
+  .premium-home .hero-carousel{height:420px!important}
 }
 
 @media (max-width: 1000px){
   .premium-home .hero-copy::before{display:none!important}
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .premium-home .hero h1{
+    max-width:12ch!important;
+    font-size:clamp(2.45rem,8vw,3.25rem)!important;
+    line-height:1.08!important;
+    text-wrap:balance!important;
+  }
+  .premium-home.rtl .hero h1{
+    width:100%!important;
+    max-width:620px!important;
+    margin-left:auto!important;
+    margin-right:0!important;
+    font-size:clamp(2.35rem,7.4vw,3.15rem)!important;
+    line-height:1.24!important;
+    text-align:right!important;
+    letter-spacing:0!important;
+  }
+  .premium-home.rtl .hero-location{align-self:flex-end!important}
+  .premium-home.rtl .hero-copy>p{text-align:right!important}
+  .premium-home .hero-order::after,
+  .premium-home.rtl .hero-order::after{display:none!important}
+}
+
+@media (max-width:560px){
+  .premium-home.rtl .hero h1{
+    font-size:clamp(2.15rem,10.5vw,2.8rem)!important;
+    line-height:1.28!important;
+  }
+  .premium-home.rtl .hero-copy>p{
+    font-size:.92rem!important;
+    line-height:1.8!important;
+  }
 }
