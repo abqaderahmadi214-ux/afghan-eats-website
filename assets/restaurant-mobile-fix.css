@@ -1,0 +1,297 @@
+/* Afghan Eats restaurant mobile hardening — 2026-09-06
+   Keeps the restaurant page inside the viewport and collapses all desktop-only rails/grids. */
+body.restaurant-page{
+  width:100%;
+  max-width:100vw;
+  overflow-x:hidden;
+}
+.restaurant-page .header,
+.restaurant-page .store-hero,
+.restaurant-page .store-tabs,
+.restaurant-page main.section,
+.restaurant-page .mobile-nav{
+  width:100%;
+  max-width:100vw;
+}
+.restaurant-page .container{
+  width:min(1280px,calc(100% - 32px))!important;
+  max-width:100%!important;
+  margin-inline:auto!important;
+  min-width:0!important;
+}
+.restaurant-page .menu-layout,
+.restaurant-page #menuContent,
+.restaurant-page .menu-category-browser,
+.restaurant-page .menu-category-content,
+.restaurant-page .menu-section,
+.restaurant-page .menu-card-grid,
+.restaurant-page .directory-menu-grid{
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+@media(max-width:900px){
+  .restaurant-page .nav{
+    width:100%;
+    min-width:0;
+    gap:10px!important;
+  }
+  .restaurant-page .brand{
+    min-width:0;
+    flex:0 1 auto;
+  }
+  .restaurant-page .brand-wordmark{
+    font-size:1.08rem!important;
+    white-space:nowrap;
+  }
+  .restaurant-page .brand-emblem{
+    width:34px!important;
+    height:34px!important;
+    flex:none;
+  }
+  .restaurant-page .navlinks{display:none!important}
+  .restaurant-page .actions{
+    margin-inline-start:auto;
+    gap:6px!important;
+    min-width:0;
+  }
+  .restaurant-page .header .lang,
+  .restaurant-page .header .btn-light,
+  .restaurant-page .header .btn-primary{
+    min-height:38px;
+    padding:8px 10px!important;
+    border-radius:10px!important;
+    font-size:.82rem!important;
+  }
+
+  .restaurant-page .store-hero,
+  .restaurant-page .store-hero-loading{
+    width:100%!important;
+    min-height:280px!important;
+    height:280px!important;
+  }
+  .restaurant-page .store-title{
+    width:100%;
+    padding:34px 0 28px!important;
+  }
+  .restaurant-page .store-title h1{
+    max-width:15ch!important;
+    font-size:clamp(2rem,9vw,3rem)!important;
+    line-height:1.04!important;
+  }
+  .restaurant-page .store-cuisine,
+  .restaurant-page .store-meta-line,
+  .restaurant-page .store-address{
+    max-width:100%;
+    font-size:.86rem!important;
+    line-height:1.45;
+  }
+
+  .restaurant-page .store-tabs{
+    position:sticky!important;
+    top:60px!important;
+    overflow:hidden!important;
+  }
+  .restaurant-page .store-tabs .container{
+    width:100%!important;
+    max-width:100%!important;
+    min-height:52px!important;
+    padding:7px 14px!important;
+    display:flex!important;
+    gap:7px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+  }
+  .restaurant-page .store-tabs .container::-webkit-scrollbar{display:none}
+  .restaurant-page .store-tabs a,
+  .restaurant-page .store-tabs button{
+    flex:0 0 auto!important;
+    white-space:nowrap!important;
+    scroll-snap-align:start;
+    min-height:36px;
+    padding:8px 11px!important;
+    font-size:.78rem!important;
+  }
+
+  .restaurant-page main.section{
+    width:100%!important;
+    padding:18px 0 88px!important;
+    overflow:hidden!important;
+  }
+  .restaurant-page .menu-layout{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:0!important;
+  }
+  .restaurant-page .cart-panel{
+    display:none!important;
+    position:static!important;
+  }
+  .restaurant-page #menuContent{width:100%!important}
+
+  .restaurant-page .menu-category-browser{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:14px!important;
+  }
+  .restaurant-page .menu-category-rail{
+    position:static!important;
+    top:auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+  }
+  .restaurant-page .menu-category-label{display:none!important}
+  .restaurant-page .menu-category-options{
+    width:100%!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    gap:8px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    padding:2px 0 4px!important;
+    scrollbar-width:none;
+  }
+  .restaurant-page .menu-category-options::-webkit-scrollbar{display:none}
+  .restaurant-page .menu-category-option{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    white-space:nowrap!important;
+    padding:9px 12px!important;
+    border:1px solid rgba(18,60,50,.12)!important;
+    border-radius:999px!important;
+    background:#fffdf8!important;
+    color:#123c32!important;
+    box-shadow:none!important;
+    font-size:.8rem!important;
+  }
+  .restaurant-page .menu-category-option.active{
+    color:#fff!important;
+    background:linear-gradient(135deg,#e5483c,#c9362d)!important;
+    border-color:transparent!important;
+  }
+  .restaurant-page .menu-category-option small{display:none!important}
+
+  .restaurant-page .menu-card-grid,
+  .restaurant-page .directory-menu-grid{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+  .restaurant-page .menu-section-heading{
+    width:100%;
+    align-items:center!important;
+    gap:10px!important;
+  }
+  .restaurant-page .menu-section-heading h2,
+  .restaurant-page .directory-menu-section .menu-section-heading h3{
+    min-width:0;
+    font-size:1.45rem!important;
+    line-height:1.15!important;
+  }
+
+  .restaurant-page .menu-item,
+  .restaurant-page .premium-menu-card{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    min-height:118px!important;
+    grid-template-columns:96px minmax(0,1fr) 40px!important;
+    gap:11px!important;
+    padding:11px!important;
+    border-radius:18px!important;
+  }
+  .restaurant-page .menu-item-media{
+    width:96px!important;
+    height:96px!important;
+    border-radius:14px!important;
+  }
+  .restaurant-page .menu-item-copy{min-width:0!important}
+  .restaurant-page .menu-item h3{
+    overflow-wrap:anywhere;
+    font-size:.98rem!important;
+    line-height:1.25!important;
+  }
+  .restaurant-page .menu-item p{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    font-size:.82rem!important;
+    line-height:1.35!important;
+  }
+  .restaurant-page .price,
+  .restaurant-page .menu-price{font-size:.9rem!important}
+  .restaurant-page .add-btn{
+    width:38px!important;
+    height:38px!important;
+    border-radius:12px!important;
+  }
+
+  .restaurant-page .mobile-basket-bar{
+    left:14px!important;
+    right:14px!important;
+    bottom:70px!important;
+    width:auto!important;
+    max-width:calc(100vw - 28px)!important;
+    z-index:70!important;
+  }
+}
+
+@media(max-width:520px){
+  .restaurant-page .container{
+    width:calc(100% - 24px)!important;
+  }
+  .restaurant-page .nav{
+    height:58px!important;
+  }
+  .restaurant-page .brand-wordmark{font-size:.96rem!important}
+  .restaurant-page .header .btn-light{
+    width:40px!important;
+    min-width:40px!important;
+    padding:8px!important;
+    overflow:hidden;
+    font-size:0!important;
+  }
+  .restaurant-page .header .btn-light::before{
+    content:"👤";
+    font-size:1rem;
+  }
+  .restaurant-page .store-tabs{top:58px!important}
+  .restaurant-page .store-hero,
+  .restaurant-page .store-hero-loading{
+    min-height:250px!important;
+    height:250px!important;
+  }
+  .restaurant-page .store-title{padding:30px 0 24px!important}
+  .restaurant-page .store-title h1{font-size:2rem!important}
+  .restaurant-page .menu-item,
+  .restaurant-page .premium-menu-card{
+    grid-template-columns:84px minmax(0,1fr) 36px!important;
+    gap:9px!important;
+    min-height:106px!important;
+    padding:9px!important;
+  }
+  .restaurant-page .menu-item-media{
+    width:84px!important;
+    height:84px!important;
+  }
+  .restaurant-page .add-btn{
+    width:34px!important;
+    height:34px!important;
+    font-size:1.15rem!important;
+  }
+  .restaurant-page .menu-section-heading h2,
+  .restaurant-page .directory-menu-section .menu-section-heading h3{font-size:1.3rem!important}
+}
