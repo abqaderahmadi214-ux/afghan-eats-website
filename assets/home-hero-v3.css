@@ -1,0 +1,210 @@
+/* Afghan Eats homepage hero v3 — wide brand stage
+   2026-09-06
+   Purpose: make the hero occupy the screen confidently on desktop while keeping a calm premium hierarchy.
+*/
+
+@media (min-width: 1280px){
+  /* Align the header and hero to the same confident wide canvas. */
+  .premium-home .header>.container,
+  .premium-home .hero>.container{
+    width:min(1780px,96vw)!important;
+    max-width:none!important;
+    margin-inline:auto!important;
+  }
+
+  .premium-home .hero{
+    min-height:560px!important;
+    padding:44px 0 48px!important;
+    display:flex!important;
+    align-items:center!important;
+    background:
+      radial-gradient(circle at 11% 18%,rgba(244,182,63,.11),transparent 25rem),
+      radial-gradient(circle at 82% 78%,rgba(255,255,255,.045),transparent 30rem),
+      linear-gradient(116deg,#072a23 0%,#0a3a2f 50%,#072c25 100%)!important;
+  }
+
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    width:100%!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    column-gap:clamp(64px,4.4vw,92px)!important;
+    align-items:center!important;
+  }
+
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{
+    position:relative!important;
+    width:100%!important;
+    max-width:760px!important;
+    margin:0!important;
+    padding:8px 0!important;
+  }
+
+  /* One restrained signature mark beside the copy instead of decorative clutter. */
+  .premium-home .hero-copy::before{
+    content:"";
+    position:absolute;
+    left:-28px;
+    top:16px;
+    width:3px;
+    height:88px;
+    border-radius:999px;
+    background:linear-gradient(180deg,#f4b63f,#e64a3d);
+    opacity:.9;
+  }
+  .premium-home.rtl .hero-copy::before{
+    left:auto;
+    right:-28px;
+  }
+
+  .premium-home .hero-location{
+    margin-bottom:16px!important;
+    font-size:.82rem!important;
+  }
+
+  .premium-home .hero h1{
+    max-width:12.6ch!important;
+    margin:0 0 18px!important;
+    font-size:clamp(4.2rem,4.8vw,5.5rem)!important;
+    line-height:.99!important;
+    letter-spacing:-.05em!important;
+  }
+  .premium-home.rtl .hero h1{
+    max-width:13.4ch!important;
+    font-size:clamp(4.15rem,4.7vw,5.35rem)!important;
+    line-height:1.13!important;
+    letter-spacing:0!important;
+  }
+
+  .premium-home .hero-copy>p{
+    max-width:650px!important;
+    margin:0 0 24px!important;
+    font-size:1.05rem!important;
+    line-height:1.7!important;
+    color:rgba(255,244,223,.70)!important;
+  }
+
+  .premium-home .hero-order,
+  .premium-home.rtl .hero-order{
+    width:100%!important;
+    max-width:690px!important;
+  }
+
+  .premium-home .mode-tabs{
+    margin-bottom:12px!important;
+  }
+
+  .premium-home .address-box,
+  .premium-home.rtl .address-box{
+    width:100%!important;
+    max-width:690px!important;
+    min-height:64px!important;
+    padding:6px!important;
+    border-radius:18px!important;
+  }
+  .premium-home .address-box input{
+    min-height:50px!important;
+    padding-inline:18px!important;
+    font-size:1rem!important;
+  }
+  .premium-home .address-box .btn{
+    min-width:148px!important;
+    min-height:50px!important;
+    padding-inline:22px!important;
+    font-size:.95rem!important;
+    border-radius:12px!important;
+  }
+
+  .premium-home .hero-order::after{
+    content:"Herat restaurants  •  Delivery or pickup  •  Cash on delivery"!important;
+    display:block!important;
+    margin-top:14px!important;
+    color:rgba(255,244,223,.52)!important;
+    font-size:.78rem!important;
+    font-weight:700!important;
+    letter-spacing:.01em!important;
+  }
+  .premium-home.rtl .hero-order::after{
+    content:"رستورانت‌های هرات  •  ارسال یا دریافت حضوری  •  پرداخت نقدی هنگام تحویل"!important;
+    text-align:right!important;
+    letter-spacing:0!important;
+  }
+
+  /* The image becomes a real brand stage, not a small card floating in empty green. */
+  .premium-home .hero-carousel{
+    width:100%!important;
+    max-width:none!important;
+    height:500px!important;
+    min-height:500px!important;
+    margin:0!important;
+    border-radius:30px!important;
+    border:1px solid rgba(255,216,120,.32)!important;
+    box-shadow:0 30px 72px rgba(1,16,13,.31)!important;
+  }
+  .premium-home .hero-carousel:hover{
+    box-shadow:0 30px 72px rgba(1,16,13,.31)!important;
+  }
+  .premium-home .hero-slide-overlay{
+    padding:34px 38px 36px!important;
+  }
+  .premium-home .hero-slide-overlay>div{
+    max-width:520px!important;
+  }
+  .premium-home .hero-slide h2{
+    max-width:16ch!important;
+    font-size:clamp(2.35rem,2.65vw,3rem)!important;
+  }
+  .premium-home.rtl .hero-slide h2{
+    line-height:1.16!important;
+  }
+  .premium-home .hero-slide-cta{
+    font-size:.82rem!important;
+  }
+}
+
+@media (min-width: 1680px){
+  .premium-home .hero{
+    min-height:590px!important;
+    padding:46px 0 50px!important;
+  }
+  .premium-home .hero>.container,
+  .premium-home .header>.container{
+    width:min(1840px,94vw)!important;
+  }
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    column-gap:82px!important;
+  }
+  .premium-home .hero-carousel{
+    height:520px!important;
+    min-height:520px!important;
+  }
+}
+
+/* Mid desktop still uses noticeably more width than the old 1160px island. */
+@media (min-width: 1001px) and (max-width: 1279px){
+  .premium-home .hero>.container,
+  .premium-home .header>.container{
+    width:min(1180px,94vw)!important;
+    max-width:none!important;
+  }
+  .premium-home .hero{
+    padding:44px 0 48px!important;
+  }
+  .premium-home .hero-grid,
+  .premium-home.rtl .hero-grid{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    column-gap:46px!important;
+  }
+  .premium-home .hero-copy,
+  .premium-home.rtl .hero-copy{
+    max-width:580px!important;
+  }
+  .premium-home .hero-carousel{
+    height:420px!important;
+  }
+}
+
+@media (max-width: 1000px){
+  .premium-home .hero-copy::before{display:none!important}
+}
