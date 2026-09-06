@@ -1,0 +1,411 @@
+/* Afghan Eats signature restaurant experience — 2026-09-06 */
+.restaurant-page{
+  --ae-r-forest:#0b2c24;
+  --ae-r-forest-2:#123c32;
+  --ae-r-forest-3:#1b5547;
+  --ae-r-red:#e5483c;
+  --ae-r-red-dark:#c9362d;
+  --ae-r-saffron:#f3b23d;
+  --ae-r-cream:#fff8ed;
+  --ae-r-ivory:#fffdf8;
+  --ae-r-sand:#f5eadb;
+  --ae-r-ink:#17251f;
+  --ae-r-muted:#69766f;
+  background:var(--ae-r-cream)!important;
+}
+
+/* Match the new homepage chrome instead of falling back to the old light header. */
+.restaurant-page .header{
+  background:rgba(9,40,32,.96)!important;
+  border-bottom:1px solid rgba(243,178,61,.20)!important;
+  box-shadow:0 12px 34px rgba(4,24,19,.20)!important;
+  backdrop-filter:blur(18px) saturate(1.08);
+}
+.restaurant-page .header::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-1px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--ae-r-saffron),var(--ae-r-red),var(--ae-r-saffron),transparent);
+  opacity:.76;
+  pointer-events:none;
+}
+.restaurant-page .header .brand,
+.restaurant-page .header .brand-wordmark{color:#fff9ee!important}
+.restaurant-page .header .brand-emblem{color:var(--ae-r-red)!important}
+.restaurant-page .header .navlinks a{color:rgba(255,255,255,.78)!important}
+.restaurant-page .header .navlinks a:hover{color:var(--ae-r-saffron)!important}
+.restaurant-page .header .lang,
+.restaurant-page .header .btn-light{
+  color:#fff!important;
+  background:rgba(255,255,255,.07)!important;
+  border-color:rgba(255,255,255,.17)!important;
+}
+.restaurant-page .header .lang:hover,
+.restaurant-page .header .btn-light:hover{
+  background:rgba(255,255,255,.12)!important;
+  border-color:rgba(243,178,61,.36)!important;
+}
+
+/* Restaurant hero becomes part of the brand, not a generic full-width image. */
+.restaurant-page .store-hero,
+.restaurant-page .store-hero-loading{
+  min-height:390px!important;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(243,178,61,.18),transparent 24rem),
+    linear-gradient(135deg,var(--ae-r-forest),#071f19)!important;
+  border-bottom:1px solid rgba(243,178,61,.20);
+  overflow:hidden;
+  isolation:isolate;
+}
+.restaurant-page .store-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:.12;
+  background-image:
+    linear-gradient(45deg,transparent 44%,rgba(255,255,255,.35) 45%,rgba(255,255,255,.35) 46%,transparent 47%),
+    linear-gradient(-45deg,transparent 44%,rgba(243,178,61,.45) 45%,rgba(243,178,61,.45) 46%,transparent 47%);
+  background-size:32px 32px;
+  mask-image:linear-gradient(90deg,rgba(0,0,0,.75),transparent 72%);
+}
+.restaurant-page.rtl .store-hero::after{mask-image:linear-gradient(270deg,rgba(0,0,0,.75),transparent 72%)}
+.restaurant-page .store-hero>img{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:saturate(1.08) contrast(1.04)!important;
+  transform:scale(1.01);
+}
+.restaurant-page .store-overlay{
+  z-index:2;
+  background:
+    linear-gradient(90deg,rgba(7,31,25,.92) 0%,rgba(7,31,25,.70) 43%,rgba(7,31,25,.18) 78%,rgba(7,31,25,.08) 100%)!important;
+}
+.restaurant-page.rtl .store-overlay{
+  background:linear-gradient(270deg,rgba(7,31,25,.92) 0%,rgba(7,31,25,.70) 43%,rgba(7,31,25,.18) 78%,rgba(7,31,25,.08) 100%)!important;
+}
+.restaurant-page .store-title{
+  position:relative;
+  z-index:3;
+  padding:56px 0 48px!important;
+}
+.restaurant-page .store-title h1{
+  max-width:760px;
+  margin:12px 0 10px;
+  color:#fff7e7!important;
+  font-size:clamp(2.7rem,5.3vw,5rem)!important;
+  line-height:.98;
+  letter-spacing:-.055em!important;
+  text-shadow:0 7px 30px rgba(0,0,0,.28);
+}
+.restaurant-page.rtl .store-title h1{letter-spacing:0!important;line-height:1.12}
+.restaurant-page .store-cuisine{
+  margin:0 0 10px;
+  color:#ffd983!important;
+  font-weight:850;
+  letter-spacing:.01em;
+}
+.restaurant-page .store-meta-line,
+.restaurant-page .store-address{color:rgba(255,255,255,.82)!important}
+.restaurant-page .store-badges{display:flex;gap:8px;flex-wrap:wrap}
+.restaurant-page .store-badges .status-pill,
+.restaurant-page .store-badges .verify{
+  border:1px solid rgba(255,255,255,.20)!important;
+  background:rgba(255,255,255,.10)!important;
+  color:#fff!important;
+  backdrop-filter:blur(10px);
+  box-shadow:none!important;
+}
+.restaurant-page .store-badges .status-pill:not(.closed):not(.directory){background:rgba(33,153,96,.18)!important}
+.restaurant-page .store-badges .status-pill.closed{background:rgba(229,72,60,.20)!important}
+.restaurant-page .store-image-note{z-index:4}
+
+/* Category bar: strong branded transition from hero into menu. */
+.restaurant-page .store-tabs{
+  top:76px!important;
+  background:rgba(255,248,237,.96)!important;
+  border-bottom:1px solid rgba(18,60,50,.13)!important;
+  box-shadow:0 10px 26px rgba(18,60,50,.08)!important;
+  backdrop-filter:blur(16px);
+}
+.restaurant-page .store-tabs .container{min-height:58px}
+.restaurant-page .store-tabs a,
+.restaurant-page .store-tabs button{
+  color:var(--ae-r-forest-2)!important;
+  border:1px solid rgba(18,60,50,.12)!important;
+  background:rgba(255,255,255,.62)!important;
+  font-weight:850;
+}
+.restaurant-page .store-tabs a:hover,
+.restaurant-page .store-tabs button:hover{
+  color:var(--ae-r-red-dark)!important;
+  border-color:rgba(229,72,60,.28)!important;
+  background:#fff!important;
+}
+
+/* Warm, layered menu canvas with a subtle Afghan-market texture. */
+.restaurant-page main.section.soft{
+  position:relative;
+  background:
+    radial-gradient(circle at 8% 8%,rgba(243,178,61,.10),transparent 26rem),
+    radial-gradient(circle at 94% 24%,rgba(18,60,50,.08),transparent 28rem),
+    linear-gradient(180deg,#fff7e9 0%,#fffdf8 58%,#f7efe3 100%)!important;
+}
+.restaurant-page main.section.soft::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.055;
+  background-image:radial-gradient(circle,var(--ae-r-forest-2) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.restaurant-page .menu-layout{position:relative;z-index:1}
+
+.restaurant-page .menu-category-browser{
+  display:grid;
+  grid-template-columns:210px minmax(0,1fr);
+  gap:24px;
+  align-items:start;
+}
+.restaurant-page .menu-category-rail{
+  position:sticky;
+  top:154px;
+  padding:18px;
+  border:1px solid rgba(243,178,61,.18);
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 20% 0,rgba(243,178,61,.13),transparent 15rem),
+    linear-gradient(155deg,#103a30,#08271f);
+  box-shadow:0 20px 48px rgba(11,44,36,.16);
+  color:#fff;
+}
+.restaurant-page .menu-category-label{
+  display:block;
+  margin:0 0 12px;
+  color:#ffd77d;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.restaurant-page .menu-category-options{display:grid;gap:7px}
+.restaurant-page .menu-category-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 12px;
+  border:1px solid transparent;
+  border-radius:13px;
+  background:transparent;
+  color:rgba(255,255,255,.76);
+  font-weight:800;
+  cursor:pointer;
+  text-align:inherit;
+}
+.restaurant-page .menu-category-option:hover{
+  color:#fff;
+  background:rgba(255,255,255,.07);
+  border-color:rgba(255,255,255,.08);
+}
+.restaurant-page .menu-category-option.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--ae-r-red),var(--ae-r-red-dark));
+  border-color:rgba(255,255,255,.12);
+  box-shadow:0 9px 20px rgba(229,72,60,.20);
+}
+.restaurant-page .menu-category-option small{
+  min-width:25px;height:25px;
+  display:grid;place-items:center;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  color:inherit;
+  font-size:.72rem;
+}
+.restaurant-page .menu-section-heading{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 16px;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(18,60,50,.10);
+}
+.restaurant-page .menu-section-heading h2,
+.restaurant-page .directory-menu-section .menu-section-heading h3{
+  margin:0!important;
+  color:var(--ae-r-forest-2)!important;
+  font-size:clamp(1.65rem,2.4vw,2.25rem)!important;
+  letter-spacing:-.035em;
+}
+.restaurant-page.rtl .menu-section-heading h2,
+.restaurant-page.rtl .directory-menu-section .menu-section-heading h3{letter-spacing:0}
+.restaurant-page .menu-item-count{
+  flex:none;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f8e8c1;
+  color:#6f4a00;
+  font-size:.74rem;
+  font-weight:850;
+}
+.restaurant-page .menu-card-grid,
+.restaurant-page .directory-menu-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.restaurant-page .menu-item,
+.restaurant-page .premium-menu-card{
+  min-height:142px;
+  display:grid;
+  grid-template-columns:132px minmax(0,1fr) auto;
+  gap:15px;
+  align-items:center;
+  padding:12px!important;
+  margin:0!important;
+  border:1px solid rgba(18,60,50,.11)!important;
+  border-radius:22px!important;
+  background:rgba(255,253,248,.96)!important;
+  box-shadow:0 12px 30px rgba(18,60,50,.07)!important;
+  transform:none!important;
+  overflow:hidden;
+}
+.restaurant-page .menu-item:hover,
+.restaurant-page .premium-menu-card:hover{
+  transform:none!important;
+  border-color:rgba(229,72,60,.23)!important;
+  box-shadow:0 18px 38px rgba(18,60,50,.12)!important;
+}
+.restaurant-page .menu-item-media{
+  width:132px;
+  height:116px;
+  overflow:hidden;
+  border-radius:16px;
+  background:#eee3d2;
+}
+.restaurant-page .menu-item-media img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .35s ease,filter .25s ease;
+}
+.restaurant-page .menu-item:hover .menu-item-media img{transform:scale(1.035);filter:saturate(1.07)}
+.restaurant-page .menu-item-copy{min-width:0}
+.restaurant-page .menu-item h3{
+  margin:0 0 6px;
+  color:var(--ae-r-forest-2)!important;
+  font-size:1.03rem!important;
+}
+.restaurant-page .menu-item p{margin:0 0 10px;color:var(--ae-r-muted)!important;line-height:1.45}
+.restaurant-page .menu-price,
+.restaurant-page .price{color:var(--ae-r-red-dark)!important;font-weight:900}
+.restaurant-page .add-btn{
+  width:42px!important;height:42px!important;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,var(--ae-r-red),var(--ae-r-red-dark))!important;
+  box-shadow:0 8px 18px rgba(229,72,60,.20)!important;
+}
+.restaurant-page .add-btn:hover:not(:disabled){filter:brightness(1.05);transform:scale(1.03)}
+.restaurant-page .premium-menu-placeholder{background:linear-gradient(145deg,#f4e8d6,#ead9c0)!important;color:#856c4c!important}
+
+/* Basket becomes a recognizable Afghan Eats purchase panel. */
+.restaurant-page .cart-panel{
+  top:154px!important;
+  border:1px solid rgba(18,60,50,.13)!important;
+  border-radius:26px!important;
+  background:#fffdf8!important;
+  box-shadow:0 24px 60px rgba(18,60,50,.13)!important;
+  overflow:hidden;
+}
+.restaurant-page .cart-panel::before{
+  content:"";
+  display:block;
+  height:6px;
+  margin:-20px -20px 18px;
+  background:linear-gradient(90deg,var(--ae-r-red),var(--ae-r-saffron),var(--ae-r-forest-3));
+}
+.restaurant-page .cart-panel-head h2{color:var(--ae-r-forest-2)!important}
+.restaurant-page .cart-panel .btn-primary{
+  min-height:48px;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,var(--ae-r-red),var(--ae-r-red-dark))!important;
+  box-shadow:0 10px 24px rgba(229,72,60,.20)!important;
+}
+.restaurant-page .cart-panel .group-order{
+  margin-top:15px;
+  border-color:rgba(18,60,50,.11)!important;
+  background:#f7efe2!important;
+}
+.restaurant-page .cart-panel .safety-note{color:#78827d!important}
+
+/* Directory/preview restaurants use the same contemporary visual language. */
+.restaurant-page .directory-detail,
+.restaurant-page .directory-public-menu,
+.restaurant-page .directory-owner{
+  border-color:rgba(18,60,50,.11)!important;
+  background:rgba(255,253,248,.96)!important;
+  box-shadow:0 14px 36px rgba(18,60,50,.07)!important;
+}
+.restaurant-page .directory-kicker{color:var(--ae-r-red-dark)!important}
+.restaurant-page .directory-owner{border-radius:20px!important}
+
+/* Modal and mobile basket inherit the brand. */
+.restaurant-page .modal-card{
+  border:1px solid rgba(243,178,61,.20);
+  background:#fffaf1!important;
+  box-shadow:0 32px 90px rgba(6,31,25,.32)!important;
+}
+.restaurant-page .mobile-basket-bar{
+  background:linear-gradient(135deg,var(--ae-r-red),var(--ae-r-red-dark))!important;
+  box-shadow:0 -10px 30px rgba(18,60,50,.20)!important;
+}
+
+@media(max-width:1180px){
+  .restaurant-page .menu-layout{grid-template-columns:minmax(0,1fr) 330px!important;gap:24px!important}
+  .restaurant-page .menu-category-browser{grid-template-columns:180px minmax(0,1fr)}
+  .restaurant-page .menu-card-grid,
+  .restaurant-page .directory-menu-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:900px){
+  .restaurant-page .store-hero,.restaurant-page .store-hero-loading{min-height:340px!important}
+  .restaurant-page .store-title h1{font-size:clamp(2.5rem,9vw,4rem)!important}
+  .restaurant-page .menu-layout{grid-template-columns:1fr!important}
+  .restaurant-page .cart-panel{position:static!important;display:none}
+  .restaurant-page .menu-category-browser{grid-template-columns:1fr;gap:14px}
+  .restaurant-page .menu-category-rail{position:static;padding:12px;border-radius:18px}
+  .restaurant-page .menu-category-label{display:none}
+  .restaurant-page .menu-category-options{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .restaurant-page .menu-category-options::-webkit-scrollbar{display:none}
+  .restaurant-page .menu-category-option{width:auto;flex:0 0 auto;padding:9px 12px}
+  .restaurant-page .menu-category-option small{display:none}
+}
+
+@media(max-width:620px){
+  .restaurant-page .header .navlinks{display:none}
+  .restaurant-page .store-hero,.restaurant-page .store-hero-loading{min-height:310px!important}
+  .restaurant-page .store-overlay,
+  .restaurant-page.rtl .store-overlay{background:linear-gradient(180deg,rgba(7,31,25,.18),rgba(7,31,25,.88))!important}
+  .restaurant-page .store-title{padding:42px 0 32px!important}
+  .restaurant-page .store-title h1{font-size:2.55rem!important}
+  .restaurant-page main.section{padding-top:22px!important}
+  .restaurant-page .menu-section-heading{align-items:center}
+  .restaurant-page .menu-item,.restaurant-page .premium-menu-card{
+    grid-template-columns:102px minmax(0,1fr) 38px;
+    min-height:118px;
+    gap:11px;
+    border-radius:18px!important;
+  }
+  .restaurant-page .menu-item-media{width:102px;height:94px;border-radius:13px}
+  .restaurant-page .menu-item p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.82rem}
+  .restaurant-page .add-btn{width:38px!important;height:38px!important;border-radius:12px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .restaurant-page .menu-item-media img,.restaurant-page .add-btn{transition:none!important}
+}
