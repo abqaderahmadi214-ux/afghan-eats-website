@@ -1,13 +1,17 @@
 (() => {
-  const brandHref = '/assets/brand-theme.css?v=20260906-1';
-  if (!document.querySelector(`link[href="${brandHref}"]`)) {
+  const styles = [
+    ['/assets/brand-theme.css?v=20260906-2', 'aeBrandTheme'],
+    ['/assets/home-signature.css?v=20260906-1', 'aeHomeSignature']
+  ];
+  for (const [href, datasetKey] of styles) {
+    if (document.querySelector(`link[href="${href}"]`)) continue;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = brandHref;
-    link.dataset.aeBrandTheme = '1';
+    link.href = href;
+    link.dataset[datasetKey] = '1';
     document.head.appendChild(link);
   }
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#123c32');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0b332a');
 
   const grid = document.getElementById('cuisinePhotoGrid');
   if (!grid) return;
