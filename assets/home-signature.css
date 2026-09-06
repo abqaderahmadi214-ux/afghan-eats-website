@@ -1,0 +1,282 @@
+/* Afghan Eats signature homepage — 2026-09-06
+   Purpose: make the public home unmistakably Afghan Eats, not a generic light marketplace.
+   Visual language: Herat forest, pomegranate red, saffron, warm bread/cream, subtle Afghan geometry.
+*/
+
+.premium-home{
+  --ae-sig-forest:#0b332a;
+  --ae-sig-forest-2:#06251f;
+  --ae-sig-forest-3:#155345;
+  --ae-sig-red:#e64a3d;
+  --ae-sig-red-2:#c9362d;
+  --ae-sig-saffron:#f4b63f;
+  --ae-sig-gold:#ffd878;
+  --ae-sig-cream:#fff4df;
+  --ae-sig-bread:#f4e4cb;
+  --ae-sig-ink:#13231e;
+  --ae-sig-mint:#e7f2ec;
+  background:var(--ae-sig-forest-2)!important;
+}
+
+/* Dark brand chrome: strong and recognizable before the user even scrolls. */
+.premium-home .header{
+  background:rgba(7,39,32,.96)!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 12px 34px rgba(2,19,15,.22)!important;
+  backdrop-filter:blur(18px) saturate(1.12);
+}
+.premium-home .header::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-1px;
+  height:3px;
+  background:linear-gradient(90deg,var(--ae-sig-saffron) 0 24%,var(--ae-sig-red) 24% 56%,#fff1be 56% 68%,var(--ae-sig-forest-3) 68% 100%);
+  opacity:.92;
+  pointer-events:none;
+}
+.premium-home .brand,
+.premium-home .brand-wordmark{color:#fff7e8!important}
+.premium-home .brand-emblem{color:var(--ae-sig-red)!important}
+.premium-home .navlinks a{color:rgba(255,247,232,.78)!important}
+.premium-home .navlinks a:hover,
+.premium-home .navlinks a:focus-visible{color:#fff!important}
+.premium-home .navlinks a::before{background:var(--ae-sig-saffron)!important}
+.premium-home .lang,
+.premium-home .btn-light{
+  color:#fff7e8!important;
+  border-color:rgba(255,255,255,.17)!important;
+  background:rgba(255,255,255,.07)!important;
+}
+.premium-home .lang:hover,
+.premium-home .btn-light:hover{background:rgba(255,255,255,.12)!important}
+.premium-home .btn-primary{
+  background:linear-gradient(135deg,#ef594b,var(--ae-sig-red-2))!important;
+  box-shadow:0 11px 26px rgba(230,74,61,.28)!important;
+}
+
+/* Hero: brand theatre, not a pale landing-page template. */
+.premium-home .hero{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 13% 18%,rgba(244,182,63,.22),transparent 24rem),
+    radial-gradient(circle at 89% 18%,rgba(230,74,61,.20),transparent 28rem),
+    linear-gradient(118deg,#082b24 0%,#0d3b30 48%,#0a2f27 100%)!important;
+  border-bottom:0!important;
+}
+.premium-home .hero::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:-110px auto auto -90px!important;
+  width:390px!important;
+  height:390px!important;
+  border-radius:50%!important;
+  background:
+    repeating-conic-gradient(from 45deg,rgba(244,182,63,.13) 0 9deg,transparent 9deg 18deg)!important;
+  -webkit-mask:radial-gradient(circle,transparent 0 25%,#000 26% 68%,transparent 69%);
+  mask:radial-gradient(circle,transparent 0 25%,#000 26% 68%,transparent 69%);
+  opacity:.9!important;
+  filter:none!important;
+  pointer-events:none!important;
+  animation:aeSignatureSpin 32s linear infinite!important;
+}
+.premium-home .hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  right:-120px!important;
+  bottom:-170px!important;
+  width:430px!important;
+  height:430px!important;
+  border-radius:42%!important;
+  background:
+    linear-gradient(45deg,transparent 46%,rgba(255,216,120,.09) 47% 53%,transparent 54%),
+    linear-gradient(-45deg,transparent 46%,rgba(230,74,61,.08) 47% 53%,transparent 54%)!important;
+  background-size:44px 44px!important;
+  opacity:.85!important;
+  filter:none!important;
+  pointer-events:none!important;
+  animation:none!important;
+}
+@keyframes aeSignatureSpin{to{transform:rotate(360deg)}}
+.premium-home .hero-grid{position:relative;z-index:2}
+.premium-home .hero-location{
+  color:#1e241d!important;
+  background:linear-gradient(135deg,#ffd879,#f4b63f)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 10px 30px rgba(2,18,14,.18)!important;
+  font-weight:900!important;
+}
+.premium-home .hero-location span[aria-hidden="true"]{color:var(--ae-sig-red)!important}
+.premium-home .hero h1{
+  color:#fff5e2!important;
+  background:linear-gradient(120deg,#fff7e9 0%,#ffd779 48%,#fff1cf 78%,#fff7e9 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:none!important;
+}
+.premium-home .hero p{color:rgba(255,247,232,.76)!important}
+.premium-home .mode-tabs{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.05)!important;
+}
+.premium-home .mode-tabs button{color:rgba(255,247,232,.76)!important}
+.premium-home .mode-tabs button.active{
+  color:var(--ae-sig-forest-2)!important;
+  background:linear-gradient(135deg,#ffe6a5,var(--ae-sig-saffron))!important;
+  box-shadow:0 8px 20px rgba(244,182,63,.16)!important;
+}
+.premium-home .address-box{
+  border:2px solid rgba(244,182,63,.42)!important;
+  background:#fffaf0!important;
+  box-shadow:0 22px 54px rgba(1,15,12,.28)!important;
+}
+.premium-home .address-box:focus-within{
+  border-color:var(--ae-sig-saffron)!important;
+  box-shadow:0 24px 60px rgba(1,15,12,.32),0 0 0 4px rgba(244,182,63,.12)!important;
+}
+.premium-home .address-box input{color:var(--ae-sig-ink)!important}
+.premium-home .hero-carousel{
+  border:2px solid rgba(255,216,120,.52)!important;
+  box-shadow:0 30px 85px rgba(1,17,13,.40),0 0 0 8px rgba(255,255,255,.025)!important;
+}
+.premium-home .hero-carousel:hover{box-shadow:0 34px 92px rgba(1,17,13,.46),0 0 0 8px rgba(244,182,63,.035)!important}
+.premium-home .hero-slide-badge{background:var(--ae-sig-red)!important}
+.premium-home .hero-slide-kicker{background:rgba(11,51,42,.58)!important;border:1px solid rgba(255,255,255,.18)}
+.premium-home .hero-slide-cta{color:#ffe4a3!important}
+
+/* A small woven divider makes the brand language repeat across the page. */
+.premium-home main>.section:not(.soft){
+  position:relative;
+  background:
+    radial-gradient(circle at 92% 16%,rgba(230,74,61,.10),transparent 23rem),
+    radial-gradient(circle at 8% 88%,rgba(244,182,63,.15),transparent 24rem),
+    linear-gradient(180deg,#fff0d7 0%,#fff8eb 56%,#f6ead8 100%)!important;
+}
+.premium-home main>.section:not(.soft)::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:0;
+  height:12px;
+  background:
+    linear-gradient(135deg,var(--ae-sig-saffron) 25%,transparent 25%) -8px 0/16px 16px,
+    linear-gradient(225deg,var(--ae-sig-red) 25%,transparent 25%) -8px 0/16px 16px,
+    linear-gradient(315deg,var(--ae-sig-forest-3) 25%,transparent 25%) 0 0/16px 16px,
+    linear-gradient(45deg,#fff1bf 25%,transparent 25%) 0 0/16px 16px;
+  opacity:.82;
+  pointer-events:none;
+}
+.premium-home .section-head h2{color:var(--ae-sig-forest)!important}
+.premium-home .section-head h2::after{
+  background:linear-gradient(90deg,var(--ae-sig-red),var(--ae-sig-saffron),var(--ae-sig-forest-3))!important;
+  width:72px!important;
+}
+.premium-home .cuisine-photo-card{
+  border:2px solid rgba(11,51,42,.09)!important;
+  border-radius:26px 10px 26px 10px!important;
+  box-shadow:0 16px 34px rgba(11,51,42,.11)!important;
+}
+.premium-home .cuisine-photo-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:inherit;
+  pointer-events:none;
+}
+.premium-home .cuisine-photo-card b{z-index:3!important}
+
+/* Marketplace section becomes a branded night-market field. */
+.premium-home .section.soft{
+  position:relative;
+  background:
+    radial-gradient(circle at 12% 12%,rgba(244,182,63,.15),transparent 26rem),
+    radial-gradient(circle at 90% 86%,rgba(230,74,61,.13),transparent 30rem),
+    linear-gradient(135deg,#0a2f27 0%,#0d3c31 54%,#082b24 100%)!important;
+  border:0!important;
+  overflow:hidden;
+}
+.premium-home .section.soft::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  right:-160px;
+  top:-180px;
+  border-radius:50%;
+  background:repeating-conic-gradient(from 45deg,rgba(255,255,255,.035) 0 9deg,transparent 9deg 18deg);
+  pointer-events:none;
+}
+.premium-home .section.soft .container{position:relative;z-index:1}
+.premium-home .section.soft .section-head h2{color:#fff4df!important}
+.premium-home .section.soft .section-head p{color:rgba(255,244,223,.68)!important}
+.premium-home .section.soft .section-head .btn-light{
+  color:#fff5e5!important;
+  border-color:rgba(244,182,63,.28)!important;
+  background:rgba(244,182,63,.08)!important;
+}
+.premium-home .restaurant-card{
+  background:#fff7e8!important;
+  border:2px solid rgba(244,182,63,.18)!important;
+  box-shadow:0 18px 44px rgba(1,18,14,.25)!important;
+}
+.premium-home .restaurant-card:hover,
+.premium-home .restaurant-card:focus-within{
+  transform:none!important;
+  border-color:rgba(244,182,63,.54)!important;
+  box-shadow:0 26px 62px rgba(1,18,14,.34)!important;
+}
+.premium-home .restaurant-body h3{color:var(--ae-sig-forest)!important}
+.premium-home .rating{background:#e4efe9!important;color:var(--ae-sig-forest)!important}
+
+/* Turn the partner band into the pomegranate signature moment. */
+.premium-home .community-band{
+  background:
+    radial-gradient(circle at 12% 20%,rgba(255,216,120,.23),transparent 25rem),
+    radial-gradient(circle at 92% 78%,rgba(11,51,42,.27),transparent 27rem),
+    linear-gradient(122deg,#ba3028 0%,#e64a3d 48%,#c5382f 100%)!important;
+  border-top:12px solid var(--ae-sig-saffron)!important;
+}
+.premium-home .community-band::before{
+  background:radial-gradient(circle,rgba(255,216,120,.24),transparent 68%)!important;
+}
+.premium-home .join-eyebrow{color:#ffe39f!important}
+.premium-home .join-copy h2{color:#fff9ef!important}
+.premium-home .join-copy p{color:rgba(255,249,239,.78)!important}
+.premium-home .join-link{
+  background:rgba(79,15,12,.16)!important;
+  border-color:rgba(255,255,255,.25)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.11),0 14px 32px rgba(84,16,12,.12)!important;
+}
+.premium-home .join-link:hover{background:rgba(79,15,12,.26)!important;border-color:#ffe39f!important}
+.premium-home .join-link>b{color:#ffe39f!important}
+
+.premium-home .footer{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.015),transparent 20%),
+    #041b16!important;
+  border-top:1px solid rgba(255,216,120,.15);
+}
+
+/* Mobile keeps the same identity rather than falling back to a white template. */
+@media(max-width:720px){
+  .premium-home .header{background:rgba(6,37,31,.985)!important}
+  .premium-home .hero{
+    background:
+      radial-gradient(circle at 8% 4%,rgba(244,182,63,.18),transparent 16rem),
+      radial-gradient(circle at 94% 34%,rgba(230,74,61,.18),transparent 18rem),
+      linear-gradient(155deg,#082b24 0%,#0c392f 60%,#072820 100%)!important;
+  }
+  .premium-home .hero::before{width:280px!important;height:280px!important;left:-120px!important;top:-100px!important}
+  .premium-home .hero::after{width:250px!important;height:250px!important;right:-110px!important;bottom:-100px!important;background-size:34px 34px!important}
+  .premium-home .cuisine-photo-card{border-radius:20px 8px 20px 8px!important}
+  .premium-home .community-band{border-top-width:8px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .premium-home .hero::before{animation:none!important}
+}
