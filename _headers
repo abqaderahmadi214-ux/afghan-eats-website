@@ -1,0 +1,10 @@
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/live-search.js
+  Cache-Control: no-cache, must-revalidate
+/assets/home-hero-v3.css
+  Cache-Control: no-cache, must-revalidate
+/assets/home-hero-copy-v4.css
+  Cache-Control: no-cache, must-revalidate
