@@ -1,4 +1,14 @@
 (() => {
+  const brandHref = '/assets/brand-theme.css?v=20260906-1';
+  if (!document.querySelector(`link[href="${brandHref}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = brandHref;
+    link.dataset.aeBrandTheme = '1';
+    document.head.appendChild(link);
+  }
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#123c32');
+
   const grid = document.getElementById('cuisinePhotoGrid');
   if (!grid) return;
   const cards = [...grid.querySelectorAll('.cuisine-photo-card')];
