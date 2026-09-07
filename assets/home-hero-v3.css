@@ -200,3 +200,326 @@
   .premium-home .restaurant-grid,.premium-home .cuisine-photo-grid{grid-template-columns:1fr!important}
   .premium-home main>.section.soft,.premium-home main>.section:not(.soft){padding:44px 0 50px!important}
 }
+
+/* 2026-09-07 — final restaurant marketplace treatment.
+   Restaurant cards and photography are intentionally static: no translate, scale,
+   pointer-following glow or reveal movement. Interaction is expressed only through
+   border/shadow/color so the card never shakes under the pointer. */
+.premium-home main>.section.soft{
+  position:relative!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(243,178,61,.08),transparent 28rem),
+    radial-gradient(circle at 92% 88%,rgba(229,72,60,.055),transparent 30rem),
+    linear-gradient(180deg,#fffaf1 0%,#fff7eb 100%)!important;
+  border-top:1px solid rgba(18,60,50,.06)!important;
+}
+.premium-home main>.section.soft::before{
+  display:none!important;
+}
+.premium-home main>.section.soft .section-head{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:28px!important;
+  margin-bottom:30px!important;
+}
+.premium-home.rtl main>.section.soft .section-head{
+  direction:rtl!important;
+}
+.premium-home main>.section.soft .section-head>div{
+  max-width:760px!important;
+}
+.premium-home main>.section.soft .section-head h2{
+  margin:0!important;
+  color:#0b332a!important;
+  font-weight:950!important;
+  line-height:1.12!important;
+}
+.premium-home main>.section.soft .section-head h2::after{
+  width:62px!important;
+  height:3px!important;
+  margin-top:12px!important;
+  background:linear-gradient(90deg,#e5483c,#f3b23d)!important;
+}
+.premium-home main>.section.soft .section-head p{
+  max-width:680px!important;
+  margin-top:10px!important;
+  color:#66756f!important;
+  font-size:.98rem!important;
+  line-height:1.7!important;
+}
+.premium-home main>.section.soft .section-head .btn.btn-light{
+  flex:0 0 auto!important;
+  min-height:44px!important;
+  padding:0 18px!important;
+  border:1px solid rgba(18,60,50,.16)!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  color:#123c32!important;
+  box-shadow:0 6px 18px rgba(18,60,50,.05)!important;
+  font-size:.9rem!important;
+  font-weight:850!important;
+  opacity:1!important;
+}
+.premium-home main>.section.soft .section-head .btn.btn-light:hover{
+  transform:none!important;
+  border-color:rgba(18,60,50,.30)!important;
+  background:#f8f2e7!important;
+  color:#0b332a!important;
+  box-shadow:0 8px 20px rgba(18,60,50,.07)!important;
+}
+
+.premium-home main>.section.soft #homeRestaurants.restaurant-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))!important;
+  gap:24px!important;
+  align-items:stretch!important;
+  width:100%!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-card,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:hover,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:focus,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:focus-within,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card.ae-reveal,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card.ae-reveal.is-revealed{
+  position:relative!important;
+  display:block!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  opacity:1!important;
+  transform:none!important;
+  translate:none!important;
+  scale:none!important;
+  rotate:none!important;
+  overflow:hidden!important;
+  border:1px solid rgba(18,60,50,.11)!important;
+  border-radius:22px!important;
+  background:#fffdf8!important;
+  box-shadow:0 12px 30px rgba(18,60,50,.075)!important;
+  transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease!important;
+  will-change:auto!important;
+  contain:layout paint!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:hover,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:focus-within{
+  transform:none!important;
+  border-color:rgba(18,60,50,.23)!important;
+  background:#fff!important;
+  box-shadow:0 16px 38px rgba(18,60,50,.105)!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-card::after{
+  display:none!important;
+  content:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-card-link{
+  display:flex!important;
+  height:100%!important;
+  flex-direction:column!important;
+  color:inherit!important;
+  text-decoration:none!important;
+  transform:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-image{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:16/10!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  border-radius:0!important;
+  background:
+    radial-gradient(circle at 18% 15%,rgba(243,178,61,.18),transparent 12rem),
+    linear-gradient(135deg,#123c32,#0b2c24)!important;
+  transform:none!important;
+  contain:paint!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-image img,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:hover .restaurant-image img,
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:focus-within .restaurant-image img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  opacity:1!important;
+  transform:none!important;
+  translate:none!important;
+  scale:none!important;
+  rotate:none!important;
+  filter:saturate(1.02) contrast(1.01)!important;
+  transition:filter .18s ease!important;
+  animation:none!important;
+  will-change:auto!important;
+  backface-visibility:hidden!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-card:hover .restaurant-image img{
+  filter:saturate(1.055) contrast(1.02)!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-photo-placeholder.restaurant-specific-placeholder{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  padding:22px!important;
+  text-align:center!important;
+  color:#fff8ed!important;
+  background:
+    radial-gradient(circle at 22% 18%,rgba(243,178,61,.20),transparent 10rem),
+    linear-gradient(135deg,#174b3e 0%,#0b332a 58%,#082820 100%)!important;
+  background-image:
+    radial-gradient(circle at 22% 18%,rgba(243,178,61,.20),transparent 10rem),
+    linear-gradient(135deg,#174b3e 0%,#0b332a 58%,#082820 100%)!important;
+  transform:none!important;
+  animation:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-photo-placeholder[hidden]{
+  display:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-placeholder-mark{
+  display:grid!important;
+  place-items:center!important;
+  width:58px!important;
+  height:58px!important;
+  border:1px solid rgba(255,226,159,.35)!important;
+  border-radius:18px!important;
+  background:rgba(255,248,237,.10)!important;
+  color:#ffd878!important;
+  font-size:1.15rem!important;
+  font-weight:950!important;
+  letter-spacing:.03em!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08)!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-photo-placeholder b{
+  color:#fff8ed!important;
+  font-size:1rem!important;
+  font-weight:850!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-photo-placeholder small{
+  color:rgba(255,248,237,.66)!important;
+  font-size:.78rem!important;
+}
+.premium-home main>.section.soft #homeRestaurants .status-pill{
+  position:absolute!important;
+  top:14px!important;
+  inset-inline-start:14px!important;
+  z-index:3!important;
+  min-height:28px!important;
+  padding:5px 10px!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:999px!important;
+  background:rgba(8,40,32,.82)!important;
+  color:#fff!important;
+  font-size:.7rem!important;
+  font-weight:850!important;
+  backdrop-filter:blur(10px)!important;
+  transform:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-body{
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  gap:8px!important;
+  min-height:142px!important;
+  padding:18px 18px 19px!important;
+  background:#fffdf8!important;
+  transform:none!important;
+}
+.premium-home main>.section.soft #homeRestaurants .title-row{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+}
+.premium-home main>.section.soft #homeRestaurants .restaurant-body h3{
+  margin:0!important;
+  color:#123c32!important;
+  font-size:1.08rem!important;
+  font-weight:900!important;
+  line-height:1.35!important;
+}
+.premium-home main>.section.soft #homeRestaurants .tagline{
+  color:#6a7772!important;
+  font-size:.83rem!important;
+  line-height:1.5!important;
+}
+.premium-home main>.section.soft #homeRestaurants .browse-card-meta{
+  margin-top:auto!important;
+  color:#344f46!important;
+  font-size:.82rem!important;
+  font-weight:750!important;
+  line-height:1.45!important;
+}
+.premium-home main>.section.soft #homeRestaurants .rating{
+  flex:0 0 auto!important;
+  padding:5px 8px!important;
+  border-radius:999px!important;
+  background:#e8f2ed!important;
+  color:#123c32!important;
+  font-size:.74rem!important;
+  font-weight:900!important;
+}
+.premium-home main>.section.soft #homeRestaurants .fav{
+  top:14px!important;
+  inset-inline-end:14px!important;
+  z-index:5!important;
+  width:36px!important;
+  height:36px!important;
+  border:1px solid rgba(18,60,50,.10)!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.94)!important;
+  color:#123c32!important;
+  box-shadow:0 5px 14px rgba(18,60,50,.10)!important;
+  transform:none!important;
+  transition:background .18s ease,color .18s ease,border-color .18s ease!important;
+}
+.premium-home main>.section.soft #homeRestaurants .fav:hover{
+  transform:none!important;
+  background:#fff3e6!important;
+  border-color:rgba(229,72,60,.20)!important;
+  color:#e5483c!important;
+}
+
+.premium-home main>.section.soft #homeRestaurants .ae-loading-card{
+  overflow:hidden!important;
+  border:1px solid rgba(18,60,50,.08)!important;
+  border-radius:22px!important;
+  background:#fffdf8!important;
+  box-shadow:0 10px 26px rgba(18,60,50,.05)!important;
+}
+.premium-home main>.section.soft #homeRestaurants .ae-loading-media{
+  aspect-ratio:16/10!important;
+  min-height:0!important;
+  background:linear-gradient(110deg,#edf1ee 20%,#f7f4ec 38%,#edf1ee 56%)!important;
+  background-size:220% 100%!important;
+}
+
+@media (max-width:1000px){
+  .premium-home main>.section.soft #homeRestaurants.restaurant-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media (max-width:720px){
+  .premium-home main>.section.soft .section-head{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:16px!important;
+  }
+  .premium-home.rtl main>.section.soft .section-head{
+    align-items:flex-end!important;
+  }
+  .premium-home main>.section.soft #homeRestaurants.restaurant-grid{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+  }
+  .premium-home main>.section.soft #homeRestaurants .restaurant-body{
+    min-height:0!important;
+  }
+}
