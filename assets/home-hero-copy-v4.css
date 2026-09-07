@@ -1,6 +1,4 @@
-/* Afghan Eats homepage hero copy v5 — 2026-09-07
-   Controlled typography for the balanced two-column hero.
-*/
+/* Afghan Eats homepage hero copy — final disciplined hierarchy, 2026-09-07 */
 
 .premium-home .hero-copy{
   display:flex!important;
@@ -8,13 +6,21 @@
   justify-content:center!important;
 }
 
+.premium-home .hero-location{
+  margin:0 0 12px!important;
+  font-size:.78rem!important;
+  font-weight:850!important;
+  letter-spacing:.02em!important;
+  color:#f3b23d!important;
+}
+
 .premium-home .hero h1{
-  margin:0 0 18px!important;
-  max-width:10.5ch!important;
+  margin:0 0 16px!important;
+  max-width:10.8ch!important;
   color:#fff4df!important;
-  font-size:clamp(3rem,3.4vw,4rem)!important;
-  line-height:1.02!important;
-  letter-spacing:-.035em!important;
+  font-size:clamp(2.9rem,3.05vw,3.75rem)!important;
+  line-height:1.04!important;
+  letter-spacing:-.032em!important;
   text-wrap:balance!important;
   word-break:normal!important;
   overflow-wrap:normal!important;
@@ -22,11 +28,11 @@
 
 .premium-home.rtl .hero h1{
   width:100%!important;
-  max-width:590px!important;
-  margin:0 0 18px auto!important;
+  max-width:570px!important;
+  margin:0 0 16px auto!important;
   color:#fff4df!important;
-  font-size:clamp(3rem,3.15vw,3.85rem)!important;
-  line-height:1.24!important;
+  font-size:clamp(2.85rem,2.85vw,3.55rem)!important;
+  line-height:1.28!important;
   letter-spacing:0!important;
   text-align:right!important;
   direction:rtl!important;
@@ -37,17 +43,17 @@
 
 .premium-home .hero-copy>p{
   max-width:540px!important;
-  margin:0 0 24px!important;
-  font-size:1rem!important;
-  line-height:1.65!important;
+  margin:0 0 22px!important;
+  font-size:.98rem!important;
+  line-height:1.68!important;
   color:rgba(255,244,223,.72)!important;
 }
 
 .premium-home.rtl .hero-copy>p{
   width:100%!important;
   max-width:560px!important;
-  margin:0 0 24px auto!important;
-  font-size:1rem!important;
+  margin:0 0 22px auto!important;
+  font-size:.98rem!important;
   line-height:1.9!important;
   text-align:right!important;
   direction:rtl!important;
@@ -62,94 +68,32 @@
 }
 
 .premium-home .hero-order,
-.premium-home.rtl .hero-order{
-  max-width:590px!important;
-}
-
-.premium-home.rtl .hero-order{
-  margin-left:auto!important;
-  margin-right:0!important;
-}
-
-.premium-home.rtl .mode-tabs{
-  margin-left:auto!important;
-  margin-right:0!important;
-}
-
+.premium-home.rtl .hero-order,
 .premium-home .address-box,
 .premium-home.rtl .address-box{
-  max-width:590px!important;
-}
-
-.premium-home.rtl .address-box{
-  margin-left:auto!important;
-  margin-right:0!important;
-}
-
-.premium-home.rtl .address-box input{
-  direction:rtl!important;
-  text-align:right!important;
+  max-width:600px!important;
 }
 
 @media (min-width:1600px){
-  .premium-home .hero h1{
-    font-size:clamp(3.35rem,3.15vw,4.15rem)!important;
-  }
-  .premium-home.rtl .hero h1{
-    max-width:610px!important;
-    font-size:clamp(3.25rem,3vw,4rem)!important;
-  }
+  .premium-home .hero h1{font-size:clamp(3.1rem,2.9vw,3.9rem)!important}
+  .premium-home.rtl .hero h1{max-width:590px!important;font-size:clamp(3rem,2.7vw,3.7rem)!important}
 }
 
 @media (min-width:1001px) and (max-width:1279px){
-  .premium-home .hero h1{
-    font-size:clamp(2.7rem,4vw,3.35rem)!important;
-  }
-  .premium-home.rtl .hero h1{
-    max-width:510px!important;
-    font-size:clamp(2.65rem,3.85vw,3.25rem)!important;
-    line-height:1.25!important;
-  }
-  .premium-home .hero-copy>p,
-  .premium-home.rtl .hero-copy>p{
-    font-size:.96rem!important;
-  }
+  .premium-home .hero h1{font-size:clamp(2.6rem,3.8vw,3.2rem)!important}
+  .premium-home.rtl .hero h1{max-width:510px!important;font-size:clamp(2.55rem,3.6vw,3.1rem)!important;line-height:1.29!important}
+  .premium-home .hero-copy>p,.premium-home.rtl .hero-copy>p{font-size:.95rem!important}
 }
 
 @media (max-width:1000px){
-  .premium-home .hero-copy,
-  .premium-home.rtl .hero-copy{
-    max-width:680px!important;
-  }
-  .premium-home .hero h1{
-    max-width:11ch!important;
-    font-size:clamp(2.5rem,7.5vw,3.2rem)!important;
-    line-height:1.06!important;
-  }
-  .premium-home.rtl .hero h1{
-    width:100%!important;
-    max-width:620px!important;
-    margin-left:auto!important;
-    margin-right:0!important;
-    font-size:clamp(2.45rem,7vw,3.1rem)!important;
-    line-height:1.28!important;
-    text-align:right!important;
-  }
-  .premium-home.rtl .hero-copy>p{
-    text-align:right!important;
-  }
+  .premium-home .hero-copy,.premium-home.rtl .hero-copy{max-width:680px!important}
+  .premium-home .hero h1{max-width:11ch!important;font-size:clamp(2.4rem,7vw,3rem)!important;line-height:1.08!important}
+  .premium-home.rtl .hero h1{width:100%!important;max-width:620px!important;margin-left:auto!important;margin-right:0!important;font-size:clamp(2.35rem,6.6vw,2.95rem)!important;line-height:1.3!important;text-align:right!important}
+  .premium-home.rtl .hero-copy>p{text-align:right!important}
 }
 
 @media (max-width:560px){
-  .premium-home .hero h1{
-    font-size:clamp(2.15rem,10vw,2.75rem)!important;
-  }
-  .premium-home.rtl .hero h1{
-    font-size:clamp(2.1rem,9.7vw,2.65rem)!important;
-    line-height:1.3!important;
-  }
-  .premium-home .hero-copy>p,
-  .premium-home.rtl .hero-copy>p{
-    font-size:.92rem!important;
-  }
+  .premium-home .hero h1{font-size:clamp(2.05rem,9.4vw,2.6rem)!important}
+  .premium-home.rtl .hero h1{font-size:clamp(2rem,9vw,2.55rem)!important;line-height:1.34!important}
+  .premium-home .hero-copy>p,.premium-home.rtl .hero-copy>p{font-size:.91rem!important}
 }
