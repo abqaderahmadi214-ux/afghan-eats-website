@@ -231,3 +231,10 @@ body.ae-premium.rtl{font-family:Vazirmatn,Tahoma,Arial,sans-serif;letter-spacing
 @media(max-width:520px){.ae-premium .restaurant-grid{grid-template-columns:1fr!important}.ae-premium .restaurant-image{height:205px!important}.ae-premium .restaurant-card .restaurant-body{padding:18px!important}.ae-premium .ae-restaurants .restaurant-grid{grid-template-columns:1fr!important}}
 @media(max-width:370px){.ae-premium .container{width:calc(100% - 28px)}.ae-premium .brand{font-size:18px}.ae-premium .actions{gap:10px}.ae-premium .ae-hero h1{font-size:38px}.ae-premium .address-box input{font-size:14px}.ae-premium .address-box .btn{padding:11px 10px;font-size:12px}.ae-join-card{padding:22px}.ae-join-icon{display:none}}
 @media(prefers-reduced-motion:reduce){html[data-design="2026"]{scroll-behavior:auto}.ae-premium *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* A single available city does not need a second header control. */
+.ae-premium .ae-city-select:has(option:only-child){display:none}
+.ae-premium .ae-city-select{font-size:13px;max-width:130px;border-color:var(--line);font-weight:650;min-height:42px}
+.ae-premium .footer-legal{align-items:center}
+
+.ae-premium.rtl .ae-cuisine-all .ae-icon{transform:scaleX(-1)}

@@ -22,7 +22,7 @@
     if(!fa())return;
     const location=document.querySelector('.topbar .container > span:first-child');
     if(location&&location.textContent.trim()!=='📍 هرات، افغانستان')location.textContent='📍 هرات، افغانستان';
-    const footer=document.querySelector('.footer-bottom');if(footer&&footer.textContent.trim()!=='© 2026 Afghan Eats · هرات، افغانستان')footer.textContent='© 2026 Afghan Eats · هرات، افغانستان';
+    const footer=document.querySelector('.footer-bottom [data-copyright]')||document.querySelector('.footer-bottom');if(footer&&footer.textContent.trim()!=='© 2026 Afghan Eats · هرات، افغانستان')footer.textContent='© 2026 Afghan Eats · هرات، افغانستان';
     document.querySelectorAll('[aria-label="Cart"]').forEach(el=>el.setAttribute('aria-label','سبد سفارش'));
     const city=document.querySelector('select[aria-label="Afghan Eats city"]');if(city)city.setAttribute('aria-label','شهر افغان ایتس');
   }
