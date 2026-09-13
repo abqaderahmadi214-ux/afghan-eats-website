@@ -111,8 +111,8 @@ function applyCityText() {
     if (en) en.textContent = `Delivering across ${city.name_en}`;
     if (fa) fa.textContent = `ارسال در سراسر ${city.name_dari || city.name_en}`;
   }
-  const footer = document.querySelector('.footer-bottom');
-  if (footer) footer.textContent = `© 2026 Afghan Eats · ${name}, Afghanistan`;
+  const footer = document.querySelector('.footer-bottom [data-copyright]')||document.querySelector('.footer-bottom');
+  if (footer) footer.textContent = cText(`© 2026 Afghan Eats · ${name}, Afghanistan`, `© 2026 افغان ایتس · ${name}، افغانستان`);
 }
 
 function applyCityAreas() {

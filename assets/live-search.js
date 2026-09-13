@@ -1,4 +1,5 @@
 (function loadAfghanEatsHomeHeroV3(){
+  if(document.documentElement.dataset.design==='2026')return;
   const path=location.pathname.toLowerCase();
   if(!(path==='/'||path.endsWith('/index.html')))return;
   const href='/assets/home-hero-v3.css?v=20260907-1';
