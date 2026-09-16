@@ -17,7 +17,7 @@ Never commit private API secrets, database passwords, JWT secrets, or Supabase s
 
 ## Current mobile releases
 
-- Customer Android: `net.afghaneats.customer` — version `1.2.0`, versionCode `5`
+- Customer Android: `net.afghaneats.customer` — version `1.2.0`, versionCode `6`
 - Rider Android: `net.afghaneats.rider` — version `1.1.2`, versionCode `4`
 - Production API: `https://afghaneats-api.onrender.com`
 
