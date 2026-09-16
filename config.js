@@ -2,7 +2,12 @@ window.AFGHAN_EATS_CONFIG = {
   apiBaseUrl: 'https://afghaneats-api.onrender.com',
   supportPhone: '+93 796 851 968',
   supportEmail: 'support@afghaneats.net',
-  customerAndroidPackage: 'com.app.afghaneatsmobile',
+  customerAndroidPackage: 'net.afghaneats.customer',
+  customerAndroidVersion: '1.2.0',
+  customerAndroidVersionCode: 5,
+  riderAndroidPackage: 'net.afghaneats.rider',
+  riderAndroidVersion: '1.1.2',
+  riderAndroidVersionCode: 4,
   customerAndroidUrl: '',
   customerIosUrl: '',
   launchCity: 'Herat'
