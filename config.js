@@ -4,7 +4,7 @@ window.AFGHAN_EATS_CONFIG = {
   supportEmail: 'support@afghaneats.net',
   customerAndroidPackage: 'net.afghaneats.customer',
   customerAndroidVersion: '1.2.0',
-  customerAndroidVersionCode: 5,
+  customerAndroidVersionCode: 6,
   riderAndroidPackage: 'net.afghaneats.rider',
   riderAndroidVersion: '1.1.2',
   riderAndroidVersionCode: 4,
