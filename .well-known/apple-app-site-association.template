@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appID": "${APPLE_TEAM_ID}.com.app.afghaneatsmobile",
+        "appID": "${APPLE_TEAM_ID}.net.afghaneats.customer",
         "components": [
           {
             "/": "/restaurant/*",
