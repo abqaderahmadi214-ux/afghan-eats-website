@@ -5,9 +5,21 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.app.afghaneatsmobile",
+      "package_name": "net.afghaneats.customer",
       "sha256_cert_fingerprints": [
-        "01:76:4E:62:3F:C4:84:2A:AF:55:4F:E3:D6:D8:D6:30:A6:37:A6:A4:03:5A:33:EF:43:7A:14:07:45:4B:DE:C7"
+        "75:AC:F9:BF:D8:56:4C:A4:59:E0:F2:1C:66:49:EA:DE:C2:80:74:BE:E9:55:30:5D:E9:D7:FF:06:BB:F8:6E:F8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.afghaneats.rider",
+      "sha256_cert_fingerprints": [
+        "9F:1F:B4:F9:E2:76:F7:82:DB:E8:91:E2:04:95:A4:61:0F:D4:8B:62:BD:40:82:B7:A3:01:5C:50:1D:FE:57:1F"
       ]
     }
   }
