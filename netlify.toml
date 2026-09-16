@@ -1,6 +1,6 @@
 [build]
 
-  command = "node scripts/render-association-assets.cjs"
+  command = "node scripts/render-association-assets.cjs && node scripts/validate-association-assets.cjs"
   
   publish = "."
   
