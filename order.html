@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
   <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-13">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="/config.js?v=20260913-final"></script>
 <link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"></head>
 <body class="ae-premium premium-customer tracking-page">
@@ -51,6 +52,11 @@
 
         <div id="liveDelivery" class="tracking-live-slot"></div>
 
+        <section class="tracking-card tracking-map-card">
+          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Rider map</span><span class="fa-copy">نقشه پیک</span></span><h2><span class="en-copy">Live rider location</span><span class="fa-copy">موقعیت زنده پیک</span></h2></div></div>
+          <div id="riderMap" style="height:360px;border-radius:14px;overflow:hidden;background:#eee8e4" aria-label="Rider location map"></div>
+        </section>
+
         <section id="aeAccountDeliveryTracking" class="ae-lastmile tracking-card tracking-account-card hidden" aria-live="polite">
           <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Account view</span><span class="fa-copy">نمای حساب</span></span><h2><span class="en-copy">Signed-in delivery tracking</span><span class="fa-copy">پیگیری تحویل با حساب</span></h2></div><span class="tracking-secure-mark">✓</span></div>
           <div id="aeAccountDeliveryTrackingBody"></div>
@@ -82,4 +88,6 @@
 <script>
 document.addEventListener('DOMContentLoaded',()=>{try{const id=new URLSearchParams(location.search).get('id'),o=JSON.parse(localStorage.getItem('ae_last_order')||'null');if(o?.customerPhone&&(o.orderId===id||o.id===id)){document.getElementById('trackPhone').value=o.customerPhone;setTimeout(()=>{if(typeof trackOrderWithLiveRider==='function')trackOrderWithLiveRider()},700)}}catch{}})
 </script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/assets/order-map.js"></script>
 <script src="/assets/design-2026.js?v=20260913-final"></script></body></html>
