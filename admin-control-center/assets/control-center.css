@@ -150,3 +150,34 @@
 @media(max-width:1200px){.dossier-summary{grid-template-columns:repeat(3,minmax(0,1fr))}.dossier-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){.dossier-toolbar-badges{justify-content:flex-start}.dossier-summary{grid-template-columns:1fr 1fr}.dossier-gallery{grid-template-columns:1fr 1fr}.dossier-candidate-grid{grid-template-columns:1fr}}
 @media(max-width:440px){.dossier-summary,.dossier-gallery{grid-template-columns:1fr}.dossier-candidate-grid article{grid-template-columns:68px minmax(0,1fr)}.dossier-candidate-grid img,.dossier-candidate-placeholder{width:68px;height:68px}}
+
+
+/* Restaurant branding upload controls */
+.restaurant-branding{margin-top:2px;padding:16px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fbfdfb,#f7faf8)}
+.restaurant-branding-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.restaurant-branding-head strong,.restaurant-branding-head small{display:block}
+.restaurant-branding-head strong{font-size:.9rem;color:#28483b}
+.restaurant-branding-head small{margin-top:3px;color:var(--muted);font-size:.75rem}
+.restaurant-media-grid{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.42fr);gap:12px}
+.restaurant-media-card{display:grid;gap:10px;min-width:0;padding:12px;border:1px solid #dfe9e2;border-radius:13px;background:#fff}
+.restaurant-media-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.restaurant-media-card-head strong,.restaurant-media-card-head small{display:block}
+.restaurant-media-card-head strong{font-size:.8rem;color:#2b493d}
+.restaurant-media-card-head small{margin-top:2px;color:var(--muted);font-size:.66rem}
+.restaurant-media-chip{flex:0 0 auto;border-radius:999px;padding:4px 7px;background:#eef5f0;color:#4b6d5e;font-size:.61rem;font-weight:850}
+.restaurant-media-preview{overflow:hidden;display:grid;place-items:center;min-height:180px;border:1px dashed #cfddd4;border-radius:11px;background:#f6f9f7}
+.restaurant-media-logo .restaurant-media-preview{min-height:210px}
+.restaurant-media-preview img{display:block;width:100%;height:210px;object-fit:cover;background:#fff}
+.restaurant-media-logo .restaurant-media-preview img{object-fit:contain}
+.restaurant-media-placeholder{display:grid;place-items:center;gap:7px;color:#7d8e86;text-align:center}
+.restaurant-media-placeholder b{display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:linear-gradient(145deg,#1d5b48,#113d32);color:#fff;font-size:1rem;letter-spacing:-.04em}
+.restaurant-media-placeholder span{font-size:.7rem;font-weight:750}
+.restaurant-media-actions{display:flex;flex-wrap:wrap;gap:7px}
+.restaurant-media-upload-button{position:relative;overflow:hidden}
+.restaurant-media-upload-button input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.restaurant-media-status{display:block;min-height:18px;color:var(--muted);font-size:.68rem;line-height:1.45}
+.restaurant-media-status.uploading{color:#7c5b1e}
+.restaurant-media-status.success{color:#17663e}
+.restaurant-media-status.error{color:#98362f}
+.restaurant-media-create-note{padding:11px;border-radius:10px;background:#f6f8f6;color:#6d7d75;font-size:.72rem;line-height:1.5}
+@media(max-width:900px){.restaurant-media-grid{grid-template-columns:1fr}}
