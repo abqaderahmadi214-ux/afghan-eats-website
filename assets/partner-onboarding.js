@@ -66,6 +66,7 @@
       district: String(data.get('district') || '').trim(),
       address: String(data.get('address') || '').trim(),
       cuisine: String(data.get('cuisine') || '').trim(),
+      menuItems: String(data.get('menuItems') || '').trim(),
       menuNotes: String(data.get('menuNotes') || '').trim(),
       menuUrl: String(data.get('menuUrl') || '').trim(),
       deliveryZones: String(data.get('deliveryZones') || '').trim(),
