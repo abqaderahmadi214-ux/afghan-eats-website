@@ -239,3 +239,12 @@ body.ae-premium.rtl{font-family:Vazirmatn,Tahoma,Arial,sans-serif;letter-spacing
 .ae-premium .footer-legal{align-items:center}
 
 .ae-premium.rtl .ae-cuisine-all .ae-icon{transform:scaleX(-1)}
+
+.ae-trust-strip{background:#fbfaf7;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ae-trust-badges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+.ae-trust-badge{min-height:74px;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 12px;border-inline-end:1px solid var(--line);text-align:center}
+.ae-trust-badge:last-child{border-inline-end:0}
+.ae-trust-badge>span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#eef4e8;color:#385c2f;font-weight:900;flex:none}
+.ae-trust-badge strong{font-size:13px;letter-spacing:-.01em}
+.ae-premium.rtl .ae-trust-badge strong{letter-spacing:0}
+@media(max-width:760px){.ae-trust-badges{grid-template-columns:1fr 1fr}.ae-trust-badge:nth-child(2){border-inline-end:0}.ae-trust-badge:nth-child(-n+2){border-bottom:1px solid var(--line)}}
