@@ -73,9 +73,10 @@
 
   function localDishMatches(query) {
     const needle = String(query || '').trim().toLowerCase();
-    if (needle.length < 2 || !Array.isArray(window.restaurants)) return [];
+    const source = typeof restaurants !== 'undefined' && Array.isArray(restaurants) ? restaurants : [];
+    if (needle.length < 2 || !source.length) return [];
     const results = [];
-    for (const restaurant of window.restaurants) {
+    for (const restaurant of source) {
       const routeId = restaurant?.slug || restaurant?.public_slug || restaurant?.id;
       for (const item of restaurant?._items || []) {
         const hay = `${item?.name || ''} ${item?.name_dari || ''} ${item?.description || ''} ${item?.description_dari || ''}`.toLowerCase();
