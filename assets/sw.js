@@ -1,6 +1,5 @@
-const CACHE_VERSION = 'afghan-eats-v1';
+const CACHE_VERSION = 'afghan-eats-v2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
-const API_CACHE = `${CACHE_VERSION}-api`;
 
 const APP_SHELL = [
   '/',
@@ -13,8 +12,8 @@ const APP_SHELL = [
   '/assets/advanced.css',
   '/assets/app.js',
   '/assets/design-2026.css',
-  '/assets/icons/afghan-eats-192.svg',
-  '/assets/icons/afghan-eats-512.svg'
+  '/assets/icons/afghan-eats-192.png',
+  '/assets/icons/afghan-eats-512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -30,7 +29,7 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys
-          .filter((key) => key !== STATIC_CACHE && key !== API_CACHE)
+          .filter((key) => key !== STATIC_CACHE)
           .map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
@@ -48,29 +47,16 @@ function isApiRequest(request) {
   }
 }
 
-async function networkFirst(request) {
-  try {
-    const response = await fetch(request);
-    if (request.method === 'GET' && response.ok) {
-      const cache = await caches.open(API_CACHE);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (error) {
-    if (request.method === 'GET') {
-      const cached = await caches.match(request);
-      if (cached) return cached;
-    }
-    throw error;
-  }
-}
-
-async function cacheFirst(request) {
+async function cacheFirstStatic(request) {
   const cached = await caches.match(request);
   if (cached) return cached;
 
   const response = await fetch(request);
-  if (request.method === 'GET' && response.ok) {
+  if (
+    request.method === 'GET' &&
+    response.ok &&
+    new URL(request.url).origin === self.location.origin
+  ) {
     const cache = await caches.open(STATIC_CACHE);
     cache.put(request, response.clone());
   }
@@ -90,10 +76,10 @@ function offlineNavigationFallback(url) {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  if (request.method !== 'GET' && !isApiRequest(request)) return;
+  if (request.method !== 'GET') return;
 
   if (isApiRequest(request)) {
-    event.respondWith(networkFirst(request));
+    event.respondWith(fetch(request));
     return;
   }
 
@@ -104,5 +90,5 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(cacheFirst(request));
+  event.respondWith(cacheFirstStatic(request));
 });
