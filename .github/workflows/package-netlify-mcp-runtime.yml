@@ -1,0 +1,29 @@
+name: Package Netlify MCP runtime
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/package-netlify-mcp-runtime.yml"
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prepare runtime
+        run: |
+          mkdir -p netlify-mcp-runtime
+          cd netlify-mcp-runtime
+          npm init -y
+          npm install --omit=dev @netlify/mcp@1.17.0
+      - name: Upload runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: netlify-mcp-runtime
+          path: netlify-mcp-runtime/
+          include-hidden-files: true
+          retention-days: 1
