@@ -316,6 +316,95 @@ async function renderRestaurants() {
 function restaurantTable(items) { return items.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Restaurant</th><th>Location</th><th>Listing</th><th>Store</th><th>Control</th></tr></thead><tbody>${items.map(item => { const awaitingOwnerApproval=item.status !== 'active' && item.source_type === 'owner_submitted'; const listing=item.status === 'active' ? `<button class="button button-danger button-small" type="button" data-action="remove-restaurant" data-id="${attr(item.id)}" data-name="${attr(item.name)}">Remove from marketplace</button>` : awaitingOwnerApproval ? `<span class="row-sub">Owner setup approval required</span>` : `<button class="button button-primary button-small" type="button" data-action="toggle-listing" data-id="${attr(item.id)}" data-status="active">Restore listing</button>`; return `<tr><td><span class="row-title">${esc(item.name)}</span><span class="row-sub">${esc(item.category_primary || (item.cuisine_tags || []).join(', ') || 'Restaurant')}</span></td><td>${esc(item.district || item.neighborhood || 'Herat')}</td><td>${badge(item.status)}</td><td>${item.is_open ? badge('open') : badge('closed')}</td><td><div class="button-stack"><button class="button button-secondary button-small" type="button" data-action="edit-restaurant" data-id="${attr(item.id)}">Edit details</button>${listing}</div></td></tr>`; }).join('')}</tbody></table></div>` : '<div class="empty-state">No restaurants were returned by the platform. Use “Add restaurant” to create the first inactive listing.</div>'; }
 function setupReviewTable(items) { return items.length ? `<div class="activity-list">${items.map(item => { const snapshot=item.snapshot||{}, restaurant=snapshot.restaurant||{}, menu=snapshot.menu||{}, menuCount=Array.isArray(menu.items)?menu.items.length:0, eta=restaurant.delivery_time_min != null && restaurant.delivery_time_max != null ? `${restaurant.delivery_time_min}–${restaurant.delivery_time_max} min` : 'Not provided', owner=item.registered_owner_name||restaurant.owner_name||item.owner_username||'Owner'; return `<article class="review-card ${String(state.setupReviewId)===String(item.id)?'selected':''}"><div class="review-card-head"><div><h3>${esc(item.restaurant_name || restaurant.name || 'Restaurant')}</h3><p>${esc(owner)} · ${esc(item.registered_owner_email||restaurant.owner_email||'No owner email')} · submitted ${shortDate(item.submitted_at || item.created_at)}</p></div>${badge('submitted')}</div><div class="review-detail-grid"><span><b>Address</b>${esc(restaurant.address || 'Not provided')}${restaurant.district ? ` · ${esc(restaurant.district)}` : ''}</span><span><b>Contact</b>${esc(restaurant.phone || item.restaurant_phone || 'Not provided')}</span><span><b>Delivery</b>${esc(eta)} · ${restaurant.delivery_fee_min != null ? `${money(restaurant.delivery_fee_min)} fee` : 'No fee'}</span><span><b>Menu</b>${number(menuCount)} submitted item${menuCount === 1 ? '' : 's'}</span></div><div class="review-card-action"><span class="row-sub">Approval is available only inside the full submitted-snapshot review.</span><button class="button button-primary button-small" type="button" data-action="open-owner-setup-review" data-id="${attr(item.id)}">Review details</button></div></article>`; }).join('')}</div>` : '<div class="empty-state">No restaurant owner setups are awaiting review.</div>'; }
 function checked(value){ return value ? 'checked' : ''; }
+function restaurantMediaCard(item,mediaKind){
+  const isLogo=mediaKind==='restaurant_logo';
+  const fieldName=isLogo?'logoUrl':'coverUrl';
+  const value=String(isLogo?(item.logo_url||''):(item.cover_image_url||''));
+  const valid=/^https:\/\//i.test(value);
+  const label=isLogo?'Restaurant logo':'Cover photo';
+  const help=isLogo?'Square image recommended · JPG, PNG or WebP':'Landscape image recommended · JPG, PNG or WebP';
+  const canUpload=Boolean(item.id);
+  return `<article class="restaurant-media-card ${isLogo?'restaurant-media-logo':''}">
+    <input type="hidden" name="${fieldName}" value="${attr(value)}">
+    <div class="restaurant-media-card-head"><div><strong>${label}</strong><small>${help}</small></div><span class="restaurant-media-chip">${isLogo?'1:1':'16:9'}</span></div>
+    <div class="restaurant-media-preview" data-media-preview data-kind="${mediaKind}">
+      ${valid?`<img src="${attr(value)}" alt="${attr(label)} preview">`:`<div class="restaurant-media-placeholder"><b>AE</b><span>${isLogo?'No logo yet':'No cover photo yet'}</span></div>`}
+    </div>
+    ${canUpload?`<div class="restaurant-media-actions">
+      <label class="button button-secondary restaurant-media-upload-button">Upload / change
+        <input type="file" accept="image/jpeg,image/png,image/webp" data-restaurant-media-upload data-restaurant-id="${attr(item.id)}" data-media-kind="${mediaKind}" data-field-name="${fieldName}">
+      </label>
+      <button class="button button-secondary" type="button" data-restaurant-media-remove data-field-name="${fieldName}">Remove</button>
+    </div>
+    <small class="restaurant-media-status" data-media-status>Large photos are resized and compressed automatically.</small>`:
+    `<div class="restaurant-media-create-note">Create this restaurant draft first, then open <b>Edit details</b> to upload the image.</div>`}
+  </article>`;
+}
+function restaurantLoadPhoto(file){
+  return new Promise((resolve,reject)=>{
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};
+    img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('This image could not be opened.'))};
+    img.src=url;
+  });
+}
+function restaurantCanvasBlob(canvas,type,quality){
+  return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Image compression failed.')),type,quality));
+}
+async function prepareRestaurantAdminImage(file,mediaKind){
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw new Error('Choose a JPG, PNG or WebP image.');
+  if(file.size>12*1024*1024)throw new Error('This photo is too large. Choose an image under 12 MB.');
+  const img=await restaurantLoadPhoto(file),naturalW=Number(img.naturalWidth||img.width),naturalH=Number(img.naturalHeight||img.height);
+  if(!naturalW||!naturalH)throw new Error('This photo has invalid dimensions.');
+  const maxEdge=mediaKind==='restaurant_logo'?1100:1700;
+  const initialScale=Math.min(1,maxEdge/Math.max(naturalW,naturalH));
+  for(let attempt=0;attempt<7;attempt+=1){
+    const shrink=initialScale*Math.pow(.86,attempt),w=Math.max(1,Math.round(naturalW*shrink)),h=Math.max(1,Math.round(naturalH*shrink));
+    const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d',{alpha:true});if(!ctx)throw new Error('Image processing is unavailable.');
+    ctx.drawImage(img,0,0,w,h);
+    const quality=Math.max(.56,.86-attempt*.055),blob=await restaurantCanvasBlob(canvas,'image/webp',quality);
+    if(blob.size<=620000)return blob;
+  }
+  throw new Error('This photo could not be compressed enough. Choose another image.');
+}
+function restaurantBlobBase64(blob){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>{const value=String(reader.result||''),comma=value.indexOf(',');comma>=0?resolve(value.slice(comma+1)):reject(new Error('Image encoding failed.'))};
+    reader.onerror=()=>reject(new Error('Image encoding failed.'));
+    reader.readAsDataURL(blob);
+  });
+}
+function setRestaurantMediaPreview(card,url,mediaKind){
+  const preview=card?.querySelector('[data-media-preview]');if(!preview)return;
+  const label=mediaKind==='restaurant_logo'?'Restaurant logo':'Cover photo';
+  preview.innerHTML=url?`<img src="${attr(url)}" alt="${attr(label)} preview">`:`<div class="restaurant-media-placeholder"><b>AE</b><span>${mediaKind==='restaurant_logo'?'No logo yet':'No cover photo yet'}</span></div>`;
+}
+async function uploadRestaurantAdminMedia(input){
+  const file=input?.files?.[0];if(!file)return;
+  const form=input.closest('form'),card=input.closest('.restaurant-media-card'),status=card?.querySelector('[data-media-status]');
+  const fieldName=String(input.dataset.fieldName||''),mediaKind=String(input.dataset.mediaKind||''),restaurantId=String(input.dataset.restaurantId||'');
+  const field=form?.elements?.[fieldName],submit=form?.querySelector('button[type="submit"]');
+  if(!form||!field||!restaurantId)return;
+  const pending=Number(form.dataset.mediaUploads||0)+1;form.dataset.mediaUploads=String(pending);
+  input.disabled=true;if(submit)submit.disabled=true;
+  if(status){status.className='restaurant-media-status uploading';status.textContent='Preparing and uploading image…'}
+  try{
+    const blob=await prepareRestaurantAdminImage(file,mediaKind),base64=await restaurantBlobBase64(blob);
+    const result=await mutate('restaurants.adminUploadImage',{restaurantId,mediaKind,fileName:String(file.name||'restaurant-photo').slice(0,255),mimeType:blob.type||'image/webp',base64});
+    const url=String(result?.url||'');if(!url)throw new Error('The upload finished without an image URL.');
+    field.value=url;setRestaurantMediaPreview(card,url,mediaKind);
+    if(status){status.className='restaurant-media-status success';status.textContent='Uploaded successfully. Save restaurant changes to publish this image.'}
+  }catch(error){
+    if(status){status.className='restaurant-media-status error';status.textContent=error.message||'Image upload failed.'}
+    else setNotice(error.message||'Image upload failed.');
+  }finally{
+    const remaining=Math.max(0,Number(form.dataset.mediaUploads||1)-1);
+    if(remaining)form.dataset.mediaUploads=String(remaining);else delete form.dataset.mediaUploads;
+    input.disabled=false;if(submit)submit.disabled=remaining>0;input.value='';
+  }
+}
 function restaurantFields(item={}){
   const tags=Array.isArray(item.cuisine_tags)?item.cuisine_tags.join(', '):(item.category_primary||'');
   return `
@@ -337,8 +426,7 @@ function restaurantFields(item={}){
     <label class="field"><span>Delivery fee minimum (AFN)</span><input name="deliveryFeeMin" type="number" min="0" max="100000" step="1" value="${attr(item.delivery_fee_min??'')}"></label>
     <label class="field"><span>Delivery fee maximum (AFN)</span><input name="deliveryFeeMax" type="number" min="0" max="100000" step="1" value="${attr(item.delivery_fee_max??'')}"></label>
     <label class="field"><span>Minimum order (AFN)</span><input name="minOrder" type="number" min="0" max="1000000" step="1" value="${attr(item.min_order_amount??'')}"></label>
-    <label class="field"><span>Logo image URL</span><input name="logoUrl" type="url" maxlength="2000" value="${attr(item.logo_url||'')}" placeholder="https://…"></label>
-    <label class="field"><span>Cover image URL</span><input name="coverUrl" type="url" maxlength="2000" value="${attr(item.cover_image_url||'')}" placeholder="https://…"></label>
+    <section class="restaurant-branding full"><div class="restaurant-branding-head"><div><strong>Branding & images</strong><small>Upload customer-facing restaurant imagery directly from this control center.</small></div></div><div class="restaurant-media-grid">${restaurantMediaCard(item,'restaurant_logo')}${restaurantMediaCard(item,'restaurant_cover')}</div></section>
     <label class="switch-row"><span><b>Delivery available</b><small>Restaurant can receive delivery orders.</small></span><span class="switch"><input name="hasDelivery" type="checkbox" ${checked(item.has_delivery!==false)}><span></span></span></label>
     <label class="switch-row"><span><b>Dine-in available</b><small>Show dine-in as an option.</small></span><span class="switch"><input name="hasDineIn" type="checkbox" ${checked(Boolean(item.has_dine_in))}><span></span></span></label>
     <label class="switch-row"><span><b>Takeaway available</b><small>Show pickup as an option.</small></span><span class="switch"><input name="hasTakeaway" type="checkbox" ${checked(Boolean(item.has_takeaway))}><span></span></span></label>
@@ -877,10 +965,27 @@ root.addEventListener('submit', event => {
   if (formId === 'career-position-form') { event.preventDefault(); const d = new FormData(form); const existingId = String(d.get('id') || ''); const deadline = String(d.get('applicationDeadline') || '').trim(); const payload = { title: String(d.get('title') || '').trim(), titleDari: String(d.get('titleDari') || '').trim() || undefined, department: String(d.get('department') || '').trim(), employmentType: String(d.get('employmentType') || 'full_time'), location: String(d.get('location') || '').trim(), workMode: String(d.get('workMode') || 'on_site'), summary: String(d.get('summary') || '').trim(), responsibilities: String(d.get('responsibilities') || '').trim() || undefined, requirements: String(d.get('requirements') || '').trim() || undefined, benefits: String(d.get('benefits') || '').trim() || undefined, applicationDeadline: deadline ? new Date(`${deadline}T23:59:59.999Z`).toISOString() : null, status: String(d.get('status') || 'draft') }; if (!payload.title || !payload.department || !payload.location || !payload.summary) return setNotice('Complete the role title, department, location and role summary before saving.'); return openConfirm(existingId ? 'Update vacancy' : 'Create vacancy', existingId ? `Save the updated details and publication state for ${payload.title}?` : `Create ${payload.title} as a ${payload.status} vacancy? Only open vacancies appear publicly on Afghan Eats Careers.`, async () => { if (existingId) await mutate('operations.adminUpdateCareerPosition', { id: existingId, ...payload }); else await mutate('operations.adminCreateCareerPosition', payload); state.careerEdit = null; toast(existingId ? 'Vacancy updated.' : 'Vacancy created.'); renderView(); }, payload.status !== 'draft'); }
   if (formId === 'staff-create-form') { event.preventDefault(); const d=new FormData(form),password=String(d.get('password')||''); const strong=password.length>=14&&/[a-z]/.test(password)&&/[A-Z]/.test(password)&&/\d/.test(password)&&/[^A-Za-z0-9]/.test(password); if(!strong)return setNotice('Staff password must be at least 14 characters and include uppercase and lowercase letters, a number and a symbol.'); const payload={username:String(d.get('username')||'').trim(),email:String(d.get('email')||'').trim(),role:String(d.get('role')||'restaurant_staff'),password}; return openConfirm('Create restricted staff account',`Create ${payload.username} with ${staffRoleLabel(payload.role)} access?`,async()=>{await mutate('auth.staffCreate',payload);form.reset();toast('Restricted staff account created.');renderView();},false); }
   if (formId === 'restaurant-create-form') { event.preventDefault(); const d=new FormData(form),payload=restaurantFormPayload(form,d); if(!payload.name)return setNotice('Restaurant name is required.'); if(payload.delivery_time_min!==null&&payload.delivery_time_max!==null&&payload.delivery_time_max<payload.delivery_time_min)return setNotice('Delivery time maximum must be equal to or greater than the minimum.'); return openConfirm('Create inactive restaurant',`Create ${payload.name} as an inactive, closed restaurant draft?`,async()=>{await mutate('restaurants.adminCreate',payload);toast('Inactive restaurant draft created.');form.reset();renderView();},false); }
-  if (formId === 'restaurant-edit-form') { event.preventDefault(); const d=new FormData(form),id=String(d.get('restaurantId')||''),payload=restaurantFormPayload(form,d); if(!id||!payload.name)return setNotice('Restaurant identity and name are required.'); if(payload.delivery_time_min!==null&&payload.delivery_time_max!==null&&payload.delivery_time_max<payload.delivery_time_min)return setNotice('Delivery time maximum must be equal to or greater than the minimum.'); return openConfirm('Save restaurant changes',`Save the updated details for ${payload.name}? The listing status will not be changed.`,async()=>{await mutate('restaurants.adminUpdate',{id,...payload});state.restaurantEditId=null;toast('Restaurant details updated.');renderView();},false); }
+  if (formId === 'restaurant-edit-form') { event.preventDefault(); if(Number(form.dataset.mediaUploads||0)>0)return setNotice('Wait for the image upload to finish before saving restaurant changes.'); const d=new FormData(form),id=String(d.get('restaurantId')||''),payload=restaurantFormPayload(form,d); if(!id||!payload.name)return setNotice('Restaurant identity and name are required.'); if(payload.delivery_time_min!==null&&payload.delivery_time_max!==null&&payload.delivery_time_max<payload.delivery_time_min)return setNotice('Delivery time maximum must be equal to or greater than the minimum.'); return openConfirm('Save restaurant changes',`Save the updated details for ${payload.name}? The listing status will not be changed.`,async()=>{await mutate('restaurants.adminUpdate',{id,...payload});state.restaurantEditId=null;toast('Restaurant details updated.');renderView();},false); }
   if (formId === 'rewards-form') { event.preventDefault(); const d = new FormData(form); return openConfirm('Save rewards controls', 'Apply the new loyalty earning and referral settings for customer accounts.', async () => { await mutate('customer.adminUpdateSettings', { enabled: form.elements.enabled.checked, pointsPer100Afn: Number(d.get('pointsPer100Afn') || 0), referralEnabled: form.elements.referralEnabled.checked, referralPoints: Number(d.get('referralPoints') || 0) }); toast('Rewards controls saved.'); renderView(); }, false); }
   if (formId === 'website-form') { event.preventDefault(); const d = new FormData(form); const payload = { orderingEnabled: form.elements.orderingEnabled.checked, orderingMessageEn: String(d.get('orderingMessageEn') || '') || null, orderingMessageDari: String(d.get('orderingMessageDari') || '') || null, bannerEnabled: form.elements.bannerEnabled.checked, bannerLevel: String(d.get('bannerLevel') || 'info'), bannerTitleEn: String(d.get('bannerTitleEn') || '') || null, bannerTitleDari: String(d.get('bannerTitleDari') || '') || null, bannerBodyEn: String(d.get('bannerBodyEn') || '') || null, bannerBodyDari: String(d.get('bannerBodyDari') || '') || null }; const paused = state.cache.website?.controls?.ordering_enabled !== false && !payload.orderingEnabled; return openConfirm(paused ? 'Pause all new customer ordering' : 'Save public-site controls', paused ? 'This server-enforced action stops new checkout only. Existing orders, browsing, tracking, support, and active deliveries remain available.' : 'Publish the new public service-banner and marketplace-reliability controls.', async () => { await mutate('platform.adminUpdateControls', payload); toast('Public-site controls saved.'); renderView(); }); }
 }, true);
+
+root.addEventListener('change',async event=>{
+  const input=event.target.closest?.('input[data-restaurant-media-upload]');
+  if(!input)return;
+  await uploadRestaurantAdminMedia(input);
+});
+root.addEventListener('click',event=>{
+  const button=event.target.closest?.('[data-restaurant-media-remove]');
+  if(!button)return;
+  event.preventDefault();
+  const form=button.closest('form'),card=button.closest('.restaurant-media-card'),fieldName=String(button.dataset.fieldName||''),field=form?.elements?.[fieldName];
+  if(!form||!field)return;
+  field.value='';
+  setRestaurantMediaPreview(card,'',card?.dataset?.mediaKind||card?.querySelector('[data-media-preview]')?.dataset?.kind||'restaurant_cover');
+  const status=card?.querySelector('[data-media-status]');
+  if(status){status.className='restaurant-media-status';status.textContent='Image removed. Save restaurant changes to apply this change.'}
+});
 
 document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const error = document.getElementById('login-error'); error.className = 'notice notice-error hidden'; const button = event.currentTarget.querySelector('button'); button.disabled = true; button.textContent = 'Signing in…'; try { const fd = new FormData(event.currentTarget); const response = await request('auth.login', { username: String(fd.get('username') || ''), password: String(fd.get('password') || '') }, 'POST', false); if (!response?.token) throw new Error('Sign-in did not return a valid session.'); saveSession(response.token, response.admin || response.user || {}); await verifySession(); setShell(); setView(location.hash.slice(1) || 'overview'); } catch (err) { error.textContent = err.message || 'Sign-in failed.'; error.classList.remove('hidden'); } finally { button.disabled = false; button.textContent = 'Sign in securely'; } });
 document.getElementById('logout-button').addEventListener('click', () => logout());
