@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Restaurants and dishes in Herat | Afghan Eats</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Afghan Eats">
+  <meta name="theme-color" content="#b91c1c">
   <meta name="description" content="Search Herat restaurants by restaurant, dish or cuisine and choose delivery or pickup with Afghan Eats.">
   <link rel="canonical" href="https://afghaneats.net/restaurants">
   <meta property="og:type" content="website"><meta property="og:title" content="Restaurants and dishes in Herat | Afghan Eats"><meta property="og:description" content="Search Herat restaurants, dishes and cuisines for delivery or pickup."><meta property="og:url" content="https://afghaneats.net/restaurants">
@@ -11,7 +16,7 @@
   <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-4">
   <link rel="stylesheet" href="/assets/restaurant-card-stability.css?v=20260905-2">
   <link rel="stylesheet" href="/assets/restaurants-mobile-fix.css?v=20260906-1">
-<link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"></head>
+<link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"><link rel="stylesheet" href="/assets/premium-design-pass.css?v=20261004-4"></head>
 <body class="ae-premium premium-customer restaurants-page">
 
   <header class="header"><div class="container nav"><a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a>
@@ -24,10 +29,24 @@
       <div class="restaurant-service-row"><div class="mode-tabs"><button data-mode="delivery" onclick="setMode('delivery')" data-i18n="delivery"></button><button data-mode="pickup" onclick="setMode('pickup')" data-i18n="pickup"></button></div><div id="addressSummary" class="address-summary"></div></div>
       <div class="filters restaurant-filter-row"><div class="restaurant-search-wrap"><span aria-hidden="true">⌕</span><input aria-label="Search restaurants or food" data-aria-en="Search restaurants or food" data-aria-fa="جستجوی رستورانت یا غذا" id="search" type="search" data-ph-en="Search restaurants or food" data-ph-fa="جستجوی رستورانت یا غذا" oninput="advancedRestaurantSearch()"></div><select id="sort" aria-label="Sort restaurants" onchange="advancedRestaurantSearch()"><option value="recommended" data-i18n="recommended"></option><option value="rating" data-en="Rating" data-fa="امتیاز">Rating</option><option value="fastest" data-i18n="fastest"></option><option value="fee" data-i18n="fee"></option></select><button class="chip" data-filter="open" onclick="toggleAdvancedFilter(this)" data-i18n="openNow"></button><button class="chip" data-filter="favorites" onclick="toggleAdvancedFilter(this)" data-i18n="favorites"></button></div>
     </div>
-    <nav class="ae-category-filters" aria-label="Cuisines"><a href="/restaurants"><span class="en-copy">All</span><span class="fa-copy">همه</span></a><a href="/restaurants?c=Afghan"><span class="en-copy">Afghan</span><span class="fa-copy">افغانی</span></a><a href="/restaurants?c=Kebab"><span class="en-copy">Kebab</span><span class="fa-copy">کباب</span></a><a href="/restaurants?c=Pizza"><span class="en-copy">Pizza</span><span class="fa-copy">پیتزا</span></a><a href="/restaurants?c=Fast%20Food"><span class="en-copy">Fast food</span><span class="fa-copy">فست‌فود</span></a><a href="/restaurants?c=Rice"><span class="en-copy">Rice dishes</span><span class="fa-copy">غذاهای برنجی</span></a><a href="/restaurants?c=Sweets"><span class="en-copy">Sweets</span><span class="fa-copy">شیرینی</span></a><a href="/restaurants?c=Cafe"><span class="en-copy">Cafés</span><span class="fa-copy">کافه‌ها</span></a></nav><div class="search-context restaurant-result-summary"><span id="resultCount" class="result-count"></span></div>
+    <div class="dish-category-row filters" role="group" aria-label="Food categories">
+      <button class="chip dish-category-chip active" type="button" data-dish-category="" aria-pressed="true"><span class="en-copy">All</span><span class="fa-copy">همه</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="afghan" aria-pressed="false"><span class="en-copy">Afghan</span><span class="fa-copy">افغانی</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="kebab" aria-pressed="false"><span class="en-copy">Kebab</span><span class="fa-copy">کباب</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="iftar" aria-pressed="false"><span class="en-copy">Iftar</span><span class="fa-copy">افطار</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="family-platter" aria-pressed="false"><span class="en-copy">Family Platter</span><span class="fa-copy">سینی خانوادگی</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="catering" aria-pressed="false"><span class="en-copy">Catering</span><span class="fa-copy">کترینگ</span></button>
+      <button class="chip dish-category-chip" type="button" data-dish-category="sweets" aria-pressed="false"><span class="en-copy">Sweets</span><span class="fa-copy">شیرینی</span></button>
+    </div>
+    <section id="dishResults" class="dish-results-grid" aria-label="Dish search results" hidden></section>
+    <div class="search-context restaurant-result-summary"><span id="resultCount" class="result-count"></span></div>
     <div id="restaurantGrid" class="restaurant-grid" aria-busy="true"><div class="ae-loading-card"><div class="ae-loading-media"></div><div class="ae-loading-body"><div class="ae-loading-line"></div><div class="ae-loading-line"></div></div></div><div class="ae-loading-card"><div class="ae-loading-media"></div><div class="ae-loading-body"><div class="ae-loading-line"></div><div class="ae-loading-line"></div></div></div><div class="ae-loading-card"><div class="ae-loading-media"></div><div class="ae-loading-body"><div class="ae-loading-line"></div><div class="ae-loading-line"></div></div></div></div>
   </div></main>
   <nav class="mobile-nav" aria-label="Mobile navigation"><a href="/"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3V10Z"/></svg><b data-i18n="home">Home</b></a><a href="/restaurants"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><b data-i18n="restaurants">Restaurants</b></a><a href="/orders"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6m-6 4h6m-6 4h4"/></svg><b data-i18n="orders">Orders</b></a><a href="/account"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><b data-i18n="account">Account</b></a></nav>
-  <script src="/assets/app.js?v=20260913-final"></script><script src="/assets/advanced.js?v=20260905-2"></script><script src="/assets/customer.js"></script>
-<script src="/assets/design-2026.js?v=20260913-final"></script></body>
+  <script src="/assets/app.js?v=20261003-media-1"></script><script src="/assets/advanced.js?v=20260905-2"></script><script src="/assets/dish-search.js"></script><script src="/assets/customer.js"></script>
+<script src="/assets/design-2026.js?v=20260913-final"></script><script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/assets/sw.js', { scope: '/' }).catch(() => {}));
+  }
+</script><script src="/assets/pwa-install.js" defer></script></body>
 </html>
