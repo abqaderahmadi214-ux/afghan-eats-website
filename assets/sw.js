@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'afghan-eats-v2';
+const CACHE_VERSION = 'afghan-eats-v3';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const APP_SHELL = [
@@ -12,8 +12,8 @@ const APP_SHELL = [
   '/assets/advanced.css',
   '/assets/app.js',
   '/assets/design-2026.css',
-  '/assets/icons/afghan-eats-192.png',
-  '/assets/icons/afghan-eats-512.png'
+  '/assets/icons/afghan-eats-192.svg',
+  '/assets/icons/afghan-eats-512.svg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -36,14 +36,18 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function isApiRequest(request) {
+function isLiveDataRequest(request) {
   try {
     const url = new URL(request.url);
-    return url.pathname.startsWith('/api/') ||
+    return (
+      url.pathname.startsWith('/api/') ||
       /\/api\//.test(url.pathname) ||
-      url.hostname.includes('afghaneats-api.onrender.com');
+      url.hostname.includes('onrender.com') ||
+      url.hostname.includes('firebaseio.com') ||
+      url.hostname.includes('googleapis.com')
+    );
   } catch {
-    return false;
+    return true;
   }
 }
 
@@ -53,7 +57,6 @@ async function cacheFirstStatic(request) {
 
   const response = await fetch(request);
   if (
-    request.method === 'GET' &&
     response.ok &&
     new URL(request.url).origin === self.location.origin
   ) {
@@ -78,8 +81,7 @@ self.addEventListener('fetch', (event) => {
 
   if (request.method !== 'GET') return;
 
-  if (isApiRequest(request)) {
-    event.respondWith(fetch(request));
+  if (isLiveDataRequest(request)) {
     return;
   }
 
@@ -90,5 +92,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(cacheFirstStatic(request));
+  const url = new URL(request.url);
+  if (url.origin === self.location.origin) {
+    event.respondWith(cacheFirstStatic(request));
+  }
 });
