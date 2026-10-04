@@ -1,0 +1,28 @@
+name: Smoke Assertion Audit
+on:
+  push:
+    branches:
+      - diagnostic/smoke-assertion-audit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit every retry_contains assertion against production
+        run: node scripts/smoke-assertion-audit.mjs
+      - name: Upload audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-assertion-audit
+          path: audit-output/
+          retention-days: 7
