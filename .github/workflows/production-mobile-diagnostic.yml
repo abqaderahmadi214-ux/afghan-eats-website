@@ -1,0 +1,39 @@
+name: Production Mobile Diagnostic
+
+on:
+  push:
+    branches:
+      - diagnostic/production-mobile-menu
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install mobile Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run production mobile diagnostic
+        run: node scripts/production-mobile-diagnostic.mjs
+
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-mobile-diagnostic
+          path: diagnostic-output/
+          if-no-files-found: error
+          retention-days: 7
