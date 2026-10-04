@@ -13,7 +13,6 @@
     "@type": "FoodEstablishment",
     "name": "Afghan Eats",
     "url": "https://afghaneats.net/",
-    "telephone": "+93 796 851 968",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Herat",
@@ -27,6 +26,20 @@
       "addressCountry": "AF"
     }
   }
+  </script>
+  <script data-schema-config-phone>
+  (function () {
+    const node = document.getElementById('afghanEatsFoodEstablishmentSchema');
+    if (!node) return;
+    try {
+      const data = JSON.parse(node.textContent);
+      const phone = String(window.AFGHAN_EATS_CONFIG?.supportPhone || '').trim();
+      if (phone) data.telephone = phone;
+      node.textContent = JSON.stringify(data);
+    } catch (error) {
+      console.warn('[Afghan Eats] Structured data update skipped.', error);
+    }
+  })();
   </script>
 <link rel="stylesheet" href="/assets/styles.css?v=20260912"><link rel="stylesheet" href="/assets/advanced.css"><link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"><link rel="preload" as="image" href="/assets/images/afghan-feast.webp" fetchpriority="high"><style>
 .ae-trust-strip{background:#fbfaf7;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -51,9 +64,9 @@
 </div><figure class="ae-hero-visual"><img class="ae-feast" src="/assets/images/afghan-feast.webp" srcset="/assets/images/afghan-feast-small.webp 768w, /assets/images/afghan-feast.webp 1536w" sizes="(max-width:760px) 100vw, 50vw" width="1536" height="1024" fetchpriority="high" loading="eager" alt="Kabuli pulao, grilled kebabs and fresh Afghan naan"><figcaption><span class="ae-visual-mark"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10 5 3h14l2 7M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M5 13v8h14v-8M9 21v-6h6v6"/></svg></span><span><small><span class="en-copy">A TASTE OF HOME</span><span class="fa-copy">طعم آشنای خانه</span></small><strong><span class="en-copy">Good food. Closer to you.</span><span class="fa-copy">غذای دلخواه، نزدیک‌تر به شما.</span></strong></span></figcaption></figure></div></section>
 <section class="ae-trust-strip" aria-label="Afghan Eats trust">
   <div class="container ae-trust-badges">
-    <div class="ae-trust-badge"><span aria-hidden="true">✓</span><strong><span class="en-copy">Halal</span><span class="fa-copy">حلال</span></strong></div>
-    <div class="ae-trust-badge"><span aria-hidden="true">✓</span><strong><span class="en-copy">Hygiene verified</span><span class="fa-copy">تأیید بهداشت</span></strong></div>
-    <div class="ae-trust-badge"><span aria-hidden="true">⌂</span><strong><span class="en-copy">Herat local</span><span class="fa-copy">محلی هرات</span></strong></div>
+    <div class="ae-trust-badge"><span aria-hidden="true">⌂</span><strong><span class="en-copy">Made for Herat</span><span class="fa-copy">برای هرات</span></strong></div>
+    <div class="ae-trust-badge"><span aria-hidden="true">文</span><strong><span class="en-copy">English & Dari</span><span class="fa-copy">انگلیسی و دری</span></strong></div>
+    <div class="ae-trust-badge"><span aria-hidden="true">↔</span><strong><span class="en-copy">Delivery & pickup</span><span class="fa-copy">ارسال و دریافت حضوری</span></strong></div>
     <div class="ae-trust-badge"><span aria-hidden="true">؋</span><strong><span class="en-copy">Cash on delivery</span><span class="fa-copy">پرداخت نقدی هنگام تحویل</span></strong></div>
   </div>
 </section>
