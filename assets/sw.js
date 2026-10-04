@@ -80,6 +80,21 @@ async function cacheFirstStatic(request) {
   return response;
 }
 
+async function networkFirstData(request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(STATIC_CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    throw error;
+  }
+}
+
 function offlineNavigationFallback(url) {
   if (url.pathname === '/restaurants' || url.pathname.endsWith('/restaurants.html')) {
     return caches.match('/restaurants.html');
@@ -106,6 +121,15 @@ self.addEventListener('fetch', (event) => {
   }
 
   const url = new URL(request.url);
+
+  if (
+    url.origin === self.location.origin &&
+    url.pathname.startsWith('/data/')
+  ) {
+    event.respondWith(networkFirstData(request));
+    return;
+  }
+
   if (url.origin === self.location.origin) {
     event.respondWith(cacheFirstStatic(request));
   }
