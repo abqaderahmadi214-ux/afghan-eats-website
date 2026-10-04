@@ -1,0 +1,28 @@
+name: Premium Design Evidence
+on:
+  push:
+    branches:
+      - diagnostic/premium-design-screenshots
+  workflow_dispatch:
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Capture production vs PR 84
+        run: node scripts/premium-design-evidence.mjs
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-design-evidence
+          path: premium-design-evidence/
+          retention-days: 7
