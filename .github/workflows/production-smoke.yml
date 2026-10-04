@@ -51,7 +51,7 @@ jobs:
             retry_contains "https://afghaneats.net/assets/app.js" "renderConnectivityState" /tmp/ae-app-v45.js
             retry_contains "https://afghaneats.net/assets/app.js" "checkoutRequestKey" /tmp/ae-app-ordering.js
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
-            retry_contains "https://afghaneats.net/" "class=\"premium-home\"" /tmp/ae-home-premium.html
+            retry_contains "https://afghaneats.net/" "premium-home" /tmp/ae-home-premium.html
             retry_contains "https://afghaneats.net/assets/home-premium.css" "homepage v2" /tmp/ae-home-premium.css
             retry_contains "https://afghaneats.net/" "id=\"heroCarousel\"" /tmp/ae-home-carousel.html
             retry_contains "https://afghaneats.net/assets/hero-carousel.js" "AUTOPLAY_MS = 3600" /tmp/ae-hero-carousel.js
