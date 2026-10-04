@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-label="Afghan Eats food placeholder">
+  <rect width="320" height="220" fill="#f3efe6"/>
+  <g fill="none" stroke="#123c32" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M111 141h98" stroke-width="5"/>
+    <path d="M121 141c4 26 22 39 39 39s35-13 39-39" stroke-width="5"/>
+    <path d="M127 128c10-17 23-25 33-25s23 8 33 25" stroke-width="5"/>
+    <path d="M160 103V91" stroke-width="5"/>
+    <path d="M146 89c-7-7-5-16 1-22" stroke-width="4"/>
+    <path d="M160 85c-7-8-5-18 1-25" stroke-width="4"/>
+    <path d="M174 89c7-7 5-16-1-22" stroke-width="4"/>
+    <path d="M88 86v72M78 86v27M88 86v27M98 86v27" stroke-width="4"/>
+    <path d="M232 86v72M225 86c0 20 14 20 14 0" stroke-width="4"/>
+  </g>
+  <g fill="none" stroke="#123c32" stroke-width="2" opacity=".16">
+    <path d="M20 20h28l14 14-14 14H20L6 34Z"/>
+    <path d="M300 20h-28l-14 14 14 14h28l14-14Z"/>
+    <path d="M20 200h28l14-14-14-14H20L6 186Z"/>
+    <path d="M300 200h-28l-14-14 14-14h28l14 14Z"/>
+  </g>
+</svg>
