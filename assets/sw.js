@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'afghan-eats-v3';
+const CACHE_VERSION = 'afghan-eats-v4';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const APP_SHELL = [
@@ -12,8 +12,19 @@ const APP_SHELL = [
   '/assets/advanced.css',
   '/assets/app.js',
   '/assets/design-2026.css',
-  '/assets/icons/afghan-eats-192.svg',
-  '/assets/icons/afghan-eats-512.svg'
+  '/assets/icons/afghan-eats-192.png',
+  '/assets/icons/afghan-eats-512.png'
+];
+
+const API_HOST = 'afghaneats-api.onrender.com';
+const NETWORK_ONLY_HOST_SUFFIXES = [
+  'onrender.com',
+  'firebaseio.com',
+  'firebaseapp.com',
+  'googleapis.com',
+  'google.com',
+  'gstatic.com',
+  'googleusercontent.com'
 ];
 
 self.addEventListener('install', (event) => {
@@ -36,16 +47,19 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function isLiveDataRequest(request) {
+function hostMatches(hostname, suffix) {
+  return hostname === suffix || hostname.endsWith(`.${suffix}`);
+}
+
+function isNetworkOnlyRequest(request) {
   try {
     const url = new URL(request.url);
-    return (
-      url.pathname.startsWith('/api/') ||
-      /\/api\//.test(url.pathname) ||
-      url.hostname.includes('onrender.com') ||
-      url.hostname.includes('firebaseio.com') ||
-      url.hostname.includes('googleapis.com')
-    );
+    const hostname = url.hostname.toLowerCase();
+
+    if (hostname === API_HOST) return true;
+    if (url.pathname.startsWith('/api/') || /\/api\//.test(url.pathname)) return true;
+
+    return NETWORK_ONLY_HOST_SUFFIXES.some((suffix) => hostMatches(hostname, suffix));
   } catch {
     return true;
   }
@@ -81,9 +95,8 @@ self.addEventListener('fetch', (event) => {
 
   if (request.method !== 'GET') return;
 
-  if (isLiveDataRequest(request)) {
-    return;
-  }
+  // Never intercept/cache API, Render, Firebase, or Google requests.
+  if (isNetworkOnlyRequest(request)) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(
