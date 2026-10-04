@@ -459,3 +459,32 @@
     margin-inline-end: 1px;
   }
 }
+
+
+/* Final mobile category rail containment: keep full pill inside the viewport */
+@media (max-width: 700px) {
+  .ae-premium .directory-category-browser,
+  .ae-premium .active-category-browser {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+  .ae-premium .directory-category-browser .menu-category-rail,
+  .ae-premium .active-category-browser .menu-category-rail {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+  .ae-premium .directory-category-browser .menu-category-options,
+  .ae-premium .active-category-browser .menu-category-options {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: 10px !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+  }
+}
