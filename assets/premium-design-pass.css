@@ -293,3 +293,84 @@
     padding: 24px;
   }
 }
+
+
+/* Follow-up polish: placeholder-first grids and Herat identity */
+.ae-premium .restaurant-photo-placeholder {
+  position: relative;
+  color: transparent !important;
+  font-size: 0 !important;
+  background-size: 128px auto;
+  background-color: #f3efe6 !important;
+}
+.ae-premium .restaurant-photo-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(18,60,50,.06);
+}
+.ae-premium .restaurant-photo-placeholder :is(span,b,small) {
+  display: none !important;
+}
+
+/* Darbar/public listing hero: geometric Herati texture, not a soft blurred placeholder */
+.ae-premium .directory-store-hero .store-photo-placeholder {
+  background-color: #21463b !important;
+  background-image:
+    url('/assets/images/herati-pattern.svg'),
+    url('/assets/images/food-placeholder.svg') !important;
+  background-repeat: repeat, no-repeat !important;
+  background-position: center, center !important;
+  background-size: 240px 240px, 150px auto !important;
+  filter: none !important;
+}
+.ae-premium .directory-store-hero .store-overlay {
+  background: linear-gradient(0deg, rgba(12,34,27,.88) 0%, rgba(12,34,27,.38) 54%, rgba(12,34,27,.10) 100%) !important;
+}
+
+/* Force every public-listing status chip to the same muted soft-green treatment */
+.ae-premium :is(
+  .status-pill.directory,
+  .status-pill.inline.directory,
+  .store-badges .status-pill.directory,
+  .directory-kicker,
+  .public-menu-status
+) {
+  background: #edf3ef !important;
+  color: #385247 !important;
+  border-color: #d7e3dc !important;
+}
+
+/* Ensure SVG placeholder categories feel intentional rather than empty */
+.ae-premium .ae-cuisine-photo img[src*="food-placeholder.svg"] {
+  object-fit: contain !important;
+  padding: 15px !important;
+  background: #f3efe6;
+}
+
+/* Small-phone protection for public-listing hero status */
+@media (max-width: 375px) {
+  .ae-premium .directory-store-title {
+    padding-top: 62px;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    top: 12px;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    max-width: calc(100% - 8px);
+  }
+  .ae-premium .directory-store-hero .status-pill.directory {
+    max-width: 100%;
+    min-height: 28px;
+    padding: 5px 8px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+  .ae-premium .directory-store-hero .status-pill.directory::after {
+    font-size: 10px;
+  }
+  .ae-premium.rtl .directory-store-hero .status-pill.directory::after {
+    font-size: 11px;
+  }
+}
