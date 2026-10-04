@@ -13,6 +13,7 @@
     "@type": "FoodEstablishment",
     "name": "Afghan Eats",
     "url": "https://afghaneats.net/",
+    "telephone": "+93 796 851 968",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Herat",
@@ -26,20 +27,6 @@
       "addressCountry": "AF"
     }
   }
-  </script>
-  <script data-schema-config-phone>
-  (function () {
-    const node = document.getElementById('afghanEatsFoodEstablishmentSchema');
-    if (!node) return;
-    try {
-      const data = JSON.parse(node.textContent);
-      const phone = String(window.AFGHAN_EATS_CONFIG?.supportPhone || '').trim();
-      if (phone) data.telephone = phone;
-      node.textContent = JSON.stringify(data);
-    } catch (error) {
-      console.warn('[Afghan Eats] Structured data update skipped.', error);
-    }
-  })();
   </script>
 <link rel="stylesheet" href="/assets/styles.css?v=20260912"><link rel="stylesheet" href="/assets/advanced.css"><link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"><link rel="preload" as="image" href="/assets/images/afghan-feast.webp" fetchpriority="high"><style>
 .ae-trust-strip{background:#fbfaf7;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
