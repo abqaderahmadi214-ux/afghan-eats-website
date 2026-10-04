@@ -56,27 +56,38 @@ async function captureCategories(base,label){
 async function captureQoqnoos(base,label){
   const {context,page,errors}=await mobilePage(base);
   await openReady(page,base+'/restaurants.html','#restaurantGrid .restaurant-card');
-  const card=page.locator('#restaurantGrid .restaurant-card').filter({hasText:'Qoqnoos Restaurant'}).first();
-  await card.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-  const data=await card.evaluate(el=>{
-    const media=el.querySelector('.restaurant-image');
-    const placeholder=el.querySelector('.restaurant-photo-placeholder');
-    const img=media?.querySelector('img');
-    const phStyle=placeholder?getComputedStyle(placeholder):null;
-    return {
-      mediaVisibleText:(media?.innerText||'').trim(),
-      containsPhotoComingSoon:/photo coming soon/i.test(media?.innerText||''),
-      imageSrc:img?.getAttribute('src')||'',
-      imageHidden:Boolean(img?.hidden),
-      placeholderDisplay:phStyle?.display||'',
-      placeholderBg:phStyle?.backgroundImage||'',
-      placeholderFontSize:phStyle?.fontSize||''
-    };
-  });
-  await card.screenshot({path:`${outDir}/${label}-qoqnoos-card.png`});
+  await page.waitForTimeout(2500);
+  let data=null;
+  let screenshotError=null;
+  for(let attempt=0;attempt<4;attempt++){
+    try{
+      const card=page.locator('#restaurantGrid .restaurant-card').filter({hasText:'Qoqnoos Restaurant'}).first();
+      await card.waitFor({state:'visible',timeout:8000});
+      data=await card.evaluate(el=>{
+        const media=el.querySelector('.restaurant-image');
+        const placeholder=el.querySelector('.restaurant-photo-placeholder');
+        const img=media?.querySelector('img');
+        const phStyle=placeholder?getComputedStyle(placeholder):null;
+        return {
+          mediaVisibleText:(media?.innerText||'').trim(),
+          containsPhotoComingSoon:/photo coming soon/i.test(media?.innerText||''),
+          imageSrc:img?.getAttribute('src')||'',
+          imageHidden:Boolean(img?.hidden),
+          placeholderDisplay:phStyle?.display||'',
+          placeholderBg:phStyle?.backgroundImage||'',
+          placeholderFontSize:phStyle?.fontSize||''
+        };
+      });
+      await card.screenshot({path:`${outDir}/${label}-qoqnoos-card.png`});
+      screenshotError=null;
+      break;
+    }catch(error){
+      screenshotError=String(error?.message||error);
+      await page.waitForTimeout(900);
+    }
+  }
   await context.close();
-  return {...data,errors};
+  return {...(data||{}),screenshotError,errors};
 }
 
 async function darbarOverlap(base,width){
