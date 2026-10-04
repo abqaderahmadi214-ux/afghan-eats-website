@@ -374,3 +374,43 @@
     font-size: 11px;
   }
 }
+
+
+/* Final follow-up: force branded artwork on restaurant-specific placeholders */
+.ae-premium .restaurant-image .restaurant-photo-placeholder.restaurant-specific-placeholder,
+.ae-premium .restaurant-image .restaurant-photo-placeholder.media-fallback {
+  background-color: #f3efe6 !important;
+  background-image: url('/assets/images/food-placeholder.svg') !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 128px auto !important;
+}
+
+/* On narrow phones, keep public-listing status in normal flow to prevent title overlap */
+@media (max-width: 375px) {
+  .ae-premium .directory-store-title {
+    padding-top: 24px;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    position: static !important;
+    inset: auto !important;
+    order: 0;
+    align-self: flex-start;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .ae-premium .directory-store-hero .status-pill.directory {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+  }
+  .ae-premium .directory-store-title h1 {
+    order: 1;
+  }
+  .ae-premium .directory-store-title .store-cuisine {
+    order: 2;
+  }
+  .ae-premium .directory-store-title .store-address {
+    order: 3;
+  }
+}
