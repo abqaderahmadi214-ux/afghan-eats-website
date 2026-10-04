@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
   <defs>
     <pattern id="h" width="80" height="80" patternUnits="userSpaceOnUse">
-      <path d="M40 4 76 40 40 76 4 40Z" fill="none" stroke="#f5ead7" stroke-width="2" opacity=".35"/>
-      <path d="M40 18 62 40 40 62 18 40Z" fill="none" stroke="#d8b98d" stroke-width="1.5" opacity=".28"/>
-      <circle cx="40" cy="40" r="5" fill="none" stroke="#f5ead7" stroke-width="1.5" opacity=".3"/>
+      <path d="M40 4 76 40 40 76 4 40Z" fill="none" stroke="#f5ead7" stroke-width="2" opacity=".43"/>
+      <path d="M40 18 62 40 40 62 18 40Z" fill="none" stroke="#d8b98d" stroke-width="1.5" opacity=".36"/>
+      <circle cx="40" cy="40" r="5" fill="none" stroke="#f5ead7" stroke-width="1.5" opacity=".38"/>
     </pattern>
   </defs>
   <rect width="240" height="240" fill="#21463b"/>
