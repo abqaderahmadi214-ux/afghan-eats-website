@@ -45,6 +45,11 @@ jobs:
           retry_contains "https://afghaneats.net/config.js" "loadLaunchReadinessV40" /tmp/ae-config.js
           retry_contains "https://afghaneats.net/assets/launch-readiness.js" "launchReadiness.snapshot" /tmp/ae-launch.js
           if [ "$GITHUB_EVENT_NAME" != "pull_request" ]; then
+            # Marker selection principle:
+            # Assert on user-visible CONTENT (headlines, section titles, CTA text, brand name)
+            # rather than internal markup IDs or CSS classes. Markup changes on every redesign;
+            # content survives. When an assertion breaks, replace with a content marker — do not
+            # replace with a new ID or class.
             retry_contains "https://afghaneats.net/config.js" "prepareCustomerLocale" /tmp/ae-config-v44.js
             retry_contains "https://afghaneats.net/assets/app.js" "requestDeliveryQuote" /tmp/ae-app-v44.js
             retry_contains "https://afghaneats.net/checkout.html" "deliveryQuotePanel" /tmp/ae-checkout-v44.html
@@ -53,9 +58,9 @@ jobs:
             retry_contains "https://afghaneats.net/checkout.html" "savedAddressChoices" /tmp/ae-checkout-v45.html
             retry_contains "https://afghaneats.net/" "premium-home" /tmp/ae-home-premium.html
             retry_contains "https://afghaneats.net/assets/home-premium.css" "homepage v2" /tmp/ae-home-premium.css
-            retry_contains "https://afghaneats.net/" "id=\"heroCarousel\"" /tmp/ae-home-carousel.html
+            retry_contains "https://afghaneats.net/" "The taste of Herat" /tmp/ae-home-hero.html
             retry_contains "https://afghaneats.net/assets/hero-carousel.js" "AUTOPLAY_MS = 3600" /tmp/ae-hero-carousel.js
-            retry_contains "https://afghaneats.net/" "id=\"cuisinePhotoGrid\"" /tmp/ae-home-cuisine.html
+            retry_contains "https://afghaneats.net/" "What are you craving" /tmp/ae-home-cuisine.html
             retry_contains "https://afghaneats.net/assets/cuisine-motion.js" "IntersectionObserver" /tmp/ae-cuisine-motion.js
             retry_contains "https://afghaneats.net/" "support@afghaneats.net" /tmp/ae-footer-support.html
             retry_contains "https://afghaneats.net/" "class=\"brand-emblem\"" /tmp/ae-brand-v3.html
