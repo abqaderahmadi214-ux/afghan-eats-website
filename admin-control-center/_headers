@@ -8,7 +8,7 @@
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /*
-  Content-Security-Policy: default-src 'self'; connect-src 'self' https://afghaneats-api.onrender.com; img-src 'self' data: https:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://afghaneats-api.onrender.com; img-src 'self' data: blob: https:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'
   Cross-Origin-Opener-Policy: same-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Referrer-Policy: same-origin
