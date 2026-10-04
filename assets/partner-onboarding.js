@@ -86,7 +86,7 @@
   }
 
   function safeFallback(payload, reason) {
-    console.info('Afghan Eats partner onboarding fallback payload', payload, reason || '');
+    console.warn('[Afghan Eats] Partner onboarding fell back to local confirmation.', reason || '');
     showResult(
       'success',
       "Thanks — we've saved your application details for follow-up. The Afghan Eats team will contact you.",
