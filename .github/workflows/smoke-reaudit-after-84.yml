@@ -1,0 +1,28 @@
+name: Smoke Re-audit After 84
+on:
+  push:
+    branches:
+      - diagnostic/smoke-reaudit-after-84
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Re-audit all production smoke markers
+        run: node scripts/smoke-reaudit-after-84.mjs
+      - name: Upload audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-reaudit-after-84
+          path: reaudit-output/
+          retention-days: 7
