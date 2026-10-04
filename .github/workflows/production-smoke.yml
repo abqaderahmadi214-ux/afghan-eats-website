@@ -134,8 +134,8 @@ jobs:
               echo 'Generic restaurant stock-photo fallbacks must not return to customer restaurant cards.' >&2
               exit 1
             fi
-            retry_contains "https://afghaneats.net/" "id=\"customerAndroidDownload\"" /tmp/ae-footer-apps.html
-            retry_contains "https://afghaneats.net/" "id=\"customerIosDownload\"" /tmp/ae-footer-apps-ios.html
+            retry_contains "https://afghaneats.net/" "Mobile apps coming soon" /tmp/ae-footer-apps.html
+            retry_contains "https://afghaneats.net/" "Mobile apps coming soon" /tmp/ae-footer-apps-ios.html
             retry_contains "https://afghaneats.net/assets/app-downloads.js" "customerAndroidDownload" /tmp/ae-app-downloads.js
             if grep -Fq 'ie.flipdish.br11970' /tmp/ae-footer-apps.html; then
               echo 'Unrelated Flipdish Afghan Eats app link must never appear in the Herat footer.' >&2
