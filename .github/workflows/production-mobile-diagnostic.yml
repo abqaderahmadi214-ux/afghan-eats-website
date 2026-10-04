@@ -29,6 +29,9 @@ jobs:
       - name: Run production mobile diagnostic
         run: node scripts/production-mobile-diagnostic.mjs
 
+      - name: Run headed PWA installability diagnostic
+        run: xvfb-run -a node scripts/pwa-installability-diagnostic.mjs
+
       - name: Upload diagnostic evidence
         if: always()
         uses: actions/upload-artifact@v4
