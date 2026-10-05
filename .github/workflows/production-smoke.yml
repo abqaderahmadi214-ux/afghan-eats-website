@@ -364,6 +364,28 @@ jobs:
           print('Database-backed directory contract passed')
           PY
 
+      - name: Temporary PR96 Google Places resolution
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 96
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsS --connect-timeout 10 --max-time 180 --retry 3 --retry-delay 5 \
+            "https://deploy-preview-96--afghaneats.netlify.app/.netlify/functions/places-resolve" \
+            -o /tmp/places-resolution.json
+          node - <<'NODE'
+          const p=require('/tmp/places-resolution.json');
+          console.log('PLACES_COUNTS='+JSON.stringify(p.counts||{}));
+          console.log('PLACES_API_ERROR='+JSON.stringify(p.apiError||null));
+          for(const x of p.results||[]){
+            const b=x.best||null;
+            console.log('PLACES_RESULT '+JSON.stringify({
+              source:x.source,id:x.id,name:x.name,status:x.status,error:x.error||null,
+              best:b?{id:b.id||null,displayName:b.displayName||'',formattedAddress:b.formattedAddress||'',location:b.location||null,nameScore:b.nameScore,addressScore:b.addressScore,score:b.score}:null
+            }));
+          }
+          if((p.results||[]).some(x=>x.status==='error')) process.exit(2);
+          NODE
+
       - name: Production verification summary
         run: |
           echo 'Afghan Eats production smoke passed.'
