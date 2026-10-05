@@ -50,11 +50,31 @@ window.renderTrackingPrimaryAction=function(order=window.__AE_TRACKING_ORDER||{}
   const actions=[riderPhone?`<a class="btn btn-primary btn-sm" href="${esc(trackingTel(riderPhone))}">☎ ${aeText('Contact rider','تماس با پیک')}</a>`:'',restaurantPhone?`<a class="btn btn-light btn-sm" href="${esc(trackingTel(restaurantPhone))}">☎ ${aeText('Contact restaurant','تماس با رستورانت')}</a>`:'',`<a class="tracking-help-link" href="${esc(help)}">${aeText('Help','راهنما')}</a>`].filter(Boolean).join('');
   host.innerHTML=`<div class="tracking-primary-copy"><b>🛵 ${esc(name)}</b><span>${aeText('Your rider is assigned. Contact them only if needed for this delivery.','پیک شما تعیین شده است. فقط در صورت نیاز برای همین تحویل تماس بگیرید.')}</span></div><div class="tracking-primary-actions">${actions}</div>`;
 };
+function normalizeTrackingLocation(value){
+  const source=value?.location&&value?.lat==null&&value?.latitude==null?value.location:value;
+  const lat=Number(source?.lat??source?.latitude),lng=Number(source?.lng??source?.lon??source?.longitude);
+  return Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180?{lat,lng}:null
+}
+function renderTrackingGeo(order,last){
+  const geo=$('#trackingGeo');if(!geo)return;
+  const restaurantLocation=normalizeTrackingLocation(
+    order?.restaurant?.location??order?.restaurant_location??order?.restaurantLocation??last?.restaurantLocation
+  );
+  const customerLocation=normalizeTrackingLocation(
+    order?.deliveryLocation??order?.delivery_location??order?.delivery_location_json??last?.deliveryLocation
+  );
+  if(restaurantLocation)geo.setAttribute('data-restaurant-location',JSON.stringify(restaurantLocation));
+  else geo.removeAttribute('data-restaurant-location');
+  if(customerLocation)geo.setAttribute('data-customer-location',JSON.stringify(customerLocation));
+  else geo.removeAttribute('data-customer-location');
+  window.AfghanEatsRiderMap?.initMap?.()
+}
 window.renderAdvancedTracking=function(input){
   if(!input)return;
   const o={...(window.__AE_TRACKING_ORDER||{}),...input};window.__AE_TRACKING_ORDER=o;
   const meta=$('#orderMeta'),steps=$('#timelineSteps'),summary=$('#trackingOrderSummary'),details=$('#trackingDeliveryDetails'),experience=$('#trackingExperience'),number=o.order_number||o.orderNumber||aeText('Order','سفارش'),status=String(o.status||'placed'),last=(()=>{try{const x=JSON.parse(localStorage.getItem('ae_last_order')||'null');return x&&(x.orderId===o.id||x.id===o.id)?x:null}catch{return null}})(),restaurant=last?.restaurantName||o.restaurant_name||o.restaurantName||'',statusData={placed:{label:aeText('Confirmed','تأیید شد')},confirmed:{label:aeText('Confirmed','تأیید شد')},preparing:{label:aeText('Preparing','در حال آماده‌سازی')},ready_for_pickup:{label:aeText('Ready','آماده')},picked_up:{label:aeText('On the way','در راه')},on_the_way:{label:aeText('On the way','در راه')},delivered:{label:aeText('Delivered','تحویل شد')},cancelled:{label:aeText('Cancelled','لغو شد')},failed:{label:aeText('Issue','مشکل')}},current=statusData[status]||statusData.placed,eta=trackingEtaRange(o,last),total=Number(o.total??last?.total??0),items=Array.isArray(o.items)?o.items:(Array.isArray(last?.items)?last.items:[]),subtotal=Number(o.subtotal??last?.subtotal??0),deliveryFee=Number(o.delivery_fee??o.deliveryFee??last?.deliveryFee??0),serviceFee=Number(o.service_fee??o.serviceFee??last?.serviceFee??0),discount=Number(o.discount??last?.discount??0),tip=Number(o.tip_amount??o.tipAmount??last?.tipAmount??0);
   experience?.classList.remove('is-locked');
+  renderTrackingGeo(o,last);
   const ref=String(number).replace(/^#/,'');
   if(meta)meta.innerHTML=`<div class="tracking-hero-main"><h1>${esc(aeText('Order','سفارش'))} #${esc(ref)} <span>${esc(current.label)}</span></h1><p>${esc(aeText('Estimated delivery','تحویل تخمینی'))}: <b dir="ltr">${eta.min}–${eta.max} ${esc(t('min'))}</b>${restaurant?` <span>· ${esc(restaurant)}</span>`:''}</p></div><span class="tracking-status-chip status-${esc(status)}">${esc(current.label)}</span>`;
   const stages=['confirmed','preparing','ready_for_pickup','on_the_way','delivered'],labels={confirmed:aeText('Confirmed','تأیید'),preparing:aeText('Preparing','آماده‌سازی'),ready_for_pickup:aeText('Ready','آماده'),on_the_way:aeText('On the way','در راه'),delivered:aeText('Delivered','تحویل')},icons={confirmed:'✓',preparing:'♨',ready_for_pickup:'●',on_the_way:'➜',delivered:'✓'},currentStage=trackingStage(status),ci=stages.indexOf(currentStage),terminal=['cancelled','failed'].includes(status);
