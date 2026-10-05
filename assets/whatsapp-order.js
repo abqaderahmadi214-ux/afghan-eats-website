@@ -5,6 +5,32 @@
     return String(phone || '').replace(/\D/g, '');
   }
 
+  function normalizePhone(phone) {
+    if (typeof phone !== 'string') return '';
+    let digits = digitsOnly(phone);
+    if (digits.startsWith('00')) digits = digits.slice(2);
+    if (/^0[2-7]\d{8}$/.test(digits)) digits = `93${digits.slice(1)}`;
+    if (/^[2-7]\d{8}$/.test(digits)) digits = `93${digits}`;
+    if (!/^[1-9]\d{7,14}$/.test(digits)) return '';
+    if (digits.startsWith('93') && !/^93[2-7]\d{8}$/.test(digits)) return '';
+    return digits;
+  }
+
+  function resolvePhone(restaurant) {
+    const candidates = [
+      restaurant?.whatsapp,
+      restaurant?.whatsapp_number,
+      restaurant?.phone,
+      ...(Array.isArray(restaurant?.phones) ? restaurant.phones : []),
+      ...(Array.isArray(restaurant?.phone_numbers) ? restaurant.phone_numbers : [])
+    ];
+    for (const candidate of candidates) {
+      const phone = normalizePhone(candidate);
+      if (phone) return phone;
+    }
+    return '';
+  }
+
   function normalizeItems(items) {
     return (Array.isArray(items) ? items : [])
       .map((item) => ({
@@ -20,7 +46,7 @@
   }
 
   function waOrderLink(phone, restaurantName, items, customerName, address) {
-    const digits = digitsOnly(phone);
+    const digits = normalizePhone(phone);
     if (!digits) return '';
 
     const orderItems = normalizeItems(items);
@@ -80,7 +106,10 @@
     const button = document.getElementById('waOrderBtn');
     if (!button) return '';
 
-    const phone = restaurant?.whatsapp || restaurant?.whatsapp_number || restaurant?.phone || '';
+    const phone = resolvePhone(restaurant);
+    button.hidden = !phone;
+    button.style.display = phone ? '' : 'none';
+    button.style.display = phone ? '' : 'none';
     const orderItems = normalizeItems(items);
     const link = orderItems.length
       ? waOrderLink(
