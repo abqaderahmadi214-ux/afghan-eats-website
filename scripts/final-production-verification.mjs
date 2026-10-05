@@ -78,10 +78,16 @@ try{
     if(menu.enabled<2) throw new Error(`Char Fasl did not expose two orderable menu items: ${JSON.stringify(menu)}`);
     await screenshot(page,'01-char-fasl-menu.png');
 
-    // Add two distinct menu items through the visible customer UI.
-    const buttons=page.locator('.add-btn:not([disabled]):visible');
-    for(let i=0;i<2;i++){
-      await buttons.nth(i).click();
+    // Add two genuinely distinct menu items by unique accessible item names.
+    const buttonMeta=await page.locator('.add-btn:not([disabled]):visible').evaluateAll(btns=>btns.map(b=>({
+      label:b.getAttribute('aria-label')||'',
+      onclick:b.getAttribute('onclick')||''
+    })));
+    const distinctLabels=[...new Set(buttonMeta.map(x=>x.label).filter(Boolean))].slice(0,2);
+    if(distinctLabels.length<2) throw new Error('Fewer than two distinct visible orderable dishes were found: '+JSON.stringify(buttonMeta));
+
+    for(const label of distinctLabels){
+      await page.getByRole('button',{name:label,exact:true}).first().click();
       await page.locator('#itemModal.open').waitFor({state:'visible',timeout:5000});
       await page.locator('#itemModal button[onclick="addCurrent()"]').click();
       await page.waitForTimeout(250);
@@ -92,14 +98,14 @@ try{
       const cart=await page.evaluate(()=>JSON.parse(localStorage.getItem('ae_cart')||'[]'));
       const subtotal=cart.reduce((s,x)=>s+Number(x.price||0)*Number(x.qty||1),0);
       if(subtotal>=200)break;
-      await buttons.nth(0).click();
+      await page.getByRole('button',{name:distinctLabels[0],exact:true}).first().click();
       await page.locator('#itemModal.open').waitFor({state:'visible',timeout:5000});
       await page.locator('#itemModal button[onclick="addCurrent()"]').click();
       await page.waitForTimeout(200);
     }
 
     const cart=await page.evaluate(()=>JSON.parse(localStorage.getItem('ae_cart')||'[]'));
-    if(cart.length<2) throw new Error('Cart does not contain two distinct items after UI add flow.');
+    if(cart.length<2) throw new Error('Cart does not contain two distinct items after UI add flow. buttons='+JSON.stringify(buttonMeta)+' cart='+JSON.stringify(cart));
 
     const wa=await page.evaluate(()=>{
       const a=document.getElementById('waOrderBtn');
