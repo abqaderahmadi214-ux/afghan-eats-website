@@ -107,10 +107,14 @@ test('checkout captures GPS and sends deliveryLocation',async({page})=>{
   await page.locator('select[name="district"]').selectOption('Gulha');
   await page.locator('input[name="address"]').fill('Gulha Circle');
   await expect(page.locator('#deliveryQuotePanel')).toContainText('Delivery confirmed');
+  await expect.poll(()=>page.evaluate(()=>window.AE_DELIVERY_LOCATION)).toEqual({lat:34.3501,lng:62.2002});
+  await expect(page.locator('input[name="fulfillment"]:checked')).toHaveValue('delivery');
   const orderRequest=page.waitForRequest(r=>r.url().endsWith('/orders.place')&&r.method()==='POST');
   await page.getByRole('button',{name:'Place order'}).click();
   const request=await orderRequest;
-  expect(request.postDataJSON().json.deliveryLocation).toEqual({lat:34.3501,lng:62.2002});
+  const body=request.postDataJSON();
+  const state=await page.evaluate(()=>({deliveryLocation:window.AE_DELIVERY_LOCATION,mode:localStorage.getItem('ae_mode')}));
+  expect(body.json.deliveryLocation,JSON.stringify({body,state})).toEqual({lat:34.3501,lng:62.2002});
 });
 
 test('tracking map renders restaurant, customer and rider pins',async({page})=>{
