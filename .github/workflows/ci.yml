@@ -22,6 +22,8 @@ jobs:
         run: |
           node --check assets/app.js
           node --check assets/advanced.js
+          node --check assets/order-map.js
+          node --check scripts/inject-google-maps-config.cjs
           node --check assets/operations.js
           node --check assets/trust.js
           node --check assets/portal.js
@@ -117,7 +119,11 @@ jobs:
           asset_block=netlify.split('for = "/assets/*"',1)[-1]
           if 'immutable' in asset_block.lower():
               problems.append('Unversioned assets must not use immutable caching')
+          order_html=(root/'order.html').read_text(encoding='utf-8')
+          if re.search(r'leaflet|unpkg\.com',order_html,re.I):
+              problems.append('Leaflet/unpkg references must not remain in order.html')
           patterns=[
+              re.compile(r'AIza[A-Za-z0-9_-]{10,}'),
               re.compile(r'sk_live_[A-Za-z0-9]{12,}'),
               re.compile(r'eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}'),
               re.compile(r'(?:SUPABASE_SERVICE_ROLE_KEY|JWT_SECRET|COMMUNICATIONS_PROVIDER_TOKEN)\s*[:=]\s*["\'][^$"\']{12,}["\']',re.I),
