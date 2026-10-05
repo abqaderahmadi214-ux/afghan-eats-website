@@ -1,0 +1,490 @@
+/*
+ * Afghan Eats premium design pass.
+ * Visual-only overrides: no application behavior is defined here.
+ */
+
+/* Typography and vertical rhythm */
+.ae-premium {
+  line-height: 1.55;
+}
+.ae-premium :is(p, li, .tagline, .browse-card-meta, .directory-checked) {
+  line-height: 1.55;
+}
+.ae-premium .section {
+  padding-block: 54px;
+}
+.ae-premium .section-head {
+  margin-bottom: 30px;
+}
+
+/* Shared premium food placeholder */
+.ae-premium :is(
+  .restaurant-photo-placeholder,
+  .menu-photo-placeholder,
+  .store-photo-placeholder,
+  .ae-cuisine-photo
+) {
+  background-color: #f3efe6 !important;
+  background-image: url('/assets/images/food-placeholder.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 78px auto;
+}
+.ae-premium :is(
+  .restaurant-photo-placeholder,
+  .menu-photo-placeholder,
+  .store-photo-placeholder
+) > * {
+  display: none !important;
+}
+.ae-premium .restaurant-photo-placeholder {
+  min-height: 100%;
+}
+.ae-premium .menu-photo-placeholder {
+  font-size: 0 !important;
+}
+.ae-premium img[src*="food-placeholder.svg"] {
+  background: #f3efe6;
+  object-fit: contain !important;
+  padding: 36px;
+}
+.ae-premium .ae-cuisine-all .ae-cuisine-photo {
+  background-image: none;
+}
+
+/* Homepage hero: keep the real Afghan feast image, improve polish and overlay contrast */
+.ae-premium .ae-hero-visual {
+  border-radius: 26px;
+  overflow: visible;
+}
+.ae-premium .ae-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(18,60,50,.02), rgba(18,60,50,.18));
+  pointer-events: none;
+  z-index: 1;
+}
+.ae-premium .ae-feast {
+  box-shadow: 0 24px 60px rgba(23,37,31,.14);
+}
+.ae-premium .ae-hero-visual figcaption {
+  z-index: 2;
+  background: rgba(255,255,255,.97);
+  color: #17251f;
+  border-color: rgba(18,60,50,.12);
+}
+.ae-premium .ae-hero-visual figcaption small {
+  color: #56665d;
+}
+.ae-premium .ae-hero-visual figcaption strong {
+  color: #17251f;
+}
+
+/* Homepage categories: identical circles and identical image crops */
+.ae-premium .ae-cuisine-photo {
+  width: 96px !important;
+  height: 96px !important;
+  min-width: 96px;
+  min-height: 96px;
+  aspect-ratio: 1;
+  flex: 0 0 96px;
+  background-size: 46px auto;
+}
+.ae-premium .ae-cuisine-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 1;
+  object-fit: cover !important;
+  object-position: center;
+}
+
+/* Restaurant cards */
+.ae-premium .restaurant-grid {
+  gap: 28px !important;
+}
+.ae-premium .restaurant-card {
+  box-shadow: 0 8px 24px rgba(23,37,31,.05) !important;
+}
+.ae-premium .restaurant-card:hover {
+  box-shadow: 0 16px 38px rgba(23,37,31,.10) !important;
+}
+.ae-premium .restaurant-image {
+  background: #f3efe6;
+}
+.ae-premium .restaurant-image img {
+  object-position: center;
+}
+
+/* Public listing / public menu pills: neutral rather than warning yellow */
+.ae-premium .status-pill.directory,
+.ae-premium .directory-kicker,
+.ae-premium .public-menu-status {
+  background: #edf3ef !important;
+  color: #385247 !important;
+  border: 1px solid #d7e3dc !important;
+  box-shadow: none !important;
+}
+
+/* Darbar/public preview hero: compact status pill in hero top-right */
+.ae-premium .directory-store-hero .store-overlay {
+  align-items: stretch;
+}
+.ae-premium .directory-store-title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.ae-premium .directory-store-hero .store-badges {
+  position: absolute;
+  top: 20px;
+  inset-inline-end: 0;
+  z-index: 3;
+}
+.ae-premium .directory-store-hero .status-pill.directory {
+  position: static !important;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0 !important;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.ae-premium .directory-store-hero .status-pill.directory::after {
+  content: "Public listing — ordering disabled";
+  font-size: 11px;
+}
+.ae-premium.rtl .directory-store-hero .status-pill.directory::after {
+  content: "فهرست عمومی — سفارش غیرفعال";
+  font-size: 12px;
+}
+
+/* Remove the oversized ordering-disabled notice below public-listing heroes */
+.ae-premium .directory-summary .directory-kicker,
+.ae-premium .directory-summary h2,
+.ae-premium .directory-summary > div:first-child > p {
+  display: none !important;
+}
+.ae-premium .directory-detail {
+  background: #fff !important;
+  border-color: #e3e9e3 !important;
+  box-shadow: 0 10px 30px rgba(23,37,31,.05) !important;
+}
+.ae-premium .directory-primary-actions {
+  margin-top: 4px;
+}
+.ae-premium .directory-primary-actions::before {
+  content: "Ordering is not enabled through Afghan Eats yet. You can contact the restaurant directly.";
+  flex: 0 0 100%;
+  display: block;
+  margin-bottom: 4px;
+  color: #66736d;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.ae-premium.rtl .directory-primary-actions::before {
+  content: "سفارش از طریق افغان ایتس هنوز فعال نیست. می‌توانید مستقیماً با رستورانت تماس بگیرید.";
+  text-align: right;
+}
+
+/* Menu cards: uniform height, consistent spacing, calmer price-pending state */
+.ae-premium .menu-card-grid,
+.ae-premium .directory-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px !important;
+  row-gap: 20px !important;
+  column-gap: 20px !important;
+  align-items: stretch;
+}
+.ae-premium .premium-menu-card {
+  margin: 0 !important;
+  min-height: 154px;
+  height: 100%;
+  padding: 18px !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 18px rgba(23,37,31,.04);
+}
+.ae-premium .premium-menu-card .menu-item-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ae-premium .premium-menu-card .menu-price {
+  margin-top: auto;
+  padding-top: 12px;
+}
+.ae-premium .premium-menu-card:has(.add-btn:disabled) .menu-price,
+.ae-premium .public-menu-item .menu-price {
+  color: #78837d;
+  font-weight: 600;
+}
+.ae-premium .menu-item-media {
+  align-self: stretch;
+  height: auto;
+  min-height: 112px;
+  background: #f3efe6;
+}
+.ae-premium .directory-menu-section {
+  margin-top: 32px;
+}
+.ae-premium .directory-public-menu {
+  border-top-color: #e5ebe6;
+  padding-top: 32px;
+  margin-top: 34px;
+}
+
+/* Footer app availability: one quiet line, no pseudo-store badges */
+.ae-premium .mobile-apps-coming-soon {
+  margin: 0;
+  color: #66736d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Mobile refinements */
+@media (max-width: 1000px) {
+  .ae-premium .menu-card-grid,
+  .ae-premium .directory-menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .ae-premium .section {
+    padding-block: 36px;
+  }
+  .ae-premium .section-head {
+    margin-bottom: 24px;
+  }
+  .ae-premium .ae-cuisine-photo {
+    width: 78px !important;
+    height: 78px !important;
+    min-width: 78px;
+    min-height: 78px;
+    flex-basis: 78px;
+    background-size: 40px auto;
+  }
+  .ae-premium .restaurant-grid {
+    gap: 20px !important;
+  }
+  .ae-premium .ae-hero-visual::after {
+    border-radius: 18px;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    top: 14px;
+    inset-inline-end: 0;
+  }
+  .ae-premium .premium-menu-card {
+    min-height: 132px;
+    padding: 14px !important;
+    gap: 13px !important;
+  }
+  .ae-premium .menu-item-media {
+    min-height: 88px;
+  }
+  .ae-premium img[src*="food-placeholder.svg"] {
+    padding: 24px;
+  }
+}
+
+
+/* Follow-up polish: placeholder-first grids and Herat identity */
+.ae-premium .restaurant-photo-placeholder {
+  position: relative;
+  color: transparent !important;
+  font-size: 0 !important;
+  background-size: 128px auto;
+  background-color: #f3efe6 !important;
+}
+.ae-premium .restaurant-photo-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(18,60,50,.06);
+}
+.ae-premium .restaurant-photo-placeholder :is(span,b,small) {
+  display: none !important;
+}
+
+/* Darbar/public listing hero: geometric Herati texture, not a soft blurred placeholder */
+.ae-premium .directory-store-hero .store-photo-placeholder {
+  background-color: #21463b !important;
+  background-image:
+    url('/assets/images/herati-pattern.svg'),
+    url('/assets/images/food-placeholder.svg') !important;
+  background-repeat: repeat, no-repeat !important;
+  background-position: center, center !important;
+  background-size: 240px 240px, 150px auto !important;
+  filter: none !important;
+}
+.ae-premium .directory-store-hero .store-overlay {
+  background: linear-gradient(0deg, rgba(12,34,27,.88) 0%, rgba(12,34,27,.38) 54%, rgba(12,34,27,.10) 100%) !important;
+}
+
+/* Force every public-listing status chip to the same muted soft-green treatment */
+.ae-premium :is(
+  .status-pill.directory,
+  .status-pill.inline.directory,
+  .store-badges .status-pill.directory,
+  .directory-kicker,
+  .public-menu-status
+) {
+  background: #edf3ef !important;
+  color: #385247 !important;
+  border-color: #d7e3dc !important;
+}
+
+/* Ensure SVG placeholder categories feel intentional rather than empty */
+.ae-premium .ae-cuisine-photo img[src*="food-placeholder.svg"] {
+  object-fit: contain !important;
+  padding: 15px !important;
+  background: #f3efe6;
+}
+
+/* Small-phone protection for public-listing hero status */
+@media (max-width: 375px) {
+  .ae-premium .directory-store-title {
+    padding-top: 62px;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    top: 12px;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    max-width: calc(100% - 8px);
+  }
+  .ae-premium .directory-store-hero .status-pill.directory {
+    max-width: 100%;
+    min-height: 28px;
+    padding: 5px 8px;
+    white-space: normal;
+    line-height: 1.25;
+  }
+  .ae-premium .directory-store-hero .status-pill.directory::after {
+    font-size: 10px;
+  }
+  .ae-premium.rtl .directory-store-hero .status-pill.directory::after {
+    font-size: 11px;
+  }
+}
+
+
+/* Final follow-up: force branded artwork on restaurant-specific placeholders */
+.ae-premium .restaurant-image .restaurant-photo-placeholder.restaurant-specific-placeholder,
+.ae-premium .restaurant-image .restaurant-photo-placeholder.media-fallback {
+  background-color: #f3efe6 !important;
+  background-image: url('/assets/images/food-placeholder.svg') !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 128px auto !important;
+}
+
+/* On narrow phones, keep public-listing status in normal flow to prevent title overlap */
+@media (max-width: 375px) {
+  .ae-premium .directory-store-title {
+    padding-top: 24px;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    position: static !important;
+    inset: auto !important;
+    order: 0;
+    align-self: flex-start;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .ae-premium .directory-store-hero .status-pill.directory {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+  }
+  .ae-premium .directory-store-title h1 {
+    order: 1;
+  }
+  .ae-premium .directory-store-title .store-cuisine {
+    order: 2;
+  }
+  .ae-premium .directory-store-title .store-address {
+    order: 3;
+  }
+}
+
+
+/* Accessibility: skip links stay off-screen until keyboard focus */
+.ae-premium :is(.ae-skip-link,.skip-link) {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: auto;
+  height: auto;
+  z-index: 10000;
+  padding: 10px 14px;
+  border: 2px solid #123c32;
+  border-radius: 10px;
+  background: #fff;
+  color: #123c32;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(23,37,31,.14);
+}
+.ae-premium :is(.ae-skip-link,.skip-link):focus,
+.ae-premium :is(.ae-skip-link,.skip-link):focus-visible {
+  position: fixed !important;
+  left: 12px !important;
+  top: 12px !important;
+  width: auto;
+  height: auto;
+}
+
+/* Mobile menu categories: keep first/last pill fully inside the scroll viewport */
+@media (max-width: 700px) {
+  .ae-premium .directory-category-browser .menu-category-options,
+  .ae-premium .active-category-browser .menu-category-options {
+    box-sizing: border-box;
+    padding-inline: 8px !important;
+    scroll-padding-inline: 8px;
+  }
+  .ae-premium .directory-category-browser .menu-category-option:first-child,
+  .ae-premium .active-category-browser .menu-category-option:first-child {
+    margin-inline-start: 1px;
+  }
+  .ae-premium .directory-category-browser .menu-category-option:last-child,
+  .ae-premium .active-category-browser .menu-category-option:last-child {
+    margin-inline-end: 1px;
+  }
+}
+
+
+/* Final mobile category rail containment: keep full pill inside the viewport */
+@media (max-width: 700px) {
+  .ae-premium .directory-category-browser,
+  .ae-premium .active-category-browser {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+  .ae-premium .directory-category-browser .menu-category-rail,
+  .ae-premium .active-category-browser .menu-category-rail {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+  .ae-premium .directory-category-browser .menu-category-options,
+  .ae-premium .active-category-browser .menu-category-options {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: 10px !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+  }
+}

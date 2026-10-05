@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-design="2026">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Restaurant onboarding | Afghan Eats</title>
+  <meta name="description" content="Start restaurant onboarding with Afghan Eats in Herat.">
+  <link rel="stylesheet" href="/assets/styles.css?v=rtl-phone-1">
+  <link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final">
+  <script src="/config.js?v=20260913-final"></script>
+  <style>
+    .partner-onboarding{max-width:980px;margin:0 auto}
+    .onboarding-intro{margin-bottom:22px}
+    .onboarding-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px 0 24px}
+    .onboarding-step-indicator{border:1px solid var(--line,#e6ddd7);border-radius:14px;padding:12px;background:#fff;font-size:.82rem;font-weight:800}
+    .onboarding-step-indicator.active{border-color:#b91c1c;box-shadow:0 0 0 2px rgba(185,28,28,.08)}
+    .onboarding-step-indicator small{display:block;color:#766b64;margin-bottom:3px}
+    .onboarding-panel{border:1px solid var(--line,#e6ddd7);border-radius:20px;background:#fff;padding:24px}
+    .onboarding-panel[hidden]{display:none}
+    .onboarding-panel h2{margin-top:0}
+    .onboarding-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .onboarding-actions .right{margin-inline-start:auto;display:flex;gap:10px}
+    .onboarding-note{margin-top:16px}
+    @media(max-width:760px){.onboarding-steps{grid-template-columns:1fr 1fr}.onboarding-panel{padding:18px}}
+  </style>
+</head>
+<body class="ae-premium">
+<header class="header"><div class="container nav"><a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a><nav class="navlinks"><a href="/restaurants" data-i18n="restaurants">Restaurants</a><a href="/partner"><span class="en-copy">For restaurants</span><span class="fa-copy">برای رستورانت‌ها</span></a></nav><div class="actions"><button class="lang" type="button" onclick="toggleLang()" aria-label="Switch language">دری</button></div></div></header>
+
+<main class="section soft">
+  <div class="container partner-onboarding">
+    <div class="onboarding-intro">
+      <span class="hero-kicker"><span class="en-copy">Restaurant onboarding</span><span class="fa-copy">ثبت رستورانت</span></span>
+      <h1><span class="en-copy">Become an Afghan Eats partner</span><span class="fa-copy">همکار افغان ایتس شوید</span></h1>
+      <p class="en-copy">Complete four short steps. If the live application endpoint is not available yet, your details remain on this page for safe follow-up and our team will contact you.</p>
+      <p class="fa-copy">چهار مرحله کوتاه را تکمیل کنید. اگر سیستم آنلاین درخواست هنوز فعال نباشد، معلومات شما برای پیگیری محفوظ می‌ماند و تیم ما با شما تماس می‌گیرد.</p>
+    </div>
+
+    <div class="onboarding-steps" aria-label="Onboarding steps">
+      <div class="onboarding-step-indicator active" data-step-indicator><small>1</small><span class="en-copy">Restaurant details</span><span class="fa-copy">جزئیات رستورانت</span></div>
+      <div class="onboarding-step-indicator" data-step-indicator><small>2</small><span class="en-copy">Menu</span><span class="fa-copy">منو</span></div>
+      <div class="onboarding-step-indicator" data-step-indicator><small>3</small><span class="en-copy">Delivery zones</span><span class="fa-copy">ساحات ارسال</span></div>
+      <div class="onboarding-step-indicator" data-step-indicator><small>4</small><span class="en-copy">Payout info</span><span class="fa-copy">معلومات پرداخت</span></div>
+    </div>
+
+    <form id="partnerOnboardingForm" onsubmit="partnerOnboardingSubmit(event)">
+      <section class="onboarding-panel" data-onboarding-step>
+        <h2><span class="en-copy">Restaurant details</span><span class="fa-copy">جزئیات رستورانت</span></h2>
+        <div class="grid2">
+          <label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="restaurantName" required minlength="2"></label>
+          <label class="field"><span class="en-copy">Owner / manager</span><span class="fa-copy">مالک / مدیر</span><input name="ownerName" required minlength="2"></label>
+          <label class="field"><span class="en-copy">Phone</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required placeholder="+93"></label>
+          <label class="field"><span>WhatsApp</span><input name="whatsapp" type="tel" placeholder="+93"></label>
+          <label class="field"><span class="en-copy">Email</span><span class="fa-copy">ایمیل</span><input name="email" type="email"></label>
+          <label class="field"><span class="en-copy">District / area</span><span class="fa-copy">ناحیه / ساحه</span><input name="district" required></label>
+          <label class="field full"><span class="en-copy">Address / landmark</span><span class="fa-copy">آدرس / نشانی نزدیک</span><input name="address" required minlength="5"></label>
+        </div>
+      </section>
+
+      <section class="onboarding-panel" data-onboarding-step hidden>
+        <h2><span class="en-copy">Menu</span><span class="fa-copy">منو</span></h2>
+        <div class="grid2">
+          <label class="field"><span class="en-copy">Cuisine / specialties</span><span class="fa-copy">نوع غذا / تخصص</span><input name="cuisine" required placeholder="Afghan, kebab, pizza..."></label>
+          <label class="field"><span class="en-copy">Existing menu link</span><span class="fa-copy">لینک منوی فعلی</span><input name="menuUrl" type="url" placeholder="https://..."></label>
+          <label class="field full"><span class="en-copy">Menu items</span><span class="fa-copy">اقلام منو</span><textarea name="menuItems" rows="5" required placeholder="Kabuli pulao — 250 AFN&#10;Chicken kebab — 180 AFN"></textarea></label>
+          <label class="field full"><span class="en-copy">Menu notes</span><span class="fa-copy">یادداشت منو</span><textarea name="menuNotes" rows="4" placeholder="Price ranges, family platters, catering, availability..."></textarea></label>
+        </div>
+      </section>
+
+      <section class="onboarding-panel" data-onboarding-step hidden>
+        <h2><span class="en-copy">Delivery zones</span><span class="fa-copy">ساحات ارسال</span></h2>
+        <div class="grid2">
+          <label class="field"><span class="en-copy">Delivery model</span><span class="fa-copy">نوع ارسال</span><select name="deliveryModel" required><option value="afghan_eats">Afghan Eats delivery</option><option value="own_delivery">Own delivery</option><option value="both">Both</option></select></label>
+          <label class="field full"><span class="en-copy">Areas you can serve</span><span class="fa-copy">ساحات قابل ارسال</span><textarea name="deliveryZones" rows="5" required placeholder="Tank Markaz, Jebrael, Injil..."></textarea></label>
+        </div>
+      </section>
+
+      <section class="onboarding-panel" data-onboarding-step hidden>
+        <h2><span class="en-copy">Payout info</span><span class="fa-copy">معلومات پرداخت</span></h2>
+        <div class="grid2">
+          <label class="field"><span class="en-copy">Preferred payout method</span><span class="fa-copy">روش ترجیحی پرداخت</span><select name="payoutMethod" required><option value="cash_settlement">Cash settlement</option><option value="bank_transfer">Bank transfer</option><option value="mobile_money">Mobile money</option></select></label>
+          <label class="field"><span class="en-copy">Payout contact name</span><span class="fa-copy">نام مسئول دریافت</span><input name="payoutName" required></label>
+          <label class="field"><span class="en-copy">Payout contact phone</span><span class="fa-copy">شماره تماس پرداخت</span><input name="payoutPhone" type="tel" required placeholder="+93"></label>
+        </div>
+        <div class="notice onboarding-note"><span class="en-copy">Do not enter bank passwords, PINs, card numbers, or other secrets here.</span><span class="fa-copy">رمز بانکی، پین، شماره کارت یا معلومات محرمانه را اینجا وارد نکنید.</span></div>
+      </section>
+
+      <div class="onboarding-actions">
+        <button id="onboardingPrev" class="btn btn-light" type="button" onclick="partnerOnboardingPrev()" hidden><span class="en-copy">Back</span><span class="fa-copy">قبلی</span></button>
+        <div class="right">
+          <button id="onboardingNext" class="btn btn-primary" type="button" onclick="partnerOnboardingNext()"><span class="en-copy">Next</span><span class="fa-copy">بعدی</span></button>
+          <button id="onboardingSubmit" class="btn btn-primary" type="submit" hidden><span class="en-copy">Submit</span><span class="fa-copy">ارسال</span></button>
+        </div>
+      </div>
+      <div id="partnerOnboardingResult" class="notice" hidden></div>
+    </form>
+  </div>
+</main>
+
+<script src="/assets/app.js?v=20260913-final"></script>
+<script src="/assets/partner-onboarding.js"></script>
+<script src="/assets/design-2026.js?v=20260913-final"></script>
+</body>
+</html>
