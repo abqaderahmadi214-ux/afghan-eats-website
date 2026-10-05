@@ -33,6 +33,7 @@ function enrichRestaurantResearch(r){
   const meta=entry.restaurant||{},verified=['owner_confirmed','field_verified'].includes(r?.verification_status)||['active_partner','approved'].includes(r?.partnership_status),liveGallery=Array.isArray(r?.gallery_images)?r.gallery_images.filter(Boolean):[];
   return {...r,
     name_dari:r?.name_dari||meta.name_dari||null,
+    location:r?.location||meta.location||null,
     cover_image_url:r?.cover_image_url||meta.cover_image_url||null,
     logo_url:r?.logo_url||meta.logo_url||null,
     gallery_images:liveGallery.length?liveGallery:(Array.isArray(meta.gallery_images)?meta.gallery_images:[]),
@@ -158,6 +159,7 @@ function updateTotals(x){[['cartSubtotal',x.subtotal],['cartService',x.service],
 function captureDeliveryLocation(){
   const button=$('#checkoutLocationPrompt'),status=$('#checkoutLocationState');
   if(!navigator.geolocation)return;
+  window.AE_DELIVERY_LOCATION=null;
   if(button)button.disabled=true;
   navigator.geolocation.getCurrentPosition(
     pos=>{
