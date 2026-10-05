@@ -209,3 +209,11 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run customer journey browser tests
         run: npm run test:e2e
+
+      - name: Upload visual proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-proof
+          path: test-results/visual-proof
+          if-no-files-found: warn
