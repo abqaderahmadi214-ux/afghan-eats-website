@@ -73,7 +73,7 @@ try{
     page.on('pageerror',e=>pageErrors.push(String(e.message||e)));
     page.on('console',m=>{ if(m.type()==='error') pageErrors.push('console: '+m.text()); });
 
-    await page.goto(`${BASE}/restaurant.html?id=char-fasl-restaurant`,{waitUntil:'domcontentloaded',timeout:30000});
+    await page.goto(`${BASE}/restaurant.html?id=food-box-restaurant`,{waitUntil:'domcontentloaded',timeout:30000});
     const menu=await waitForMenuOrError(page,20000);
     if(menu.enabled<2) throw new Error(`Char Fasl did not expose two orderable menu items: ${JSON.stringify(menu)}`);
     await screenshot(page,'01-char-fasl-menu.png');
