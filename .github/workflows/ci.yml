@@ -209,3 +209,12 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run customer journey browser tests
         run: npm run test:e2e
+
+      - name: Upload Google Maps mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-maps-mobile-screenshots
+          path: visual-proof
+          if-no-files-found: warn
+          retention-days: 2
