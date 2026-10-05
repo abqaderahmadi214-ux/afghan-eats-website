@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="/assets/operations.css">
   <link rel="stylesheet" href="/assets/portal.css">
   <link rel="stylesheet" href="/assets/customer-premium.css?v=20260828-13">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="/config.js?v=20260913-final"></script>
 <link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"><style>
 #riderMap {
@@ -21,11 +20,6 @@
   border-radius: 12px;
   background: #f3f4f6;
   overflow: hidden;
-}
-#riderMap .leaflet-container,
-#riderMap.leaflet-container {
-  height: 100%;
-  width: 100%;
 }
 .rider-map-status {
   margin: 10px 0 0;
@@ -75,7 +69,8 @@
 
     <section class="tracking-map-card tracking-surface" aria-labelledby="trackingMapTitle">
       <div class="tracking-surface-head"><b id="trackingMapTitle"><span class="en-copy">Live rider location</span><span class="fa-copy">موقعیت زنده پیک</span></b></div>
-      <div id="riderMap" aria-label="Rider location map"></div>
+      <div id="trackingGeo" hidden></div>
+      <div id="riderMap" class="rider-map" style="height:340px;width:100%;border-radius:12px;overflow:hidden" aria-label="Rider location map"></div>
       <p id="riderMapStatus" class="rider-map-status" role="status" aria-live="polite"><span class="en-copy">Waiting for rider — this map updates when a driver is assigned.</span><span class="fa-copy">در انتظار پیک — این نقشه پس از تعیین راننده به‌روزرسانی می‌شود.</span></p>
     </section>
 
@@ -115,6 +110,21 @@
 <script>
 document.addEventListener('DOMContentLoaded',()=>{try{const id=new URLSearchParams(location.search).get('id'),o=JSON.parse(localStorage.getItem('ae_last_order')||'null');if(o?.customerPhone&&(o.orderId===id||o.id===id)){document.getElementById('trackPhone').value=o.customerPhone;setTimeout(()=>{if(typeof trackOrderWithLiveRider==='function')trackOrderWithLiveRider()},700)}}catch{}})
 </script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/assets/order-map.js"></script>
+<script>
+window.__initTrackingMap = function () {
+  if (window.AfghanEatsRiderMap && window.AfghanEatsRiderMap.initMap) {
+    window.AfghanEatsRiderMap.initMap();
+  }
+};
+window.gm_authFailure = function () {
+  if (window.AfghanEatsRiderMap && window.AfghanEatsRiderMap.showMapFallback) {
+    window.AfghanEatsRiderMap.showMapFallback();
+  }
+};
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=__GMAPS_KEY__&callback=__initTrackingMap&loading=async"
+  onerror="window.__initTrackingMap()">
+</script>
 <script src="/assets/design-2026.js?v=20260913-final"></script></body></html>

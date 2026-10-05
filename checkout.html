@@ -127,6 +127,13 @@
         <div class="sum-row total"><span data-i18n="total"></span><span id="cartTotal"></span></div>
       </div>
       <div class="server-price-note"><span aria-hidden="true">🛡️</span><span class="en-copy">Final menu prices, fees, delivery coverage, rewards and promotions are checked again by the server.</span><span class="fa-copy">قیمت نهایی، هزینه‌ها، محدوده ارسال، امتیازها و تخفیف‌ها دوباره در سرور بررسی می‌شوند.</span></div>
+      <div class="checkout-location-share delivery-only">
+        <button id="checkoutLocationPrompt" class="checkout-location-prompt" type="button" onclick="captureDeliveryLocation()">
+          <span class="en-copy">📍 Share location for accurate delivery</span>
+          <span class="fa-copy">📍 برای تحویل دقیق، موقعیت خود را شریک کنید</span>
+        </button>
+        <span id="checkoutLocationState" class="checkout-location-state" role="status" aria-live="polite"></span>
+      </div>
       <button class="btn btn-primary checkout-place-order" type="submit" data-i18n="place"></button>
       <div id="orderSubmitState" class="order-submit-state"></div>
     </aside>

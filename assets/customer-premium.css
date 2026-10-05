@@ -3196,3 +3196,11 @@
   .restaurant-page .directory-primary-actions>.btn.btn-light{width:auto}
   .restaurant-page .directory-primary-actions .directory-phone-link{min-height:34px}
 }
+
+/* Checkout GPS share */
+.checkout-page .checkout-location-share{display:grid;gap:6px;margin:12px 0 10px}
+.checkout-page .checkout-location-prompt{width:100%;min-height:42px;border:1px solid #d9e5df;border-radius:12px;background:#f6faf8;color:var(--ae-deep);padding:10px 12px;font:inherit;font-size:.76rem;font-weight:800;text-align:start;cursor:pointer}
+.checkout-page .checkout-location-prompt:hover{border-color:#b9d3c5;background:#f0f7f3}
+.checkout-page .checkout-location-prompt:disabled{cursor:wait;opacity:.65}
+.checkout-page .checkout-location-state{min-height:18px;color:#2e6f4e;font-size:.68rem;font-weight:800}
+.checkout-page.rtl .checkout-location-prompt{text-align:right}

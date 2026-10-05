@@ -22,7 +22,12 @@
       ],
       "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/68d763eac3b94c050add63eb/overview",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": false
+      "menu_preview_only": false,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -56,7 +61,12 @@
       "public_menu_source_url": "https://www.findglocal.com/AF/Herat/726025043923993/%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1-%D9%87%D8%B1%D8%A7%D8%AA-Darbar-herat",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -150,7 +160,12 @@
       "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/688ae831d18b1a34282bb019/overview",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -217,7 +232,12 @@
       "public_menu_source_url": "https://mizbanapp.com/fa/herat",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -370,7 +390,12 @@
       "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/parmis",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": false
+      "menu_preview_only": false,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -400,7 +425,12 @@
       "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/food-box",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": false
+      "menu_preview_only": false,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -424,7 +454,12 @@
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/688db40ecbac199cae041663",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": false
+      "menu_preview_only": false,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -450,7 +485,12 @@
       "public_menu_source_url": "https://www.findglocal.com/AF/Herat/452443301292439/%D8%B1%D8%B3%D8%AA%D9%88%D8%B1%D8%A7%D9%86%D8%AA-%D9%86%D9%88%DB%8C-%D9%85%D9%87%D8%AA%D8%A7%D8%A8-%D8%B4%DB%8C%D9%86%D9%88%D8%A7%D8%B1%DB%8C",
       "public_menu_checked_at": "2026-09-01",
       "source_checked_at": "2026-09-01",
-      "menu_preview_only": false
+      "menu_preview_only": false,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []

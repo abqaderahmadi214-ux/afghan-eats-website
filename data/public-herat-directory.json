@@ -47,7 +47,12 @@
       "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/overview",
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/menu",
-      "public_menu_checked_at": "2026-08-28"
+      "public_menu_checked_at": "2026-08-28",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -404,7 +409,12 @@
       "public_media_source_url": "https://www.mizbanapp.com/fa/herat/restaurant/lala-omid/menu",
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://www.mizbanapp.com/fa/herat/restaurant/lala-omid/menu",
-      "public_menu_checked_at": "2026-08-28"
+      "public_menu_checked_at": "2026-08-28",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -719,7 +729,12 @@
       "listing_mode": "directory",
       "source_label": "Official Instagram profile",
       "source_url": "https://www.instagram.com/mrburger.afg/",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -767,7 +782,12 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/photos",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -822,7 +842,12 @@
       "public_media_source_url": "https://mizbanapp.com/en/herat/restaurant/jumeirah-fast-food",
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/jumeirah-fast-food",
-      "public_menu_checked_at": "2026-08-28"
+      "public_menu_checked_at": "2026-08-28",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -1357,7 +1382,12 @@
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/ps/herat/restaurant/dehkadeh-fast-food",
       "public_menu_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -1639,7 +1669,12 @@
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/pizza-99",
       "public_menu_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -2066,7 +2101,12 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/fa/herat/restaurant/biron-bar/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2114,7 +2154,12 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/fa/herat/restaurant/sorush-burger/overview",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2164,7 +2209,12 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/en/herat/restaurant/68aae7e16f914a8a20f48d1b/photos",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2217,7 +2267,12 @@
       "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/jaspin-burger-and-pizza/overview",
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/jaspin-burger-and-pizza",
-      "public_menu_checked_at": "2026-09-01"
+      "public_menu_checked_at": "2026-09-01",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2266,7 +2321,12 @@
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/food-box-2/overview",
       "source_checked_at": "2026-09-01",
-      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/food-box/overview"
+      "public_media_source_url": "https://www.mizbanapp.com/en/herat/restaurant/food-box/overview",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2314,7 +2374,12 @@
       "listing_mode": "directory",
       "source_label": "Mizban public listing",
       "source_url": "https://mizbanapp.com/en/herat/restaurant/pizza-and-burger-padidah-now",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2366,7 +2431,12 @@
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/burger-masoud",
       "public_menu_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
@@ -2729,7 +2799,12 @@
       "source_label": "Mizban public listing",
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/maza-biryani/overview",
       "source_checked_at": "2026-09-01",
-      "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/maza-biryani/overview"
+      "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/maza-biryani/overview",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2779,7 +2854,12 @@
       "listing_mode": "directory",
       "source_label": "Official Facebook page",
       "source_url": "https://www.facebook.com/tanin.restaurant/",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2826,7 +2906,12 @@
       "listing_mode": "directory",
       "source_label": "Official Facebook page",
       "source_url": "https://www.facebook.com/mehrbano.af/",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2875,7 +2960,12 @@
       "listing_mode": "directory",
       "source_label": "Official Instagram profile",
       "source_url": "https://www.instagram.com/hot_box_fast_food/",
-      "source_checked_at": "2026-08-09"
+      "source_checked_at": "2026-08-09",
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [],
     "items": []
@@ -2928,7 +3018,12 @@
       "public_menu_source_label": "Mizban public menu",
       "public_menu_source_url": "https://mizbanapp.com/fa/herat/restaurant/char-fasl-food",
       "public_menu_checked_at": "2026-09-01",
-      "menu_preview_only": true
+      "menu_preview_only": true,
+      "location": {
+        "lat": null,
+        "lng": null,
+        "accuracy": "unresolved"
+      }
     },
     "categories": [
       {
