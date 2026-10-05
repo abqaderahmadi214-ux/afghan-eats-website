@@ -113,7 +113,7 @@ async function searchPlace(apiKey, item) {
 
 export default async (request) => {
   if (request.method !== 'GET') return json({ error: 'GET only' }, 405);
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const apiKey = Netlify.env.get('GOOGLE_MAPS_API_KEY');
   if (!apiKey) return json({ error: 'GOOGLE_MAPS_API_KEY is not configured for this deploy context' }, 503);
 
   try {
