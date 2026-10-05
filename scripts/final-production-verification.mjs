@@ -17,9 +17,9 @@ const result={
 };
 
 function cleanText(v){return String(v??'').replace(/\s+/g,' ').trim();}
-async function shot(page,name){await page.screenshot({path:\`\${OUT}/\${name}.png\`,fullPage:false});}
+async function shot(page,name){await page.screenshot({path:`${OUT}/${name}.png`,fullPage:false});}
 async function save(){
-  await fs.writeFile(\`\${OUT}/report.json\`,JSON.stringify(result,null,2));
+  await fs.writeFile(`${OUT}/report.json`,JSON.stringify(result,null,2));
 }
 
 const browser=await chromium.launch({headless:false,args:['--no-sandbox','--disable-dev-shm-usage']});
@@ -38,7 +38,7 @@ let orderPhone='+93700000123';
 
 try{
   // A) end-to-end order.
-  await page.goto(\`\${BASE}/restaurant.html?id=char-fasl-restaurant\`,{waitUntil:'domcontentloaded',timeout:60000});
+  await page.goto(`${BASE}/restaurant.html?id=char-fasl-restaurant`,{waitUntil:'domcontentloaded',timeout:60000});
   await page.waitForSelector('.add-btn:not([disabled])',{timeout:30000});
   const menuInfo=await page.locator('.menu-item.premium-menu-card').evaluateAll(cards=>cards.slice(0,8).map(card=>({
     name:card.querySelector('h3')?.textContent?.trim()||'',
@@ -79,7 +79,7 @@ try{
   if(!Object.values(waChecks).every(Boolean)) throw new Error('WhatsApp message is missing required order content.');
   await shot(page,'A-restaurant-cart-whatsapp');
 
-  await page.goto(\`\${BASE}/checkout\`,{waitUntil:'domcontentloaded',timeout:60000});
+  await page.goto(`${BASE}/checkout`,{waitUntil:'domcontentloaded',timeout:60000});
   await page.waitForSelector('form.checkout-shell',{timeout:20000});
   await page.locator('input[name="fulfillment"][value="delivery"]').check();
   await page.locator('input[name="name"]').fill('Afghan Eats QA Test');
@@ -96,7 +96,7 @@ try{
   await page.waitForTimeout(1200);
   const quoteStatus=await page.evaluate(()=>window.AE_CHECKOUT_QUOTE_STATUS);
   const submit=page.locator('form.checkout-shell button[type="submit"]');
-  if(await submit.isDisabled()) throw new Error(\`Checkout submit is disabled; delivery quote status=\${quoteStatus}\`);
+  if(await submit.isDisabled()) throw new Error(`Checkout submit is disabled; delivery quote status=${quoteStatus}`);
 
   await shot(page,'A-checkout-before-submit');
   await Promise.all([
@@ -166,7 +166,7 @@ try{
     connectionType:'cellular3g'
   });
   const start=Date.now();
-  await slow.goto(\`\${BASE}/restaurant.html?id=char-fasl-restaurant\`,{waitUntil:'domcontentloaded',timeout:60000});
+  await slow.goto(`${BASE}/restaurant.html?id=char-fasl-restaurant`,{waitUntil:'domcontentloaded',timeout:60000});
   const outcome=await Promise.race([
     slow.waitForSelector('.menu-item.premium-menu-card',{timeout:15000}).then(()=>({type:'menu'})),
     slow.waitForSelector('#menuContent .notice.error',{timeout:15000}).then(()=>({type:'retry'}))
@@ -223,7 +223,7 @@ try{
   // D) Dedicated WhatsApp test on restaurant page.
   const waContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const wa=await waContext.newPage();
-  await wa.goto(\`\${BASE}/restaurant.html?id=char-fasl-restaurant\`,{waitUntil:'domcontentloaded',timeout:60000});
+  await wa.goto(`${BASE}/restaurant.html?id=char-fasl-restaurant`,{waitUntil:'domcontentloaded',timeout:60000});
   await wa.waitForSelector('.add-btn:not([disabled])',{timeout:30000});
   await wa.locator('.add-btn:not([disabled])').first().click();
   await wa.waitForSelector('#itemModal.open',{timeout:5000});
@@ -247,7 +247,7 @@ try{
   await map.addInitScript(({lastOrder})=>{
     localStorage.setItem('ae_last_order',JSON.stringify(lastOrder));
   },{lastOrder});
-  await map.goto(\`\${BASE}/order?id=\${encodeURIComponent(orderId)}\`,{waitUntil:'domcontentloaded',timeout:60000});
+  await map.goto(`${BASE}/order?id=${encodeURIComponent(orderId)}`,{waitUntil:'domcontentloaded',timeout:60000});
   await map.waitForSelector('#riderMap.leaflet-container',{timeout:20000});
   await map.waitForSelector('#riderMap .leaflet-marker-icon',{timeout:20000});
   await map.waitForSelector('#riderMap .leaflet-tile',{timeout:20000});
