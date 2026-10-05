@@ -121,7 +121,8 @@ test('recommended discovery prioritizes orderable restaurants and hides test inv
   await page.goto('/restaurants');
   await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
   await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
-  await expect(page.locator('#resultCount')).toContainText('available to order');
+  await expect(page.locator('#resultCount')).toContainText('listings');
+  await expect(page.locator('#resultCount')).not.toContainText('available to order');
 });
 
 test('late homepage refreshes keep preview and test inventory out of popular restaurants', async ({page})=>{
@@ -328,14 +329,15 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await expect(page.locator('#cartDiscount')).toContainText('0');
 });
 
-test('an unavailable delivery address offers a clear pickup path', async ({page})=>{
+test('an unavailable delivery address shows a compact change-address notice', async ({page})=>{
   await mockApi(page,{deliveryUnavailable:true});
   await page.goto('/');
   await page.locator('.address-box input[name="address"]').fill('Outside delivery area');
   await page.locator('.address-box button').click();
-  await expect(page.locator('#restaurantGrid')).toContainText('Delivery is not available to this address yet');
-  await page.getByRole('button',{name:'Show pickup restaurants'}).click();
-  await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
+  const notice=page.locator('.delivery-inline-notice');
+  await expect(notice).toContainText('Delivery is not active at this address yet.');
+  await expect(notice.getByRole('button',{name:'Change address'})).toBeVisible();
+  await expect(page.locator('.delivery-empty')).toHaveCount(0);
 });
 
 test('one-time admin reset removes its token after a successful password change', async ({page})=>{
