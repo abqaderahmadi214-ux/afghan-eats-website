@@ -11,10 +11,30 @@ function tlTime(v){try{return new Date(v).toLocaleTimeString([], {hour:'2-digit'
 function tlMerge(state,newEvents){for(const e of newEvents||[]){if(!state.events.some(x=>Number(x.seq)===Number(e.seq)))state.events.push(e)}state.events.sort((a,b)=>Number(a.seq)-Number(b.seq));if(state.events.length>100)state.events=state.events.slice(-100)}
 function tlDedupe(events){const out=[];for(const e of events){const p=out[out.length-1];if(p&&p.status===e.status&&Math.abs(new Date(e.createdAt)-new Date(p.createdAt))<3000)continue;out.push(e)}return out}
 function tlEventHtml(e,showOrder=false){const actor=e.actor&&e.actor!=='system'?` · ${tlEsc(e.actor)}`:'';return`<div class="ae-event ${e.kind==='status'?'status':''}"><span class="ae-event-pin"></span><div>${showOrder&&e.orderNumber?`<b>${tlEsc(e.orderNumber)}</b> · `:''}<b>${tlEsc(tlLabel(e.status))}</b><small style="display:block">${tlEsc(actor.replace(/^ · /,''))}</small></div><time>${tlEsc(tlTime(e.createdAt))}</time></div>`}
-function mountCustomerFeed(){if(!location.pathname.toLowerCase().endsWith('/order.html')||document.getElementById('aeCustomerTimeline'))return;const anchor=document.getElementById('timelineSteps');if(!anchor)return;const el=document.createElement('section');el.id='aeCustomerTimeline';el.className='ae-live-feed hidden';el.innerHTML=`<div class="ae-live-head"><div><span class="ae-live-dot"></span><b>${tlText('Live order activity','فعالیت زنده سفارش')}</b></div><small id="aeCustomerTimelineState">${tlText('Waiting for verification','در انتظار تأیید')}</small></div><div id="aeCustomerProgress" class="ae-progress"></div><div id="aeCustomerEvents" class="ae-event-list"></div>`;anchor.insertAdjacentElement('afterend',el)}
-function renderCustomerFeed(order){const el=document.getElementById('aeCustomerTimeline');if(!el)return;el.classList.remove('hidden');const stages=['placed','confirmed','preparing','ready_for_pickup','picked_up','on_the_way','delivered'],idx=stages.indexOf(order.status),progress=document.getElementById('aeCustomerProgress');if(progress)progress.innerHTML=stages.map((s,i)=>`<span class="ae-progress-step ${i<idx?'done':''} ${i===idx?'done current':''}">${tlEsc(tlLabel(s))}</span>`).join('');const list=document.getElementById('aeCustomerEvents');if(list)list.innerHTML=tlDedupe(AETIMELINE.customer.events).slice(-20).reverse().map(e=>tlEventHtml(e)).join('')||`<p class="muted">${tlText('No activity yet.','هنوز فعالیتی ثبت نشده است.')}</p>`;const state=document.getElementById('aeCustomerTimelineState');if(state)state.textContent=`${tlText('Live','زنده')} · ${tlTime(new Date())}`}
-async function customerPoll(reset=false){mountCustomerFeed();const id=new URLSearchParams(location.search).get('id'),phone=document.getElementById('trackPhone')?.value?.trim();if(!id||!phone)return false;if(reset){AETIMELINE.customer.cursor=0;AETIMELINE.customer.events=[]}try{const d=await tlQuery('timeline.customer',{orderId:id,customerPhone:phone,afterSeq:AETIMELINE.customer.cursor,limit:60});tlMerge(AETIMELINE.customer,d.events);AETIMELINE.customer.cursor=Number(d.nextCursor||AETIMELINE.customer.cursor);renderCustomerFeed(d.order);if(!AETIMELINE.customer.timer)AETIMELINE.customer.timer=setInterval(()=>customerPoll(false),Number(d.pollAfterMs||8000));return true}catch(e){if(reset){const s=document.getElementById('aeCustomerTimelineState');if(s)s.textContent=e.message}return false}}
-function hookCustomerTracking(){mountCustomerFeed();const btn=document.querySelector('#trackGate button');btn?.addEventListener('click',()=>setTimeout(()=>customerPoll(true),300));setTimeout(()=>{const phone=document.getElementById('trackPhone')?.value?.trim();if(phone)customerPoll(true)},1200)}
+function mountCustomerFeed(){}
+function renderCustomerFeed(order){
+  if(!order)return;
+  const merged={...(window.__AE_TRACKING_ORDER||{}),...order};
+  if(typeof window.renderAdvancedTracking==='function')window.renderAdvancedTracking(merged);
+}
+async function customerPoll(reset=false){
+  const id=new URLSearchParams(location.search).get('id'),phone=document.getElementById('trackPhone')?.value?.trim();
+  if(!id||!phone)return false;
+  if(reset){AETIMELINE.customer.cursor=0;AETIMELINE.customer.events=[]}
+  try{
+    const d=await tlQuery('timeline.customer',{orderId:id,customerPhone:phone,afterSeq:AETIMELINE.customer.cursor,limit:60});
+    tlMerge(AETIMELINE.customer,d.events);
+    AETIMELINE.customer.cursor=Number(d.nextCursor||AETIMELINE.customer.cursor);
+    renderCustomerFeed(d.order);
+    if(!AETIMELINE.customer.timer)AETIMELINE.customer.timer=setInterval(()=>customerPoll(false),Number(d.pollAfterMs||8000));
+    return true
+  }catch(e){return false}
+}
+function hookCustomerTracking(){
+  const btn=document.querySelector('#trackGate button');
+  btn?.addEventListener('click',()=>setTimeout(()=>customerPoll(true),300));
+  setTimeout(()=>{const phone=document.getElementById('trackPhone')?.value?.trim();if(phone)customerPoll(true)},1200)
+}
 function mountPortalStream(role){const dash=document.getElementById(role==='owner'?'ownerDashboard':'riderDashboard');if(!dash||document.getElementById(`ae${role}Stream`))return;const el=document.createElement('section');el.id=`ae${role}Stream`;el.className='portal-card ae-live-feed';el.innerHTML=`<div class="ae-live-head"><div><span class="ae-live-dot"></span><b>${tlText('Live order activity','فعالیت زنده سفارش')}</b></div><small>${tlText('Auto refresh','به‌روزرسانی خودکار')}</small></div><div id="ae${role}Events" class="ae-event-list"></div>`;const grid=dash.querySelector('.portal-grid');if(role==='owner')grid?.querySelector('aside')?.prepend(el);else dash.appendChild(el)}
 async function portalStreamPoll(role,reset=false){if(typeof AEPortal==='undefined'||!AEPortal.token||AEPortal.role!==role)return;if(reset){AETIMELINE[role].cursor=0;AETIMELINE[role].events=[]}mountPortalStream(role);try{const d=await portalQuery(`timeline.${role}Stream`,{afterSeq:AETIMELINE[role].cursor,limit:60});tlMerge(AETIMELINE[role],d.events);AETIMELINE[role].cursor=Number(d.nextCursor||AETIMELINE[role].cursor);const el=document.getElementById(`ae${role}Events`);if(el)el.innerHTML=tlDedupe(AETIMELINE[role].events).slice(-18).reverse().map(e=>tlEventHtml(e,true)).join('')||`<p class="muted">${tlText('No recent order activity.','فعالیت اخیر سفارش وجود ندارد.')}</p>`;if(!AETIMELINE[role].timer)AETIMELINE[role].timer=setInterval(()=>portalStreamPoll(role,false),Number(d.pollAfterMs||6000))}catch(e){console.warn(`timeline ${role}`,e.message)}}
 function hookPortalStreams(){let tries=0;const t=setInterval(()=>{tries++;if(typeof AEPortal!=='undefined'&&AEPortal.token&&['owner','rider'].includes(AEPortal.role)){clearInterval(t);portalStreamPoll(AEPortal.role,true)}else if(tries>180)clearInterval(t)},1000)}
