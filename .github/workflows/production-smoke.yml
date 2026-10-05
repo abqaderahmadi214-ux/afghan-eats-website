@@ -411,7 +411,7 @@ jobs:
               });
               if(!r.ok){results.push({...item,status:'error',error:`Places API ${r.status}`});continue}
               const body=await r.json(),c=(Array.isArray(body.places)?body.places:[]).filter(p=>inHerat(p.location)).map(p=>{
-                const displayName=p.displayName?.text||'',n=nameScore(item.name,displayName),a=item.address?overlapScore(item.address,p.formattedAddress||''):0,ha=/herat/i.test(String(p.formattedAddress||'')),score=n*.75+(item.address?a*.25:(ha?.15:0));
+                const displayName=p.displayName?.text||'',n=nameScore(item.name,displayName),a=item.address?overlapScore(item.address,p.formattedAddress||''):0,ha=/herat/i.test(String(p.formattedAddress||'')),score=n*.75+(item.address?a*.25:(ha ? .15 : 0));
                 return {id:p.id||null,displayName,formattedAddress:p.formattedAddress||'',location:p.location||null,nameScore:+n.toFixed(3),addressScore:+a.toFixed(3),score:+score.toFixed(3)}
               }).sort((a,b)=>b.score-a.score);
               const best=c[0]||null,confident=!!(best&&best.nameScore>=.55&&(!item.address||best.addressScore>=.08||/herat/i.test(best.formattedAddress)));
