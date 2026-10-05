@@ -90,6 +90,43 @@ jobs:
                   raise SystemExit(f'Public listing source is incomplete: {rid}')
           if len(ids)!=len(set(ids)):
               raise SystemExit('Duplicate restaurant ID in public Herat directory')
+
+          research=json.load(open(root/'data/researched-herat-restaurants.json', encoding='utf-8'))
+          location_rows=[
+              ('directory', entry.get('restaurant',{})) for entry in directory
+          ] + [
+              ('research', entry.get('restaurant',entry)) for entry in research
+          ]
+          resolved=0
+          unresolved=0
+          for source,restaurant in location_rows:
+              label=restaurant.get('id') or restaurant.get('research_key') or restaurant.get('name') or '<unknown>'
+              location=restaurant.get('location')
+              if not isinstance(location,dict):
+                  raise SystemExit(f'Missing Google Maps location metadata: {source}:{label}')
+              accuracy=str(location.get('accuracy') or '').strip().lower()
+              lat=location.get('lat')
+              lng=location.get('lng')
+              place_id=location.get('place_id')
+              if accuracy=='unresolved':
+                  if lat is not None or lng is not None or place_id:
+                      raise SystemExit(f'Unresolved location must keep null coordinates/place_id: {source}:{label}')
+                  unresolved+=1
+                  continue
+              if accuracy!='verified':
+                  raise SystemExit(f'Location accuracy must be verified or unresolved: {source}:{label}')
+              try:
+                  lat=float(lat)
+                  lng=float(lng)
+              except (TypeError,ValueError):
+                  raise SystemExit(f'Verified location requires numeric coordinates: {source}:{label}')
+              if not (34.0 <= lat <= 34.5 and 62.0 <= lng <= 62.4):
+                  raise SystemExit(f'Verified location is outside Herat bounds: {source}:{label} ({lat},{lng})')
+              if not str(place_id or '').strip():
+                  raise SystemExit(f'Verified location requires Google place_id: {source}:{label}')
+              resolved+=1
+          print(f'Google Maps coordinates: resolved={resolved} unresolved={unresolved} total={len(location_rows)}')
+
           missing=[]
           for page in root.glob('*.html'):
               text=page.read_text(encoding='utf-8')
