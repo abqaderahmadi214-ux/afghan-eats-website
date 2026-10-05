@@ -46,7 +46,7 @@ async function waitForMenuOrError(page,timeout=20000){
       const cards=[...document.querySelectorAll('.premium-menu-card')].filter(el=>{
         const r=el.getBoundingClientRect(); return r.width>0&&r.height>0;
       }).length;
-      const enabled=[...document.querySelectorAll('.add-btn:not([disabled])')].length;
+      const enabled=[...document.querySelectorAll('.add-btn:not([disabled])')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(el).visibility!=='hidden';}).length;
       const err=document.querySelector('#menuContent .notice.error');
       return {cards,enabled,error:Boolean(err),errorText:err?.textContent?.trim()||''};
     });
@@ -55,7 +55,7 @@ async function waitForMenuOrError(page,timeout=20000){
   }
   return {...await page.evaluate(()=>({
     cards:document.querySelectorAll('.premium-menu-card').length,
-    enabled:document.querySelectorAll('.add-btn:not([disabled])').length,
+    enabled:[...document.querySelectorAll('.add-btn:not([disabled])')].filter(el=>{const r=el.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(el).visibility!=='hidden';}).length,
     error:Boolean(document.querySelector('#menuContent .notice.error')),
     errorText:document.querySelector('#menuContent .notice.error')?.textContent?.trim()||''
   })),elapsedMs:Date.now()-start,timeout:true};
@@ -79,7 +79,7 @@ try{
     await screenshot(page,'01-char-fasl-menu.png');
 
     // Add two distinct menu items through the visible customer UI.
-    const buttons=page.locator('.add-btn:not([disabled])');
+    const buttons=page.locator('.add-btn:not([disabled]):visible');
     for(let i=0;i<2;i++){
       await buttons.nth(i).click();
       await page.locator('#itemModal.open').waitFor({state:'visible',timeout:5000});
@@ -234,14 +234,24 @@ try{
 
   // C: PWA installability, custom install banner, install-button invocation, standalone launch semantics.
   try{
-    const context=await browser.newContext(mobileContextOptions());
-    const page=await context.newPage();
+    // Use a persistent profile: Chrome suppresses beforeinstallprompt in incognito contexts.
+    const installUserDir=await fs.mkdtemp(path.join(os.tmpdir(),'ae-pwa-install-'));
+    const context=await chromium.launchPersistentContext(installUserDir,{
+      headless:false,
+      viewport:{width:390,height:844},
+      deviceScaleFactor:2,
+      hasTouch:true,
+      locale:'en-US',
+      userAgent:'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Mobile Safari/537.36',
+      args:['--disable-dev-shm-usage']
+    });
+    const page=context.pages()[0]||await context.newPage();
     await page.addInitScript(()=>{
       window.__aeBeforeInstallPrompt=false;
       window.addEventListener('beforeinstallprompt',()=>{window.__aeBeforeInstallPrompt=true;},{once:true});
     });
     await page.goto(BASE+'/',{waitUntil:'networkidle',timeout:30000});
-    await page.waitForTimeout(3500);
+    await page.waitForTimeout(4500);
     const cdp=await context.newCDPSession(page);
     const installability=await cdp.send('Page.getInstallabilityErrors').catch(e=>({error:String(e)}));
     const manifest=await cdp.send('Page.getAppManifest').catch(e=>({error:String(e)}));
@@ -261,6 +271,7 @@ try{
       await page.waitForTimeout(700);
     }
     await context.close();
+    await fs.rm(installUserDir,{recursive:true,force:true});
 
     const userDir=await fs.mkdtemp(path.join(os.tmpdir(),'ae-pwa-app-'));
     const appContext=await chromium.launchPersistentContext(userDir,{
