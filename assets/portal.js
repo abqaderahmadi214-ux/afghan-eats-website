@@ -198,7 +198,20 @@ window.createPortalInvite=async function(type,applicationId){try{const d=await o
 window.copyPortalInvite=async function(){const v=document.getElementById('portalInviteLink')?.value||'';try{await navigator.clipboard.writeText(v);alert('Activation link copied.')}catch{}}
 window.setPortalAccount=async function(id,active){try{await opsMutation('portal.adminSetAccountActive',{id,active},true);await portalAdminLoad()}catch(e){alert(e.message)}}
 
-async function loadLiveDelivery(){const box=document.getElementById('liveDelivery');if(!box)return;const id=new URLSearchParams(location.search).get('id'),phone=document.getElementById('trackPhone')?.value.trim()||JSON.parse(localStorage.getItem('ae_last_order')||'null')?.customerPhone||'';if(!id||phone.length<9)return;try{const d=await portalQuery('portal.liveTracking',{orderId:id,phone},false);if(!d.delivery){box.innerHTML=`<div class="live-delivery"><b>🛵 ${portalText('Finding a rider','در حال یافتن پیک')}</b><p class="muted">${portalText('Your order is in the restaurant workflow. Rider details will appear after assignment.','سفارش در روند رستورانت است. معلومات پیک پس از تخصیص نمایش داده می‌شود.')}</p></div>`;return}const x=d.delivery,hasLoc=x.last_latitude!=null&&x.last_longitude!=null,loc=hasLoc?`https://www.openstreetmap.org/?mlat=${encodeURIComponent(x.last_latitude)}&mlon=${encodeURIComponent(x.last_longitude)}#map=16/${encodeURIComponent(x.last_latitude)}/${encodeURIComponent(x.last_longitude)}`:'';box.innerHTML=`<div class="live-delivery"><div class="live-rider"><div class="rider-avatar">🛵</div><div><b>${portalEsc(x.rider_name)}</b><div class="muted">${portalEsc(x.vehicle||'rider')} · ${portalEsc(x.delivery_status)}</div></div>${hasLoc?`<a class="btn btn-light btn-sm" target="_blank" rel="noopener" href="${loc}">${portalText('View live location','مشاهده موقعیت')}</a>`:''}</div>${hasLoc?`<div class="live-location">📍 ${portalText('Location updated','موقعیت به‌روزرسانی شده')}: ${x.location_updated_at?new Date(x.location_updated_at).toLocaleTimeString():'—'}</div>`:`<div class="live-location muted">${portalText('The rider has not shared a live GPS point yet.','پیک هنوز موقعیت زنده GPS را شریک نکرده است.')}</div>`}</div>`;if(['delivered','cancelled'].includes(d.status)&&AEPortal.liveTimer){clearInterval(AEPortal.liveTimer);AEPortal.liveTimer=null}}catch(e){box.innerHTML=`<div class="notice error">${portalEsc(e.message)}</div>`}}
+async function loadLiveDelivery(){
+  const id=new URLSearchParams(location.search).get('id'),phone=document.getElementById('trackPhone')?.value.trim()||JSON.parse(localStorage.getItem('ae_last_order')||'null')?.customerPhone||'';
+  if(!id||phone.length<9)return;
+  try{
+    const d=await portalQuery('portal.liveTracking',{orderId:id,phone},false);
+    window.__AE_TRACKING_RIDER=d.delivery||null;
+    if(typeof window.renderTrackingPrimaryAction==='function')window.renderTrackingPrimaryAction(window.__AE_TRACKING_ORDER||{id},d.delivery||null);
+    window.AfghanEatsRiderMap?.pollRiderLocation?.();
+    if(['delivered','cancelled'].includes(d.status)&&AEPortal.liveTimer){clearInterval(AEPortal.liveTimer);AEPortal.liveTimer=null}
+  }catch(e){
+    const host=document.getElementById('trackingPrimaryAction');
+    if(host)host.innerHTML=`<div class="tracking-primary-copy"><b>${portalText('Live rider details are temporarily unavailable.','جزئیات زنده پیک موقتاً در دسترس نیست.')}</b><span>${portalText('Your order status will keep updating.','وضعیت سفارش شما همچنان به‌روزرسانی می‌شود.')}</span></div><div class="tracking-primary-actions"><a class="btn btn-light btn-sm" href="/help">${portalText('Help','راهنما')}</a></div>`;
+  }
+}
 window.trackOrderWithLiveRider=async function(){if(typeof secureTrackOrder==='function')await secureTrackOrder();await loadLiveDelivery();if(AEPortal.liveTimer)clearInterval(AEPortal.liveTimer);AEPortal.liveTimer=setInterval(loadLiveDelivery,20000)}
 
 function bindOwnerForm(id,handler){const form=document.getElementById(id);if(!form||form.dataset.ownerBound)return;form.addEventListener('submit',handler);form.dataset.ownerBound='1'}

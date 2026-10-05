@@ -14,7 +14,9 @@
   <script src="/config.js?v=20260913-final"></script>
 <link rel="stylesheet" href="/assets/design-2026.css?v=20260913-final"><style>
 #riderMap {
-  height: 300px;
+  height: 40vh;
+  min-height: 300px;
+  max-height: 390px;
   width: 100%;
   border-radius: 12px;
   background: #f3f4f6;
@@ -58,21 +60,11 @@
 <div class="actions"><button class="lang" type="button" onclick="toggleLang()" aria-label="Switch language">دری</button><a class="ae-account" href="/account"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span data-i18n="account">Account</span></a><a class="btn btn-primary ae-cart" href="/checkout" data-aria-en="Basket" data-aria-fa="سبد خرید" aria-label="Basket"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><span class="ae-cart-label"><span class="en-copy">Basket</span><span class="fa-copy">سبد</span></span><span class="cart-count badge-count">0</span></a></div></div></header>
 
 <main class="section soft"><div class="container tracking-container">
-  <div class="tracking-page-head">
-    <div>
-      <span class="tracking-eyebrow"><span class="en-copy">Live order journey</span><span class="fa-copy">روند زنده سفارش</span></span>
-      <h1 data-i18n="track"></h1>
-      <p class="en-copy">See where your order is in the restaurant and delivery journey.</p>
-      <p class="fa-copy">ببینید سفارش شما در کدام مرحله آماده‌سازی و تحویل قرار دارد.</p>
-    </div>
-    <a class="tracking-back" href="/orders"><span aria-hidden="true">←</span><span class="en-copy">All orders</span><span class="fa-copy">همه سفارش‌ها</span></a>
-  </div>
-
   <section id="trackGate" class="track-gate tracking-verify-card">
     <div class="tracking-verify-icon" aria-hidden="true">🔒</div>
     <div class="tracking-verify-copy">
       <b><span class="en-copy">Verify this order</span><span class="fa-copy">این سفارش را تأیید کنید</span></b>
-      <p><span class="en-copy">Enter the phone number used at checkout. Signed-in linked orders can also show an account-only summary.</span><span class="fa-copy">شماره تماسی را که هنگام سفارش استفاده کردید وارد کنید. سفارش‌های متصل به حساب نیز می‌توانند خلاصه مخصوص حساب را نشان دهند.</span></p>
+      <p><span class="en-copy">Enter the phone number used at checkout to open private live tracking.</span><span class="fa-copy">شماره تماسی را که هنگام سفارش استفاده کردید وارد کنید تا پیگیری زنده خصوصی باز شود.</span></p>
       <div class="track-gate-row"><input id="trackPhone" type="tel" placeholder="+93 7xx xxx xxx"><button class="btn btn-primary" type="button" onclick="trackOrderWithLiveRider()"><span class="en-copy">Verify & track</span><span class="fa-copy">تأیید و پیگیری</span></button></div>
       <div id="trackNotice" class="tracking-verify-notice"></div>
     </div>
@@ -81,41 +73,37 @@
   <div id="trackingExperience" class="tracking-experience is-locked">
     <section id="orderMeta" class="tracking-status-hero" aria-live="polite"></section>
 
-    <div class="tracking-layout">
-      <div class="tracking-main-column">
-        <section class="tracking-card tracking-progress-card">
-          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Progress</span><span class="fa-copy">پیشرفت</span></span><h2><span class="en-copy">Your order journey</span><span class="fa-copy">روند سفارش شما</span></h2></div><span class="tracking-live-pill"><span></span><span class="en-copy">Live</span><span class="fa-copy">زنده</span></span></div>
-          <div id="timelineSteps" class="premium-tracking-steps"></div>
-        </section>
+    <section class="tracking-map-card tracking-surface" aria-labelledby="trackingMapTitle">
+      <div class="tracking-surface-head"><b id="trackingMapTitle"><span class="en-copy">Live rider location</span><span class="fa-copy">موقعیت زنده پیک</span></b></div>
+      <div id="riderMap" aria-label="Rider location map"></div>
+      <p id="riderMapStatus" class="rider-map-status" role="status" aria-live="polite"><span class="en-copy">Waiting for rider — this map updates when a driver is assigned.</span><span class="fa-copy">در انتظار پیک — این نقشه پس از تعیین راننده به‌روزرسانی می‌شود.</span></p>
+    </section>
 
-        <div id="liveDelivery" class="tracking-live-slot"></div>
+    <section class="tracking-status-strip tracking-surface" aria-label="Order status">
+      <div id="timelineSteps" class="premium-tracking-steps"></div>
+    </section>
 
-        <section class="tracking-card tracking-map-card">
-          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Rider map</span><span class="fa-copy">نقشه پیک</span></span><h2><span class="en-copy">Live rider location</span><span class="fa-copy">موقعیت زنده پیک</span></h2></div></div>
-          <div id="riderMap" aria-label="Rider location map"></div>
-          <p id="riderMapStatus" class="rider-map-status" role="status" aria-live="polite"><span class="en-copy">Waiting for rider location…</span><span class="fa-copy">در انتظار موقعیت پیک…</span></p>
-        </section>
-
-        <section id="aeAccountDeliveryTracking" class="ae-lastmile tracking-card tracking-account-card hidden" aria-live="polite">
-          <div class="tracking-card-head"><div><span class="tracking-card-kicker"><span class="en-copy">Account view</span><span class="fa-copy">نمای حساب</span></span><h2><span class="en-copy">Signed-in delivery tracking</span><span class="fa-copy">پیگیری تحویل با حساب</span></h2></div><span class="tracking-secure-mark">✓</span></div>
-          <div id="aeAccountDeliveryTrackingBody"></div>
-        </section>
-
-        <div id="orderCancelControl" class="tracking-cancel-slot"></div>
-
-        <section class="tracking-help-card">
-          <div class="tracking-help-icon" aria-hidden="true">?</div>
-          <div><b><span class="en-copy">Need help with this order?</span><span class="fa-copy">برای این سفارش کمک می‌خواهید؟</span></b><p class="en-copy">Get support without losing your place in tracking.</p><p class="fa-copy">بدون خروج از روند پیگیری، از پشتیبانی کمک بگیرید.</p></div>
-          <div class="tracking-help-actions"><a class="btn btn-light" href="/help"><span class="en-copy">Get help</span><span class="fa-copy">دریافت کمک</span></a><button class="btn btn-light" type="button" onclick="secureTrackOrder()"><span aria-hidden="true">↻</span><span class="en-copy">Refresh</span><span class="fa-copy">تازه‌سازی</span></button></div>
-        </section>
+    <section id="trackingPrimaryAction" class="tracking-primary-action tracking-surface" aria-live="polite">
+      <div class="tracking-primary-copy">
+        <b><span class="en-copy">We're finding a driver.</span><span class="fa-copy">در حال یافتن پیک هستیم.</span></b>
+        <span class="en-copy">We’ll update this page when a rider is assigned.</span><span class="fa-copy">پس از تعیین پیک، این صفحه به‌روزرسانی می‌شود.</span>
       </div>
+      <a class="btn btn-light btn-sm" href="/help"><span class="en-copy">Help</span><span class="fa-copy">راهنما</span></a>
+    </section>
 
-      <aside class="tracking-side-column">
-        <section id="trackingOrderSummary" class="tracking-card tracking-order-summary"></section>
-        <section id="trackingDeliveryDetails" class="tracking-card tracking-delivery-details"></section>
-        <section class="tracking-privacy-card"><span aria-hidden="true">🛡️</span><div><b><span class="en-copy">Private tracking</span><span class="fa-copy">پیگیری خصوصی</span></b><p class="en-copy">Precise rider location is shown only after phone verification. Location sharing stops when delivery ends.</p><p class="fa-copy">موقعیت دقیق پیک فقط پس از تأیید شماره نمایش داده می‌شود و با پایان تحویل متوقف می‌گردد.</p></div></section>
-      </aside>
-    </div>
+    <details id="trackingOrderDetails" class="tracking-order-details tracking-surface">
+      <summary><span><b><span class="en-copy">Order details</span><span class="fa-copy">جزئیات سفارش</span></b><small><span class="en-copy">Summary, address, payment and delivery controls</span><span class="fa-copy">خلاصه، آدرس، پرداخت و تنظیمات تحویل</span></small></span><span class="tracking-details-chevron" aria-hidden="true">⌄</span></summary>
+      <div id="trackingOrderDetailsBody" class="tracking-order-details-body">
+        <div id="trackingOrderSummary" class="tracking-details-block"></div>
+        <div id="trackingDeliveryDetails" class="tracking-details-block"></div>
+        <div id="aeAccountDeliveryTracking" class="ae-lastmile tracking-details-block tracking-account-card hidden" aria-live="polite">
+          <div class="tracking-details-heading"><b><span class="en-copy">Signed-in delivery tracking</span><span class="fa-copy">پیگیری تحویل با حساب</span></b></div>
+          <div id="aeAccountDeliveryTrackingBody"></div>
+        </div>
+        <div id="orderCancelControl" class="tracking-cancel-slot"></div>
+        <div class="tracking-privacy-inline"><span aria-hidden="true">🛡️</span><span><span class="en-copy">Precise rider location is private and stops when delivery ends.</span><span class="fa-copy">موقعیت دقیق پیک خصوصی است و با پایان تحویل متوقف می‌شود.</span></span></div>
+      </div>
+    </details>
   </div>
 </div></main>
 

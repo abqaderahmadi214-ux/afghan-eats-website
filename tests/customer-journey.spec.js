@@ -121,8 +121,7 @@ test('recommended discovery prioritizes orderable restaurants and hides test inv
   await page.goto('/restaurants');
   await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
   await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
-  await expect(page.locator('#resultCount')).toContainText('listings');
-  await expect(page.locator('#resultCount')).not.toContainText('available to order');
+  await expect(page.locator('#resultCount')).toContainText('available to order');
 });
 
 test('late homepage refreshes keep preview and test inventory out of popular restaurants', async ({page})=>{
@@ -191,8 +190,9 @@ test('public Herat directory listings can show sourced menus without becoming or
   await listing.click();
   await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
   await expect(page.locator('.directory-detail a[href^="tel:"]')).toHaveCount(3);
-  await expect(page.locator('.directory-contact-list a[target="_blank"]')).toHaveAttribute('href',/instagram\.com\/jumeirah/);
-  await expect(page.locator('.directory-menu-head a[target="_blank"]')).toHaveAttribute('href',/mizbanapp\.com\/en\/herat\/restaurant\/jumeirah-fast-food/);
+  await expect(page.locator('.directory-contact-list a[target="_blank"]')).toHaveCount(0);
+  await expect(page.locator('.directory-menu-head a[target="_blank"]')).toHaveCount(0);
+  await expect(page.locator('.directory-detail')).toContainText('Items and prices below were copied from a public restaurant source.');
   await expect(page.locator('.directory-detail')).toContainText('Public menu');
   await expect(page.locator('.directory-detail')).toContainText('Jumeirah Special Burger');
   await expect(page.locator('.directory-detail')).toContainText('؋ 200');
@@ -328,15 +328,14 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await expect(page.locator('#cartDiscount')).toContainText('0');
 });
 
-test('an unavailable delivery address shows a compact change-address notice', async ({page})=>{
+test('an unavailable delivery address offers a clear pickup path', async ({page})=>{
   await mockApi(page,{deliveryUnavailable:true});
   await page.goto('/');
   await page.locator('.address-box input[name="address"]').fill('Outside delivery area');
   await page.locator('.address-box button').click();
-  const notice=page.locator('.delivery-inline-notice');
-  await expect(notice).toContainText('Delivery is not active at this address yet.');
-  await expect(notice.getByRole('button',{name:'Change address'})).toBeVisible();
-  await expect(page.locator('.delivery-empty')).toHaveCount(0);
+  await expect(page.locator('#restaurantGrid')).toContainText('Delivery is not available to this address yet');
+  await page.getByRole('button',{name:'Show pickup restaurants'}).click();
+  await expect(page.locator('.restaurant-card').first()).toContainText('Herat Kitchen');
 });
 
 test('one-time admin reset removes its token after a successful password change', async ({page})=>{

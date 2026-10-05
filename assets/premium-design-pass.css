@@ -244,10 +244,9 @@
 /* Footer app availability: one quiet line, no pseudo-store badges */
 .ae-premium .mobile-apps-coming-soon {
   margin: 0;
-  color: #88928d;
-  font-size: 11px;
-  line-height: 1.4;
-  font-weight: 500;
+  color: #66736d;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 /* Mobile refinements */

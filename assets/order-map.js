@@ -129,8 +129,8 @@
     riderMarker.bindPopup('Herat — waiting for rider location');
 
     setStatus(
-      getOrderId() ? 'Waiting for rider location…' : 'Waiting for rider — order ID not available yet.',
-      getOrderId() ? 'در انتظار موقعیت پیک…' : 'در انتظار پیک — شناسه سفارش هنوز موجود نیست.',
+      getOrderId() ? 'Waiting for rider — this map updates when a driver is assigned.' : 'Waiting for rider — order ID not available yet.',
+      getOrderId() ? 'در انتظار پیک — این نقشه پس از تعیین راننده به‌روزرسانی می‌شود.' : 'در انتظار پیک — شناسه سفارش هنوز موجود نیست.',
       'waiting'
     );
 
@@ -187,8 +187,8 @@
 
       if (!response.ok) {
         setStatus(
-          'Waiting for rider location…',
-          'در انتظار موقعیت پیک…',
+          'Waiting for rider — this map updates when a driver is assigned.',
+          'در انتظار پیک — این نقشه پس از تعیین راننده به‌روزرسانی می‌شود.',
           'waiting'
         );
         return;
@@ -197,8 +197,8 @@
       const point = parseCoordinates(await response.json());
       if (!point) {
         setStatus(
-          'Waiting for rider location…',
-          'در انتظار موقعیت پیک…',
+          'Waiting for rider — this map updates when a driver is assigned.',
+          'در انتظار پیک — این نقشه پس از تعیین راننده به‌روزرسانی می‌شود.',
           'waiting'
         );
         return;
