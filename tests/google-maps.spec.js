@@ -112,9 +112,7 @@ test('checkout captures GPS and sends deliveryLocation',async({page})=>{
   const orderRequest=page.waitForRequest(r=>r.url().endsWith('/orders.place')&&r.method()==='POST');
   await page.getByRole('button',{name:'Place order'}).click();
   const request=await orderRequest;
-  const body=request.postDataJSON();
-  const state=await page.evaluate(()=>({deliveryLocation:window.AE_DELIVERY_LOCATION,mode:localStorage.getItem('ae_mode')}));
-  expect(body.json.deliveryLocation,JSON.stringify({body,state})).toEqual({lat:34.3501,lng:62.2002});
+  expect(request.postDataJSON().json.deliveryLocation).toEqual({lat:34.3501,lng:62.2002});
 });
 
 test('tracking map renders restaurant, customer and rider pins',async({page})=>{
@@ -134,6 +132,23 @@ test('tracking map renders restaurant, customer and rider pins',async({page})=>{
   await expect(geo).toHaveAttribute('data-customer-location',JSON.stringify(tracked.deliveryLocation));
   await expect(page.locator('.fake-gmap-pin')).toHaveCount(3);
   await page.screenshot({path:'visual-proof/tracking-map-3-pins-390x844.jpg',type:'jpeg',quality:88});
+});
+
+test('tracking map ignores unresolved zero restaurant coordinates',async({page})=>{
+  const tracked={
+    id:orderId,order_number:'AE-4242',status:'confirmed',total:310,
+    restaurant:{name:'Unresolved Restaurant',location:{lat:0,lng:0,accuracy:'unresolved'}},
+    deliveryLocation:{lat:34.3501,lng:62.2002},
+    delivery_address:'Gulha Circle',delivery_phone:'+93 700 000 123',items:[]
+  };
+  await mockApi(page,{trackedOrder:tracked});
+  await mockGoogleMaps(page);
+  await page.addInitScript(({orderId})=>localStorage.setItem('ae_last_order',JSON.stringify({orderId,orderNumber:'AE-4242',customerPhone:'+93 700 000 123',status:'confirmed',total:310})),{orderId});
+  await page.goto(`/order?id=${orderId}`);
+  const geo=page.locator('#trackingGeo');
+  await expect(geo).not.toHaveAttribute('data-restaurant-location',/.+/);
+  await expect(geo).toHaveAttribute('data-customer-location',JSON.stringify(tracked.deliveryLocation));
+  await expect(page.locator('.fake-gmap-pin')).toHaveCount(1);
 });
 
 test('tracking map shows bilingual-safe fallback when Google Maps is unavailable',async({page})=>{
