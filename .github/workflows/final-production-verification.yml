@@ -20,9 +20,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Run live production verification
+      - name: Run live mobile production verification
         run: xvfb-run -a node scripts/final-production-verification.mjs
-      - name: Upload verification evidence
+      - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
