@@ -42,9 +42,14 @@
     fa = 'نقشه در دسترس نیست — موقعیت پیک از طریق واتساپ ارسال می‌شود.'
   ) {
     const host = document.getElementById('riderMap');
+    const isFa = document.documentElement.lang === 'fa' ||
+      document.documentElement.dir === 'rtl' ||
+      localStorage.getItem('ae_lang') === 'fa';
     if (host) {
       host.classList.add('rider-map-unavailable');
-      host.innerHTML = '<div class="rider-map-fallback"><strong>Map unavailable</strong><span>Rider location will be sent by WhatsApp.</span></div>';
+      host.innerHTML = isFa
+        ? '<div class="rider-map-fallback"><strong>نقشه در دسترس نیست</strong><span>موقعیت پیک از طریق واتساپ ارسال می‌شود.</span></div>'
+        : '<div class="rider-map-fallback"><strong>Map unavailable</strong><span>Rider location will be sent by WhatsApp.</span></div>';
     }
     setStatus(en, fa, 'unavailable');
   }
@@ -320,7 +325,7 @@
     pollTimer = window.setInterval(pollRiderLocation, POLL_INTERVAL_MS);
   }
 
-  window.AfghanEatsRiderMap = { initMap, pollRiderLocation };
+  window.AfghanEatsRiderMap = { initMap, pollRiderLocation, showMapFallback };
 
   if (
     document.readyState !== 'loading' &&
