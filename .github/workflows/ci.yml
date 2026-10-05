@@ -12,6 +12,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: PR96 preview Google Maps key check
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://deploy-preview-96--afghaneats.netlify.app/order.html"
+          echo "COMMAND: curl -fsS $URL | grep -o '__GMAPS_KEY__\\|AIza[A-Za-z0-9_-]*' | head -5"
+          set +e
+          OUTPUT="$(curl -fsS "$URL" | grep -o '__GMAPS_KEY__\\|AIza[A-Za-z0-9_-]*' | head -5)"
+          STATUS=$?
+          set -e
+          printf '%s\n' "$OUTPUT"
+          echo "PIPELINE_EXIT=$STATUS"
+          HTML="$(curl -fsS "$URL")"
+          if grep -q '__GMAPS_KEY__' <<<"$HTML"; then
+            echo "PLACEHOLDER_PRESENT=yes"
+            exit 2
+          fi
+          COUNT="$(grep -o 'AIza[A-Za-z0-9_-]*' <<<"$HTML" | wc -l | tr -d ' ')"
+          echo "PLACEHOLDER_PRESENT=no"
+          echo "AIZA_COUNT=$COUNT"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
