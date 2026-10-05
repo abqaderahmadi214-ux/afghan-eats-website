@@ -109,7 +109,6 @@
     const phone = resolvePhone(restaurant);
     button.hidden = !phone;
     button.style.display = phone ? '' : 'none';
-    button.style.display = phone ? '' : 'none';
     const orderItems = normalizeItems(items);
     const link = orderItems.length
       ? waOrderLink(
