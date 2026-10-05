@@ -5,6 +5,14 @@
   publish = "."
   
 
+# Google Maps browser keys are intentionally embedded in client-side HTML.
+# They are protected by HTTP referrer restrictions (afghaneats.net/*) and
+# API restrictions (Maps JavaScript API only) in Google Cloud Console.
+# Netlify's secrets scanner flags them as false positives because it cannot
+# distinguish a browser key from a server secret.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "GOOGLE_MAPS_API_KEY"
+
 
 [[headers]]
 
