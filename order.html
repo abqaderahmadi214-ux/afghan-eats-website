@@ -117,6 +117,11 @@ window.__initTrackingMap = function () {
     window.AfghanEatsRiderMap.initMap();
   }
 };
+window.gm_authFailure = function () {
+  if (window.AfghanEatsRiderMap && window.AfghanEatsRiderMap.showMapFallback) {
+    window.AfghanEatsRiderMap.showMapFallback();
+  }
+};
 </script>
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=__GMAPS_KEY__&callback=__initTrackingMap&loading=async"
