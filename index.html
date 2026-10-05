@@ -1,6 +1,19 @@
 <!doctype html>
 <html lang="en" data-design="2026">
-<head>
+<head><script>
+(function(){
+  const errors=[], warns=[];
+  const oe=console.error.bind(console), ow=console.warn.bind(console);
+  function render(){
+    const d=document.getElementById('consoleDiag');
+    if(!d)return;
+    d.textContent='errors='+errors.length+' warns='+warns.length+(errors[0]?' | '+errors[0].slice(0,120):'');
+  }
+  console.error=function(...a){errors.push(a.map(String).join(' '));oe(...a);render()};
+  console.warn=function(...a){warns.push(a.map(String).join(' '));ow(...a);render()};
+  window.addEventListener('DOMContentLoaded',()=>{const d=document.createElement('div');d.id='consoleDiag';d.style='position:fixed;z-index:99999;bottom:8px;right:8px;max-width:620px;background:#111;color:#fff;padding:6px 10px;border-radius:8px;font:11px monospace';document.body.appendChild(d);render()});
+})();
+</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Track order | Afghan Eats</title>
