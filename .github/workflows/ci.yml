@@ -18,36 +18,6 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
-      - name: Resolve Google Places coordinates for PR 96
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 96
-        shell: bash
-        run: |
-          set -euo pipefail
-          url="https://deploy-preview-96--afghaneats.netlify.app/.netlify/functions/places-resolve"
-          for attempt in $(seq 1 4); do
-            echo "Attempt ${attempt}/30"
-            code=$(curl -sS -o places-resolution.json -w '%{http_code}' --connect-timeout 10 --max-time 120 "$url" || true)
-            if [ "$code" = "200" ]; then
-              node -e "const p=require('./places-resolution.json'); console.log(JSON.stringify(p.counts||{},null,2)); console.log('apiError:',p.apiError); console.log('resolved:',(p.results||[]).filter(x=>x.status==='resolved').length); console.log('unresolved:',(p.results||[]).filter(x=>x.status!=='resolved').length)"
-              break
-            fi
-            echo "HTTP $code"; cat places-resolution.json || true; echo "Preview may still be deploying"
-            if [ "$attempt" = "4" ]; then
-              cat places-resolution.json >&2 || true
-              exit 1
-            fi
-            sleep 15
-          done
-
-      - name: Upload Google Places resolution artifact
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 96
-        uses: actions/upload-artifact@v4
-        with:
-          name: google-places-resolution
-          path: places-resolution.json
-          if-no-files-found: error
-          retention-days: 1
-
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
