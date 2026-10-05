@@ -10,7 +10,8 @@ window.AFGHAN_EATS_CONFIG = {
   riderAndroidVersionCode: 4,
   customerAndroidUrl: '',
   customerIosUrl: '',
-  launchCity: 'Herat'
+  launchCity: 'Herat',
+  googleMapsApiKey: '__GMAPS_KEY__'
 };
 
 (function prepareCustomerLocale(){const fa=localStorage.getItem('ae_lang')==='fa';document.documentElement.lang=fa?'fa':'en';document.documentElement.dir=fa?'rtl':'ltr';document.documentElement.dataset.aeLocaleReady='1'})();
