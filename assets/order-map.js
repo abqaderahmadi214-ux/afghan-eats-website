@@ -97,9 +97,16 @@
 
     try {
       const loc = JSON.parse(el.getAttribute(attribute) || 'null');
+      if (String(loc?.accuracy || '').trim().toLowerCase() === 'unresolved') return null;
       const lat = Number(loc?.lat);
       const lng = Number(loc?.lng);
-      if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng };
+      if (
+        Number.isFinite(lat) &&
+        Number.isFinite(lng) &&
+        Math.abs(lat) <= 90 &&
+        Math.abs(lng) <= 180 &&
+        (Math.abs(lat) > 0.000001 || Math.abs(lng) > 0.000001)
+      ) return { lat, lng };
     } catch {
       // Invalid or unavailable tracking coordinates are treated as missing.
     }
