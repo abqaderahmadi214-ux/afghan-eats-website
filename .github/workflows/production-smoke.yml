@@ -364,6 +364,67 @@ jobs:
           print('Database-backed directory contract passed')
           PY
 
+      - name: Temporary PR96 Google Places resolution from injected browser key
+        if: github.event_name == 'pull_request' && github.event.pull_request.number == 96
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const PREVIEW='https://deploy-preview-96--afghaneats.netlify.app';
+          const API_BASE='https://afghaneats-api.onrender.com';
+          const norm=v=>String(v||'').toLowerCase().normalize('NFKD').replace(/[\u200c\u200f]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+          const stop=new Set(['herat','afghanistan','restaurant','fast','food','branch','road','street','opposite','near','beside','park','square','chaharahi']);
+          const tokens=v=>norm(v).split(/\s+/).filter(x=>x&&!stop.has(x));
+          function overlapScore(a,b){const aa=new Set(tokens(a)),bb=new Set(tokens(b));if(!aa.size||!bb.size)return 0;let hit=0;for(const t of aa)if(bb.has(t))hit++;return hit/Math.max(aa.size,bb.size)}
+          function nameScore(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;if(a===b)return 1;if(a.includes(b)||b.includes(a))return .9;return overlapScore(a,b)}
+          function inHerat(loc){const lat=Number(loc?.latitude),lng=Number(loc?.longitude);return Number.isFinite(lat)&&Number.isFinite(lng)&&lat>=34&&lat<=34.5&&lng>=62&&lng<=62.4}
+          async function json(url){const r=await fetch(url);if(!r.ok)throw new Error(`GET ${url} -> ${r.status}`);return r.json()}
+          async function main(){
+            const html=await (await fetch(PREVIEW+'/order.html',{cache:'no-store'})).text();
+            const match=html.match(/maps\.googleapis\.com\/maps\/api\/js\?key=([^&"'<>\s]+)/i);
+            if(!match||!match[1]||match[1]==='__GMAPS_KEY__')throw new Error('Deploy Preview did not inject a Google Maps browser key');
+            const apiKey=decodeURIComponent(match[1]);
+            console.log('Injected browser key detected (value intentionally not printed).');
+            const [research,directory,liveRaw]=await Promise.all([
+              json(PREVIEW+'/data/researched-herat-restaurants.json'),
+              json(PREVIEW+'/data/public-herat-directory.json'),
+              json(API_BASE+'/api/trpc/restaurants.list?input='+encodeURIComponent(JSON.stringify({json:{}}))).catch(e=>({__error:e.message}))
+            ]);
+            const live=liveRaw?.result?.data?.json??liveRaw?.result?.data??liveRaw;
+            const rows=[];
+            const add=(r,source)=>{if(r?.name)rows.push({source,id:r.id||r.research_key||null,name:r.name,address:r.address||r.address_en||null})};
+            for(const e of Array.isArray(research)?research:[])add(e.restaurant||e,'research');
+            for(const e of Array.isArray(directory)?directory:[])add(e.restaurant||e,'directory');
+            if(Array.isArray(live))for(const r of live)add(r,'api');
+            const seen=new Set(),unique=rows.filter(r=>{const k=`${r.id||''}|${norm(r.name)}`;if(seen.has(k))return false;seen.add(k);return true});
+            const results=[];
+            for(const item of unique){
+              const r=await fetch('https://places.googleapis.com/v1/places:searchText',{
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json',
+                  'X-Goog-Api-Key':apiKey,
+                  'X-Goog-FieldMask':'places.displayName,places.location,places.formattedAddress,places.id',
+                  'Referer':PREVIEW+'/'
+                },
+                body:JSON.stringify({textQuery:`${item.name} Herat Afghanistan`})
+              });
+              if(!r.ok){results.push({...item,status:'error',error:`Places API ${r.status}`});continue}
+              const body=await r.json(),c=(Array.isArray(body.places)?body.places:[]).filter(p=>inHerat(p.location)).map(p=>{
+                const displayName=p.displayName?.text||'',n=nameScore(item.name,displayName),a=item.address?overlapScore(item.address,p.formattedAddress||''):0,ha=/herat/i.test(String(p.formattedAddress||'')),score=n*.75+(item.address?a*.25:(ha?.15:0));
+                return {id:p.id||null,displayName,formattedAddress:p.formattedAddress||'',location:p.location||null,nameScore:+n.toFixed(3),addressScore:+a.toFixed(3),score:+score.toFixed(3)}
+              }).sort((a,b)=>b.score-a.score);
+              const best=c[0]||null,confident=!!(best&&best.nameScore>=.55&&(!item.address||best.addressScore>=.08||/herat/i.test(best.formattedAddress)));
+              results.push({...item,status:confident?'resolved':'unresolved',best});
+            }
+            const counts={research:Array.isArray(research)?research.length:0,directory:Array.isArray(directory)?directory.length:0,api:Array.isArray(live)?live.length:0,unique:unique.length,resolved:results.filter(x=>x.status==='resolved').length,unresolved:results.filter(x=>x.status==='unresolved').length,errors:results.filter(x=>x.status==='error').length};
+            console.log('PLACES_COUNTS='+JSON.stringify(counts));
+            for(const x of results)console.log('PLACES_RESULT '+JSON.stringify(x));
+            if(counts.errors)process.exit(2);
+          }
+          main().catch(e=>{console.error('PLACES_FATAL '+e.message);process.exit(1)});
+          NODE
+
       - name: Production verification summary
         run: |
           echo 'Afghan Eats production smoke passed.'
