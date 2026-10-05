@@ -24,15 +24,15 @@ jobs:
         run: |
           set -euo pipefail
           url="https://deploy-preview-96--afghaneats.netlify.app/.netlify/functions/places-resolve"
-          for attempt in $(seq 1 30); do
+          for attempt in $(seq 1 4); do
             echo "Attempt ${attempt}/30"
             code=$(curl -sS -o places-resolution.json -w '%{http_code}' --connect-timeout 10 --max-time 120 "$url" || true)
             if [ "$code" = "200" ]; then
               node -e "const p=require('./places-resolution.json'); console.log(JSON.stringify(p.counts||{},null,2)); console.log('apiError:',p.apiError); console.log('resolved:',(p.results||[]).filter(x=>x.status==='resolved').length); console.log('unresolved:',(p.results||[]).filter(x=>x.status!=='resolved').length)"
               break
             fi
-            echo "HTTP $code; preview may still be deploying"
-            if [ "$attempt" = "30" ]; then
+            echo "HTTP $code"; cat places-resolution.json || true; echo "Preview may still be deploying"
+            if [ "$attempt" = "4" ]; then
               cat places-resolution.json >&2 || true
               exit 1
             fi
