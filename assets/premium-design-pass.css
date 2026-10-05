@@ -489,3 +489,34 @@
     overflow-y: visible !important;
   }
 }
+
+/* Public-listing hero: stack status below restaurant name on narrow phones */
+@media (max-width: 400px) {
+  .ae-premium .directory-store-title {
+    padding-top: 24px;
+  }
+  .ae-premium .directory-store-title h1 {
+    order: 0;
+  }
+  .ae-premium .directory-store-hero .store-badges {
+    position: static !important;
+    inset: auto !important;
+    order: 1;
+    align-self: flex-start;
+    max-width: 100%;
+    margin: 10px 0 0;
+  }
+  .ae-premium .directory-store-hero .status-pill.directory {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.25;
+  }
+  .ae-premium .directory-store-title .store-cuisine {
+    order: 2;
+  }
+  .ae-premium .directory-store-title .store-address {
+    order: 3;
+  }
+}
