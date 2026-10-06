@@ -63,9 +63,10 @@
       "source_checked_at": "2026-09-01",
       "menu_preview_only": true,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.340041,
+        "lng": 62.21704,
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -162,9 +163,10 @@
       "source_checked_at": "2026-09-01",
       "menu_preview_only": true,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.34873,
+        "lng": 62.207593,
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -234,9 +236,10 @@
       "source_checked_at": "2026-09-01",
       "menu_preview_only": true,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.347112,
+        "lng": 62.206283,
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -392,9 +395,10 @@
       "source_checked_at": "2026-09-01",
       "menu_preview_only": false,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.339954,
+        "lng": 62.216978,
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -427,9 +431,10 @@
       "source_checked_at": "2026-09-01",
       "menu_preview_only": false,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.346666,
+        "lng": 62.219078,
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
