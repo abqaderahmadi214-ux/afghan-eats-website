@@ -21,6 +21,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
+          node --check assets/restaurant-discovery-map.js
           node --check assets/advanced.js
           node --check assets/order-map.js
           node --check scripts/inject-google-maps-config.cjs
