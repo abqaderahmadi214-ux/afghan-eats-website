@@ -65,7 +65,8 @@
       "location": {
         "lat": 34.340041,
         "lng": 62.21704,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -164,7 +165,8 @@
       "location": {
         "lat": 34.34873,
         "lng": 62.207593,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -236,7 +238,8 @@
       "location": {
         "lat": 34.347112,
         "lng": 62.206283,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -394,7 +397,8 @@
       "location": {
         "lat": 34.339954,
         "lng": 62.216978,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -429,7 +433,8 @@
       "location": {
         "lat": 34.346666,
         "lng": 62.219078,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
