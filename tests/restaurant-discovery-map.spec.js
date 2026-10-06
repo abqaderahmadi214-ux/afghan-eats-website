@@ -36,21 +36,16 @@ async function mockGoogleMaps(page) {
       body: String.raw`
 (function(){
   const style=document.createElement('style');
-  style.textContent=`
-    #restaurantDiscoveryMap{position:relative;overflow:hidden;background:#e9efe9}
-    .fake-map-surface{position:absolute;inset:0;background:
-      linear-gradient(25deg,transparent 48%,rgba(255,255,255,.92) 49%,rgba(255,255,255,.92) 52%,transparent 53%),
-      linear-gradient(115deg,transparent 45%,rgba(255,255,255,.78) 46%,rgba(255,255,255,.78) 49%,transparent 50%),
-      linear-gradient(160deg,transparent 48%,rgba(211,221,215,.8) 49%,rgba(211,221,215,.8) 51%,transparent 52%),
-      #e8eee9;
-      background-size:240px 180px,320px 220px,190px 160px,auto}
-    .fake-map-district{position:absolute;color:#8a9790;font:700 12px system-ui;letter-spacing:.02em}
-    .fake-discovery-pin{position:absolute;transform:translate(-50%,-50%);border:0;background:transparent;cursor:pointer;padding:0;z-index:3}
-    .fake-discovery-pin-dot{display:grid;place-items:center;width:28px;height:28px;border-radius:50% 50% 50% 8px;transform:rotate(-45deg);background:#b91c1c;color:white;box-shadow:0 3px 9px rgba(0,0,0,.22);border:2px solid white}
-    .fake-discovery-pin-dot span{transform:rotate(45deg);font:800 11px system-ui}
-    .fake-discovery-pin-label{position:absolute;left:32px;top:-6px;white-space:nowrap;background:rgba(255,255,255,.95);border:1px solid #d8e1dc;border-radius:8px;padding:4px 7px;color:#173f2c;font:800 11px system-ui;box-shadow:0 2px 7px rgba(31,58,45,.12)}
-    .fake-info-window{position:absolute;right:18px;top:18px;z-index:5;background:white;border:1px solid #dbe4de;border-radius:14px;padding:12px;box-shadow:0 8px 24px rgba(31,58,45,.18);max-width:280px}
-  `;
+  style.textContent=[
+    '#restaurantDiscoveryMap{position:relative;overflow:hidden;background:#e9efe9}',
+    '.fake-map-surface{position:absolute;inset:0;background:linear-gradient(25deg,transparent 48%,rgba(255,255,255,.92) 49%,rgba(255,255,255,.92) 52%,transparent 53%),linear-gradient(115deg,transparent 45%,rgba(255,255,255,.78) 46%,rgba(255,255,255,.78) 49%,transparent 50%),linear-gradient(160deg,transparent 48%,rgba(211,221,215,.8) 49%,rgba(211,221,215,.8) 51%,transparent 52%),#e8eee9;background-size:240px 180px,320px 220px,190px 160px,auto}',
+    '.fake-map-district{position:absolute;color:#8a9790;font:700 12px system-ui;letter-spacing:.02em}',
+    '.fake-discovery-pin{position:absolute;transform:translate(-50%,-50%);border:0;background:transparent;cursor:pointer;padding:0;z-index:3}',
+    '.fake-discovery-pin-dot{display:grid;place-items:center;width:28px;height:28px;border-radius:50% 50% 50% 8px;transform:rotate(-45deg);background:#b91c1c;color:white;box-shadow:0 3px 9px rgba(0,0,0,.22);border:2px solid white}',
+    '.fake-discovery-pin-dot span{transform:rotate(45deg);font:800 11px system-ui}',
+    '.fake-discovery-pin-label{position:absolute;left:32px;top:-6px;white-space:nowrap;background:rgba(255,255,255,.95);border:1px solid #d8e1dc;border-radius:8px;padding:4px 7px;color:#173f2c;font:800 11px system-ui;box-shadow:0 2px 7px rgba(31,58,45,.12)}',
+    '.fake-info-window{position:absolute;right:18px;top:18px;z-index:5;background:white;border:1px solid #dbe4de;border-radius:14px;padding:12px;box-shadow:0 8px 24px rgba(31,58,45,.18);max-width:280px}'
+  ].join('');
   document.head.appendChild(style);
 
   function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
