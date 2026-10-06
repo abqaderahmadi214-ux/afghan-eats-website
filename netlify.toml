@@ -32,7 +32,7 @@
     
     X-Permitted-Cross-Domain-Policies = "none"
     
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com https://*.googleapis.com https://*.ggpht.com; connect-src 'self' https://afghaneats-api.onrender.com https://maps.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com https://*.googleapis.com https://*.ggpht.com; connect-src 'self' https://afghaneats-api.onrender.com https://maps.googleapis.com https://places.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
     
 
 
