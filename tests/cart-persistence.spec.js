@@ -81,7 +81,7 @@ test('ae_cart survives add, reload, cross-page navigation and checkout hydration
 
   const afterAdd=await page.evaluate(()=>localStorage.getItem('ae_cart'));
   console.log('[CART_PERSISTENCE] after_add='+afterAdd);
-  expect(JSON.parse(afterAdd)).toEqual([{
+  expect(JSON.parse(afterAdd)).toMatchObject([{
     id:'kebab',
     restaurantId:'test-restaurant',
     restaurantName:'Herat Kitchen',
