@@ -49,9 +49,9 @@
       "public_menu_source_url": "https://mizbanapp.com/en/herat/restaurant/50-50/menu",
       "public_menu_checked_at": "2026-08-28",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.347978,
+        "lng": 62.21848,
+        "accuracy": "verified"
       }
     },
     "categories": [
@@ -731,9 +731,9 @@
       "source_url": "https://www.instagram.com/mrburger.afg/",
       "source_checked_at": "2026-08-09",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.345587,
+        "lng": 62.214611,
+        "accuracy": "verified"
       }
     },
     "categories": [],
@@ -784,9 +784,9 @@
       "source_url": "https://www.mizbanapp.com/en/herat/restaurant/mansoor-fast-food/photos",
       "source_checked_at": "2026-08-09",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.358232,
+        "lng": 62.20127,
+        "accuracy": "verified"
       }
     },
     "categories": [],
@@ -1384,9 +1384,9 @@
       "public_menu_checked_at": "2026-09-01",
       "menu_preview_only": true,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.359134,
+        "lng": 62.206343,
+        "accuracy": "verified"
       }
     },
     "categories": [
@@ -1671,9 +1671,9 @@
       "public_menu_checked_at": "2026-09-01",
       "menu_preview_only": true,
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.348279,
+        "lng": 62.219447,
+        "accuracy": "verified"
       }
     },
     "categories": [
@@ -2211,9 +2211,9 @@
       "source_url": "https://mizbanapp.com/en/herat/restaurant/68aae7e16f914a8a20f48d1b/photos",
       "source_checked_at": "2026-08-09",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.349228,
+        "lng": 62.195752,
+        "accuracy": "verified"
       }
     },
     "categories": [],
@@ -2801,9 +2801,9 @@
       "source_checked_at": "2026-09-01",
       "public_media_source_url": "https://mizbanapp.com/fa/herat/restaurant/maza-biryani/overview",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.345817,
+        "lng": 62.219038,
+        "accuracy": "verified"
       }
     },
     "categories": [],
@@ -2856,9 +2856,9 @@
       "source_url": "https://www.facebook.com/tanin.restaurant/",
       "source_checked_at": "2026-08-09",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.347981,
+        "lng": 62.192477,
+        "accuracy": "verified"
       }
     },
     "categories": [],
@@ -2908,9 +2908,9 @@
       "source_url": "https://www.facebook.com/mehrbano.af/",
       "source_checked_at": "2026-08-09",
       "location": {
-        "lat": null,
-        "lng": null,
-        "accuracy": "unresolved"
+        "lat": 34.349199,
+        "lng": 62.219166,
+        "accuracy": "verified"
       }
     },
     "categories": [],
