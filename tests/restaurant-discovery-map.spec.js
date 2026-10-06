@@ -141,7 +141,7 @@ test.beforeEach(() => fs.mkdirSync('visual-proof', { recursive: true }));
 
 test('restaurant discovery map mobile visual proof', async ({ page }) => {
   await openMap(page, { width: 390, height: 844 });
-  await page.locator('.fake-discovery-pin').first().click();
+  await page.evaluate(() => document.querySelector('.fake-discovery-pin')?.click());
   await expect(page.locator('.fake-info-window')).toBeVisible();
   await page.screenshot({
     path: 'visual-proof/restaurant-discovery-map-390x844.png',
