@@ -1,6 +1,6 @@
 [build]
 
-  command = "node scripts/inject-google-maps-config.cjs && node scripts/render-association-assets.cjs && node scripts/validate-association-assets.cjs"
+  command = "node scripts/resolver-live-check.cjs && node scripts/inject-google-maps-config.cjs && node scripts/render-association-assets.cjs && node scripts/validate-association-assets.cjs"
   
   publish = "."
   
