@@ -424,10 +424,12 @@ test('production cart persistence diagnostic', async ({page})=>{
   });
   await page.reload({waitUntil:'domcontentloaded'});
 
-  const restaurantLinks=await page.locator('a.restaurant-card-link[href*="/restaurant"]').evaluateAll(nodes=>
+  await page.locator('a.restaurant-card-link').first().waitFor({state:'visible',timeout:20_000}).catch(()=>{});
+  const restaurantLinks=await page.locator('a.restaurant-card-link').evaluateAll(nodes=>
     [...new Set(nodes.map(node=>node.href).filter(Boolean))]
   );
   console.log('[CART_DIAG] restaurant_links='+restaurantLinks.length);
+  console.log('[CART_DIAG] restaurants_page_text='+JSON.stringify((await page.locator('body').innerText().catch(()=>'' )).slice(0,500)));
 
   let added=false;
   for(const href of restaurantLinks.slice(0,8)){
