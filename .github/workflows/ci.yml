@@ -108,6 +108,7 @@ jobs:
               lat=location.get('lat')
               lng=location.get('lng')
               place_id=location.get('place_id')
+              verification_source=str(location.get('verification_source') or '').strip().lower()
               if accuracy=='unresolved':
                   if lat is not None or lng is not None or place_id:
                       raise SystemExit(f'Unresolved location must keep null coordinates/place_id: {source}:{label}')
@@ -122,8 +123,8 @@ jobs:
                   raise SystemExit(f'Verified location requires numeric coordinates: {source}:{label}')
               if not (34.0 <= lat <= 34.5 and 62.0 <= lng <= 62.4):
                   raise SystemExit(f'Verified location is outside Herat bounds: {source}:{label} ({lat},{lng})')
-              if not str(place_id or '').strip():
-                  raise SystemExit(f'Verified location requires Google place_id: {source}:{label}')
+              if not str(place_id or '').strip() and verification_source!='manual':
+                  raise SystemExit(f'Verified location requires Google place_id or verification_source=manual: {source}:{label}')
               resolved+=1
           print(f'Google Maps coordinates: resolved={resolved} unresolved={unresolved} total={len(location_rows)}')
 
