@@ -54,6 +54,28 @@
     setStatus(en, fa, 'unavailable');
   }
 
+  function loadGoogleMaps() {
+    const key = window.AFGHAN_EATS_CONFIG?.googleMapsApiKey || '';
+    if (!key || key === '__GMAPS_KEY__') {
+      showMapFallback(
+        'Map unavailable — rider location will be sent by WhatsApp.',
+        'نقشه در دسترس نیست — موقعیت پیک از طریق واتساپ ارسال می‌شود.'
+      );
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' +
+      encodeURIComponent(key) + '&callback=__initTrackingMap&loading=async';
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => showMapFallback(
+      'Map unavailable — rider location will be sent by WhatsApp.',
+      'نقشه در دسترس نیست — موقعیت پیک از طریق واتساپ ارسال می‌شود.'
+    );
+    document.head.appendChild(script);
+  }
+
   function trackingIsVerified() {
     const experience = document.getElementById('trackingExperience');
     const gate = document.getElementById('trackGate');
@@ -333,6 +355,8 @@
   }
 
   window.AfghanEatsRiderMap = { initMap, pollRiderLocation, showMapFallback };
+
+  document.addEventListener('DOMContentLoaded', loadGoogleMaps);
 
   if (
     document.readyState !== 'loading' &&
