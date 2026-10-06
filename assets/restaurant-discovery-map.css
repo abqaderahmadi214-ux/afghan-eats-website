@@ -203,6 +203,20 @@ body.restaurant-map-mode #restaurantGrid {
 }
 
 @media (max-width: 760px) {
+  body.restaurant-map-mode .restaurant-page-head,
+  body.restaurant-map-mode .restaurant-filter-row,
+  body.restaurant-map-mode #addressSummary {
+    display: none !important;
+  }
+
+  body.restaurant-map-mode .restaurant-discovery-bar {
+    margin-bottom: 0;
+  }
+
+  body.restaurant-map-mode .restaurant-service-row {
+    padding-block: 4px;
+  }
+
   .restaurant-service-row {
     flex-wrap: wrap;
     gap: 10px;
@@ -213,14 +227,15 @@ body.restaurant-map-mode #restaurantGrid {
   }
 
   .restaurant-map-view {
+    margin-top: 8px;
     margin-inline: -12px;
     margin-bottom: calc(64px + env(safe-area-inset-bottom));
   }
 
   .restaurant-map-shell {
     display: block;
-    height: calc(100dvh - 220px);
-    min-height: 520px;
+    height: calc(100dvh - 185px);
+    min-height: 560px;
     border-radius: 16px;
   }
 
@@ -229,7 +244,7 @@ body.restaurant-map-mode #restaurantGrid {
   }
 
   #restaurantDiscoveryMap {
-    min-height: 520px;
+    min-height: 560px;
     height: 100%;
   }
 
