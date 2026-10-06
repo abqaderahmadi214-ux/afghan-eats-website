@@ -59,7 +59,7 @@ async function mockApi(page,{trackedOrder=null,riderLocation=null}={}){
 async function mockGoogleMaps(page){
   await page.route('**/config.js**',async route=>{
     const response=await route.fetch();
-    const body=(await response.text()).replace('__GMAPS_KEY__','AIza-test-browser-key');
+    const body=(await response.text()).replace('__GMAPS_KEY__','test-browser-key');
     await route.fulfill({response,body});
   });
   await page.route('https://maps.googleapis.com/maps/api/js**',async route=>{
