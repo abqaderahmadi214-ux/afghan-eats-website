@@ -8,6 +8,10 @@
  * successfully inject the key BUT the production deploy will FAIL. This is
  * intentional — a broken production map is worse than a broken preview.
  *
+ * config.js is the single source of truth for the browser key. order.html
+ * never embeds the key directly; assets/order-map.js loads Google Maps
+ * dynamically from window.AFGHAN_EATS_CONFIG.googleMapsApiKey.
+ *
  * If you need previews to also have a working map, add a second env var
  * GOOGLE_MAPS_API_KEY_PREVIEW with a separate Google Cloud key restricted to
  * deploy-preview-*.afghaneats.netlify.app/*
@@ -19,13 +23,13 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const key = String(process.env.GOOGLE_MAPS_API_KEY || '').trim();
 const marker = '__GMAPS_KEY__';
-const targets = ['config.js', 'order.html'];
+const targets = ['config.js'];
 const isProduction = process.env.CONTEXT === 'production';
 
 if (!key) {
   if (isProduction) {
     console.error('[Afghan Eats] FATAL: GOOGLE_MAPS_API_KEY is not set in the production build context.');
-    console.error('[Afghan Eats] Refusing to ship order.html with __GMAPS_KEY__ placeholder.');
+    console.error('[Afghan Eats] Refusing to ship config.js with __GMAPS_KEY__ placeholder.');
     console.error('[Afghan Eats] Set the env var in Netlify site settings → Environment variables → scope Production.');
     process.exit(1);
   }
