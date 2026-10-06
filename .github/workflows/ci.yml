@@ -254,3 +254,10 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run customer journey browser tests
         run: npm run test:e2e
+      - name: Upload restaurant discovery map screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restaurant-discovery-map-screenshots
+          path: visual-proof/restaurant-discovery-map-*.png
+          if-no-files-found: ignore
