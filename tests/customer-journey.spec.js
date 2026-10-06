@@ -355,3 +355,78 @@ test('one-time admin reset removes its token after a successful password change'
   expect(resetPayload).toEqual({token:'single-use-test-token',newPassword:'SecureAdmin!2026Herat'});
   await expect(page.locator('#adminResetForm')).toHaveClass(/hidden/);
 });
+
+
+test('TEMP production cart persistence diagnostic', async ({page})=>{
+  test.setTimeout(90_000);
+  const origin='https://afghaneats.net';
+
+  await page.goto(origin+'/restaurants',{waitUntil:'domcontentloaded'});
+  await page.evaluate(()=>{
+    localStorage.removeItem('ae_cart');
+    localStorage.removeItem('ae_mode');
+    localStorage.removeItem('ae_address');
+  });
+  await page.reload({waitUntil:'domcontentloaded'});
+
+  const orderable=page.locator('.restaurant-card:not(.directory-card):not(.preview-card)').first();
+  await expect(orderable).toBeVisible({timeout:20_000});
+  const restaurantName=(await orderable.locator('h3').textContent()||'').trim();
+  console.log('PROD_CART_RESTAURANT='+restaurantName);
+  await orderable.locator('a.restaurant-card-link').click();
+
+  await expect(page.locator('.add-btn').first()).toBeVisible({timeout:20_000});
+  await page.locator('.add-btn').first().click();
+  await page.locator('#itemModal button[onclick="addCurrent()"]').click();
+
+  const afterAdd=await page.evaluate(()=>({
+    raw:localStorage.getItem('ae_cart'),
+    badge:document.querySelector('.cart-count')?.textContent||'',
+    controlled:Boolean(navigator.serviceWorker?.controller)
+  }));
+  console.log('PROD_CART_AFTER_ADD='+JSON.stringify(afterAdd));
+
+  await page.reload({waitUntil:'domcontentloaded'});
+  const afterReload=await page.evaluate(()=>({
+    raw:localStorage.getItem('ae_cart'),
+    badge:document.querySelector('.cart-count')?.textContent||'',
+    controlled:Boolean(navigator.serviceWorker?.controller)
+  }));
+  console.log('PROD_CART_AFTER_RELOAD='+JSON.stringify(afterReload));
+
+  await page.goto(origin+'/restaurants',{waitUntil:'domcontentloaded'});
+  const afterNavigation=await page.evaluate(()=>({
+    raw:localStorage.getItem('ae_cart'),
+    badge:document.querySelector('.cart-count')?.textContent||'',
+    controlled:Boolean(navigator.serviceWorker?.controller)
+  }));
+  console.log('PROD_CART_AFTER_NAVIGATION='+JSON.stringify(afterNavigation));
+
+  await page.goto(origin+'/checkout',{waitUntil:'domcontentloaded'});
+  await page.waitForTimeout(3000);
+  const checkoutBeforeUnregister=await page.evaluate(()=>({
+    raw:localStorage.getItem('ae_cart'),
+    badge:document.querySelector('.cart-count')?.textContent||'',
+    cartText:document.querySelector('#cartItems')?.textContent?.trim()||'',
+    placeDisabled:Boolean(document.querySelector('.checkout-place-order')?.disabled),
+    controlled:Boolean(navigator.serviceWorker?.controller),
+    appScripts:[...document.scripts].map(s=>s.src).filter(src=>src.includes('/assets/app.js'))
+  }));
+  console.log('PROD_CART_CHECKOUT_BEFORE_UNREGISTER='+JSON.stringify(checkoutBeforeUnregister));
+
+  await page.evaluate(async()=>{
+    if(!('serviceWorker' in navigator))return;
+    const registrations=await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map(reg=>reg.unregister()));
+  });
+  await page.reload({waitUntil:'domcontentloaded'});
+  await page.waitForTimeout(3000);
+  const checkoutAfterUnregister=await page.evaluate(()=>({
+    raw:localStorage.getItem('ae_cart'),
+    badge:document.querySelector('.cart-count')?.textContent||'',
+    cartText:document.querySelector('#cartItems')?.textContent?.trim()||'',
+    placeDisabled:Boolean(document.querySelector('.checkout-place-order')?.disabled),
+    controlled:Boolean(navigator.serviceWorker?.controller)
+  }));
+  console.log('PROD_CART_CHECKOUT_AFTER_UNREGISTER='+JSON.stringify(checkoutAfterUnregister));
+});
