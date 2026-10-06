@@ -57,6 +57,11 @@ async function mockApi(page,{trackedOrder=null,riderLocation=null}={}){
 }
 
 async function mockGoogleMaps(page){
+  await page.route('**/config.js**',async route=>{
+    const response=await route.fetch();
+    const body=(await response.text()).replace('__GMAPS_KEY__','AIza-test-browser-key');
+    await route.fulfill({response,body});
+  });
   await page.route('https://maps.googleapis.com/maps/api/js**',async route=>{
     await route.fulfill({
       status:200,
@@ -153,11 +158,16 @@ test('tracking map ignores unresolved zero restaurant coordinates',async({page})
 
 test('tracking map shows bilingual-safe fallback when Google Maps is unavailable',async({page})=>{
   const tracked={id:orderId,order_number:'AE-4242',status:'confirmed',total:310,delivery_address:'Gulha Circle',delivery_phone:'+93 700 000 123',items:[]};
+  const mapsRequests=[];
+  const invalidKeyErrors=[];
+  page.on('request',request=>{if(request.url().startsWith('https://maps.googleapis.com/maps/api/js'))mapsRequests.push(request.url())});
+  page.on('console',message=>{if(message.type()==='error'&&message.text().includes('InvalidKeyMapError'))invalidKeyErrors.push(message.text())});
   await mockApi(page,{trackedOrder:tracked});
-  await page.route('https://maps.googleapis.com/maps/api/js**',route=>route.abort());
   await page.addInitScript(({orderId})=>localStorage.setItem('ae_last_order',JSON.stringify({orderId,orderNumber:'AE-4242',customerPhone:'+93 700 000 123',status:'confirmed',total:310})),{orderId});
   await page.goto(`/order?id=${orderId}`);
   await expect(page.locator('#riderMapStatus')).toContainText('Map unavailable');
   await expect(page.locator('.rider-map-fallback')).toContainText('Rider location will be sent by WhatsApp.');
+  expect(mapsRequests).toHaveLength(0);
+  expect(invalidKeyErrors).toHaveLength(0);
   await page.screenshot({path:'visual-proof/tracking-map-fallback-390x844.jpg',type:'jpeg',quality:88});
 });
