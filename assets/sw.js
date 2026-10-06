@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'afghan-eats-v9';
+const CACHE_VERSION = 'afghan-eats-v11';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const APP_SHELL = [
@@ -7,7 +7,7 @@ const APP_SHELL = [
   '/restaurants.html',
   '/restaurant.html',
   '/manifest.json',
-  '/config.js',
+  '/tools/resolve-coordinates.html',
   '/assets/styles.css',
   '/assets/advanced.css',
   '/assets/app.js',
@@ -57,6 +57,7 @@ function isNetworkOnlyRequest(request) {
     const hostname = url.hostname.toLowerCase();
 
     if (hostname === API_HOST) return true;
+    if (url.pathname === '/config.js') return true;
     if (url.pathname.startsWith('/api/') || /\/api\//.test(url.pathname)) return true;
 
     return NETWORK_ONLY_HOST_SUFFIXES.some((suffix) => hostMatches(hostname, suffix));
@@ -69,15 +70,20 @@ async function cacheFirstStatic(request) {
   const cached = await caches.match(request);
   if (cached) return cached;
 
-  const response = await fetch(request);
-  if (
-    response.ok &&
-    new URL(request.url).origin === self.location.origin
-  ) {
-    const cache = await caches.open(STATIC_CACHE);
-    cache.put(request, response.clone());
+  try {
+    const response = await fetch(request);
+    if (
+      response.ok &&
+      new URL(request.url).origin === self.location.origin
+    ) {
+      const cache = await caches.open(STATIC_CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    console.warn('[Afghan Eats] Cache-first fetch failed:', request.url, error);
+    throw error;
   }
-  return response;
 }
 
 async function networkFirstData(request) {
