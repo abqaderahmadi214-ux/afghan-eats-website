@@ -51,7 +51,8 @@
       "location": {
         "lat": 34.347978,
         "lng": 62.21848,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -733,7 +734,8 @@
       "location": {
         "lat": 34.345587,
         "lng": 62.214611,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -786,7 +788,8 @@
       "location": {
         "lat": 34.358232,
         "lng": 62.20127,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -1386,7 +1389,8 @@
       "location": {
         "lat": 34.359134,
         "lng": 62.206343,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -1673,7 +1677,8 @@
       "location": {
         "lat": 34.348279,
         "lng": 62.219447,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [
@@ -2213,7 +2218,8 @@
       "location": {
         "lat": 34.349228,
         "lng": 62.195752,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -2803,7 +2809,8 @@
       "location": {
         "lat": 34.345817,
         "lng": 62.219038,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -2858,7 +2865,8 @@
       "location": {
         "lat": 34.347981,
         "lng": 62.192477,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
@@ -2910,7 +2918,8 @@
       "location": {
         "lat": 34.349199,
         "lng": 62.219166,
-        "accuracy": "verified"
+        "accuracy": "verified",
+        "verification_source": "manual"
       }
     },
     "categories": [],
