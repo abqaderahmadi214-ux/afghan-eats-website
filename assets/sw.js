@@ -130,7 +130,10 @@ self.addEventListener('fetch', (event) => {
 
   if (
     url.origin === self.location.origin &&
-    url.pathname.startsWith('/data/')
+    (
+      url.pathname.startsWith('/data/') ||
+      url.pathname === '/assets/app.js'
+    )
   ) {
     event.respondWith(networkFirstData(request));
     return;
