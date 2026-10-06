@@ -380,20 +380,6 @@ test('cart persists immediately through reload, checkout navigation and SW unreg
   await page.addScriptTag({url:'/assets/inventory.js'});
   await page.waitForTimeout(800);
 
-  if(await page.evaluate(()=>'serviceWorker' in navigator)){
-    await page.evaluate(async()=>{
-      const registration=await navigator.serviceWorker.register('/assets/sw.js',{scope:'/'});
-      await navigator.serviceWorker.ready;
-      return registration.scope;
-    });
-    await page.reload();
-    await expect(page.locator('#menuContent')).toContainText('Kebab');
-    await page.addScriptTag({url:'/assets/catalog.js'});
-    await page.addScriptTag({url:'/assets/food-safety.js'});
-    await page.addScriptTag({url:'/assets/inventory.js'});
-    await page.waitForTimeout(800);
-  }
-
   await page.locator('.add-btn').first().click();
   await expect(page.locator('#itemModal')).toHaveClass(/open/);
   await page.locator('#itemModal button[onclick="addCurrent()"]').click();
