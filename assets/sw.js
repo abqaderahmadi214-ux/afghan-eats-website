@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'afghan-eats-v12';
+const CACHE_VERSION = 'afghan-eats-v13';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const APP_SHELL = [
@@ -130,7 +130,10 @@ self.addEventListener('fetch', (event) => {
 
   if (
     url.origin === self.location.origin &&
-    url.pathname.startsWith('/data/')
+    (
+      url.pathname.startsWith('/data/') ||
+      url.pathname === '/assets/app.js'
+    )
   ) {
     event.respondWith(networkFirstData(request));
     return;
