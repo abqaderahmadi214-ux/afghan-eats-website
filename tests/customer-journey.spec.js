@@ -16,7 +16,7 @@ const directoryListing = {
 };
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing]}={}){
+async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing],cartSafetyDelayMs=0}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
@@ -32,6 +32,14 @@ async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRow
     }
     else if(path.endsWith('/orders.place'))data={success:true,replayed:false,orderId:'33333333-3333-4333-8333-333333333333',orderNumber:'AE-20260827-4242',message:'Order placed successfully',pricing:{subtotal:250,deliveryFee:60,serviceFee:8,discount:0,tipAmount:0,total:318},promo:null,loyalty:null,logistics:quote,customerLinked:false,scheduledFor:null};
     else if(path.endsWith('/catalog.publicModifiers'))data={groups:[],options:[],links:[]};
+    else if(path.endsWith('/inventory.publicRestaurant')){
+      if(cartSafetyDelayMs)await new Promise(resolve=>setTimeout(resolve,cartSafetyDelayMs));
+      data=[];
+    }
+    else if(path.endsWith('/foodSafety.publicRestaurant')){
+      if(cartSafetyDelayMs)await new Promise(resolve=>setTimeout(resolve,cartSafetyDelayMs));
+      data={items:[],options:[]};
+    }
     else if(path.endsWith('/merchant.publicAvailabilityBatch'))data=[];
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
     else if(path.endsWith('/cities.publicCatalog'))data=[];
@@ -357,125 +365,63 @@ test('one-time admin reset removes its token after a successful password change'
 });
 
 
+test('cart persists immediately through reload, checkout navigation and SW unregister', async ({page})=>{
+  test.setTimeout(90_000);
+  await mockApi(page,{cartSafetyDelayMs:1200});
 
-test('TEMP production cart persistence diagnostic', async ({page})=>{
-  test.setTimeout(120_000);
-  const origin='https://afghaneats.net';
+  await page.goto('/restaurant.html?id=test-restaurant');
+  await expect(page.locator('#menuContent')).toContainText('Kebab');
 
-  async function cartSnapshot(label){
-    const value=await page.evaluate(async()=>{
-      const cacheEntries=[];
-      if('caches' in window){
-        for(const cacheName of await caches.keys()){
-          const cache=await caches.open(cacheName);
-          for(const request of await cache.keys()){
-            if(!request.url.includes('/assets/app.js')) continue;
-            const response=await cache.match(request);
-            const text=response?await response.clone().text():'';
-            cacheEntries.push({
-              cacheName,
-              url:request.url,
-              length:text.length,
-              hasCartKey:text.includes('cartKey'),
-              hasBasePrice:text.includes('basePrice'),
-              hasModifierSummary:text.includes('modifierSummary'),
-              hasSimpleSave:text.includes("localStorage.setItem('ae_cart',JSON.stringify(cart))")
-            });
-          }
-        }
-      }
-      let networkApp={};
-      try{
-        const response=await fetch('/assets/app.js?cart-diagnostic='+Date.now(),{cache:'no-store'});
-        const text=await response.text();
-        networkApp={
-          status:response.status,
-          length:text.length,
-          hasCartKey:text.includes('cartKey'),
-          hasBasePrice:text.includes('basePrice'),
-          hasModifierSummary:text.includes('modifierSummary'),
-          hasSimpleSave:text.includes("localStorage.setItem('ae_cart',JSON.stringify(cart))")
-        };
-      }catch(error){
-        networkApp={error:String(error)};
-      }
-      return {
-        raw:localStorage.getItem('ae_cart'),
-        badge:document.querySelector('.cart-count')?.textContent||'',
-        controlled:Boolean(navigator.serviceWorker?.controller),
-        addCurrentSource:typeof addCurrent==='function'?String(addCurrent):'missing',
-        saveCartSource:typeof saveCart==='function'?String(saveCart):'missing',
-        cacheEntries,
-        networkApp
-      };
+  // These customer modules are enabled in production and wrap addCurrent().
+  // The delayed API responses reproduce the race that previously let users
+  // navigate away before saveCart() ran.
+  await page.addScriptTag({url:'/assets/catalog.js'});
+  await page.addScriptTag({url:'/assets/food-safety.js'});
+  await page.addScriptTag({url:'/assets/inventory.js'});
+  await page.waitForTimeout(800);
+
+  if(await page.evaluate(()=>'serviceWorker' in navigator)){
+    await page.evaluate(async()=>{
+      const registration=await navigator.serviceWorker.register('/assets/sw.js',{scope:'/'});
+      await navigator.serviceWorker.ready;
+      return registration.scope;
     });
-    console.log(label+'='+JSON.stringify(value));
-    return value;
+    await page.reload();
+    await expect(page.locator('#menuContent')).toContainText('Kebab');
+    await page.addScriptTag({url:'/assets/catalog.js'});
+    await page.addScriptTag({url:'/assets/food-safety.js'});
+    await page.addScriptTag({url:'/assets/inventory.js'});
+    await page.waitForTimeout(800);
   }
 
-  await page.goto(origin+'/restaurants',{waitUntil:'domcontentloaded'});
-  await page.evaluate(()=>{
-    localStorage.removeItem('ae_cart');
-    localStorage.removeItem('ae_mode');
-    localStorage.removeItem('ae_address');
-  });
-  await page.reload({waitUntil:'domcontentloaded'});
-
-  const orderable=page.locator('.restaurant-card:not(.directory-card):not(.preview-card)').first();
-  await expect(orderable).toBeVisible({timeout:20_000});
-  const restaurantName=(await orderable.locator('h3').textContent()||'').trim();
-  console.log('PROD_CART_RESTAURANT='+restaurantName);
-  await orderable.locator('a.restaurant-card-link').click();
-
-  await expect(page.locator('.add-btn').first()).toBeVisible({timeout:20_000});
-  await cartSnapshot('PROD_CART_BEFORE_ADD');
   await page.locator('.add-btn').first().click();
+  await expect(page.locator('#itemModal')).toHaveClass(/open/);
   await page.locator('#itemModal button[onclick="addCurrent()"]').click();
-  await page.waitForTimeout(800);
-  await cartSnapshot('PROD_CART_AFTER_ADD');
 
-  await page.reload({waitUntil:'domcontentloaded'});
-  await cartSnapshot('PROD_CART_AFTER_RELOAD');
+  const storedImmediately=await page.evaluate(()=>localStorage.getItem('ae_cart'));
+  expect(storedImmediately).toBeTruthy();
+  expect(JSON.parse(storedImmediately)).toMatchObject([
+    {id:'kebab',restaurantId:'test-restaurant',qty:1}
+  ]);
+  await expect(page.locator('.cart-count').first()).toHaveText('1');
 
-  await page.goto(origin+'/checkout',{waitUntil:'domcontentloaded'});
-  await page.waitForTimeout(2500);
-  const checkoutBeforeUnregister=await page.evaluate(()=>({
-    raw:localStorage.getItem('ae_cart'),
-    badge:document.querySelector('.cart-count')?.textContent||'',
-    cartText:document.querySelector('#cartItems')?.textContent?.trim()||'',
-    placeDisabled:Boolean(document.querySelector('.checkout-place-order')?.disabled),
-    controlled:Boolean(navigator.serviceWorker?.controller),
-    appScripts:[...document.scripts].map(s=>s.src).filter(src=>src.includes('/assets/app.js'))
-  }));
-  console.log('PROD_CART_CHECKOUT_BEFORE_UNREGISTER='+JSON.stringify(checkoutBeforeUnregister));
+  await page.reload();
+  await expect(page.locator('.cart-count').first()).toHaveText('1');
+  expect(JSON.parse(await page.evaluate(()=>localStorage.getItem('ae_cart')))).toHaveLength(1);
+
+  await page.goto('/restaurants');
+  await expect(page.locator('.cart-count').first()).toHaveText('1');
+  await page.goto('/checkout');
+  await expect(page.locator('#cartItems')).toContainText('Kebab');
+  await expect(page.locator('.cart-count').first()).toHaveText('1');
 
   await page.evaluate(async()=>{
-    const registrations='serviceWorker' in navigator?await navigator.serviceWorker.getRegistrations():[];
-    await Promise.all(registrations.map(reg=>reg.unregister()));
-    const cacheNames='caches' in window?await caches.keys():[];
-    await Promise.all(cacheNames.map(name=>caches.delete(name)));
-    localStorage.removeItem('ae_cart');
+    if(!('serviceWorker' in navigator))return;
+    const registrations=await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map(registration=>registration.unregister()));
   });
-
-  await page.goto(origin+'/restaurants',{waitUntil:'domcontentloaded'});
-  const freshOrderable=page.locator('.restaurant-card:not(.directory-card):not(.preview-card)').filter({hasText:restaurantName}).first();
-  await expect(freshOrderable).toBeVisible({timeout:20_000});
-  await freshOrderable.locator('a.restaurant-card-link').click();
-  await expect(page.locator('.add-btn').first()).toBeVisible({timeout:20_000});
-  await cartSnapshot('PROD_CART_NO_SW_BEFORE_ADD');
-  await page.locator('.add-btn').first().click();
-  await page.locator('#itemModal button[onclick="addCurrent()"]').click();
-  await page.waitForTimeout(800);
-  await cartSnapshot('PROD_CART_NO_SW_AFTER_ADD');
-
-  await page.goto(origin+'/checkout',{waitUntil:'domcontentloaded'});
-  await page.waitForTimeout(2500);
-  const checkoutAfterUnregister=await page.evaluate(()=>({
-    raw:localStorage.getItem('ae_cart'),
-    badge:document.querySelector('.cart-count')?.textContent||'',
-    cartText:document.querySelector('#cartItems')?.textContent?.trim()||'',
-    placeDisabled:Boolean(document.querySelector('.checkout-place-order')?.disabled),
-    controlled:Boolean(navigator.serviceWorker?.controller)
-  }));
-  console.log('PROD_CART_CHECKOUT_AFTER_UNREGISTER='+JSON.stringify(checkoutAfterUnregister));
+  await page.reload();
+  await expect(page.locator('#cartItems')).toContainText('Kebab');
+  await expect(page.locator('.cart-count').first()).toHaveText('1');
+  expect(JSON.parse(await page.evaluate(()=>localStorage.getItem('ae_cart')))).toHaveLength(1);
 });
