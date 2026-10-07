@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'afghan-eats-v14';
+const CACHE_VERSION = 'afghan-eats-v15';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 const APP_SHELL = [
