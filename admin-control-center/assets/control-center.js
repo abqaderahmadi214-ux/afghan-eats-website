@@ -640,7 +640,7 @@ async function renderRiders() {
     ${state.riderReviewDetail?riderApplicationReviewWorkspace(state.riderReviewDetail):''}
     <section class="panel wide"><div class="panel-head"><div><h2>Rider application review queue</h2><p>Open an application to review personal information, National ID and driving licence evidence before approval.</p></div></div><div class="panel-body">${riderApplicationTable(data.applications)}</div></section>
     <section class="panel wide"><div class="panel-head"><div><h2>Create or publish a Rider shift</h2><p>See Rider coverage for the selected time before assigning. Use daily repeat for a week-long plan; do not create one continuous multi-day shift.</p></div>${badge(openShifts.length ? 'open' : 'ready')}</div><div class="panel-body">${riderShiftForm(asArray(data.board.riders))}</div></section>
-    <section class="panel wide"><div class="panel-head"><div><h2>Availability approval queue</h2><p>${number(pendingAvailability.length)} Rider request${pendingAvailability.length === 1 ? '' : 's'} waiting for review. Approval creates the confirmed shift.</p></div></div><div class="panel-body">${riderAvailabilityTable(asArray(data.board.availability))}</div></section>
+    <section class="panel wide"><div class="panel-head"><div><h2>Rider availability for planning</h2><p>${number(pendingAvailability.length)} Rider request${pendingAvailability.length === 1 ? '' : 's'} waiting for review. Approval confirms when a Rider is available; it does not create a work shift. Use the planner above to assign only the hours Operations needs.</p></div></div><div class="panel-body">${riderAvailabilityTable(asArray(data.board.availability))}</div></section>
     <section class="panel"><div class="panel-head"><div><h2>Rider fleet & live shift state</h2><p>Dispatch eligibility requires an active shift, Rider availability, and no other live delivery.</p></div></div><div class="panel-body">${riderTable(data.riders, asArray(data.board.riders))}</div></section>
     <section class="panel wide"><div class="panel-head"><div><h2>Open shift spots</h2><p>Published opportunities that Riders can claim in the app.</p></div></div><div class="panel-body">${riderShiftTable(openShifts)}</div></section>
     <section class="panel wide"><div class="panel-head"><div><h2>Scheduled shifts</h2><p>Confirmed, completed and cancelled Rider work periods. Times are Afghanistan time.</p></div></div><div class="panel-body">${riderShiftTable(scheduledShifts)}</div></section>
@@ -671,9 +671,9 @@ function riderShiftForm(riders) {
     <label class="field"><span>Repeat daily through <small>optional</small></span><input name="repeatUntil" type="date"><small>For a one-week plan, choose the last day here. Each day becomes a separate shift with the same hours.</small></label>
     <label class="field"><span>Open spots needed</span><input name="openSpots" type="number" min="1" max="20" step="1" value="1"><small>Used only when Rider is left blank.</small></label>
     <label class="field full"><span>Rider <small>optional — dedicate this shift</small></span><select name="riderId"><option value="">Open shift — choose capacity and let eligible Riders claim</option>${options}</select></label>
-    <div id="rider-shift-coverage" class="safety-card full"><strong>Coverage preview</strong><p>Choose the start and end time to see how many Riders submitted availability, are already planned, are on approved time off, or remain unplanned.</p></div>
+    <div id="rider-shift-coverage" class="safety-card full"><strong>Coverage preview</strong><p>Choose the start and end time to see approved Rider availability, pending requests, existing assignments, approved time off and remaining fleet capacity.</p></div>
     <label class="field full"><span>Operations note <small>optional</small></span><textarea name="note" maxlength="1000" rows="2"></textarea></label>
-    <div class="safety-card full"><strong>Scheduling rule</strong><p>A single Rider shift cannot exceed 18 hours. Repeating a schedule creates separate daily shifts, so a one-week assignment does not make a Rider active 24/7.</p></div>
+    <div class="safety-card full"><strong>Scheduling rule</strong><p>Availability is a planning signal only; it never places a Rider online or creates a work shift by itself. A single work shift cannot exceed 18 hours. Repeating a schedule creates separate daily shifts, so a one-week plan does not make a Rider active 24/7.</p></div>
     <button class="button button-primary full" type="submit">Create planned shift(s)</button>
   </form>`;
 }
@@ -696,20 +696,23 @@ function riderShiftCoverage(window){
   const start=new Date(window.startsAt).getTime(),end=new Date(window.endsAt).getTime(),date=window.date;
   const planned=new Set(shifts.filter(item=>item.riderId&&item.status==='assigned'&&riderShiftOverlap(start,end,new Date(item.startsAt).getTime(),new Date(item.endsAt).getTime())).map(item=>String(item.riderId)));
   const away=new Set(timeOff.filter(item=>item.status==='approved'&&String(item.startDate)<=date&&String(item.endDate)>=date).map(item=>String(item.riderId)));
-  const submitted=new Set();
+  const approved=new Set(),pending=new Set();
   for(const item of availability){
     if(!item.riderId||item.status==='withdrawn'||item.status==='rejected'||String(item.date)!==date)continue;
     try{
       const aStart=new Date(kabulIso(`${item.date}T${item.allDay?'00:00':item.start}`)).getTime();
       const aEnd=new Date(kabulIso(`${item.date}T${item.allDay?'23:59':item.end}`)).getTime();
-      if(riderShiftOverlap(start,end,aStart,aEnd))submitted.add(String(item.riderId));
+      if(!riderShiftOverlap(start,end,aStart,aEnd))continue;
+      if(item.status==='approved')approved.add(String(item.riderId));
+      else if(item.status==='pending')pending.add(String(item.riderId));
     }catch{}
   }
-  const eligibleSubmitted=new Set([...submitted].filter(id=>!planned.has(id)&&!away.has(id)));
+  const eligibleApproved=new Set([...approved].filter(id=>!planned.has(id)&&!away.has(id)));
+  const eligiblePending=new Set([...pending].filter(id=>!planned.has(id)&&!away.has(id)));
   const activeIds=new Set(riders.filter(r=>String(r.status||'active')==='active').map(r=>String(r.id)));
   const unplanned=[...activeIds].filter(id=>!planned.has(id)&&!away.has(id));
   const openSpots=shifts.filter(item=>item.status==='open'&&riderShiftOverlap(start,end,new Date(item.startsAt).getTime(),new Date(item.endsAt).getTime())).length;
-  return{planned,away,submitted,eligibleSubmitted,unplanned,openSpots,riders};
+  return{planned,away,approved,pending,eligibleApproved,eligiblePending,unplanned,openSpots,riders};
 }
 function refreshRiderShiftCoverage(){
   const form=document.getElementById('rider-shift-form'),box=document.getElementById('rider-shift-coverage');if(!form||!box)return;
@@ -724,20 +727,21 @@ function refreshRiderShiftCoverage(){
         let stateLabel='no submitted availability';
         if(first.planned.has(id))stateLabel='already planned';
         else if(first.away.has(id))stateLabel='approved time off';
-        else if(first.eligibleSubmitted.has(id))stateLabel='available';
+        else if(first.eligibleApproved.has(id))stateLabel='available';
+        else if(first.eligiblePending.has(id))stateLabel='availability pending';
         option.textContent=`${base} · ${stateLabel}`;
         option.disabled=first.planned.has(id)||first.away.has(id);
       });
       if(select.selectedOptions[0]?.disabled)select.value='';
     }
     box.innerHTML=`<strong>Coverage preview · ${esc(windows.length===1?windows[0].date:`${windows[0].date} → ${windows[windows.length-1].date}`)}</strong>
-      <p><b>${number(first.eligibleSubmitted.size)}</b> submitted availability · <b>${number(first.planned.size)}</b> already planned · <b>${number(first.away.size)}</b> on approved time off · <b>${number(first.unplanned.length)}</b> active Riders not yet planned · <b>${number(first.openSpots)}</b> open spot(s) already published in the first window.</p>
+      <p><b>${number(first.eligibleApproved.size)}</b> approved available · <b>${number(first.eligiblePending.size)}</b> pending availability · <b>${number(first.planned.size)}</b> already planned · <b>${number(first.away.size)}</b> on approved time off · <b>${number(first.unplanned.length)}</b> active Riders not yet planned · <b>${number(first.openSpots)}</b> open spot(s) already published in the first window.</p>
       ${windows.length>1?'<small>Counts shown are for the first daily window. The server re-checks overlap and time-off rules for every day when shifts are created.</small>':''}`;
   }catch(error){box.innerHTML=`<strong>Coverage preview</strong><p>${esc(error.message||'The selected shift window is invalid.')}</p>`}
 }
 function riderAvailabilityTable(items) {
   const visible = items.filter(item => item.status !== 'withdrawn');
-  return visible.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Rider</th><th>Requested availability</th><th>State</th><th>Review</th></tr></thead><tbody>${visible.map(item => `<tr><td><span class="row-title">${esc(item.riderName)}</span><span class="row-sub">${esc(item.vehicle || '')} · ${esc(item.serviceArea || '')}</span></td><td>${esc(item.date)}<span class="row-sub">${esc(item.allDay ? 'All day' : `${item.start} – ${item.end}`)} · Afghanistan time</span></td><td>${badge(item.status)}</td><td>${item.status === 'pending' ? `<div class="button-stack"><button class="button button-primary button-small" data-action="rider-availability-review" data-id="${attr(item.id)}" data-status="approved">Approve & schedule</button><button class="button button-danger button-small" data-action="rider-availability-review" data-id="${attr(item.id)}" data-status="rejected">Reject</button></div>` : '<span class="row-sub">Reviewed</span>'}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty-state">No Rider availability requests have been submitted.</div>';
+  return visible.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Rider</th><th>Requested availability</th><th>State</th><th>Review</th></tr></thead><tbody>${visible.map(item => `<tr><td><span class="row-title">${esc(item.riderName)}</span><span class="row-sub">${esc(item.vehicle || '')} · ${esc(item.serviceArea || '')}</span></td><td>${esc(item.date)}<span class="row-sub">${esc(item.allDay ? 'All day' : `${item.start} – ${item.end}`)} · Afghanistan time</span></td><td>${badge(item.status)}</td><td>${item.status === 'pending' ? `<div class="button-stack"><button class="button button-primary button-small" data-action="rider-availability-review" data-id="${attr(item.id)}" data-status="approved">Approve availability</button><button class="button button-danger button-small" data-action="rider-availability-review" data-id="${attr(item.id)}" data-status="rejected">Reject</button></div>` : '<span class="row-sub">Reviewed</span>'}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty-state">No Rider availability requests have been submitted.</div>';
 }
 function riderShiftTable(items) {
   return items.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Shift</th><th>Rider / spot</th><th>Schedule</th><th>State</th><th>Control</th></tr></thead><tbody>${items.map(item => `<tr><td><span class="row-title">${esc(item.title || 'Rider shift')}</span><span class="row-sub">${esc(item.serviceArea || 'Herat')}</span></td><td>${esc(item.riderName || 'Open to interested Riders')}</td><td>${esc(afghanDate(item.startsAt))}<span class="row-sub">to ${esc(afghanDate(item.endsAt))}</span></td><td>${badge(item.status)}</td><td>${['open','assigned'].includes(item.status) ? `<button class="button button-danger button-small" data-action="rider-shift-cancel" data-id="${attr(item.id)}">Cancel shift</button>` : '<span class="row-sub">Closed</span>'}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty-state">No shifts in this section.</div>';
