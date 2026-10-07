@@ -3205,3 +3205,21 @@
 .checkout-page .checkout-location-prompt:disabled{cursor:wait;opacity:.65}
 .checkout-page .checkout-location-state{min-height:18px;color:#2e6f4e;font-size:.68rem;font-weight:800}
 .checkout-page.rtl .checkout-location-prompt{text-align:right}
+
+/* 2026 product alignment: same interaction geometry as Rider and Control Center */
+.premium-customer .btn,
+.premium-customer button:not(.add-btn):not(.fav){
+  min-height:48px;
+}
+.premium-customer .btn-primary,
+.premium-customer .btn-light,
+.premium-customer .lang{
+  border-radius:14px;
+}
+.premium-customer .restaurant-card,
+.premium-customer .checkout-card,
+.premium-customer .cart-panel,
+.premium-customer .order-card,
+.premium-customer .saved-card{
+  border-radius:22px;
+}
