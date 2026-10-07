@@ -3,22 +3,22 @@
    Loaded only on the public/customer experience by config.js. */
 
 :root{
-  --ae-brand-forest:#123c32;
-  --ae-brand-forest-2:#0b2c24;
-  --ae-brand-forest-3:#1c5748;
-  --ae-brand-pomegranate:#e5483c;
-  --ae-brand-pomegranate-dark:#c9362d;
-  --ae-brand-saffron:#f3b23d;
-  --ae-brand-saffron-soft:#ffe8b2;
-  --ae-brand-cream:#fff8ed;
-  --ae-brand-ivory:#fffdf8;
-  --ae-brand-mint:#edf7f2;
-  --ae-brand-mint-2:#e2f1ea;
-  --ae-brand-sand:#f4eadc;
-  --ae-brand-ink:#16241f;
-  --ae-brand-muted:#68756f;
-  --ae-brand-line:rgba(18,60,50,.12);
-  --ae-brand-shadow:0 20px 55px rgba(18,60,50,.10);
+  --ae-brand-forest:#0D4A3A;
+  --ae-brand-forest-2:#08382C;
+  --ae-brand-forest-3:#176B55;
+  --ae-brand-pomegranate:#B9383E;
+  --ae-brand-pomegranate-dark:#8F2930;
+  --ae-brand-saffron:#A96B10;
+  --ae-brand-saffron-soft:#FFF4DC;
+  --ae-brand-cream:#F8F4EC;
+  --ae-brand-ivory:#FFFFFF;
+  --ae-brand-mint:#EDF3EF;
+  --ae-brand-mint-2:#E3EEE7;
+  --ae-brand-sand:#EFE8DA;
+  --ae-brand-ink:#15201B;
+  --ae-brand-muted:#66756D;
+  --ae-brand-line:#D8E2DB;
+  --ae-brand-shadow:0 16px 42px rgba(13,74,58,.10);
 }
 
 html{background:var(--ae-brand-forest-2)}
@@ -55,13 +55,15 @@ body{
   background:rgba(255,253,248,.86)!important;
 }
 .btn-primary{
-  background:linear-gradient(135deg,var(--ae-brand-pomegranate),#d94034)!important;
+  min-height:48px;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,var(--ae-brand-forest),var(--ae-brand-forest-3))!important;
   color:#fff!important;
-  box-shadow:0 9px 24px rgba(229,72,60,.18)!important;
+  box-shadow:0 9px 22px rgba(13,74,58,.18)!important;
 }
 .btn-primary:hover{
-  background:linear-gradient(135deg,#ee5749,var(--ae-brand-pomegranate-dark))!important;
-  box-shadow:0 12px 28px rgba(229,72,60,.24)!important;
+  background:var(--ae-brand-forest-2)!important;
+  box-shadow:0 12px 28px rgba(13,74,58,.22)!important;
 }
 
 /* Homepage: warm market energy rather than flat white. */
@@ -259,4 +261,34 @@ body:not(.premium-home):not(.premium-customer) .faq details{
 
 @media(prefers-reduced-motion:reduce){
   .header,.btn-primary,.restaurant-card{transition:none!important}
+}
+
+/* Unified Afghan Eats product chrome — Rider / Customer / Web / Admin */
+:root{
+  --ae-product-radius-sm:12px;
+  --ae-product-radius:18px;
+  --ae-product-radius-lg:22px;
+  --ae-product-action-height:48px;
+}
+.btn,.btn-light,.lang{
+  min-height:var(--ae-product-action-height);
+  border-radius:14px!important;
+}
+.premium-customer .restaurant-card,
+.premium-customer .form-card,
+.premium-customer .checkout-card,
+.premium-customer .cart-panel,
+.premium-customer .account-nav,
+.premium-customer .saved-card,
+.premium-customer .order-card{
+  border-radius:var(--ae-product-radius-lg)!important;
+}
+.premium-customer .chip,
+.premium-customer .status-pill{
+  border-radius:999px!important;
+}
+.premium-customer .field input,
+.premium-customer .field select,
+.premium-customer .field textarea{
+  border-radius:var(--ae-product-radius-sm)!important;
 }
