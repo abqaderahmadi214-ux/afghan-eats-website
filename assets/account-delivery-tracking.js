@@ -89,7 +89,7 @@
     if(!location.pathname.toLowerCase().includes('order'))return;
     load();
     if(state.timer)clearInterval(state.timer);
-    state.timer=setInterval(()=>{if(!document.hidden)load();},15000);
+    state.timer=setInterval(()=>{if(!document.hidden)load();},30000);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)load();});
   }
 

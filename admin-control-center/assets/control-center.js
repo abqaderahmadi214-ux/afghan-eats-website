@@ -639,7 +639,7 @@ async function renderRiders() {
   <div class="section-grid">
     ${state.riderReviewDetail?riderApplicationReviewWorkspace(state.riderReviewDetail):''}
     <section class="panel wide"><div class="panel-head"><div><h2>Rider application review queue</h2><p>Open an application to review personal information, National ID and driving licence evidence before approval.</p></div></div><div class="panel-body">${riderApplicationTable(data.applications)}</div></section>
-    <section class="panel wide"><div class="panel-head"><div><h2>Create or publish a Rider shift</h2><p>Leave Rider blank to publish an open spot. Active Riders will be notified and may claim it from Shift planning.</p></div>${badge(openShifts.length ? 'open' : 'ready')}</div><div class="panel-body">${riderShiftForm(asArray(data.board.riders))}</div></section>
+    <section class="panel wide"><div class="panel-head"><div><h2>Create or publish a Rider shift</h2><p>See Rider coverage for the selected time before assigning. Use daily repeat for a week-long plan; do not create one continuous multi-day shift.</p></div>${badge(openShifts.length ? 'open' : 'ready')}</div><div class="panel-body">${riderShiftForm(asArray(data.board.riders))}</div></section>
     <section class="panel wide"><div class="panel-head"><div><h2>Availability approval queue</h2><p>${number(pendingAvailability.length)} Rider request${pendingAvailability.length === 1 ? '' : 's'} waiting for review. Approval creates the confirmed shift.</p></div></div><div class="panel-body">${riderAvailabilityTable(asArray(data.board.availability))}</div></section>
     <section class="panel"><div class="panel-head"><div><h2>Rider fleet & live shift state</h2><p>Dispatch eligibility requires an active shift, Rider availability, and no other live delivery.</p></div></div><div class="panel-body">${riderTable(data.riders, asArray(data.board.riders))}</div></section>
     <section class="panel wide"><div class="panel-head"><div><h2>Open shift spots</h2><p>Published opportunities that Riders can claim in the app.</p></div></div><div class="panel-body">${riderShiftTable(openShifts)}</div></section>
@@ -662,8 +662,78 @@ function riderTable(items, boardRiders = []) {
   }).join('')}</tbody></table></div>` : '<div class="empty-state">There are no operational Rider records yet.</div>';
 }
 function riderShiftForm(riders) {
-  const options = riders.map(rider => `<option value="${attr(rider.id)}">${esc(rider.fullName || 'Rider')} · ${esc(rider.vehicle || '')} · ${esc(rider.serviceArea || 'Herat')}</option>`).join('');
-  return `<form id="rider-shift-form" class="form-grid"><label class="field"><span>Shift title</span><input name="title" maxlength="180" value="Rider shift"></label><label class="field"><span>Service area</span><input name="serviceArea" maxlength="180" value="Herat city"></label><label class="field"><span>Start · Afghanistan time</span><input name="startsAt" type="datetime-local" required></label><label class="field"><span>End · Afghanistan time</span><input name="endsAt" type="datetime-local" required></label><label class="field full"><span>Rider <small>optional</small></span><select name="riderId"><option value="">Open shift — notify Riders and let one claim it</option>${options}</select></label><label class="field full"><span>Operations note <small>optional</small></span><textarea name="note" maxlength="1000" rows="2"></textarea></label><div class="safety-card full"><strong>Open spot behavior</strong><p>When no Rider is selected, the shift is published to active Riders. The first eligible Rider who claims it gets the spot; overlapping shifts and approved time off are blocked by the server.</p></div><button class="button button-primary full" type="submit">Create shift / publish open spot</button></form>`;
+  const options = riders.map(rider => `<option value="${attr(rider.id)}" data-rider-name="${attr(rider.fullName || 'Rider')}">${esc(rider.fullName || 'Rider')} · ${esc(rider.vehicle || '')} · ${esc(rider.serviceArea || 'Herat')}</option>`).join('');
+  return `<form id="rider-shift-form" class="form-grid">
+    <label class="field"><span>Shift title</span><input name="title" maxlength="180" value="Rider shift"></label>
+    <label class="field"><span>Service area</span><input name="serviceArea" maxlength="180" value="Herat city"></label>
+    <label class="field"><span>Start · Afghanistan time</span><input name="startsAt" type="datetime-local" required></label>
+    <label class="field"><span>End · Afghanistan time</span><input name="endsAt" type="datetime-local" required></label>
+    <label class="field"><span>Repeat daily through <small>optional</small></span><input name="repeatUntil" type="date"><small>For a one-week plan, choose the last day here. Each day becomes a separate shift with the same hours.</small></label>
+    <label class="field"><span>Open spots needed</span><input name="openSpots" type="number" min="1" max="20" step="1" value="1"><small>Used only when Rider is left blank.</small></label>
+    <label class="field full"><span>Rider <small>optional — dedicate this shift</small></span><select name="riderId"><option value="">Open shift — choose capacity and let eligible Riders claim</option>${options}</select></label>
+    <div id="rider-shift-coverage" class="safety-card full"><strong>Coverage preview</strong><p>Choose the start and end time to see how many Riders submitted availability, are already planned, are on approved time off, or remain unplanned.</p></div>
+    <label class="field full"><span>Operations note <small>optional</small></span><textarea name="note" maxlength="1000" rows="2"></textarea></label>
+    <div class="safety-card full"><strong>Scheduling rule</strong><p>A single Rider shift cannot exceed 18 hours. Repeating a schedule creates separate daily shifts, so a one-week assignment does not make a Rider active 24/7.</p></div>
+    <button class="button button-primary full" type="submit">Create planned shift(s)</button>
+  </form>`;
+}
+function riderShiftOverlap(startA,endA,startB,endB){return startA<endB&&endA>startB}
+function riderShiftLocalDate(value){return String(value||'').slice(0,10)}
+function riderShiftAddDays(dateKey,days){const d=new Date(`${dateKey}T12:00:00Z`);d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)}
+function riderShiftDailyWindows(startLocal,endLocal,repeatUntil){
+  const firstDate=riderShiftLocalDate(startLocal),endDate=riderShiftLocalDate(endLocal),lastDate=String(repeatUntil||'').trim();
+  if(!lastDate)return [{startsAt:kabulIso(startLocal),endsAt:kabulIso(endLocal),date:firstDate}];
+  if(firstDate!==endDate)throw new Error('Daily repeat requires the start and end to be on the same Afghanistan date.');
+  if(lastDate<firstDate)throw new Error('Repeat-through date must be on or after the first shift date.');
+  const span=Math.round((new Date(`${lastDate}T12:00:00Z`)-new Date(`${firstDate}T12:00:00Z`))/86400000);
+  if(span>13)throw new Error('Create at most 14 daily shifts at a time.');
+  const startTime=String(startLocal).slice(11),endTime=String(endLocal).slice(11),windows=[];
+  for(let day=0;day<=span;day+=1){const date=riderShiftAddDays(firstDate,day);windows.push({date,startsAt:kabulIso(`${date}T${startTime}`),endsAt:kabulIso(`${date}T${endTime}`)})}
+  return windows;
+}
+function riderShiftCoverage(window){
+  const board=state.cache.riders?.board||{},riders=asArray(board.riders),availability=asArray(board.availability),shifts=asArray(board.shifts),timeOff=asArray(board.timeOff);
+  const start=new Date(window.startsAt).getTime(),end=new Date(window.endsAt).getTime(),date=window.date;
+  const planned=new Set(shifts.filter(item=>item.riderId&&item.status==='assigned'&&riderShiftOverlap(start,end,new Date(item.startsAt).getTime(),new Date(item.endsAt).getTime())).map(item=>String(item.riderId)));
+  const away=new Set(timeOff.filter(item=>item.status==='approved'&&String(item.startDate)<=date&&String(item.endDate)>=date).map(item=>String(item.riderId)));
+  const submitted=new Set();
+  for(const item of availability){
+    if(!item.riderId||item.status==='withdrawn'||item.status==='rejected'||String(item.date)!==date)continue;
+    try{
+      const aStart=new Date(kabulIso(`${item.date}T${item.allDay?'00:00':item.start}`)).getTime();
+      const aEnd=new Date(kabulIso(`${item.date}T${item.allDay?'23:59':item.end}`)).getTime();
+      if(riderShiftOverlap(start,end,aStart,aEnd))submitted.add(String(item.riderId));
+    }catch{}
+  }
+  const eligibleSubmitted=new Set([...submitted].filter(id=>!planned.has(id)&&!away.has(id)));
+  const activeIds=new Set(riders.filter(r=>String(r.status||'active')==='active').map(r=>String(r.id)));
+  const unplanned=[...activeIds].filter(id=>!planned.has(id)&&!away.has(id));
+  const openSpots=shifts.filter(item=>item.status==='open'&&riderShiftOverlap(start,end,new Date(item.startsAt).getTime(),new Date(item.endsAt).getTime())).length;
+  return{planned,away,submitted,eligibleSubmitted,unplanned,openSpots,riders};
+}
+function refreshRiderShiftCoverage(){
+  const form=document.getElementById('rider-shift-form'),box=document.getElementById('rider-shift-coverage');if(!form||!box)return;
+  const startLocal=form.elements.startsAt?.value,endLocal=form.elements.endsAt?.value,repeatUntil=form.elements.repeatUntil?.value;
+  if(!startLocal||!endLocal){box.innerHTML='<strong>Coverage preview</strong><p>Choose the start and end time to see Rider coverage before assigning.</p>';return}
+  try{
+    const windows=riderShiftDailyWindows(startLocal,endLocal,repeatUntil),rows=windows.map(window=>({window,coverage:riderShiftCoverage(window)}));
+    const first=rows[0].coverage,select=form.elements.riderId;
+    if(select){
+      [...select.options].slice(1).forEach(option=>{
+        const id=String(option.value),base=option.dataset.riderName||option.textContent.split(' · ')[0]||'Rider';
+        let stateLabel='no submitted availability';
+        if(first.planned.has(id))stateLabel='already planned';
+        else if(first.away.has(id))stateLabel='approved time off';
+        else if(first.eligibleSubmitted.has(id))stateLabel='available';
+        option.textContent=`${base} · ${stateLabel}`;
+        option.disabled=first.planned.has(id)||first.away.has(id);
+      });
+      if(select.selectedOptions[0]?.disabled)select.value='';
+    }
+    box.innerHTML=`<strong>Coverage preview · ${esc(windows.length===1?windows[0].date:`${windows[0].date} → ${windows[windows.length-1].date}`)}</strong>
+      <p><b>${number(first.eligibleSubmitted.size)}</b> submitted availability · <b>${number(first.planned.size)}</b> already planned · <b>${number(first.away.size)}</b> on approved time off · <b>${number(first.unplanned.length)}</b> active Riders not yet planned · <b>${number(first.openSpots)}</b> open spot(s) already published in the first window.</p>
+      ${windows.length>1?'<small>Counts shown are for the first daily window. The server re-checks overlap and time-off rules for every day when shifts are created.</small>':''}`;
+  }catch(error){box.innerHTML=`<strong>Coverage preview</strong><p>${esc(error.message||'The selected shift window is invalid.')}</p>`}
 }
 function riderAvailabilityTable(items) {
   const visible = items.filter(item => item.status !== 'withdrawn');
@@ -928,16 +998,29 @@ async function action(event) {
 }
 
 root.addEventListener('click', action);
+root.addEventListener('input', event => { if(event.target?.closest?.('#rider-shift-form')) refreshRiderShiftCoverage(); });
+root.addEventListener('change', event => { if(event.target?.closest?.('#rider-shift-form')) refreshRiderShiftCoverage(); });
 root.addEventListener('submit', event => {
   const form = event.target;
   const formId = form?.getAttribute?.('id') || '';
   if (formId === 'rider-shift-form') {
     event.preventDefault(); const d = new FormData(form);
-    let startsAt, endsAt; try { startsAt = kabulIso(d.get('startsAt')); endsAt = kabulIso(d.get('endsAt')); } catch (error) { return setNotice(error.message); }
-    if (new Date(endsAt) <= new Date(startsAt)) return setNotice('Shift end must be after shift start.');
-    const riderId = String(d.get('riderId') || '').trim() || null;
-    const payload = { title: String(d.get('title') || 'Rider shift').trim() || 'Rider shift', serviceArea: String(d.get('serviceArea') || '').trim() || undefined, startsAt, endsAt, riderId, note: String(d.get('note') || '').trim() || undefined };
-    return openConfirm(riderId ? 'Schedule Rider shift' : 'Publish open Rider shift', riderId ? 'Create this confirmed shift for the selected Rider? The Rider will be notified.' : 'Publish this open shift to active Riders so an interested eligible Rider can claim it?', async () => { await mutate('riderOperations.adminCreateShift', payload); toast(riderId ? 'Rider shift scheduled and Rider notified.' : 'Open shift published and Riders notified.'); form.reset(); renderView(); }, false);
+    const startLocal=String(d.get('startsAt')||''),endLocal=String(d.get('endsAt')||''),repeatUntil=String(d.get('repeatUntil')||'');
+    let windows; try { windows=riderShiftDailyWindows(startLocal,endLocal,repeatUntil); } catch(error){ return setNotice(error.message); }
+    if(windows.some(window=>new Date(window.endsAt)<=new Date(window.startsAt)))return setNotice('Shift end must be after shift start.');
+    if(windows.some(window=>new Date(window.endsAt)-new Date(window.startsAt)>18*60*60*1000))return setNotice('A Rider shift cannot exceed 18 hours. Use daily repeat for a weekly plan.');
+    const riderId=String(d.get('riderId')||'').trim()||null;
+    const requestedSpots=Math.max(1,Math.min(20,Number(d.get('openSpots')||1))),spots=riderId?1:requestedSpots;
+    const base={title:String(d.get('title')||'Rider shift').trim()||'Rider shift',serviceArea:String(d.get('serviceArea')||'').trim()||undefined,riderId,note:String(d.get('note')||'').trim()||undefined};
+    const payloads=[];for(const window of windows){for(let spot=0;spot<spots;spot+=1)payloads.push({...base,startsAt:window.startsAt,endsAt:window.endsAt})}
+    const wording=riderId?`${payloads.length} dedicated daily shift${payloads.length===1?'':'s'} for the selected Rider`:`${payloads.length} open shift spot${payloads.length===1?'':'s'} across ${windows.length} day${windows.length===1?'':'s'}`;
+    return openConfirm(riderId?'Schedule Rider shift plan':'Publish Rider capacity',`Create ${wording}? Every shift is a separate work window; no Rider will be scheduled continuously across days.`,async()=>{
+      let created=0;
+      try{for(const payload of payloads){await mutate('riderOperations.adminCreateShift',payload);created+=1}}
+      catch(error){throw new Error(`${created} shift(s) were created before the server stopped the plan: ${error.message||'unknown error'}`)}
+      toast(`${created} Rider shift${created===1?'':'s'} created.`);
+      form.reset();await renderView();
+    },false);
   }
   if (formId === 'rider-support-reply-form') {
     event.preventDefault(); const d = new FormData(form), threadId = String(d.get('threadId') || ''), body = String(d.get('body') || '').trim();
