@@ -139,3 +139,14 @@
 
 
 
+
+
+[[headers]]
+
+  for = "/customer-app-config.json"
+
+  [headers.values]
+
+    Content-Type = "application/json; charset=utf-8"
+
+    Cache-Control = "no-cache, no-store, must-revalidate"
