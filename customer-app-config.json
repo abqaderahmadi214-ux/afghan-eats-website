@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-10-09.1",
+  "refreshSeconds": 60,
+  "brand": {
+    "primary": "#0D4A3A",
+    "primaryDark": "#08382C",
+    "accent": "#A96B10",
+    "background": "#F8F4EC",
+    "surface": "#FFFFFF",
+    "text": "#15201B",
+    "muted": "#66756D",
+    "border": "#D8E2DB",
+    "error": "#B9383E"
+  },
+  "home": {
+    "eyebrow": {
+      "en": "FROM THE HEART OF HERAT",
+      "fa": "از دل هرات"
+    },
+    "heroTitle": {
+      "en": "The taste of home.",
+      "fa": "طعم خانه،\nکنار شما."
+    },
+    "cravingTitle": {
+      "en": "What are you craving?",
+      "fa": "چه غذایی میل دارید؟"
+    },
+    "kitchensTitle": {
+      "en": "Order from Herat’s kitchens",
+      "fa": "از رستورانت‌های هرات سفارش دهید"
+    }
+  },
+  "features": {
+    "liveTracking": true,
+    "customerRiderChat": true,
+    "cashTips": true,
+    "riderRatings": true
+  }
+}
