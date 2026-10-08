@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "2026-10-09.1",
+  "revision": "2026-10-09.2",
   "refreshSeconds": 60,
   "brand": {
     "primary": "#0D4A3A",
@@ -15,20 +15,20 @@
   },
   "home": {
     "eyebrow": {
-      "en": "FROM THE HEART OF HERAT",
-      "fa": "از دل هرات"
+      "en": "FROM HERAT, WITH LOVE",
+      "fa": "از هرات، با مهر"
     },
     "heroTitle": {
-      "en": "The taste of home.",
-      "fa": "طعم خانه،\nکنار شما."
+      "en": "The taste of Herat.\\nDelivered.",
+      "fa": "طعم‌های هرات،\\nپشت دروازۀ شما."
     },
     "cravingTitle": {
       "en": "What are you craving?",
-      "fa": "چه غذایی میل دارید؟"
+      "fa": "میل به چه غذایی دارید؟"
     },
     "kitchensTitle": {
-      "en": "Order from Herat’s kitchens",
-      "fa": "از رستورانت‌های هرات سفارش دهید"
+      "en": "Restaurants in Herat",
+      "fa": "رستورانت‌های هرات"
     }
   },
   "features": {
