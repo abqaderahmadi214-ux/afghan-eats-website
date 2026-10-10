@@ -937,6 +937,10 @@
   color: #fff !important;
   box-shadow: 0 8px 20px rgba(18, 60, 50, .25) !important;
 }
+.ae-premium .dish-category-row .chip {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
 .ae-premium .discovery-search input,
 .ae-premium .search-input {
   border-radius: 999px;
@@ -1387,7 +1391,7 @@
   color: #fff;
 }
 
-/* 15. Footer + mobile nav */
+/* 15. Footer + mobile nav (footer is light per design-2026.css: use dark text) */
 .ae-premium .footer .footer-main {
   padding-block: 52px 36px;
 }
@@ -1396,26 +1400,26 @@
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--pp-saffron);
-  opacity: .9;
+  color: var(--pp-forest);
+  opacity: 1;
 }
 .ae-premium.rtl .footer h3 {
   letter-spacing: .02em;
 }
 .ae-premium .footer-links-col a {
-  color: rgba(255, 253, 248, .72);
+  color: var(--pp-muted);
   font-size: .92rem;
   transition: color var(--pp-speed) var(--pp-ease), padding var(--pp-speed) var(--pp-ease);
 }
 .ae-premium .footer-links-col a:hover {
-  color: #fff;
+  color: var(--pp-pom-deep);
   padding-inline-start: 4px;
 }
 .ae-premium .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-top: 1px solid var(--pp-line-soft);
   padding-block: 20px;
   font-size: .84rem;
-  color: rgba(255, 253, 248, .55);
+  color: var(--pp-muted);
 }
 .ae-premium .mobile-nav {
   background: rgba(255, 253, 248, .94) !important;
