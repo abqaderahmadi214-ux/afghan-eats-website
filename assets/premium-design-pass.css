@@ -520,3 +520,1021 @@
     order: 3;
   }
 }
+
+/* ==========================================================================
+   PREMIUM PASS II — 2026-10-10
+   A cohesive elevation of the Afghan Eats customer experience: refined type,
+   confident rhythm, elevated cards, polished chrome. Visual-only overrides.
+   Scoped to .ae-premium; bilingual + RTL safe (logical properties only).
+   ========================================================================== */
+
+/* 1. Design tokens */
+.ae-premium {
+  --pp-forest: #123c32;
+  --pp-forest-deep: #0b2c24;
+  --pp-forest-soft: #1c5748;
+  --pp-pom: #e5483c;
+  --pp-pom-deep: #c9362d;
+  --pp-brand: #b91c1c;
+  --pp-saffron: #f3b23d;
+  --pp-cream: #fff8ed;
+  --pp-ivory: #fffdf8;
+  --pp-mint: #edf7f2;
+  --pp-ink: #16241f;
+  --pp-muted: #68756f;
+  --pp-faint: #8a948e;
+  --pp-line: rgba(18, 60, 50, .12);
+  --pp-line-soft: rgba(18, 60, 50, .07);
+  --pp-card: #fffdf9;
+  --pp-radius-lg: 22px;
+  --pp-radius-md: 16px;
+  --pp-radius-sm: 12px;
+  --pp-shadow-sm: 0 2px 8px rgba(18, 60, 50, .05);
+  --pp-shadow-md: 0 10px 30px rgba(18, 60, 50, .08);
+  --pp-shadow-lg: 0 24px 60px rgba(18, 60, 50, .13);
+  --pp-shadow-pom: 0 10px 26px rgba(229, 72, 60, .22);
+  --pp-ease: cubic-bezier(.22, .61, .21, 1);
+  --pp-speed: 180ms;
+}
+
+/* 2. Typography — display scale, refined rhythm */
+.ae-premium h1, .ae-premium h2, .ae-premium h3 {
+  text-wrap: balance;
+  letter-spacing: -.015em;
+}
+.ae-premium.rtl h1, .ae-premium.rtl h2, .ae-premium.rtl h3 {
+  letter-spacing: 0;
+}
+.ae-premium .section-head h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+.ae-premium .section-head p,
+.ae-premium .ae-section-note {
+  color: var(--pp-muted);
+  font-size: .98rem;
+  max-width: 60ch;
+}
+/* Eyebrow/kicker treatment — letterspaced micro-label */
+.ae-premium :is(.ae-eyebrow, .checkout-eyebrow, .orders-kicker, .account-panel-kicker) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--pp-pom-deep);
+}
+.ae-premium.rtl :is(.ae-eyebrow, .checkout-eyebrow, .orders-kicker, .account-panel-kicker) {
+  letter-spacing: .02em;
+}
+.ae-premium :is(.ae-eyebrow, .checkout-eyebrow, .orders-kicker, .account-panel-kicker)::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--pp-pom), var(--pp-saffron));
+  flex: 0 0 auto;
+}
+/* Prices and numerals: tabular, confident */
+.ae-premium :is(.menu-price, .sum-row span:last-child, .sum-row.total, .order-total, #tipPreview) {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+/* 3. Buttons — premium primary, refined secondary */
+.ae-premium .btn {
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  transition: transform var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease), background var(--pp-speed) var(--pp-ease), border-color var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .btn-primary {
+  background: linear-gradient(135deg, var(--pp-pom) 0%, var(--pp-pom-deep) 100%) !important;
+  box-shadow: var(--pp-shadow-pom), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
+  border: 1px solid rgba(160, 30, 22, .28);
+}
+.ae-premium .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(229, 72, 60, .30), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
+}
+.ae-premium .btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 14px rgba(229, 72, 60, .22), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
+}
+.ae-premium .btn-light {
+  background: var(--pp-ivory) !important;
+  border: 1px solid var(--pp-line) !important;
+  box-shadow: var(--pp-shadow-sm);
+  color: var(--pp-forest);
+}
+.ae-premium .btn-light:hover {
+  border-color: rgba(18, 60, 50, .22) !important;
+  box-shadow: var(--pp-shadow-md);
+  transform: translateY(-1px);
+}
+.ae-premium .btn-dark {
+  background: linear-gradient(135deg, var(--pp-forest-soft), var(--pp-forest-deep)) !important;
+  box-shadow: 0 10px 24px rgba(18, 60, 50, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
+  border: 1px solid rgba(11, 44, 36, .4);
+}
+.ae-premium .btn:focus-visible,
+.ae-premium a:focus-visible,
+.ae-premium button:focus-visible {
+  outline: 3px solid rgba(229, 72, 60, .35);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* 4. Header — quieter, sharper */
+.ae-premium .header .nav {
+  height: 72px;
+}
+.ae-premium .brand-wordmark {
+  font-weight: 900;
+  letter-spacing: -.02em;
+  font-size: 1.35rem;
+}
+.ae-premium .brand-emblem {
+  filter: drop-shadow(0 4px 10px rgba(229, 72, 60, .28));
+  transition: transform var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .brand:hover .brand-emblem {
+  transform: rotate(-8deg) scale(1.05);
+}
+.ae-premium .navlinks a {
+  font-weight: 700;
+  color: var(--pp-ink);
+  padding: 26px 2px;
+}
+.ae-premium .navlinks a::after {
+  content: "";
+  position: absolute;
+  inset-inline: 2px;
+  bottom: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--pp-pom), var(--pp-saffron));
+  transform: scaleX(0);
+  transition: transform var(--pp-speed) var(--pp-ease);
+}
+.ae-premium.rtl .navlinks a::after {
+  transform-origin: right center;
+}
+.ae-premium .navlinks a:hover::after {
+  transform: scaleX(1);
+}
+.ae-premium .lang {
+  border-radius: 999px;
+  font-weight: 800;
+  border: 1px solid var(--pp-line) !important;
+  background: rgba(255, 253, 248, .9) !important;
+  transition: border-color var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .lang:hover {
+  border-color: rgba(229, 72, 60, .4) !important;
+  box-shadow: 0 4px 14px rgba(18, 60, 50, .08);
+}
+.ae-premium .ae-cart.btn-primary {
+  border-radius: 999px;
+  padding-inline: 18px;
+}
+.ae-premium .cart-count.badge-count {
+  background: #fff;
+  color: var(--pp-pom-deep);
+  font-weight: 900;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+
+/* 5. Homepage hero */
+.ae-premium .ae-hero-copy h1 {
+  font-size: clamp(2.4rem, 4.6vw, 3.9rem);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -.025em;
+  color: var(--pp-forest);
+}
+.ae-premium.rtl .ae-hero-copy h1 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+.ae-premium .ae-hero-copy h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--pp-pom-deep), var(--pp-pom) 55%, #f08a3c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ae-premium .ae-hero-sub {
+  font-size: 1.06rem;
+  color: var(--pp-muted);
+  max-width: 46ch;
+}
+.ae-premium .mode-tabs {
+  border-radius: 999px;
+  padding: 5px;
+  gap: 4px;
+}
+.ae-premium .mode-tabs button {
+  border-radius: 999px;
+  font-weight: 800;
+  padding: 10px 22px;
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .mode-tabs button.active {
+  background: var(--pp-forest) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(18, 60, 50, .28) !important;
+}
+.ae-premium .address-box {
+  border-radius: 20px;
+  border: 1px solid var(--pp-line) !important;
+}
+.ae-premium .address-box input {
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+.ae-premium .address-box input::placeholder {
+  color: var(--pp-faint);
+  font-weight: 500;
+}
+.ae-premium .ae-browse-link {
+  font-weight: 800;
+  color: var(--pp-forest);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--pp-speed) var(--pp-ease), color var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .ae-browse-link:hover {
+  color: var(--pp-pom-deep);
+  border-bottom-color: var(--pp-saffron);
+}
+.ae-premium .ae-browse-link .ae-icon {
+  transition: transform var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .ae-browse-link:hover .ae-icon {
+  transform: translateX(3px);
+}
+.ae-premium.rtl .ae-browse-link:hover .ae-icon {
+  transform: translateX(-3px) scaleX(-1);
+}
+
+/* 6. Cuisine rail */
+.ae-premium .ae-cuisine {
+  border-radius: var(--pp-radius-md);
+  transition: transform var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .ae-cuisine:hover {
+  transform: translateY(-3px);
+}
+.ae-premium .ae-cuisine strong {
+  font-size: .86rem;
+  font-weight: 800;
+  color: var(--pp-ink);
+}
+.ae-premium .ae-cuisine-photo {
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: var(--pp-shadow-md);
+  transition: box-shadow var(--pp-speed) var(--pp-ease), transform var(--pp-speed) var(--pp-ease);
+  overflow: hidden;
+}
+.ae-premium .ae-cuisine:hover .ae-cuisine-photo {
+  box-shadow: 0 14px 32px rgba(18, 60, 50, .16);
+  transform: scale(1.04);
+}
+
+/* 7. Restaurant cards — the money shot */
+.ae-premium .restaurant-card {
+  border-radius: var(--pp-radius-lg) !important;
+  overflow: hidden;
+  border: 1px solid var(--pp-line-soft) !important;
+  background: var(--pp-card) !important;
+  transition: transform 220ms var(--pp-ease), box-shadow 220ms var(--pp-ease), border-color 220ms var(--pp-ease);
+}
+.ae-premium .restaurant-card:hover,
+.ae-premium .restaurant-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--pp-shadow-lg) !important;
+  border-color: rgba(229, 72, 60, .22) !important;
+}
+.ae-premium .restaurant-image {
+  overflow: hidden;
+  position: relative;
+}
+.ae-premium .restaurant-image img {
+  transition: transform 480ms var(--pp-ease);
+}
+.ae-premium .restaurant-card:hover .restaurant-image img {
+  transform: scale(1.06);
+}
+.ae-premium .restaurant-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, rgba(11, 44, 36, .14));
+  pointer-events: none;
+}
+.ae-premium .restaurant-body {
+  padding: 18px 20px 20px;
+}
+.ae-premium .restaurant-body h3,
+.ae-premium .restaurant-body .restaurant-name {
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  margin: 0 0 6px;
+}
+.ae-premium .restaurant-body .tagline {
+  color: var(--pp-muted);
+  font-size: .88rem;
+}
+.ae-premium .rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--pp-mint) !important;
+  color: var(--pp-forest) !important;
+  font-weight: 800;
+  font-size: .82rem;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(18, 60, 50, .1);
+}
+.ae-premium .rating::before {
+  content: "★";
+  color: var(--pp-saffron);
+  font-size: .9em;
+  text-shadow: 0 1px 2px rgba(243, 178, 61, .5);
+}
+.ae-premium .restaurant-meta,
+.ae-premium .restaurant-card .meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: .84rem;
+  color: var(--pp-muted);
+  font-weight: 600;
+}
+.ae-premium .delivery-time-pill,
+.ae-premium .delivery-fee-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(18, 60, 50, .05);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+/* Card badges (open / featured / promo) */
+.ae-premium .store-badges .status-pill,
+.ae-premium .restaurant-badges .badge,
+.ae-premium .promo-badge {
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  box-shadow: var(--pp-shadow-sm);
+}
+.ae-premium.rtl :is(.store-badges .status-pill, .restaurant-badges .badge, .promo-badge) {
+  letter-spacing: 0;
+}
+
+/* 8. Discovery page (restaurants.html) */
+.ae-premium .restaurant-discovery-bar,
+.ae-premium .filters,
+.ae-premium .browse-context {
+  border-radius: var(--pp-radius-md) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-sm);
+}
+.ae-premium .chip {
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid var(--pp-line);
+  background: var(--pp-ivory);
+  padding: 9px 18px;
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .chip:hover {
+  border-color: rgba(229, 72, 60, .35);
+  transform: translateY(-1px);
+  box-shadow: var(--pp-shadow-sm);
+}
+.ae-premium .chip.active {
+  background: var(--pp-forest) !important;
+  border-color: var(--pp-forest) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(18, 60, 50, .25) !important;
+}
+.ae-premium .discovery-search input,
+.ae-premium .search-input {
+  border-radius: 999px;
+  border: 1px solid var(--pp-line);
+  padding: 13px 20px;
+  padding-inline-start: 46px;
+  background: var(--pp-ivory);
+  box-shadow: var(--pp-shadow-sm);
+  transition: border-color var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .discovery-search input:focus,
+.ae-premium .search-input:focus {
+  border-color: rgba(229, 72, 60, .5);
+  box-shadow: 0 0 0 4px rgba(229, 72, 60, .08), var(--pp-shadow-md);
+  outline: none;
+}
+
+/* 9. Restaurant page — hero, menu, add buttons */
+.ae-premium .store-hero,
+.ae-premium .restaurant-hero {
+  border-radius: 0 0 28px 28px;
+  overflow: hidden;
+}
+.ae-premium .store-title h1,
+.ae-premium .restaurant-hero h1 {
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+.ae-premium.rtl :is(.store-title h1, .restaurant-hero h1) {
+  letter-spacing: 0;
+}
+.ae-premium .menu-category-option {
+  border-radius: 999px;
+  font-weight: 700;
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .menu-category-option.active,
+.ae-premium .menu-category-option[aria-selected="true"] {
+  background: var(--pp-forest);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(18, 60, 50, .25);
+}
+.ae-premium .directory-menu-section h3,
+.ae-premium .menu-section-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ae-premium .directory-menu-section h3::after,
+.ae-premium .menu-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--pp-line-soft);
+}
+.ae-premium .premium-menu-card {
+  border: 1px solid var(--pp-line-soft) !important;
+  background: var(--pp-card);
+  transition: transform var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease), border-color var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .premium-menu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pp-shadow-md);
+  border-color: rgba(229, 72, 60, .18) !important;
+}
+.ae-premium .menu-item-media {
+  border-radius: var(--pp-radius-sm);
+  overflow: hidden;
+}
+.ae-premium .menu-item-media img {
+  transition: transform 420ms var(--pp-ease);
+}
+.ae-premium .premium-menu-card:hover .menu-item-media img {
+  transform: scale(1.07);
+}
+.ae-premium .menu-item-name,
+.ae-premium .menu-item-copy b,
+.ae-premium .menu-item-copy strong {
+  font-weight: 800;
+  letter-spacing: -.01em;
+  font-size: 1rem;
+}
+.ae-premium .menu-item-desc {
+  color: var(--pp-muted);
+  font-size: .87rem;
+  line-height: 1.55;
+}
+.ae-premium .menu-price {
+  font-size: 1.12rem;
+  color: var(--pp-forest);
+}
+.ae-premium .menu-price .currency {
+  font-size: .82em;
+  font-weight: 700;
+  color: var(--pp-muted);
+}
+.ae-premium .add-btn {
+  border-radius: 999px !important;
+  font-weight: 800;
+  min-width: 44px;
+  min-height: 44px;
+  background: var(--pp-ivory);
+  border: 1.5px solid rgba(229, 72, 60, .35) !important;
+  color: var(--pp-pom-deep) !important;
+  box-shadow: var(--pp-shadow-sm);
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .add-btn:hover {
+  background: linear-gradient(135deg, var(--pp-pom), var(--pp-pom-deep)) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: var(--pp-shadow-pom);
+  transform: scale(1.06);
+}
+.ae-premium .add-btn:active {
+  transform: scale(.96);
+}
+.ae-premium .add-btn:disabled {
+  opacity: .45;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 10. Forms & inputs */
+.ae-premium .field > span,
+.ae-premium .field > label {
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--pp-forest);
+  letter-spacing: .02em;
+}
+.ae-premium .field input,
+.ae-premium .field select,
+.ae-premium .field textarea {
+  border-radius: 14px;
+  border: 1.5px solid var(--pp-line);
+  background: var(--pp-ivory);
+  padding: 14px 16px;
+  font-size: .98rem;
+  transition: border-color var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease), background var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .field input:hover,
+.ae-premium .field select:hover,
+.ae-premium .field textarea:hover {
+  border-color: rgba(18, 60, 50, .25);
+}
+.ae-premium .field input:focus,
+.ae-premium .field select:focus,
+.ae-premium .field textarea:focus {
+  border-color: var(--pp-pom);
+  box-shadow: 0 0 0 4px rgba(229, 72, 60, .09);
+  outline: none;
+  background: #fff;
+}
+.ae-premium .field input::placeholder,
+.ae-premium .field textarea::placeholder {
+  color: var(--pp-faint);
+}
+.ae-premium .form-card {
+  border-radius: var(--pp-radius-lg) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-md);
+  padding: clamp(24px, 4vw, 40px) !important;
+}
+.ae-premium .notice {
+  border-radius: var(--pp-radius-sm);
+  border-inline-start: 4px solid var(--pp-saffron);
+  box-shadow: var(--pp-shadow-sm);
+}
+.ae-premium .notice.error {
+  border-inline-start-color: var(--pp-pom);
+}
+.ae-premium .notice.success {
+  border-inline-start-color: #1e7a4c;
+}
+
+/* 11. Checkout */
+.ae-premium .checkout-section {
+  border-radius: var(--pp-radius-lg);
+  border: 1px solid var(--pp-line-soft);
+  background: var(--pp-card);
+  box-shadow: var(--pp-shadow-sm);
+  padding: clamp(20px, 3.4vw, 32px);
+}
+.ae-premium .checkout-section-head h2 {
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+.ae-premium .checkout-section-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: .9rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pp-forest-soft), var(--pp-forest-deep));
+  box-shadow: 0 6px 16px rgba(18, 60, 50, .25);
+  flex: 0 0 auto;
+}
+.ae-premium .fulfillment-card label span,
+.ae-premium .checkout-choice-card label span {
+  border-radius: var(--pp-radius-md);
+  border: 1.5px solid var(--pp-line);
+  font-weight: 700;
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .fulfillment-card input:checked + span,
+.ae-premium .checkout-choice-card input:checked + span {
+  border-color: var(--pp-pom) !important;
+  background: #fff5f3 !important;
+  box-shadow: 0 0 0 3px rgba(229, 72, 60, .1);
+}
+.ae-premium .checkout-summary-panel {
+  border-radius: var(--pp-radius-lg);
+  border: 1px solid var(--pp-line-soft);
+  background: linear-gradient(180deg, var(--pp-ivory), #fbf6ec);
+  box-shadow: var(--pp-shadow-md);
+  padding: 24px;
+  position: sticky;
+  top: 92px;
+}
+.ae-premium .checkout-summary-head h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.ae-premium .sum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-block: 7px;
+  font-size: .94rem;
+  color: var(--pp-muted);
+}
+.ae-premium .sum-row.total {
+  border-top: 1px dashed var(--pp-line);
+  margin-top: 8px;
+  padding-top: 14px;
+  font-size: 1.18rem;
+  color: var(--pp-ink);
+}
+.ae-premium .checkout-place-order {
+  width: 100%;
+  min-height: 56px;
+  font-size: 1.06rem;
+  border-radius: 16px;
+  margin-top: 6px;
+}
+.ae-premium .checkout-place-order:disabled {
+  background: #d8dcd9 !important;
+  color: #8a948e !important;
+  box-shadow: none !important;
+  border-color: transparent;
+}
+.ae-premium .server-price-note {
+  border-radius: var(--pp-radius-sm);
+  background: var(--pp-mint);
+  border: 1px solid rgba(18, 60, 50, .1);
+  font-size: .82rem;
+  color: var(--pp-forest-soft);
+}
+.ae-premium .tip-pill {
+  border-radius: 999px;
+  border: 1.5px solid var(--pp-line);
+  font-weight: 800;
+  transition: all var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .tip-pill.active {
+  border-color: var(--pp-pom);
+  background: #fff5f3;
+  color: var(--pp-pom-deep);
+  box-shadow: 0 0 0 3px rgba(229, 72, 60, .08);
+}
+
+/* 12. Orders & tracking */
+.ae-premium .orders-head h1,
+.ae-premium .tracking-status-hero h1 {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+.ae-premium.rtl :is(.orders-head h1, .tracking-status-hero h1) {
+  letter-spacing: 0;
+}
+.ae-premium .order-card,
+.ae-premium .tracking-surface {
+  border-radius: var(--pp-radius-lg) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-sm);
+  transition: box-shadow var(--pp-speed) var(--pp-ease), transform var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .order-card:hover {
+  box-shadow: var(--pp-shadow-md);
+  transform: translateY(-2px);
+}
+.ae-premium .tracking-status-hero {
+  border-radius: var(--pp-radius-lg);
+  background: linear-gradient(135deg, var(--pp-forest) 0%, var(--pp-forest-deep) 100%);
+  color: #fff;
+  padding: clamp(24px, 4vw, 40px);
+  box-shadow: var(--pp-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.ae-premium .tracking-status-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(243, 178, 61, .22), transparent 40%),
+    radial-gradient(circle at 8% 88%, rgba(229, 72, 60, .18), transparent 42%);
+  pointer-events: none;
+}
+.ae-premium .tracking-status-hero > * {
+  position: relative;
+}
+.ae-premium .premium-tracking-steps .step .dot,
+.ae-premium .step .dot {
+  box-shadow: var(--pp-shadow-sm);
+  border: 2px solid #fff;
+}
+.ae-premium .step.done .dot {
+  background: linear-gradient(135deg, #2a9d6a, #1e7a4c);
+}
+.ae-premium .step.active .dot {
+  background: linear-gradient(135deg, var(--pp-pom), var(--pp-pom-deep));
+  box-shadow: 0 0 0 5px rgba(229, 72, 60, .14);
+}
+.ae-premium .rider-map {
+  border-radius: var(--pp-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--pp-line-soft);
+  box-shadow: var(--pp-shadow-sm);
+}
+
+/* 13. Account */
+.ae-premium .account-hero {
+  border-radius: var(--pp-radius-lg);
+  background: linear-gradient(135deg, var(--pp-forest) 0%, var(--pp-forest-deep) 100%);
+  color: #fff;
+  box-shadow: var(--pp-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.ae-premium .account-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 90% 10%, rgba(243, 178, 61, .2), transparent 42%);
+  pointer-events: none;
+}
+.ae-premium .account-hero > * {
+  position: relative;
+}
+.ae-premium .account-member-pill {
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.ae-premium .account-nav {
+  border-radius: var(--pp-radius-md) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-sm);
+  padding: 10px !important;
+  background: var(--pp-card);
+}
+.ae-premium .account-nav a,
+.ae-premium .account-nav-item {
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background var(--pp-speed) var(--pp-ease), color var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .account-nav a.active,
+.ae-premium .account-nav-item.active {
+  background: linear-gradient(135deg, #fff0ec, #ffe4dc) !important;
+  color: var(--pp-pom-deep) !important;
+  box-shadow: inset 0 0 0 1px rgba(229, 72, 60, .18);
+}
+.ae-premium .account-overview-card,
+.ae-premium .account-panel {
+  border-radius: var(--pp-radius-lg) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-sm);
+  background: var(--pp-card);
+}
+.ae-premium .account-reward-spotlight {
+  border-radius: var(--pp-radius-md);
+  background: linear-gradient(135deg, #fff6df, #ffedc9);
+  border: 1px solid rgba(243, 178, 61, .4);
+}
+
+/* 14. Help / FAQ */
+.ae-premium .support-card {
+  border-radius: var(--pp-radius-lg) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  box-shadow: var(--pp-shadow-sm);
+  transition: transform var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .support-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pp-shadow-md);
+}
+.ae-premium .faq details {
+  border-radius: var(--pp-radius-md) !important;
+  border: 1px solid var(--pp-line-soft) !important;
+  transition: box-shadow var(--pp-speed) var(--pp-ease), border-color var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .faq details[open] {
+  box-shadow: var(--pp-shadow-md);
+  border-color: rgba(229, 72, 60, .2) !important;
+}
+.ae-premium .faq summary {
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ae-premium .faq summary::-webkit-details-marker {
+  display: none;
+}
+.ae-premium .faq summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--pp-mint);
+  color: var(--pp-forest);
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform var(--pp-speed) var(--pp-ease), background var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .faq details[open] summary::after {
+  transform: rotate(45deg);
+  background: var(--pp-pom);
+  color: #fff;
+}
+
+/* 15. Footer + mobile nav */
+.ae-premium .footer .footer-main {
+  padding-block: 52px 36px;
+}
+.ae-premium .footer h3 {
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--pp-saffron);
+  opacity: .9;
+}
+.ae-premium.rtl .footer h3 {
+  letter-spacing: .02em;
+}
+.ae-premium .footer-links-col a {
+  color: rgba(255, 253, 248, .72);
+  font-size: .92rem;
+  transition: color var(--pp-speed) var(--pp-ease), padding var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .footer-links-col a:hover {
+  color: #fff;
+  padding-inline-start: 4px;
+}
+.ae-premium .footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  padding-block: 20px;
+  font-size: .84rem;
+  color: rgba(255, 253, 248, .55);
+}
+.ae-premium .mobile-nav {
+  background: rgba(255, 253, 248, .94) !important;
+  backdrop-filter: blur(18px) saturate(1.1);
+  border-top: 1px solid var(--pp-line-soft);
+  box-shadow: 0 -10px 30px rgba(18, 60, 50, .08);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ae-premium .mobile-nav a {
+  border-radius: 12px;
+  font-weight: 700;
+  color: var(--pp-muted);
+  transition: color var(--pp-speed) var(--pp-ease), background var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .mobile-nav a.active,
+.ae-premium .mobile-nav a[aria-current="page"] {
+  color: var(--pp-pom-deep);
+  background: #fff0ec;
+}
+
+/* 16. Loading & empty states */
+.ae-premium .ae-loading-card,
+.ae-premium .menu-loading,
+.ae-premium .store-loading-block {
+  border-radius: var(--pp-radius-lg);
+  overflow: hidden;
+}
+.ae-premium .ae-loading-line,
+.ae-premium .ae-loading-media {
+  border-radius: 10px;
+  background: linear-gradient(100deg, #eee9df 30%, #f7f2e8 46%, #eee9df 62%) !important;
+  background-size: 200% 100% !important;
+  animation: pp-shimmer 1.4s linear infinite;
+}
+@keyframes pp-shimmer {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
+.ae-premium .orders-empty,
+.ae-premium .empty-state,
+.ae-premium .cart-empty {
+  text-align: center;
+  padding: clamp(36px, 6vw, 64px) 24px;
+  border-radius: var(--pp-radius-lg);
+  border: 1.5px dashed var(--pp-line);
+  background: rgba(255, 253, 248, .7);
+}
+.ae-premium :is(.orders-empty, .empty-state, .cart-empty) h2,
+.ae-premium :is(.orders-empty, .empty-state, .cart-empty) h3 {
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.ae-premium :is(.orders-empty, .empty-state, .cart-empty) p {
+  color: var(--pp-muted);
+  max-width: 44ch;
+  margin-inline: auto;
+}
+
+/* 17. Micro-interactions */
+.ae-premium img {
+  transition: opacity var(--pp-speed) var(--pp-ease);
+}
+.ae-premium .restaurant-card,
+.ae-premium .premium-menu-card,
+.ae-premium .support-card,
+.ae-premium .order-card {
+  will-change: transform;
+}
+.ae-premium .checkout-identity-card {
+  border-radius: var(--pp-radius-md);
+  border: 1px solid var(--pp-line-soft);
+  background: linear-gradient(135deg, var(--pp-mint), #f4faf6);
+}
+
+/* 18. Responsive tightening */
+@media (max-width: 900px) {
+  .ae-premium .checkout-summary-panel {
+    position: static;
+  }
+  .ae-premium .header .nav {
+    height: 64px;
+  }
+}
+@media (max-width: 640px) {
+  .ae-premium .restaurant-body {
+    padding: 15px 16px 17px;
+  }
+  .ae-premium .checkout-section {
+    padding: 18px;
+    border-radius: 18px;
+  }
+  .ae-premium .form-card {
+    padding: 22px !important;
+    border-radius: 18px !important;
+  }
+  .ae-premium .ae-hero-copy h1 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+  }
+}
+
+/* 19. Reduced motion — everything calms down */
+@media (prefers-reduced-motion: reduce) {
+  .ae-premium *,
+  .ae-premium *::before,
+  .ae-premium *::after {
+    animation-duration: .001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001s !important;
+  }
+  .ae-premium .restaurant-card:hover,
+  .ae-premium .premium-menu-card:hover,
+  .ae-premium .ae-cuisine:hover,
+  .ae-premium .order-card:hover,
+  .ae-premium .support-card:hover {
+    transform: none !important;
+  }
+  .ae-premium .restaurant-card:hover .restaurant-image img,
+  .ae-premium .premium-menu-card:hover .menu-item-media img,
+  .ae-premium .ae-cuisine:hover .ae-cuisine-photo {
+    transform: none !important;
+  }
+}
