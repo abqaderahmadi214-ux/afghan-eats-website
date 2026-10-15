@@ -51,17 +51,26 @@ window.submitVerifiedReview=async function(event){
   }catch(error){out.className='notice error review-result field full';out.textContent=error?.message||trustText('Review could not be submitted.','نظر ثبت نشد.');if(button)button.disabled=false}
 }
 
+
+function supportFormError(error){
+  const message=String(error?.message||'');
+  if(message.includes('Enter the order number or order ID'))return trustText('Enter the order number (AE-…) or order ID from your order confirmation.','شماره سفارش (AE-…) یا شناسه سفارش را از تأییدیه سفارش وارد کنید.');
+  if(message.includes('Support case not found'))return trustText('No matching support case was found. Use the AES-… reference received after creating a case and the checkout phone number.','درخواست مطابق پیدا نشد. شماره پیگیری AES-… را که پس از ثبت درخواست دریافت کردید، همراه با شماره تماس سفارش وارد کنید.');
+  if(/Order not found|Order verification failed|checkout phone verification failed/.test(message))return trustText('We could not match the order and checkout phone number. Check both against your order confirmation.','سفارش و شماره تماس مطابقت نداشت. هر دو را با تأییدیه سفارش بررسی کنید.');
+  return trustText('The request could not be completed. Check the form details and try again, or contact Afghan Eats support.','درخواست تکمیل نشد. معلومات فورم را بررسی کرده و دوباره تلاش کنید یا با پشتیبانی افغان ایتس تماس بگیرید.');
+}
+
 window.submitSupportCase=async function(event){
   event.preventDefault();const form=event.currentTarget,out=document.getElementById('supportResult'),f=new FormData(form),button=form.querySelector('button[type=submit]');if(button)button.disabled=true;
   try{
-    const data=await trpcMutation('trust.supportCreate',{orderId:String(f.get('orderId')||''),phone:String(f.get('phone')||''),category:String(f.get('category')||'other'),details:String(f.get('details')||'')});
-    out.className='notice success';out.innerHTML=`✓ ${trustText('Support case created','درخواست پشتیبانی ثبت شد')}: <b>${trustEsc(data.reference)}</b><br>${trustText('Keep this reference to check progress.','این شماره پیگیری را برای بررسی وضعیت نگه دارید.')}`;localStorage.setItem('ae_support_reference',data.reference);form.reset();
-  }catch(error){out.className='notice error';out.textContent=error?.message||trustText('Support case could not be created.','درخواست پشتیبانی ثبت نشد.');}finally{if(button)button.disabled=false}
+    const data=await trpcMutation('trust.supportCreate',{orderId:String(f.get('orderId')||'').trim(),phone:String(f.get('phone')||'').trim(),category:String(f.get('category')||'other'),details:String(f.get('details')||'')});
+    out.className='notice success';out.innerHTML=`✓ ${trustText('Support case created','درخواست پشتیبانی ثبت شد')}: <b>${trustEsc(data.reference)}</b><br>${trustText('Keep this reference to check progress.','این شماره پیگیری را برای بررسی وضعیت نگه دارید.')}`;localStorage.setItem('ae_support_reference',data.reference);const refInput=document.getElementById('supportReference');if(refInput)refInput.value=data.reference;const trackingPhone=document.querySelector('form[onsubmit*="checkSupportCase"] input[name="phone"]');if(trackingPhone)trackingPhone.value=String(f.get('phone')||'').trim();
+  }catch(error){out.className='notice error';out.textContent=supportFormError(error);}finally{if(button)button.disabled=false}
 }
 window.checkSupportCase=async function(event){
   event.preventDefault();const form=event.currentTarget,out=document.getElementById('supportStatusResult'),f=new FormData(form);
   try{const data=await trpcQuery('trust.supportStatus',{reference:String(f.get('reference')||''),phone:String(f.get('phone')||'')});out.className='notice success';out.innerHTML=`<b>${trustEsc(data.reference)}</b> · <span class="status-badge status-${trustEsc(data.status)}">${trustEsc(data.status)}</span><br>${trustText('Category','دسته')}: ${trustEsc(data.category)} · ${trustText('Priority','اولویت')}: ${trustEsc(data.priority)}`}
-  catch(error){out.className='notice error';out.textContent=error?.message||trustText('Support case not found.','درخواست پیدا نشد.')}
+  catch(error){out.className='notice error';out.textContent=supportFormError(error)}
 }
 
 async function trustAdminData(){
