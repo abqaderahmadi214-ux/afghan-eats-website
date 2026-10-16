@@ -39,7 +39,16 @@
       "package": "net.afghaneats.customer",
       "sourceVersion": "1.2.4",
       "sourceAndroidBuild": 19,
-      "installedBuildVerified": false
+      "installedBuildVerified": false,
+      "androidCandidate": {
+        "sourceCommit": "77845098723941021c10c6ba9f68ea418e9bf68b",
+        "releaseUrl": "https://github.com/abqaderahmadi214-ux/afghaneats-backend/releases/tag/customer-1.2.4-build19-38900776389-1",
+        "sha256": "3493a90342c9af3ade7994a9f8fa61bb0f6dafe877f6b00f730a397102b60efd",
+        "packageAndSignatureVerified": true,
+        "publicNativeSmokeVerified": true,
+        "physicalDeviceVerified": false,
+        "storePublicationVerified": false
+      }
     },
     "riderNative": {
       "repository": "abqaderahmadi214-ux/afghan-eats-rider-app",
@@ -54,6 +63,7 @@
     "Source versions identify inspected configuration, not app-store availability.",
     "Use the API and admin health endpoints for actual deployed Git commit identifiers.",
     "The legacy admin.afghaneats.net hosting migration is pending; use the maintained admin URL.",
-    "Rider pay supports fixed salary, per completed delivery and hybrid. Fixed salary is the initial draft model; no rate is assumed."
+    "Rider pay supports fixed salary, per completed delivery and hybrid. Fixed salary is the initial draft model; no rate is assumed.",
+    "Android candidates are private GitHub prereleases requiring repository access; they are not app-store publications. Customer emulator validation uses a temporary test-signed APK derived from the signed production bundle."
   ]
 }
