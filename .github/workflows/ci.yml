@@ -256,3 +256,5 @@ jobs:
         run: npm run test:e2e
       - name: Verify Control Center MFA browser journey
         run: node tests/admin-mfa-browser.mjs
+      - name: Verify worker queue browser journey
+        run: node tests/worker-queue-browser.mjs
