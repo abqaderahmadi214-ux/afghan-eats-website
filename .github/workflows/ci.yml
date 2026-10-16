@@ -258,3 +258,5 @@ jobs:
         run: node tests/admin-mfa-browser.mjs
       - name: Verify worker queue browser journey
         run: node tests/worker-queue-browser.mjs
+      - name: Verify restaurant maintenance agent browser controls
+        run: node tests/restaurant-agent-browser.mjs
