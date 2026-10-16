@@ -15,3 +15,7 @@ jobs:
           node-version: 22
       - run: node --check admin-control-center/assets/control-center.js
       - run: node --check admin-control-center/server.mjs
+
+      - run: node --check admin-control-center/assets/finance-workspace.js
+      - run: node --check admin-control-center/assets/freshness.js
+      - run: node tests/premium-foundation.test.mjs

@@ -1,6 +1,6 @@
-/operations https://admin.afghaneats.net/ 301!
-/operations.html https://admin.afghaneats.net/ 301!
-/admin https://admin.afghaneats.net/ 301!
+/operations https://afghan-eats-admin.onrender.com/ 302!
+/operations.html https://afghan-eats-admin.onrender.com/ 302!
+/admin https://afghan-eats-admin.onrender.com/ 302!
 /restaurants /restaurants.html 200
 /restaurant /restaurant.html 200
 /checkout /checkout.html 200
@@ -15,3 +15,6 @@
 /privacy /privacy.html 200
 /terms /terms.html 200
 /data-deletion /data-deletion.html 200
+
+/owner /owner.html 200
+/rider-portal /rider-portal.html 200

@@ -48,6 +48,7 @@ async function mockApi(page,{trackedOrder=null,riderLocation=null}={}){
     else if(path.endsWith('/orders.place'))data={success:true,orderId,orderNumber:'AE-2026-4242',pricing:{subtotal:250,deliveryFee:60,total:310}};
     else if(path.endsWith('/orders.track'))data=trackedOrder||[];
     else if(path.endsWith('/catalog.publicModifiers'))data={groups:[],options:[],links:[]};
+    else if(path.endsWith('/merchant.publicAvailability'))data={restaurantId:restaurant.id,acceptingNow:true,acceptingScheduled:true,operationMode:'normal',scheduleConfigured:false};
     else if(path.endsWith('/merchant.publicAvailabilityBatch'))data=[];
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
     else if(path.endsWith('/cities.publicCatalog'))data=[];

@@ -1,6 +1,6 @@
 [build]
 
-  command = "node scripts/inject-google-maps-config.cjs && node scripts/render-association-assets.cjs && node scripts/validate-association-assets.cjs"
+  command = "node scripts/write-release.cjs && node scripts/inject-google-maps-config.cjs && node scripts/render-association-assets.cjs && node scripts/validate-association-assets.cjs"
   
   publish = "."
   
@@ -150,3 +150,8 @@
     Content-Type = "application/json; charset=utf-8"
 
     Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/data/platform-release.json"
+  [headers.values]
+    Cache-Control = "no-store, max-age=0"

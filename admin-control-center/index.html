@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="referrer" content="same-origin">\n  <meta name="ae-build" content="restaurant-media-upload-2">
+  <meta name="referrer" content="same-origin">
+  <meta name="ae-build" content="premium-foundation-1">
   <title>Afghan Eats Control Center</title>
-  <link rel="stylesheet" href="assets/control-center.css?v=restaurant-media-upload-2">
+  <link rel="stylesheet" href="assets/control-center.css?v=premium-foundation-1">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -45,6 +46,8 @@
         <a data-view="promotions" href="#promotions"><span>◇</span>Promotions</a>
         <a data-view="communications" href="#communications"><span>✉</span>Communications</a>
         <a data-view="support" href="#support"><span>☏</span>Customer support</a>
+        <a data-view="finance" href="#finance"><span>؋</span>Finance &amp; settlements</a>
+        <a data-view="safety" href="#safety"><span>✓</span>Food safety</a>
         <a data-view="access" href="#access"><span>⊞</span>Portal access</a>
         <a data-view="security" href="#security"><span>◈</span>Security</a>
         <a data-view="audit" href="#audit"><span>☷</span>Audit</a>
@@ -52,12 +55,13 @@
         <a data-view="website" href="#website"><span>◌</span>Public site</a>
       </nav>
       <div class="sidebar-bottom">
+        <small class="release-label">Release premium-foundation-1</small>
         <a class="site-link" href="https://afghaneats.net" target="_blank" rel="noopener noreferrer"><span>↗</span>View customer site</a>
         <div class="admin-card"><span id="admin-initial" class="admin-avatar">A</span><div><strong id="admin-name">Administrator</strong><small id="admin-role">Admin</small></div><button id="logout-button" class="icon-button" type="button" title="Sign out" aria-label="Sign out">⏻</button></div>
       </div>
     </aside>
     <main id="main-content" class="workspace" tabindex="-1">
-      <header class="workspace-header"><div><p id="page-kicker" class="eyebrow">Marketplace control</p><h1 id="page-title">Overview</h1></div><div class="header-actions"><span id="connection-state" class="connection-state"><i></i>Secure session</span><button id="refresh-button" class="button button-secondary" type="button">Refresh data</button></div></header>
+      <header class="workspace-header"><div><p id="page-kicker" class="eyebrow">Marketplace control</p><h1 id="page-title">Overview</h1></div><div class="header-actions"><span id="connection-state" class="connection-state" role="status">Waiting for data</span><button id="refresh-button" class="button button-secondary" type="button">Refresh data</button></div></header>
       <section id="global-notice" class="notice hidden" aria-live="polite"></section>
       <section id="view-root" aria-live="polite"><div class="loading-panel"><span class="spinner"></span><p>Loading controls…</p></div></section>
     </main>
@@ -69,9 +73,10 @@
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="assets/control-center.js?v=rule-workers-1"></script>
+  <script src="assets/freshness.js?v=premium-foundation-1"></script>
+  <script src="assets/control-center.js?v=premium-foundation-1"></script>
+  <script src="assets/finance-workspace.js?v=premium-foundation-1"></script>
   <script src="assets/support-agent.js?v=prepared-replies-1"></script>
   <script src="assets/rule-workers.js?v=1"></script>
 </body>
 </html>
-

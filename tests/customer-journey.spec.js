@@ -32,6 +32,7 @@ async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRow
     }
     else if(path.endsWith('/orders.place'))data={success:true,replayed:false,orderId:'33333333-3333-4333-8333-333333333333',orderNumber:'AE-20260827-4242',message:'Order placed successfully',pricing:{subtotal:250,deliveryFee:60,serviceFee:8,discount:0,tipAmount:0,total:318},promo:null,loyalty:null,logistics:quote,customerLinked:false,scheduledFor:null};
     else if(path.endsWith('/catalog.publicModifiers'))data={groups:[],options:[],links:[]};
+    else if(path.endsWith('/merchant.publicAvailability'))data={restaurantId:restaurant.id,acceptingNow:true,acceptingScheduled:true,operationMode:'normal',scheduleConfigured:false};
     else if(path.endsWith('/merchant.publicAvailabilityBatch'))data=[];
     else if(path.endsWith('/merchant.publicMenuAvailability'))data=[];
     else if(path.endsWith('/cities.publicCatalog'))data=[];
