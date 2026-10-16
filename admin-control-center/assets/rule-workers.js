@@ -108,7 +108,7 @@ window.WorkerQueue = (() => {
         data = result; failed = false; receivedAt = Date.now();
         panel.querySelector('[data-workers-result]').innerHTML = renderFindings(data);
         panel.querySelector('[data-worker-counts]').textContent = `All flags: ${label(data.counts?.total)} · Unassigned: ${label(data.counts?.unassigned)} · Mine: ${label(data.counts?.mine)} · Needs eligible owner: ${label(data.counts?.needs_owner)}`;
-        panel.querySelector('[data-worker-page]').textContent = `${data.totalMatching ? number(data.offset + 1) : '0'}–${number(Math.min(data.offset + data.findings.length, data.totalMatching || 0))} of ${label(data.totalMatching)} matching flags`;
+        panel.querySelector('[data-worker-page]').textContent = `${data.findings.length ? number(data.offset + 1) : '0'}–${data.findings.length ? number(Math.min(data.offset + data.findings.length, data.totalMatching || 0)) : '0'} of ${label(data.totalMatching)} matching flags`;
         panel.querySelector('[data-worker-runs]').innerHTML = renderRuns(data.runs);
         const summary = data.summary || {};
         panel.querySelector('[data-worker-cohort]').textContent = data.lastSuccessAt ? `Orders created in the 24 hours before the last successful check: ${label(summary.orders_24h)} · Delivered: ${label(summary.delivered_24h)} · Cancelled: ${label(summary.cancelled_24h)} · Value of those delivered orders: AFN ${label(summary.delivered_value_afn_24h)}. Statuses are as recorded at that check.` : 'A successful check is needed before this snapshot is available.';
