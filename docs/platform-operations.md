@@ -21,6 +21,16 @@ Web customer, owner, rider and maintained admin logout requests invalidate the p
 
 The finance workspace exports the selected merchant statement and the latest 100 rider cash-ledger entries. A cash export is not a wage statement or a complete historical ledger. Empty amounts remain empty; unknown values are not converted to zero. CSV downloads neutralize formula-like external text while preserving numeric negatives. Review the record scope and statement lines before reconciliation.
 
+## Control Center two-step verification
+
+In the maintained admin, open **Security → Two-step verification**. Confirm your current password or the Google account linked to the current account. Enter the private setup key in a time-based authenticator (6 digits, 30 seconds), then confirm one code. Protection remains off until confirmation. Download the ten recovery codes and store them securely, separate from the authenticator. Setup expires after ten minutes. Setup keys, challenges and recovery-code plaintext are not saved in browser storage.
+
+Once enabled, both password and Google sign-in require an authenticator code or a single-use recovery code. A sign-in challenge lasts five minutes. Codes allow one adjacent 30-second interval of clock drift; an accepted authenticator code cannot be reused. Five failed codes lock verification for fifteen minutes across new challenges. Keep device time automatic. An enrollment confirmation also consumes that authenticator code; wait for the next code for another immediate sign-in.
+
+Enabling/disabling increments the account's MFA version, so earlier sessions stop authorizing admin routes. Other accounts and customer/owner/rider sessions are unaffected. Disabling requires primary identity confirmation and a valid factor, with a review dialog. Enable/disable actions are audited without keys or codes. MFA is optional per account in this release; enrollment is not proof that every staff member has enabled it. Accounts using the old admin interface should move to the maintained URL before enrollment.
+
+Secrets are encrypted with AES-256-GCM using an account-bound key derived from the existing JWT_SECRET; recovery codes are stored only as hashes. Preserve the current secret with protected database backups. Changing JWT_SECRET also changes the wrapping key: plan a re-enrollment or controlled re-encryption before rotation. Single-use recovery codes remain usable even if the encrypted authenticator key cannot be read. Password reset does not remove MFA. If both authenticator and recovery codes are lost, verify the account holder through an independent trusted channel and use an audited database recovery procedure; no public reset or staff-management bypass is provided. Do not paste keys or recovery codes in tickets or chat. Replacement codes currently require disabling and re-enrolling after identity/factor verification.
+
 ## Native production source
 
 Customer native releases use `afghaneats-backend`, branch `customer-production`, preserved from the newer `feat/customer-ota-live-sync-v18` source. The older `customer-staging` remains a separate web staging deployment and must not overwrite this source. Customer release candidate 1.2.4/build19 retains runtime 1.2.3 because its native dependencies are unchanged. Rider releases use `afghan-eats-rider-app`, main, with candidate 1.1.10/build14.
@@ -54,4 +64,4 @@ Financial commands are never triggered by rendering or polling. Review the confi
 
 ## Follow-on work from the premium review
 
-The first release establishes operational controls and source corrections. Further work includes completion of component/style consolidation, dedicated finance/support role design, staff MFA, payroll/payment execution, physical-device background-location validation, native distribution, backup-restore evidence, and monitored uptime targets. Keep these as separate verified releases; do not describe them as completed by this foundation release.
+The first release establishes operational controls and source corrections. Further work includes completion of component/style consolidation, dedicated finance/support role design, staff-wide MFA enrollment/enforcement, payroll/payment execution, physical-device background-location validation, native distribution, backup-restore evidence, and monitored uptime targets. Keep these as separate verified releases; do not describe them as completed by this foundation release.

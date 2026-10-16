@@ -79,7 +79,7 @@ async function logout(show = true) {
   }
  // A previous request may have expired while the user signed in again.
  if (state.token !== logoutToken) return;
- window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
+ window.AdminMfa?.clearSecrets(); window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); window.initGoogleStaffSignIn?.(); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
 function userLabel() { return state.user?.name || state.user?.username || state.user?.email || 'Administrator'; }
 function currentRole(){ return String(state.user?.role || '').toLowerCase(); }
 function isFullAdmin(){ return FULL_ADMIN_ROLES.has(currentRole()); }
@@ -124,7 +124,7 @@ const VIEW_META = {
 };
 
 function setActiveNav() { document.querySelectorAll('#primary-nav a').forEach(link => link.classList.toggle('active', link.dataset.view === state.view)); const meta = VIEW_META[state.view] || VIEW_META.overview; document.getElementById('page-kicker').textContent = meta[0]; document.getElementById('page-title').textContent = meta[1]; }
-function setView(view) { window.adminFreshness?.clearDirty(); const requested=VIEW_META[view] ? view : defaultView(); state.view=canView(requested)?requested:defaultView(); if (location.hash.slice(1) !== state.view) history.replaceState(null, '', `#${state.view}`); setActiveNav(); clearNotice(); renderView(); }
+function setView(view) { if (view !== state.view) window.AdminMfa?.clearEnrollment(); window.adminFreshness?.clearDirty(); const requested=VIEW_META[view] ? view : defaultView(); state.view=canView(requested)?requested:defaultView(); if (location.hash.slice(1) !== state.view) history.replaceState(null, '', `#${state.view}`); setActiveNav(); clearNotice(); renderView(); }
 
 async function verifySession() {
   if (!state.token) return false;
@@ -135,11 +135,13 @@ async function verifySession() {
 
 
 async function handleGoogleStaffCredential(response) {
+  if (state.token) { window.AdminMfa?.handleGoogleReauth(response); return; }
   const error = document.getElementById('login-error');
   error.className = 'notice hidden';
   error.textContent = '';
   try {
     const result = await request('auth.googleStaffSignIn', { credential: String(response?.credential || '') }, 'POST', false);
+    if (await window.AdminMfa?.handleSignInResult(result)) return;
     if (result?.status === 'approved' && result?.token) {
       saveSession(result.token, result.admin || {});
       await verifySession();
@@ -861,16 +863,19 @@ function staffTable(items){
     if(pending||rejected){
       return `<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td>${roleSelect}</td><td>${badge(pending?'pending':'rejected')}<span class="row-sub">Google staff request</span></td><td>—</td><td><div class="button-stack"><button class="button button-primary button-small" type="button" data-action="staff-google-approve" data-id="${attr(item.id)}">${rejected?'Approve now':'Approve access'}</button>${pending?'<button class="button button-danger button-small" type="button" data-action="staff-google-reject" data-id="'+attr(item.id)+'">Reject</button>':''}</div></td></tr>`;
     }
-    return `<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td>${roleSelect}</td><td>${badge(item.is_active?'active':'inactive')}<span class="row-sub">${esc(staffRoleLabel(item.role))}</span></td><td>${shortDate(item.last_login_at)}</td><td><div class="button-stack"><button class="button button-secondary button-small" type="button" data-action="staff-role-save" data-id="${attr(item.id)}">Save role</button><button class="button ${item.is_active?'button-danger':'button-primary'} button-small" type="button" data-action="staff-active" data-id="${attr(item.id)}" data-active="${item.is_active?'false':'true'}">${item.is_active?'Disable':'Enable'}</button></div><div class="button-stack space-top-sm"><input class="inline-select" data-staff-password="${attr(item.id)}" type="password" minlength="14" maxlength="200" autocomplete="new-password" placeholder="New strong password"><button class="button button-secondary button-small" type="button" data-action="staff-reset-password" data-id="${attr(item.id)}">Reset password</button></div></td></tr>`;
+    return `<tr><td><span class="row-title">${esc(item.username)}</span><span class="row-sub">${esc(item.email)}</span></td><td>${roleSelect}</td><td>${badge(item.is_active?'active':'inactive')}<span class="row-sub">${esc(staffRoleLabel(item.role))}</span><span class="row-sub">Two-step verification: ${item.mfa_enabled ? 'on' : 'off'}</span></td><td>${shortDate(item.last_login_at)}</td><td><div class="button-stack"><button class="button button-secondary button-small" type="button" data-action="staff-role-save" data-id="${attr(item.id)}">Save role</button><button class="button ${item.is_active?'button-danger':'button-primary'} button-small" type="button" data-action="staff-active" data-id="${attr(item.id)}" data-active="${item.is_active?'false':'true'}">${item.is_active?'Disable':'Enable'}</button></div><div class="button-stack space-top-sm"><input class="inline-select" data-staff-password="${attr(item.id)}" type="password" minlength="14" maxlength="200" autocomplete="new-password" placeholder="New strong password"><button class="button button-secondary button-small" type="button" data-action="staff-reset-password" data-id="${attr(item.id)}">Reset password</button></div></td></tr>`;
   }).join('')}</tbody></table></div>`;
 }
 async function renderSecurityView() {
-  const staff=isFullAdmin()?asArray(await query('auth.staffList',null)):[];
+  const [staffResult,mfa] = await Promise.all([isFullAdmin()?query('auth.staffList',null):[],query('auth.mfaStatus',null)]);
+  const staff=asArray(staffResult);
   root[renderTarget()] = `<p class="section-intro">${isFullAdmin()?'Manage your administrator password and restricted staff access.':'Manage your own Control Center password. Your operational permissions are assigned by an administrator.'}</p>
     <div class="section-grid">
       <section class="panel"><div class="panel-head"><div><h2>My account security</h2><p>Changing your password invalidates earlier sessions.</p></div></div><div class="panel-body">${adminPasswordForm()}</div></section>
+      ${window.AdminMfa?.panel(mfa) || ''}
       ${isFullAdmin()?`<section class="panel"><div class="panel-head"><div><h2>Create staff access</h2><p>Create least-privilege accounts for restaurant and Rider operations.</p></div></div><div class="panel-body">${staffCreateForm()}</div></section><section class="panel wide"><div class="panel-head"><div><h2>Staff access</h2><p>${number(staff.length)} restricted account${staff.length===1?'':'s'}. Role and status changes take effect immediately.</p></div></div><div class="panel-body">${staffTable(staff)}</div></section>`:''}
     </div>`;
+  window.AdminMfa?.initGoogle();
 }
 async function renderAuditView() {
   const data = await operationsToolsData(); state.cache.audit = data;
@@ -1121,7 +1126,7 @@ root.addEventListener('click',event=>{
   if(status){status.className='restaurant-media-status';status.textContent='Image removed. Save restaurant changes to apply this change.'}
 });
 
-document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const error = document.getElementById('login-error'); error.className = 'notice notice-error hidden'; const button = event.currentTarget.querySelector('button'); button.disabled = true; button.textContent = 'Signing in…'; try { const fd = new FormData(event.currentTarget); const response = await request('auth.login', { username: String(fd.get('username') || ''), password: String(fd.get('password') || '') }, 'POST', false); if (!response?.token) throw new Error('Sign-in did not return a valid session.'); saveSession(response.token, response.admin || response.user || {}); await verifySession(); setShell(); setView(location.hash.slice(1) || 'overview'); } catch (err) { error.textContent = err.message || 'Sign-in failed.'; error.classList.remove('hidden'); } finally { button.disabled = false; button.textContent = 'Sign in securely'; } });
+document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const error = document.getElementById('login-error'); error.className = 'notice notice-error hidden'; const button = event.currentTarget.querySelector('button'); button.disabled = true; button.textContent = 'Signing in…'; try { const form = event.currentTarget; const fd = new FormData(form); const response = await request('auth.login', { username: String(fd.get('username') || ''), password: String(fd.get('password') || '') }, 'POST', false); if (await window.AdminMfa?.handleSignInResult(response)) return; if (!response?.token) throw new Error('Sign-in did not return a valid session.'); form.reset(); saveSession(response.token, response.admin || response.user || {}); await verifySession(); setShell(); setView(location.hash.slice(1) || 'overview'); } catch (err) { error.textContent = err.message || 'Sign-in failed.'; error.classList.remove('hidden'); } finally { button.disabled = false; button.textContent = 'Sign in securely'; } });
 document.getElementById('logout-button').addEventListener('click', () => logout());
 document.getElementById('refresh-button').addEventListener('click', () => { if (window.adminFreshness?.isDirty() && !window.confirm('Refresh and discard unsaved edits on this page?')) return; void renderView(); });
 window.addEventListener('hashchange', () => setView(location.hash.slice(1) || 'overview'));
