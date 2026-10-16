@@ -6,16 +6,18 @@
   const form = document.getElementById('career-apply-form');
   const message = document.getElementById('career-form-message');
   const submit = document.getElementById('career-submit');
-  const languageButton = document.getElementById('career-lang');
+  const languageButton = document.getElementById('career-lang') || document.querySelector('.actions .lang');
   let jobs = [];
 
   function escapeHtml(value) { return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
-  function lang() { return localStorage.getItem('ae_career_lang') === 'fa' ? 'fa' : 'en'; }
+  function lang() { return (localStorage.getItem('ae_lang') || localStorage.getItem('ae_career_lang')) === 'fa' ? 'fa' : 'en'; }
   function setLang(next) {
     localStorage.setItem('ae_career_lang', next);
+    localStorage.setItem('ae_lang', next);
+    document.body.classList.toggle('rtl', next === 'fa');
     document.documentElement.lang = next === 'fa' ? 'fa' : 'en';
     document.documentElement.dir = next === 'fa' ? 'rtl' : 'ltr';
-    languageButton.textContent = next === 'fa' ? 'English' : 'دری';
+    if (languageButton) languageButton.textContent = next === 'fa' ? 'English' : 'دری';
   }
   function localized(job, key) { return lang() === 'fa' && job[`${key}_dari`] ? job[`${key}_dari`] : job[key]; }
   function trpc(path, input, method = 'GET') {
@@ -65,6 +67,7 @@
     catch (error) { message.textContent = error.message || (lang() === 'fa' ? 'ارسال درخواست ممکن نشد.' : 'Your application could not be submitted.'); message.className = 'career-form-message is-error'; }
     finally { submit.disabled = false; }
   });
-  languageButton.addEventListener('click', () => { setLang(lang() === 'fa' ? 'en' : 'fa'); render(); });
+  languageButton?.removeAttribute('onclick');
+  languageButton?.addEventListener('click', () => { setLang(lang() === 'fa' ? 'en' : 'fa'); render(); });
   setLang(lang()); load();
 })();
