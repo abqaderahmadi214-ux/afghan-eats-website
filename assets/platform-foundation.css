@@ -23,3 +23,12 @@ input[type="tel"],a[href^="tel:"]{font-variant-numeric:tabular-nums}
 .checkout-error,[role="alert"]{overflow-wrap:anywhere}
 .btn-primary:disabled{opacity:.65;box-shadow:none}
 @media(max-width:620px){.field input,.field select,.field textarea{font-size:16px}.checkout-summary-panel{padding-bottom:max(16px,env(safe-area-inset-bottom))}}
+
+/* City selection is injected after loading. Keep every worker control on screen. */
+@media(max-width:620px){
+ .portal-shell .header .container.nav{height:auto;min-height:68px;flex-wrap:wrap;gap:10px;padding-block:10px}
+ .portal-shell .header .brand{flex:1 1 100%;min-width:0;flex-wrap:wrap}
+ .portal-shell .header .actions{width:100%;flex-wrap:wrap;justify-content:space-between}
+ .portal-shell .header .actions .btn{white-space:nowrap}
+ .portal-shell .header .actions :is(button,select){min-height:44px}
+}
