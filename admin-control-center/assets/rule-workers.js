@@ -93,7 +93,7 @@ window.WorkerQueue = (() => {
       const good = data.lastSuccessAt && Number.isFinite(new Date(data.lastSuccessAt).getTime());
       const serverNow = new Date(data.snapshotAt || data.lastSuccessAt).getTime();
       const age = good ? Math.max(0, serverNow - new Date(data.lastSuccessAt).getTime()) + Math.max(0, Date.now() - receivedAt) : Infinity;
-      status.textContent = !data.enabled ? 'Workers paused · previous flags retained' : data.runs?.[0]?.status === 'failure' ? 'Latest check failed · previous flags retained' : age > 15 * 60000 ? 'Awaiting a fresh successful check' : 'Checks current';
+      status.textContent = !data.enabled ? 'Workers paused · previous flags retained' : (data.lastCompletedRun || data.runs?.find(run => run.status !== 'skipped'))?.status === 'failure' ? 'Latest check failed · previous flags retained' : age > 15 * 60000 ? 'Awaiting a fresh successful check' : 'Checks current';
       if (good) status.textContent += ` · Last success ${afghanDate(data.lastSuccessAt)} Kabul`;
     }
     const allowed = () => active(panel) && !document.hidden && navigator.onLine !== false && !document.querySelector('dialog[open]') && !document.activeElement?.matches?.('input,textarea,select,[contenteditable="true"]') && !window.adminFreshness?.isDirty();

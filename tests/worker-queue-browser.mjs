@@ -6,7 +6,7 @@ const {chromium}=createRequire(import.meta.url)('playwright');
 const server=spawn(process.execPath,['admin-control-center/server.mjs'],{cwd:new URL('..',import.meta.url),env:{...process.env,PORT:'8140'},stdio:'pipe'});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);server.once('exit',code=>reject(Error(`server exited ${code}`)));});
 const browser=await chromium.launch({executablePath:existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined,headless:true,args:['--no-sandbox']});
-let writes=[],snapshotReads=[],failNextCommand=false,failSnapshot=false,holdHistory=false,pendingHistory=null;
+let writes=[],snapshotReads=[],failNextCommand=false,failSnapshot=false,holdHistory=false,pendingHistory=null,lastCompletedFailed=false;
 const issue={worker:'orders',entity_type:'order',entity_id:'order-test',rule:'rider_unassigned',reference:'AE-TEST',title:'Delivery needs attention',detail:'Review dispatch <img src=x onerror=alert(1)>',severity:'high',issue_id:'11111111-1111-4111-8111-111111111111',revision:1,owner_admin_id:null,first_seen_at:new Date().toISOString()};
 const second={...issue,issue_id:'22222222-2222-4222-8222-222222222222',reference:'AE-SECOND'};
 const event={kind:'claim',actor_username:'test',owner_username:'test',note:'Follow up <script>bad()</script>',created_at:new Date().toISOString()};
@@ -23,7 +23,7 @@ try{
   if(path==='ruleWorkers.snapshot'){
    snapshotReads.push(input);if(failSnapshot)return route.fulfill({status:503,headers,contentType:'application/json',body:JSON.stringify({error:{json:{message:'Snapshot unavailable'}}})});
    const items=input?.offset?[second]:[issue];
-   data={enabled:true,lastSuccessAt:new Date().toISOString(),snapshotAt:new Date().toISOString(),findings:items,recentlyCleared:[{issue_id:'33333333-3333-4333-8333-333333333333',reference:'AE-CLEARED',title:'Old flag',resolved_at:new Date().toISOString()}],counts:{total:51,needs_owner:issue.owner_admin_id?50:51,unassigned:issue.owner_admin_id?50:51,mine:issue.owner_admin_id?1:0},totalMatching:51,offset:input?.offset||0,showingAtMost:50,owners:[{id:1,username:'test'},{id:2,username:'second.admin'}],runs:[{status:'success',finished_at:new Date().toISOString(),finding_count:51,duration_ms:125},{status:'failure',finished_at:new Date().toISOString(),finding_count:null,duration_ms:100,stage:'snapshot',error_code:'40001'}]};
+   data={enabled:true,lastSuccessAt:new Date().toISOString(),snapshotAt:new Date().toISOString(),findings:items,recentlyCleared:[{issue_id:'33333333-3333-4333-8333-333333333333',reference:'AE-CLEARED',title:'Old flag',resolved_at:new Date().toISOString()}],counts:{total:51,needs_owner:issue.owner_admin_id?50:51,unassigned:issue.owner_admin_id?50:51,mine:issue.owner_admin_id?1:0},totalMatching:51,offset:input?.offset||0,showingAtMost:50,owners:[{id:1,username:'test'},{id:2,username:'second.admin'}],lastCompletedRun:{status:lastCompletedFailed?'failure':'success'},runs:[{status:lastCompletedFailed?'skipped':'success',finished_at:new Date().toISOString(),finding_count:51,duration_ms:125},{status:'failure',finished_at:new Date().toISOString(),finding_count:null,duration_ms:100,stage:'snapshot',error_code:'40001'}]};
   }
   if(path==='ruleWorkers.triage'){
    writes.push({path,input});
@@ -68,6 +68,8 @@ try{
  await page.getByRole('button',{name:'Close',exact:true}).click();
  failSnapshot=true;await page.locator('[data-workers-refresh]').click();await page.getByText('Update unavailable · previous queue retained',{exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:'Manage flag',exact:true}).count(),1);
  failSnapshot=false;await page.locator('[data-workers-refresh]').click();await page.getByText(/Checks current/).waitFor();
+ lastCompletedFailed=true;await page.locator('[data-workers-refresh]').click();await page.getByText(/Latest check failed · previous flags retained/).waitFor();
+ lastCompletedFailed=false;await page.locator('[data-workers-refresh]').click();await page.getByText(/Checks current/).waitFor();
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
  await page.getByText('Recent worker checks',{exact:true}).click();await page.getByRole('cell',{name:'failure',exact:false}).waitFor();
  await page.screenshot({path:'visual-proof/premium/worker-queue-mobile.png',fullPage:true});
