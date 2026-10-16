@@ -3,8 +3,8 @@
   --op-green:#124637;
   --op-green-2:#0d352b;
   --op-green-soft:#edf6f1;
-  --op-red:#df4337;
-  --op-red-dark:#c8372d;
+  --op-red:var(--ae-action);
+  --op-red-dark:var(--ae-action-hover);
   --op-gold:#f2b84b;
   --op-ink:#1d2b25;
   --op-muted:#6f7b75;

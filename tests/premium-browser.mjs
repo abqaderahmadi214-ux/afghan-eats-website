@@ -40,6 +40,10 @@ try {
   await page.getByRole('button', { name: 'Rider cash', exact: true }).click();
   assert.equal(new URL(page.url()).hash, '#finance');
   await page.getByRole('button', { name: 'Review statement' }).click();
+  const downloadReady = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download statement CSV' }).click();
+  const download = await downloadReady;
+  assert.ok(download.suggestedFilename().endsWith('.csv'));
   await page.getByRole('button', { name: 'Review approval', exact: true }).click();
   await page.locator('#confirm-dialog[open]').waitFor();
   assert.equal(writes.length, 0);

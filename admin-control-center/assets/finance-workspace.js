@@ -54,7 +54,7 @@ function renderFinanceCash(data) {
   const ledger = (data.recentCash || []).map(l => `<tr><td>${esc(l.rider_name)}<span class="row-sub">${afghanDate(l.created_at)}</span></td><td>${esc(l.entry_type)}<span class="row-sub">${esc(l.order_number || '')}</span></td><td>${money(l.amount)}</td><td>${esc(l.reference || '—')}</td></tr>`);
   return financePanel('Rider cash held', financeTable(['Rider', 'Cash balance'], rows), 'Cash collected for Afghan Eats is not rider earnings. Positive balances represent cash held; investigate negative balances.') +
     financePanel('Record cash received', financeForm('deposit', '', `<label class="field"><span>Rider</span><select name="riderId" required><option value="">Select rider</option>${options}</select></label>${financeField('amount', 'Amount received (AFN)', 'type="number" min="0.01" max="10000000" step="0.01" required')}${financeField('reference', 'Receipt / handover reference', 'minlength="2" maxlength="120" required')}${financeField('notes', 'Handover note', 'maxlength="800"')}`, 'Review cash deposit'), 'Record only cash physically received and checked. This writes an audited ledger entry.') +
-    financePanel('Recent cash ledger (latest 100)', financeTable(['Rider / time', 'Entry', 'AFN change', 'Reference'], ledger));
+    financePanel('Recent cash ledger (latest 100)', financeButton('export-cash', '', 'Download these cash entries') + financeTable(['Rider / time', 'Entry', 'AFN change', 'Reference'], ledger));
 }
 function renderFinanceCompensation(data) {
   if (!data) return financePanel('Customer compensation', financeError('Compensation'));
@@ -71,7 +71,7 @@ async function showFinanceStatement(id) {
   const lines = (d.orderLines || []).map(l => `<tr><td>${esc(l.order_number)}</td><td>${money(l.food_subtotal)}</td><td>${money(l.discount_amount)}</td><td>${money(l.commission_amount)}</td><td>${money(l.payable_contribution)}</td></tr>`);
   const adjustments = (d.adjustments || []).map(a => `<tr><td>${esc(a.description)}</td><td>${esc(a.reference || '—')}</td><td>${money(a.amount)}</td></tr>`);
   const disputes = (d.disputes || []).map(x => `<article class="safety-card"><strong>${esc(x.category)}</strong> ${badge(x.status)}<p>${esc(x.message)}</p>${['open', 'reviewing'].includes(x.status) ? financeForm('dispute', x.id, '<label class="field"><span>Decision</span><select name="decision"><option value="resolved">Resolve</option><option value="rejected">Reject</option></select></label>' + financeField('resolutionNote', 'Resolution reason', 'minlength="3" maxlength="3000" required') + financeField('creditAmount', 'Merchant credit (AFN)', 'type="number" min="0" max="10000000" step="0.01" value="0" required'), 'Review dispute decision') : esc(x.resolution_note || '')}</article>`).join('');
-  document.getElementById('finance-statement-detail').innerHTML = financePanel(`${s.reference} · ${s.restaurant_name}`, `<div class="button-stack">${financeButton('close-statement', '', 'Close detail')}${actions}</div><p>Base ${money(d.totals.basePayable)} · Adjustments ${money(d.totals.adjustmentTotal)} · <strong>Final ${money(d.totals.finalPayable)}</strong> · ${badge(s.status)} ${s.payout_hold ? badge('payout hold') : ''}</p>${financeTable(['Order', 'Food', 'Discount', 'Commission', 'Base contribution'], lines)}<h3>Adjustments</h3>${financeTable(['Reason', 'Reference', 'AFN'], adjustments)}${s.status === 'draft' ? financeForm('adjustment', id, financeField('amount', 'Signed adjustment (AFN)', 'type="number" min="-10000000" max="10000000" step="0.01" required') + financeField('description', 'Adjustment reason', 'minlength="3" maxlength="1500" required'), 'Review adjustment') : ''}${s.status === 'approved' && !s.payout_hold ? financeForm('paid', id, financeField('paymentReference', 'Actual payment reference', 'minlength="2" maxlength="160" required'), 'Review payment record') : ''}<h3>Disputes</h3>${disputes || '<p>No disputes recorded.</p>'}`);
+  document.getElementById('finance-statement-detail').innerHTML = financePanel(`${s.reference} · ${s.restaurant_name}`, `<div class="button-stack">${financeButton('close-statement', '', 'Close detail') + financeButton('export-statement', '', 'Download statement CSV')}${actions}</div><p>Base ${money(d.totals.basePayable)} · Adjustments ${money(d.totals.adjustmentTotal)} · <strong>Final ${money(d.totals.finalPayable)}</strong> · ${badge(s.status)} ${s.payout_hold ? badge('payout hold') : ''}</p>${financeTable(['Order', 'Food', 'Discount', 'Commission', 'Base contribution'], lines)}<h3>Adjustments</h3>${financeTable(['Reason', 'Reference', 'AFN'], adjustments)}${s.status === 'draft' ? financeForm('adjustment', id, financeField('amount', 'Signed adjustment (AFN)', 'type="number" min="-10000000" max="10000000" step="0.01" required') + financeField('description', 'Adjustment reason', 'minlength="3" maxlength="1500" required'), 'Review adjustment') : ''}${s.status === 'approved' && !s.payout_hold ? financeForm('paid', id, financeField('paymentReference', 'Actual payment reference', 'minlength="2" maxlength="160" required'), 'Review payment record') : ''}<h3>Disputes</h3>${disputes || '<p>No disputes recorded.</p>'}`);
   document.getElementById('finance-statement-detail').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 async function renderSafetyWorkspace() {
@@ -109,6 +109,24 @@ root.addEventListener('click', async event => {
   const { financeAction: action, id } = button.dataset;
   button.disabled = true;
   try {
+    if (action === 'export-statement') {
+      const d = financeState.statement;
+      if (!d) throw new Error('Open a statement before exporting.');
+      const s = d.statement;
+      AECsv.download(s.reference || 'merchant-statement', [
+        ['Afghan Eats merchant statement', s.reference], ['Restaurant', s.restaurant_name], ['Currency', 'AFN'], ['Status', s.status],
+        ['Base payable', csvAmount(d.totals.basePayable)], ['Adjustments', csvAmount(d.totals.adjustmentTotal)], ['Final payable', csvAmount(d.totals.finalPayable)],
+        [], ['Order', 'Food subtotal', 'Discount', 'Commission', 'Delivery component', 'Base contribution'],
+        ...(d.orderLines || []).map(l => [l.order_number, csvAmount(l.food_subtotal), csvAmount(l.discount_amount), csvAmount(l.commission_amount), csvAmount(l.delivery_fee_component), csvAmount(l.payable_contribution)]),
+        [], ['Adjustment type', 'Reason', 'Reference', 'AFN'],
+        ...(d.adjustments || []).map(a => [a.adjustment_type, a.description, a.reference, csvAmount(a.amount)]),
+      ]);
+    }
+    if (action === 'export-cash') {
+      const entries = financeState.data.cash?.recentCash;
+      if (!entries) throw new Error('Refresh the cash ledger before exporting.');
+      AECsv.download('rider-cash-latest-100', [['Afghan Eats cash ledger', 'Latest 100 entries returned by server; not wage earnings'], ['Time (Kabul)', 'Rider', 'Order', 'Entry', 'AFN change', 'Reference', 'Note'], ...entries.map(e => [afghanDate(e.created_at), e.rider_name, e.order_number, e.entry_type, csvAmount(e.amount), e.reference, e.notes])]);
+    }
     if (action === 'statement') await showFinanceStatement(id);
     if (action === 'close-statement') { financeState.statement = null; document.getElementById('finance-statement-detail').innerHTML = ''; }
     if (action === 'approve-statement') {
@@ -183,3 +201,5 @@ root.addEventListener('change', event => {
   form.elements.monthlySalaryAfn.disabled = select.value === 'per_delivery';
   form.elements.deliveryFeeAfn.disabled = select.value === 'fixed_salary';
 });
+
+function csvAmount(value) { if (value == null || value === "") return null; const amount = Number(value); return Number.isFinite(amount) ? amount : null; }

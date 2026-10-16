@@ -1,8 +1,8 @@
 /* Afghan Eats homepage v2 — quiet, focused, customer-first */
 .premium-home{
   --ae-deep:#173f34;
-  --ae-red:#df4337;
-  --ae-red-dark:#bf342b;
+  --ae-red:var(--ae-action);
+  --ae-red-dark:var(--ae-action-hover);
   --ae-ink:#1d2924;
   --ae-muted:#69736e;
   --ae-paper:#fffdf9;

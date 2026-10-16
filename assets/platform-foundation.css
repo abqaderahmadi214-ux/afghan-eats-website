@@ -1,5 +1,5 @@
 /* Common interaction tokens. Role-specific layouts remain in their own modules. */
-:root{--ae-action:#0d4a3a;--ae-action-hover:#08382c;--ae-focus:#a96b10;--ae-surface:#fffdf8;--ae-border:#d8e2db;--ae-space:8px}
+:root{--ae-action:#0d4a3a;--ae-action-hover:#08382c;--ae-focus:#a96b10;--ae-surface:#fffdf8;--ae-border:#d8e2db;--ae-space:8px;--ae-radius-control:12px;--ae-radius-card:18px;--ae-control-height:48px;--ae-text:#15241f;--ae-muted:#5f7168;--ae-danger:#a63236;--ae-shadow-control:0 8px 20px rgba(13,74,58,.16)}
 :focus-visible{outline:3px solid var(--ae-focus);outline-offset:3px}
 button,input,select,textarea{font:inherit}
 button:disabled,[aria-disabled="true"]{cursor:not-allowed}
@@ -14,3 +14,12 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed}
 @media(max-width:600px){.portal-data-bar{align-items:flex-start}.portal-data-bar button{margin-inline-start:0}.portal-order .portal-actions{display:flex;flex-wrap:wrap;gap:8px}.portal-order .portal-actions button{flex:1 1 120px}.rider-shell input,.owner-premium input{font-size:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 @media(forced-colors:active){:focus-visible{outline:3px solid Highlight}.portal-data-bar{border-color:CanvasText}}
+
+/* Shared components: one source of tokens across customer and worker surfaces. */
+.btn{min-height:var(--ae-control-height);border-radius:var(--ae-radius-control)}
+.field input,.field select,.field textarea{border-radius:var(--ae-radius-control);border-color:var(--ae-border);color:var(--ae-text)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ae-action);box-shadow:0 0 0 3px rgba(13,74,58,.12)}
+input[type="tel"],a[href^="tel:"]{font-variant-numeric:tabular-nums}
+.checkout-error,[role="alert"]{overflow-wrap:anywhere}
+.btn-primary:disabled{opacity:.65;box-shadow:none}
+@media(max-width:620px){.field input,.field select,.field textarea{font-size:16px}.checkout-summary-panel{padding-bottom:max(16px,env(safe-area-inset-bottom))}}

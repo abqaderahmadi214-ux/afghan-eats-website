@@ -52,4 +52,24 @@ function aeRoutePath() { const path = location.pathname.toLowerCase().replace(/\
 (function loadIdentityV53(){const path=aeRoutePath(),enabled=path.endsWith('/account.html')||path.endsWith('/rider.html')||path.endsWith('/rider-portal.html')||path==='/account'||path==='/rider'||path==='/rider-portal';if(!enabled)return;const script=document.createElement('script');script.src='/assets/identity.js';script.defer=true;script.dataset.aeIdentityV53='1';document.head.appendChild(script)})();
 
 
-(function loadSharedFoundation(){if(document.querySelector('link[data-ae-foundation]'))return;const link=document.createElement('link');link.rel='stylesheet';link.href='/assets/platform-foundation.css?v=premium-foundation-1';link.dataset.aeFoundation='1';document.head.appendChild(link)})();
+(function loadSharedFoundation(){if(document.querySelector('link[data-ae-foundation]'))return;const link=document.createElement('link');link.rel='stylesheet';link.href='/assets/platform-foundation.css?v=premium-experience-2';link.dataset.aeFoundation='1';document.head.appendChild(link)})();
+
+// Capture the current token for this request; do not read mutable storage after logout.
+window.aeEndSession = async function (token) {
+  if (!token) return true;
+  const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const response = await fetch(`${window.AFGHAN_EATS_CONFIG.apiBaseUrl}/api/trpc/sessions.logout`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ json: {} }), signal: controller.signal, keepalive: true });
+    if (!response.ok) throw new Error('Session revocation not confirmed');
+    return true;
+  } catch { sessionStorage.setItem('ae_logout_unconfirmed', '1'); return false; }
+  finally { clearTimeout(timer); }
+};
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('ae_logout_unconfirmed') !== '1') return;
+  sessionStorage.removeItem('ae_logout_unconfirmed');
+  const message = document.createElement('p');
+  message.className = 'notice error'; message.setAttribute('role', 'status');
+  message.textContent = document.documentElement.lang === 'fa' ? 'از این دستگاه خارج شدید. قطع نشست در سرور تأیید نشد؛ هنگام اتصال دوباره رمز خود را تغییر دهید اگر نشست مشکوک است.' : 'Signed out on this device. Server sign-out could not be confirmed. If you suspect account access, change your password after reconnecting.';
+  document.querySelector('main')?.prepend(message);
+});

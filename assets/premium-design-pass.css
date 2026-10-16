@@ -613,17 +613,18 @@
   transition: transform var(--pp-speed) var(--pp-ease), box-shadow var(--pp-speed) var(--pp-ease), background var(--pp-speed) var(--pp-ease), border-color var(--pp-speed) var(--pp-ease);
 }
 .ae-premium .btn-primary {
-  background: linear-gradient(135deg, var(--pp-pom) 0%, var(--pp-pom-deep) 100%) !important;
-  box-shadow: var(--pp-shadow-pom), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
-  border: 1px solid rgba(160, 30, 22, .28);
+  background: var(--ae-action) !important;
+  box-shadow: var(--ae-shadow-control) !important;
+  border: 1px solid var(--ae-action);
 }
 .ae-premium .btn-primary:hover {
+  background: var(--ae-action-hover) !important;
   transform: translateY(-1px);
-  box-shadow: 0 14px 32px rgba(229, 72, 60, .30), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
+  box-shadow: var(--ae-shadow-control) !important;
 }
 .ae-premium .btn-primary:active {
   transform: translateY(0);
-  box-shadow: 0 4px 14px rgba(229, 72, 60, .22), inset 0 1px 0 rgba(255, 255, 255, .22) !important;
+  box-shadow: var(--ae-shadow-control) !important;
 }
 .ae-premium .btn-light {
   background: var(--pp-ivory) !important;

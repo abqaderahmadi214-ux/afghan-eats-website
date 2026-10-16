@@ -4,8 +4,8 @@
 /* Afghan Eats — one public design system, September 2026. */
 html[data-design="2026"]{background:#fff;scroll-padding-top:100px}
 body.ae-premium{
-  --brand:#ce3429;--brand-dark:#ac261d;--ink:#20251f;--muted:#70746d;--line:#e7e9e3;--soft:#f7f8f5;--cream:#fff6f0;--gold:#e5ab46;
-  --ae-deep:#243b2c;--ae-deep-2:#1d3024;--ae-red:#ce3429;--ae-red-dark:#ac261d;--ae-ink:#20251f;--ae-muted:#70746d;--ae-paper:#fff;--ae-warm:#fff6f0;--ae-soft:#f7f8f5;--ae-line:#e7e9e3;
+  --brand:var(--ae-action);--brand-dark:var(--ae-action-hover);--ink:#20251f;--muted:#70746d;--line:#e7e9e3;--soft:#f7f8f5;--cream:#fff6f0;--gold:#e5ab46;
+  --ae-deep:#243b2c;--ae-deep-2:#1d3024;--ae-red:var(--ae-action);--ae-red-dark:var(--ae-action-hover);--ae-ink:#20251f;--ae-muted:#70746d;--ae-paper:#fff;--ae-warm:#fff6f0;--ae-soft:#f7f8f5;--ae-line:#e7e9e3;
   --shadow:0 16px 40px #243b2c0a;--shadow-soft:0 8px 24px #243b2c06;--ae-shadow:var(--shadow);--ae-shadow-soft:var(--shadow-soft);
   background:#fff!important;color:var(--ink);font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;
 }
