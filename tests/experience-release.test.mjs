@@ -27,3 +27,21 @@ test('sign out sends the captured bearer token; a failure is recorded without re
  assert.equal(storage.get('ae_logout_unconfirmed'),'1');
  assert.equal([...storage.values()].includes('test-token'),false);
 });
+test('a delayed admin logout cannot clear a newly signed-in session',async()=>{
+ const source=readFileSync('admin-control-center/assets/control-center.js','utf8');
+ const start=source.indexOf('async function logout('),end=source.indexOf('function userLabel()',start);
+ assert.ok(start>=0&&end>start);
+ for(const signInAgain of [true,false]) {
+  let finish;const changes=[];const storage=new Map([['token','old'],['user','old-user']]);
+  const state={token:'old',user:{username:'old'},cache:{}};
+  const context={state,API_BASE:'https://api.example',TOKEN_KEY:'token',USER_KEY:'user',AbortSignal,
+   fetch:(_url,options)=>{assert.equal(options.headers.Authorization,'Bearer old');return new Promise(resolve=>{finish=resolve;});},
+   window:{adminFreshness:{reset:()=>changes.push('refresh-reset')}},financeState:{},sessionStorage:{removeItem:key=>storage.delete(key)},root:{replaceChildren:()=>changes.push('root-cleared')},appShell:{classList:{add:()=>changes.push('app-hidden')}},loginView:{classList:{remove:()=>changes.push('login-shown')}},toast:()=>changes.push('toast')};
+  vm.runInNewContext(source.slice(start,end)+'\nthis.endSession=logout;',context);
+  const pending=context.endSession();
+  if(signInAgain){state.token='new';state.user={username:'new'};storage.set('token','new');storage.set('user','new-user');}
+  finish({ok:true});await pending;
+  if(signInAgain){assert.equal(state.token,'new');assert.equal(state.user.username,'new');assert.equal(storage.get('token'),'new');assert.deepEqual(changes,[]);}
+  else{assert.equal(state.token,'');assert.equal(storage.has('token'),false);assert.ok(changes.includes('root-cleared'));}
+ }
+});
