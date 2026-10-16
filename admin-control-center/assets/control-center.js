@@ -79,7 +79,7 @@ async function logout(show = true) {
   }
  // A previous request may have expired while the user signed in again.
  if (state.token !== logoutToken) return;
- window.AdminMfa?.clearSecrets(); window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); window.initGoogleStaffSignIn?.(); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
+ window.AdminMfa?.clearSecrets(); window.WorkerQueue?.reset(); window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); window.initGoogleStaffSignIn?.(); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
 function userLabel() { return state.user?.name || state.user?.username || state.user?.email || 'Administrator'; }
 function currentRole(){ return String(state.user?.role || '').toLowerCase(); }
 function isFullAdmin(){ return FULL_ADMIN_ROLES.has(currentRole()); }
@@ -116,6 +116,7 @@ const VIEW_META = {
   finance: ['Financial operations', 'Finance & settlements'],
   safety: ['Partner standards', 'Food safety declarations'],
   access: ['Identity & access', 'Portal access'],
+  workers: ['Operational follow-up', 'Website workers'],
   security: ['Identity & access', 'Administrator security'],
   audit: ['Governance', 'Operations audit'],
   ops: ['Support & governance', 'Support & operations'],
@@ -197,7 +198,7 @@ async function renderView(background = false) {
   if (!background) loading();
   try {
     const renderers = {
-      overview: renderOverview, dispatch: renderDispatch, restaurants: renderRestaurants,
+      overview: renderOverview, dispatch: renderDispatch, workers: () => window.WorkerQueue.renderPage(), restaurants: renderRestaurants,
       riders: renderRiders, customers: renderCustomers, promotions: renderPromotionsView,
       communications: renderCommunicationsView, support: renderSupportView,
       security: renderSecurityView, audit: renderAuditView, ops: renderOperationsTools,

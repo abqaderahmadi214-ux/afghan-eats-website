@@ -67,7 +67,7 @@ const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url, "https://admin.afghaneats.net");
   if (requestUrl.pathname === "/health") {
     sendHeaders(res, 200, "application/json; charset=utf-8", "no-store");
-    res.end(req.method === "HEAD" ? undefined : JSON.stringify({ status: "ok", service: "Afghan Eats Control Center", release: "premium-experience-2", adminMfa: "optional_totp_with_single_use_recovery", commit: process.env.RENDER_GIT_COMMIT || null }));
+    res.end(req.method === "HEAD" ? undefined : JSON.stringify({ status: "ok", service: "Afghan Eats Control Center", release: "premium-experience-2", adminMfa: "optional_totp_with_single_use_recovery", workerQueue: "ownership_and_history", commit: process.env.RENDER_GIT_COMMIT || null }));
     return;
   }
 
