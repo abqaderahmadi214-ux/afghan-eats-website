@@ -18,6 +18,7 @@
       <p class="eyebrow">Restricted operations workspace</p>
       <h1 id="login-title">Sign in to manage the marketplace.</h1>
       <p class="auth-copy">This workspace is limited to authorized Afghan Eats administrators and operations staff. Your session is stored only in this browser tab.</p>
+      <div id="primary-signin">
       <form id="login-form" novalidate>
         <label class="field"><span>Username</span><input id="login-username" name="username" autocomplete="username" required></label>
         <label class="field"><span>Password</span><input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
@@ -28,6 +29,8 @@
         <p>Use your approved Google/Gmail account. New staff requests stay pending until an Afghan Eats administrator approves a role.</p>
         <div id="google-staff-signin" class="space-top-sm"></div>
       </div>
+      </div>
+      <form id="mfa-login-form" class="hidden"><p>Enter an authenticator code or a single-use recovery code to finish signing in.</p><label class="field"><span>Verification code</span><input id="mfa-login-code" name="code" autocomplete="one-time-code" maxlength="32" required spellcheck="false" autocapitalize="characters"></label><button class="button button-primary button-wide" type="submit">Verify and sign in</button><button id="mfa-login-cancel" class="button button-secondary button-wide space-top-sm" type="button">Back to sign-in</button></form>
       <p id="login-error" class="notice notice-error hidden" role="alert"></p>
       <p class="auth-note">Do not share Control Center credentials or activation links. Access is restricted by role and enforced by the Afghan Eats backend.</p>
     </section>
@@ -72,11 +75,15 @@
     <form method="dialog"><p class="eyebrow">Confirm operational change</p><h2 id="confirm-title">Confirm action</h2><p id="confirm-copy"></p><div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancel</button><button id="confirm-action" class="button button-danger" value="confirm">Confirm change</button></div></form>
   </dialog>
 
+  <dialog id="mfa-recovery-dialog" class="confirm-dialog" aria-labelledby="mfa-recovery-title">
+    <form id="mfa-recovery-form"><h2 id="mfa-recovery-title">Save your recovery codes</h2><p>Two-step verification is enabled. These codes are shown once. Each code can replace an authenticator code for one sign-in. Store them securely, separate from your authenticator.</p><pre id="mfa-recovery-codes"></pre><button id="mfa-download-codes" class="button button-secondary" type="button">Download recovery codes</button><label class="switch-row space-top-sm"><span>I have saved my recovery codes</span><input id="mfa-codes-saved" type="checkbox" required></label><button class="button button-primary button-wide space-top-sm" type="submit">Done</button></form>
+  </dialog>
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="assets/csv-export.js?v=premium-experience-2"></script>
   <script src="assets/freshness.js?v=premium-experience-2"></script>
-  <script src="assets/control-center.js?v=premium-experience-2-session-1"></script>
+  <script src="assets/control-center.js?v=admin-mfa-1"></script>
+  <script src="assets/admin-mfa.js?v=admin-mfa-1"></script>
   <script src="assets/finance-workspace.js?v=premium-experience-2"></script>
   <script src="assets/support-agent.js?v=prepared-replies-1"></script>
   <script src="assets/rule-workers.js?v=1"></script>

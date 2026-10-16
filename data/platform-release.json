@@ -25,7 +25,9 @@
       "repository": "abqaderahmadi214-ux/afghan-eats-website",
       "branch": "main",
       "url": "https://afghan-eats-admin.onrender.com",
-      "healthPath": "/health"
+      "healthPath": "/health",
+      "securityRelease": "admin-mfa-1",
+      "twoStepVerification": "optional_per_account"
     },
     "api": {
       "repository": "abqaderahmadi214-ux/afghaneats-backend",
@@ -73,6 +75,7 @@
     "Use the API and admin health endpoints for actual deployed Git commit identifiers.",
     "The legacy admin.afghaneats.net hosting migration is pending; use the maintained admin URL.",
     "Rider pay supports fixed salary, per completed delivery and hybrid. Fixed salary is the initial draft model; no rate is assumed.",
-    "Android candidates are private GitHub prereleases requiring repository access; they are not app-store publications. Customer emulator validation uses a temporary test-signed APK derived from the signed production bundle."
+    "Android candidates are private GitHub prereleases requiring repository access; they are not app-store publications. Customer emulator validation uses a temporary test-signed APK derived from the signed production bundle.",
+    "Control Center MFA is optional per account, requires confirmed authenticator setup and protects password and Google sign-in. Availability does not mean staff enrollment is complete."
   ]
 }
