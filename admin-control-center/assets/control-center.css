@@ -181,3 +181,16 @@
 .restaurant-media-status.error{color:#98362f}
 .restaurant-media-create-note{padding:11px;border-radius:10px;background:#f6f8f6;color:#6d7d75;font-size:.72rem;line-height:1.5}
 @media(max-width:900px){.restaurant-media-grid{grid-template-columns:1fr}}
+
+
+/* Operational freshness, financial reviews and accessible controls. */
+.connection-state[data-freshness="offline"],.connection-state[data-freshness="error"]{color:var(--danger)}
+.connection-state[data-freshness="stale"]{color:#76500b}
+.release-label{display:block;margin:16px 9px;color:#b7ccc2;font-size:.7rem}
+#finance-statement-detail .panel{border:2px solid var(--brand)}
+#finance-statements,#finance-cash,#finance-compensation{scroll-margin-top:20px}
+[data-finance-form]{margin-block:16px;padding-block:12px;border-top:1px solid var(--line)}
+[data-finance-form] .field{margin-top:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(max-width:600px){.header-actions{flex-wrap:wrap;justify-content:flex-end}.connection-state{max-width:180px}.button{min-height:44px}[data-finance-form]{grid-template-columns:1fr}}

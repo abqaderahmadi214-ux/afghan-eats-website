@@ -1,0 +1,19 @@
+{
+  "release": "premium-foundation-1",
+  "brand": { "primary": "#0D4A3A", "accent": "#A96B10", "canvas": "#FFF8ED" },
+  "surfaces": {
+    "customerWeb": { "repository": "abqaderahmadi214-ux/afghan-eats-website", "branch": "main", "url": "https://afghaneats.net" },
+    "restaurantPortal": { "repository": "abqaderahmadi214-ux/afghan-eats-website", "branch": "main", "url": "https://afghaneats.net/owner" },
+    "riderPortal": { "repository": "abqaderahmadi214-ux/afghan-eats-website", "branch": "main", "url": "https://afghaneats.net/rider-portal" },
+    "admin": { "repository": "abqaderahmadi214-ux/afghan-eats-website", "branch": "main", "url": "https://afghan-eats-admin.onrender.com", "healthPath": "/health" },
+    "api": { "repository": "abqaderahmadi214-ux/afghaneats-backend", "branch": "main", "url": "https://afghaneats-api.onrender.com", "healthPath": "/health" },
+    "customerNative": { "repository": "abqaderahmadi214-ux/afghaneats-backend", "sourceBranch": "customer-staging", "package": "net.afghaneats.customer", "sourceVersion": "1.2.0", "sourceAndroidBuild": 4, "installedBuildVerified": false },
+    "riderNative": { "repository": "abqaderahmadi214-ux/afghan-eats-rider-app", "sourceBranch": "main", "package": "net.afghaneats.rider", "sourceVersion": "1.1.9", "sourceAndroidBuild": 11, "installedBuildVerified": false }
+  },
+  "notes": [
+    "Source versions identify inspected configuration, not app-store availability.",
+    "Use the API and admin health endpoints for actual deployed Git commit identifiers.",
+    "The legacy admin.afghaneats.net hosting migration is pending; use the maintained admin URL.",
+    "Rider pay supports fixed salary, per completed delivery and hybrid. Fixed salary is the initial draft model; no rate is assumed."
+  ]
+}
