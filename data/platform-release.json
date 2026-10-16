@@ -56,7 +56,16 @@
       "package": "net.afghaneats.rider",
       "sourceVersion": "1.1.10",
       "sourceAndroidBuild": 14,
-      "installedBuildVerified": false
+      "installedBuildVerified": false,
+      "androidCandidate": {
+        "sourceCommit": "076efd810f51b8413881c63b0b0a4b5f8d873f2f",
+        "releaseUrl": "https://github.com/abqaderahmadi214-ux/afghan-eats-rider-app/releases/tag/rider-1.1.10-build14-38895599840-1",
+        "sha256": "2461b66eba51208d1f1ce8d6e111ef13991664440f8deada5ee13136265435df",
+        "packageAndSignatureVerified": true,
+        "publicNativeSmokeVerified": false,
+        "physicalDeviceVerified": false,
+        "storePublicationVerified": false
+      }
     }
   },
   "notes": [
