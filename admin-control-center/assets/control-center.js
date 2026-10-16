@@ -77,6 +77,8 @@ async function logout(show = true) {
       confirmed = response.ok;
     } catch { confirmed = false; }
   }
+ // A previous request may have expired while the user signed in again.
+ if (state.token !== logoutToken) return;
  window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
 function userLabel() { return state.user?.name || state.user?.username || state.user?.email || 'Administrator'; }
 function currentRole(){ return String(state.user?.role || '').toLowerCase(); }
