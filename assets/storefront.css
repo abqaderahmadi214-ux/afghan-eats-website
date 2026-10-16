@@ -95,3 +95,6 @@
  .ae-premium.restaurants-page .restaurant-filter-row .chip[data-filter]{grid-column:auto!important;justify-content:center;border-radius:10px}
  .ae-premium.restaurants-page .mobile-nav a[aria-current]{color:#0d4a3a;background:#eaf0e5}
 }
+@media(max-width:760px){
+ .premium-home .ae-cuisines,.ae-premium.restaurants-page .dish-category-row{margin-inline-end:0;max-width:100%;padding-inline-end:3px}
+}
