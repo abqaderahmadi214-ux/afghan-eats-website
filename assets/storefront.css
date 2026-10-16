@@ -1,0 +1,104 @@
+/* Customer storefront: scoped to home and discovery, preserving ordering controls. */
+.premium-home,.restaurants-page{--store-ink:#173e32;--store-paper:#faf7f0;--store-line:#e3e3d8;--store-muted:#59665e;background:var(--store-paper);color:var(--store-ink)}
+:is(.premium-home,.restaurants-page) .header{background:#fffdf8;border-bottom:1px solid var(--store-line);box-shadow:none}
+:is(.premium-home,.restaurants-page) .brand-emblem{box-shadow:none}
+:is(.premium-home,.restaurants-page) .navlinks a[aria-current]{color:#0d4a3a;text-decoration:underline;text-underline-offset:8px;text-decoration-thickness:2px}
+:is(.premium-home,.restaurants-page) :is(a,button,input,select):focus-visible{outline:3px solid #a96b10;outline-offset:4px}
+.premium-home .ae-hero{padding:64px 0 72px;background:radial-gradient(ellipse at 95% 20%,#e8ecdf 0,transparent 55%),var(--store-paper);border-bottom:1px solid var(--store-line)}
+.premium-home .ae-hero-grid{gap:64px;grid-template-columns:1.02fr 1fr}
+.premium-home .ae-hero-copy h1{font-size:clamp(44px,5.2vw,74px);font-weight:750;letter-spacing:-.055em;line-height:1.06;color:var(--store-ink)}
+.premium-home .ae-hero-copy h1 em{background:none;color:#a46220;font-family:Georgia,'Times New Roman',serif;font-weight:500;letter-spacing:-.045em}
+.premium-home.rtl .ae-hero-copy h1{line-height:1.5;letter-spacing:0;font-size:clamp(38px,4.5vw,60px)}
+.premium-home.rtl .ae-hero-copy h1 em{font-family:inherit;letter-spacing:0}
+.premium-home .ae-eyebrow{color:#6a512c;letter-spacing:.14em}
+.premium-home .ae-eyebrow::before{background:#a96b10}
+.premium-home .ae-hero-sub{font-size:17px;color:var(--store-muted);line-height:1.75;margin-block:24px;max-width:40ch}
+.premium-home .ae-feast{height:480px;border-radius:120px 24px 24px 24px;box-shadow:none;object-position:center}
+.premium-home.rtl .ae-feast{border-radius:24px 120px 24px 24px}
+.premium-home .ae-hero-visual::after{border-radius:120px 24px 24px 24px;background:linear-gradient(transparent 65%,#102d2326)}
+.premium-home.rtl .ae-hero-visual::after{border-radius:24px 120px 24px 24px}
+.premium-home .ae-hero-visual figcaption{bottom:24px;inset-inline-start:20px;border-radius:12px;box-shadow:0 8px 28px #102d2314;padding:14px 20px}
+.premium-home .ae-order-box{background:#fffdf9;border:1px solid #dedfd2;border-radius:20px;padding:16px;box-shadow:0 10px 32px #173e3208}
+.premium-home .ae-order-box .mode-tabs{margin-bottom:12px;background:#eeeee6!important}
+.premium-home .address-box{box-shadow:none;border-color:#cdd3c8}
+.premium-home .ae-browse-link{color:#274e3f;font-size:13px;margin-top:14px}
+.premium-home .ae-cuisine-section{background:#fffdf8;border:0;padding-block:40px}
+.premium-home .ae-cuisines{gap:18px}
+.premium-home .ae-cuisine{gap:12px}
+.premium-home .ae-cuisine-photo{border:3px solid #fff;box-shadow:0 0 0 1px #dedfd4;transition:box-shadow .2s}
+.premium-home .ae-cuisine:hover .ae-cuisine-photo{box-shadow:0 0 0 3px #a96b10}
+.premium-home .ae-restaurants{background:var(--store-paper);padding-block:64px}
+.premium-home #homeRestaurants{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:100%}
+.premium-home #homeRestaurants .restaurant-image{height:240px!important}
+:is(.premium-home,.restaurants-page) .restaurant-card{border:1px solid var(--store-line)!important;border-radius:18px!important;box-shadow:0 4px 14px #173e3205!important;background:#fffdf9!important}
+:is(.premium-home,.restaurants-page) .restaurant-card:hover{border-color:#8b9c88!important;box-shadow:0 8px 24px #173e3210!important}
+:is(.premium-home,.restaurants-page) .restaurant-body h3{color:var(--store-ink);letter-spacing:-.025em}
+:is(.premium-home,.restaurants-page) .restaurant-photo-placeholder{background-color:#eceee3!important;background-image:url('/assets/images/herati-pattern.svg')!important;background-size:240px!important}
+:is(.premium-home,.restaurants-page) .restaurant-photo-placeholder::after{content:'';width:52px;height:52px;background:#fffdf8 url('/assets/images/food-placeholder.svg') center/100px no-repeat;border:1px solid #d6ddcc;border-radius:50%}
+.premium-home .ae-community{background:#173e32;padding-block:64px}
+.premium-home .ae-community-head h2{color:#fffaf0}
+.premium-home .ae-community-head .ae-eyebrow{color:#e8ce9c}
+.premium-home .ae-join-card{background:#fffaf0;border:0;border-radius:18px;padding:32px}
+.premium-home .ae-join-rider{background:#e9eddf}
+.premium-home .footer{background:#fffdf8!important;padding-top:56px}
+.restaurants-page .section.soft{background:var(--store-paper);padding-block:44px}
+.restaurants-page .restaurant-page-head{border-bottom:1px solid var(--store-line);padding-bottom:26px;margin-bottom:24px}
+.restaurants-page .restaurant-page-head h1{font-size:clamp(32px,4vw,48px);letter-spacing:-.045em;color:var(--store-ink)}
+.restaurants-page .restaurant-page-head p{color:var(--store-muted)}
+.restaurants-page .restaurant-discovery-bar{background:#fffdf9;border:1px solid var(--store-line);border-radius:18px;padding:20px;box-shadow:0 6px 20px #173e3205}
+.restaurants-page .restaurant-filter-row{margin-bottom:0}
+.restaurants-page .restaurant-search-wrap input{background:#f8f8f2;border:1px solid #cdd3c8}
+.restaurants-page .dish-category-row{gap:8px;margin-block:20px;flex-wrap:wrap}
+.restaurants-page .dish-category-row .chip{background:#fffdf8;border:1px solid #d7ddcf;border-radius:999px;min-height:44px;padding-inline:18px;box-shadow:none}
+.restaurants-page .dish-category-row .chip[aria-pressed=true]{background:#173e32;color:#fff;border-color:#173e32}
+.restaurants-page .restaurant-result-summary{padding-block:12px;color:var(--store-muted);font-size:14px}
+.restaurants-page .restaurant-grid{gap:22px!important}
+@media(max-width:1000px){.premium-home .ae-hero-grid{gap:32px}.premium-home .ae-feast{height:430px}.premium-home .ae-order-box{padding:12px}}
+@media(max-width:760px){
+ .premium-home .ae-hero{padding:32px 0 36px}.premium-home .ae-hero-grid{grid-template-columns:1fr;gap:28px}
+ .premium-home .ae-hero-copy h1{font-size:clamp(40px,10.5vw,58px);max-width:12ch}
+ .premium-home.rtl .ae-hero-copy h1{max-width:none;font-size:38px}
+ .premium-home .ae-hero-sub{font-size:15px;margin-block:18px}
+ .premium-home .ae-feast{height:270px;border-radius:64px 18px 18px 18px}
+ .premium-home.rtl .ae-feast{border-radius:18px 64px 18px 18px}
+ .premium-home .ae-hero-visual::after{border-radius:64px 18px 18px 18px}
+ .premium-home.rtl .ae-hero-visual::after{border-radius:18px 64px 18px 18px}
+ .premium-home .ae-hero-visual figcaption{bottom:14px;inset-inline-start:14px;padding:10px 14px}
+ .premium-home .ae-cuisine-section{padding-block:30px}.premium-home .ae-restaurants,.premium-home .ae-community{padding-block:38px}
+ .premium-home #homeRestaurants{grid-template-columns:1fr!important}.premium-home #homeRestaurants .restaurant-image{height:205px!important}
+ .premium-home .ae-join-card{padding:24px}
+ .restaurants-page .section.soft{padding-block:28px}.restaurants-page .restaurant-page-head{padding-bottom:20px;margin-bottom:20px}
+ .restaurants-page .restaurant-discovery-bar{padding:14px;border-radius:16px}
+ .restaurants-page .dish-category-row{flex-wrap:nowrap;overflow-x:auto;margin-inline-end:-20px;padding-inline-end:20px;padding-bottom:8px;scrollbar-width:thin}
+ .restaurants-page .dish-category-row .chip{flex:none;white-space:nowrap}
+ .restaurants-page .restaurant-grid{grid-template-columns:1fr!important;gap:12px!important}
+ .restaurants-page .restaurant-card-link{display:grid;grid-template-columns:108px minmax(0,1fr);min-height:140px}
+ .restaurants-page .restaurant-image{height:100%!important;min-height:140px!important;border-radius:0!important}
+ .restaurants-page .restaurant-body{padding:16px 14px!important;min-width:0}
+ .restaurants-page .restaurant-body h3{font-size:16px!important;padding-inline-end:25px}
+ .restaurants-page .restaurant-body .tagline{font-size:12px;line-height:1.5;min-height:0;-webkit-line-clamp:2}
+ .restaurants-page .browse-card-meta{font-size:12px;margin-top:10px}
+ .restaurants-page .fav{top:9px;inset-inline-end:9px;inset-inline-start:auto;width:30px;height:30px;font-size:20px}
+ .restaurants-page .status-pill{top:8px;inset-inline-start:6px;max-width:96px;font-size:10px;padding:4px 6px}
+ :is(.premium-home,.restaurants-page) .mobile-nav{background:#fffdf8f5;border-top-color:var(--store-line)}
+}
+@media(prefers-reduced-motion:reduce){.premium-home .ae-cuisine-photo{transition:none}}
+@media(max-width:760px){
+ .ae-premium.restaurants-page .restaurant-service-row{grid-template-columns:minmax(0,1fr) auto!important;align-items:center;gap:10px!important}
+ .ae-premium.restaurants-page .restaurant-service-row .mode-tabs{grid-column:1;min-width:0}
+ .ae-premium.restaurants-page .restaurant-service-row .mode-tabs button{padding-inline:10px}
+ .ae-premium.restaurants-page .restaurant-view-toggle{grid-column:2;min-width:0;margin:0;padding:3px}
+ .ae-premium.restaurants-page .restaurant-view-toggle button{font-size:13px;padding:8px 10px;min-height:44px}
+ .ae-premium.restaurants-page .address-summary{grid-column:1/-1}
+ .ae-premium.restaurants-page .restaurant-filter-row{grid-template-columns:1fr 1fr!important;gap:8px!important}
+ .ae-premium.restaurants-page .restaurant-filter-row #sort{grid-column:1/-1!important}
+ .ae-premium.restaurants-page .restaurant-filter-row .chip[data-filter]{grid-column:auto!important;justify-content:center;border-radius:10px}
+ .ae-premium.restaurants-page .mobile-nav a[aria-current]{color:#0d4a3a;background:#eaf0e5}
+}
+@media(max-width:760px){
+ .premium-home .ae-cuisines,.ae-premium.restaurants-page .dish-category-row{margin-inline-end:0;max-width:100%;padding-inline-end:3px}
+}
+@media(max-width:760px){
+ .ae-premium.restaurants-page .restaurant-image{height:156px!important;min-height:156px!important}
+ .ae-premium.premium-home .mobile-nav a[aria-current]{color:#0d4a3a;background:#eaf0e5}
+}
