@@ -10,7 +10,7 @@ function setup(view = 'support', snapshot = {}) {
   const panel = { querySelector: selector => selector === '[data-workers-result]' ? result : button };
   const root = { querySelector: () => mounted ? panel : null, appendChild() { mounted = true; }, contains: () => true };
   const context = { root, state: { view }, document: { createElement: () => panel }, MutationObserver: class { constructor(fn) { observer = fn; } observe() {} },
-    esc: value => String(value).replaceAll('<', '&lt;').replaceAll('>', '&gt;'), shortDate: () => 'now',
+    esc: value => String(value).replaceAll('<', '&lt;').replaceAll('>', '&gt;'), shortDate: () => 'now', setInterval: () => 1, clearInterval() {},
     query: async path => { calls.push(path); return { enabled: true, lastSuccessAt: new Date().toISOString(), summary: {}, findings: [], showingAtMost: 300, ...snapshot }; },
     mutate: async path => { calls.push(path); return { skipped: false }; } };
   vm.runInNewContext(readFileSync(new URL('../admin-control-center/assets/rule-workers.js', import.meta.url), 'utf8'), context);

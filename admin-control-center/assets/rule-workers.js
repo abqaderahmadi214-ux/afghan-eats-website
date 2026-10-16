@@ -27,6 +27,10 @@ function mountRuleWorkerDashboard() {
   };
   button.addEventListener('click', () => void load(true));
   void load();
+  const refresh = setInterval(() => {
+    if (!root.contains(panel)) { clearInterval(refresh); return; }
+    if (!button.disabled) void load();
+  }, 60000);
 }
 new MutationObserver(mountRuleWorkerDashboard).observe(root, { childList: true });
 mountRuleWorkerDashboard();
