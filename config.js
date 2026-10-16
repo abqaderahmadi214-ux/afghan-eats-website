@@ -52,7 +52,7 @@ function aeRoutePath() { const path = location.pathname.toLowerCase().replace(/\
 (function loadIdentityV53(){const path=aeRoutePath(),enabled=path.endsWith('/account.html')||path.endsWith('/rider.html')||path.endsWith('/rider-portal.html')||path==='/account'||path==='/rider'||path==='/rider-portal';if(!enabled)return;const script=document.createElement('script');script.src='/assets/identity.js';script.defer=true;script.dataset.aeIdentityV53='1';document.head.appendChild(script)})();
 
 
-(function loadSharedFoundation(){if(document.querySelector('link[data-ae-foundation]'))return;const link=document.createElement('link');link.rel='stylesheet';link.href='/assets/platform-foundation.css?v=premium-experience-2';link.dataset.aeFoundation='1';document.head.appendChild(link)})();
+(function loadSharedFoundation(){if(document.querySelector('link[data-ae-foundation]'))return;const link=document.createElement('link');link.rel='stylesheet';link.href='/assets/platform-foundation.css?v=premium-experience-2-mobile-1';link.dataset.aeFoundation='1';document.head.appendChild(link)})();
 
 // Capture the current token for this request; do not read mutable storage after logout.
 window.aeEndSession = async function (token) {
