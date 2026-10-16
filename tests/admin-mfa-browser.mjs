@@ -10,6 +10,9 @@ const codes=Array.from({length:10},(_,i)=>`ABCD-EFAB-CDEF-1234-000${i}`);
 let enabled=true, writes=[], pendingVerify=null, holdVerify=false;
 try {
  const context=await browser.newContext({viewport:{width:390,height:844}});
+ await context.addInitScript(() => {
+  window.google = { accounts: { id: { initialize(options) { window.testGoogleCallback = options.callback; }, renderButton(mount) { const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Test Google confirmation'; button.addEventListener('click', () => window.testGoogleCallback({credential:'test-google-credential'})); mount.append(button); } } } };
+ });
  await context.route('https://accounts.google.com/**',r=>r.abort());
  await context.route('https://afghaneats-api.onrender.com/**',async route=>{
   const method=route.request().method();
@@ -24,6 +27,7 @@ try {
    if(input.code==='000000')return route.fulfill({status:400,headers,contentType:'application/json',body:JSON.stringify({error:{json:{message:'Verification failed'}}})});
    data={token:'verified-test-session',admin:{id:1,username:'test',role:'admin'}};
   }
+  if(path==='identity.googleConfig')data={webClientId:'test-client'};
   if(path==='auth.me')data={id:1,username:'test',role:'admin'};
   if(path==='auth.staffList')data=[];
   if(path==='auth.mfaStatus')data={enabled,recoveryCodesRemaining:10};
@@ -41,7 +45,7 @@ try {
  await page.locator('#mfa-login-code').fill('000000');await page.getByRole('button',{name:'Verify and sign in',exact:true}).click();
  await page.getByText('Verification failed',{exact:true}).waitFor();assert.equal(await page.evaluate(()=>sessionStorage.getItem('ae_control_center_token')),null);
  await page.getByRole('button',{name:'Back to sign-in'}).click();
- await page.evaluate(()=>window.handleGoogleStaffCredential({credential:'test-google-credential'}));
+ await page.locator('#google-staff-signin button').click();
  await page.locator('#mfa-login-code').waitFor({state:'visible'});
  await page.locator('#mfa-login-code').fill('123456');await page.getByRole('button',{name:'Verify and sign in',exact:true}).click();
  await page.getByRole('heading',{name:'Two-step verification',exact:true}).waitFor();
@@ -60,6 +64,7 @@ try {
  const download=page.waitForEvent('download');await page.getByRole('button',{name:'Download recovery codes'}).click();assert.equal((await download).suggestedFilename(),'afghan-eats-recovery-codes.txt');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
  mkdirSync('visual-proof/premium',{recursive:true});await page.screenshot({path:'visual-proof/premium/admin-mfa-recovery-mobile.png',fullPage:true});
+ assert.equal(await page.locator('#google-mfa-reauth button').count(),1,'one Google confirmation control after enrollment');
  await page.locator('#mfa-codes-saved').check();await page.getByRole('button',{name:'Done',exact:true}).click();assert.equal(await page.locator('#mfa-recovery-codes').innerText(),'');
  await page.getByRole('button',{name:'Sign out',exact:true}).click();await page.locator('#login-username').waitFor({state:'visible'});
  assert.equal(await page.evaluate(()=>sessionStorage.getItem('ae_control_center_token')),null);

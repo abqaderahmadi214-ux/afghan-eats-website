@@ -81,7 +81,7 @@ window.AdminMfa = (() => {
         if (state.token !== token) return;
         saveSession(result.token, result.admin); clearEnrollment();
         toast('Two-step verification disabled. Other sessions must sign in again.');
-        await renderSecurityView(); initGoogle();
+        await renderSecurityView();
       }, true);
     }
     const token = state.token;
@@ -129,7 +129,7 @@ window.AdminMfa = (() => {
         document.getElementById('mfa-recovery-codes').textContent = result.recoveryCodes.join('\n');
         document.getElementById('mfa-codes-saved').checked = false;
         document.getElementById('mfa-recovery-dialog').showModal();
-        await renderSecurityView(); initGoogle();
+        await renderSecurityView();
       }
     } catch (error) { showError(error); }
     finally { if (button.isConnected) button.disabled = false; }
