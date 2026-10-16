@@ -15,6 +15,18 @@ Use https://afghan-eats-admin.onrender.com for the maintained control centre. Pu
 
 These duties may be combined in a small team. Sensitive financial routes remain restricted to full administrators by the backend; this release does not invent unsupported finance/support roles.
 
+## Session logout and finance exports
+
+Web customer, owner, rider and maintained admin logout requests invalidate the presented server session before removing local credentials. Other independent sessions stay signed in. The API stores only a token hash until expiry. If server logout cannot be confirmed, the web interface says so and still removes credentials from that device. This does not replace MFA or account-wide incident recovery.
+
+The finance workspace exports the selected merchant statement and the latest 100 rider cash-ledger entries. A cash export is not a wage statement or a complete historical ledger. Empty amounts remain empty; unknown values are not converted to zero. CSV downloads neutralize formula-like external text while preserving numeric negatives. Review the record scope and statement lines before reconciliation.
+
+## Native production source
+
+Customer native releases use `afghaneats-backend`, branch `customer-production`, preserved from the newer `feat/customer-ota-live-sync-v18` source. The older `customer-staging` remains a separate web staging deployment and must not overwrite this source. Customer release candidate 1.2.4/build19 retains runtime 1.2.3 because its native dependencies are unchanged. Rider releases use `afghan-eats-rider-app`, main, with candidate 1.1.10/build14.
+
+Candidate source versions are not proof of a signed artifact, installed app, store publication or tested background delivery. Record each build result separately. Existing legacy branch workflows are not disabled merely by creating the canonical branch; do not publish production updates from obsolete source.
+
 ## Rider pay
 
 Finance & settlements includes fixed monthly salary, fee per completed delivery and salary plus delivery fee. Fixed salary is selected initially. No agreed amount is guessed. Save a draft until rates, effective date and agreement are known. Tips remain unconfigured until agreed.
@@ -33,7 +45,7 @@ Financial commands are never triggered by rendering or polling. Review the confi
 
 ## Release gates
 
-1. Build the backend and run pay-policy validation/authorization/retry tests.
+1. Build the backend and run pay-policy validation/authorization/retry tests and database-backed session-revocation tests.
 2. Run frontend syntax, finance/freshness/route tests, existing support tests and browser ordering/portal checks.
 3. Verify API and admin health report the intended deployed commit. Check the public website deployment is ready.
 4. Exercise one controlled order across customer, restaurant, dispatch and rider roles, including a cancellation or exception. Use test accounts; do not create unsolicited real restaurant work.
@@ -42,4 +54,4 @@ Financial commands are never triggered by rendering or polling. Review the confi
 
 ## Follow-on work from the premium review
 
-The first release establishes operational controls and source corrections. Further work includes a complete component/style consolidation, dedicated finance/support role design, staff MFA/session revocation, payroll/payment execution, physical-device background-location validation, native distribution, backup-restore evidence, and monitored uptime targets. Keep these as separate verified releases; do not describe them as completed by this foundation release.
+The first release establishes operational controls and source corrections. Further work includes completion of component/style consolidation, dedicated finance/support role design, staff MFA, payroll/payment execution, physical-device background-location validation, native distribution, backup-restore evidence, and monitored uptime targets. Keep these as separate verified releases; do not describe them as completed by this foundation release.
