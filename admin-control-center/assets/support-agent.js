@@ -15,7 +15,7 @@ root.addEventListener('click', async event => {
     panel.id = 'support-conversation-panel';
     panel.className = 'panel wide space-top-md';
     const closed = ['closed', 'resolved'].includes(data.case.status);
-    panel.innerHTML = `<div class="panel-head"><div><h2>Support conversation · ${esc(data.case.reference)}</h2><p>${esc(data.case.status)} · ${esc(data.case.category)}</p></div></div><div class="panel-body"><p>${esc(data.case.details || '')}</p><div class="activity-list">${data.messages.map(message => `<div class="activity-row"><div><strong>${esc(message.sender)}</strong><p style="white-space:pre-wrap">${esc(message.body)}</p><small>${esc(shortDate(message.createdAt))}</small></div></div>`).join('')}</div>${closed ? '<p>Reopen this case before drafting or sending a reply.</p>' : '<form id="support-agent-reply-form" class="form-grid space-top-md"><label class="field"><span>Reply language</span><select name="language"><option value="fa">دری — Dari</option><option value="en">English</option></select></label><div class="field"><button type="button" class="button button-secondary" data-draft-reply>Draft reply with AI</button></div><label class="field full"><span>Reply — review all facts before sending</span><textarea name="body" dir="auto" rows="6" required maxlength="4000"></textarea></label><p class="full" role="status" data-draft-status>AI drafts can contain mistakes. You can also write a reply manually.</p><button type="submit" class="button button-primary full">Review and send reply</button></form>'}</div>`;
+    panel.innerHTML = `<div class="panel-head"><div><h2>Support conversation · ${esc(data.case.reference)}</h2><p>${esc(data.case.status)} · ${esc(data.case.category)}</p></div></div><div class="panel-body"><p>${esc(data.case.details || '')}</p><div class="activity-list">${data.messages.map(message => `<div class="activity-row"><div><strong>${esc(message.sender)}</strong><p style="white-space:pre-wrap">${esc(message.body)}</p><small>${esc(shortDate(message.createdAt))}</small></div></div>`).join('')}</div>${closed ? '<p>Reopen this case before drafting or sending a reply.</p>' : '<form id="support-agent-reply-form" class="form-grid space-top-md"><label class="field"><span>Reply language</span><select name="language"><option value="fa">دری — Dari</option><option value="en">English</option></select></label><div class="field"><button type="button" class="button button-secondary" data-draft-reply>Prepare reply</button></div><label class="field full"><span>Reply — review all facts before sending</span><textarea name="body" dir="auto" rows="6" required maxlength="4000"></textarea></label><p class="full" role="status" data-draft-status>Prepared replies use fixed guidance and the recorded order status. Review before sending.</p><button type="submit" class="button button-primary full">Review and send reply</button></form>'}</div>`;
     root.appendChild(panel);
     const form = panel.querySelector('form');
     if (!form) return;
@@ -25,23 +25,23 @@ root.addEventListener('click', async event => {
     const sendButton = form.querySelector('[type="submit"]');
     const status = form.querySelector('[data-draft-status]');
     draftButton.addEventListener('click', async () => {
-      if (body.value.trim() && !window.confirm('Replace the current reply with a new AI draft?')) return;
+      if (body.value.trim() && !window.confirm('Replace the current reply with a new prepared reply?')) return;
       const original = body.value;
       draftButton.disabled = true;
       sendButton.disabled = true;
       status.textContent = 'Preparing a draft… You can continue editing.';
       try {
-        const draft = await mutate('supportAgent.draft', { caseId: data.case.id, language: language.value });
+        const draft = await mutate('ruleWorkers.supportDraft', { caseId: data.case.id, language: language.value });
         if (!root.contains(panel)) return;
         if (body.value !== original) {
           status.textContent = 'Your reply changed while drafting. It has been kept; request another draft if needed.';
           return;
         }
         body.value = draft.body;
-        status.textContent = 'AI draft ready. Review and edit it before sending. Nothing has been sent.';
+        status.textContent = 'Prepared reply ready. Review and edit it before sending. Nothing has been sent.';
         body.focus();
       } catch {
-        status.textContent = 'AI drafting is unavailable. Write and send a manual reply instead.';
+        status.textContent = 'Prepared replies are unavailable. Write and send a manual reply instead.';
       } finally {
         draftButton.disabled = false;
         sendButton.disabled = false;
@@ -64,3 +64,4 @@ root.addEventListener('click', async event => {
     setNotice(error.message || 'The support conversation could not be loaded.');
   } finally { button.disabled = false; }
 });
+

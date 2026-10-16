@@ -22,7 +22,7 @@ test('drafting does not send; edited reply sends only after staff confirmation',
   const ui = setup(async (path, input) => { calls.push({ path, input }); return { body: '<b>Draft text</b>', requiresHumanReview: true }; });
   await ui.open(); await ui.generate();
   assert.equal(ui.body.value, '<b>Draft text</b>');
-  assert.deepEqual(calls.map(c => c.path), ['supportAgent.draft']);
+  assert.deepEqual(calls.map(c => c.path), ['ruleWorkers.supportDraft']);
   ui.body.value = 'Staff checked and edited this reply.';
   ui.submit();
   assert.equal(calls.length, 1);
@@ -47,3 +47,4 @@ test('a slow draft never overwrites edits made while it was generating', async (
   assert.equal(ui.body.value, 'New staff edit');
   assert.equal(ui.draftButton.disabled, false);
 });
+
