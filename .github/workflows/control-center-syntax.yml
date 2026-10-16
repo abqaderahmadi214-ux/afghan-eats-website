@@ -19,3 +19,5 @@ jobs:
       - run: node --check admin-control-center/assets/finance-workspace.js
       - run: node --check admin-control-center/assets/freshness.js
       - run: node tests/premium-foundation.test.mjs
+      - run: node --check admin-control-center/assets/csv-export.js
+      - run: node tests/experience-release.test.mjs

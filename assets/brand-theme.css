@@ -3,8 +3,8 @@
    Loaded only on the public/customer experience by config.js. */
 
 :root{
-  --ae-brand-forest:#123c32;
-  --ae-brand-forest-2:#0b2c24;
+  --ae-brand-forest:var(--ae-action);
+  --ae-brand-forest-2:var(--ae-action-hover);
   --ae-brand-forest-3:#1c5748;
   --ae-brand-pomegranate:#e5483c;
   --ae-brand-pomegranate-dark:#c9362d;
@@ -55,13 +55,13 @@ body{
   background:rgba(255,253,248,.86)!important;
 }
 .btn-primary{
-  background:linear-gradient(135deg,var(--ae-brand-pomegranate),#d94034)!important;
+  background:var(--ae-action)!important;
   color:#fff!important;
-  box-shadow:0 9px 24px rgba(229,72,60,.18)!important;
+  box-shadow:var(--ae-shadow-control)!important;
 }
 .btn-primary:hover{
-  background:linear-gradient(135deg,#ee5749,var(--ae-brand-pomegranate-dark))!important;
-  box-shadow:0 12px 28px rgba(229,72,60,.24)!important;
+  background:var(--ae-action-hover)!important;
+  box-shadow:var(--ae-shadow-control)!important;
 }
 
 /* Homepage: warm market energy rather than flat white. */

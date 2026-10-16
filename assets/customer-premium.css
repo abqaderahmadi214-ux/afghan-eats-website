@@ -4,8 +4,8 @@
   /* Shared Afghan Eats product tokens — aligned with Rider + Customer mobile */
   --ae-deep:#0D4A3A;
   --ae-deep-2:#123D30;
-  --ae-red:#0D4A3A;
-  --ae-red-dark:#08382C;
+  --ae-red:var(--ae-action);
+  --ae-red-dark:var(--ae-action-hover);
   --ae-saffron:#A96B10;
   --ae-ink:#15201B;
   --ae-muted:#66756D;

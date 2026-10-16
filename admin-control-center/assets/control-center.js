@@ -36,6 +36,7 @@ function openPrivateRiderDocument(doc){
 }
 
 async function request(path, input, method = 'GET', authenticated = true) {
+  const authToken = state.token;
   const headers = { Accept: 'application/json' };
   if (authenticated && state.token) headers.Authorization = `Bearer ${state.token}`;
   let url = `${API_BASE}/api/trpc/${path}`;
@@ -50,7 +51,7 @@ async function request(path, input, method = 'GET', authenticated = true) {
   try { payload = JSON.parse(raw); } catch { throw new Error(raw || `Request failed (${response.status})`); }
   if (!response.ok || payload?.error) {
     const message = payload?.error?.json?.message || payload?.error?.message || `Request failed (${response.status})`;
-    if (response.status === 401) logout(false);
+    if (response.status === 401 && state.token === authToken) logout(false);
     window.adminFreshness?.failed();
     throw new Error(message);
   }
@@ -67,7 +68,16 @@ function openConfirm(titleText, copy, callback, danger = true) { document.getEle
 dialog.addEventListener('close', async () => { const callback = state.confirmCallback; state.confirmCallback = null; if (dialog.returnValue !== 'confirm' || !callback) return; try { await callback(); } catch (error) { setNotice(error.message || 'The requested control change could not be completed.'); } });
 
 function saveSession(token, user) { state.token = token; state.user = user; sessionStorage.setItem(TOKEN_KEY, token); sessionStorage.setItem(USER_KEY, JSON.stringify(user)); }
-function logout(show = true) { window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); if (show) toast('You have been signed out.', 'success'); }
+async function logout(show = true) {
+  const logoutToken = state.token;
+  let confirmed = true;
+  if (show && logoutToken) {
+    try {
+      const response = await fetch(`${API_BASE}/api/trpc/sessions.logout`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${logoutToken}` }, body: JSON.stringify({ json: {} }), signal: AbortSignal.timeout(5000), keepalive: true });
+      confirmed = response.ok;
+    } catch { confirmed = false; }
+  }
+ window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
 function userLabel() { return state.user?.name || state.user?.username || state.user?.email || 'Administrator'; }
 function currentRole(){ return String(state.user?.role || '').toLowerCase(); }
 function isFullAdmin(){ return FULL_ADMIN_ROLES.has(currentRole()); }
