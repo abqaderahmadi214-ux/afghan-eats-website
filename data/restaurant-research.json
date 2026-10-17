@@ -1,0 +1,50 @@
+{
+  "menus": [
+    {
+      "name": "ARG Hotel Restaurant",
+      "nameDari": "رستورانت هتل ارگ",
+      "sourceUrl": "https://arghotel.af/restaurant-menu/",
+      "sourceLabel": "ARG Hotel official restaurant menu",
+      "checkedAt": "2026-10-16",
+      "verification": "Public source; current prices not confirmed by restaurant",
+      "items": [
+        {
+          "name": "پیتزا مخصوص ارگ",
+          "priceAfn": 500
+        },
+        {
+          "name": "پیتزا هواین",
+          "priceAfn": 450
+        },
+        {
+          "name": "پیتزا مارگاریتا",
+          "priceAfn": 450
+        },
+        {
+          "name": "کباب برگ",
+          "priceAfn": 500
+        },
+        {
+          "name": "جوجه ترش",
+          "priceAfn": 500
+        },
+        {
+          "name": "جوجه ماستی",
+          "priceAfn": 450
+        },
+        {
+          "name": "قابلی مولینگ",
+          "priceAfn": 700
+        },
+        {
+          "name": "قابلی ماهیچه",
+          "priceAfn": 550
+        },
+        {
+          "name": "کیچیری دم چک",
+          "priceAfn": 500
+        }
+      ]
+    }
+  ]
+}

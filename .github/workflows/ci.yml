@@ -260,3 +260,5 @@ jobs:
         run: node tests/worker-queue-browser.mjs
       - name: Verify restaurant maintenance agent browser controls
         run: node tests/restaurant-agent-browser.mjs
+      - name: Verify restaurant discovery admin controls
+        run: node tests/discovery-admin-browser.mjs
