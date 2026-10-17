@@ -267,3 +267,5 @@ jobs:
         run: node tests/restaurant-workspace-browser.mjs
       - name: Verify admin restaurant offer publishing
         run: node tests/admin-restaurant-offers-browser.mjs
+      - name: Verify customer app messaging controls
+        run: node tests/customer-messaging-browser.mjs
