@@ -265,3 +265,5 @@ jobs:
 
       - name: Verify restaurant menu studio
         run: node tests/restaurant-workspace-browser.mjs
+      - name: Verify admin restaurant offer publishing
+        run: node tests/admin-restaurant-offers-browser.mjs
