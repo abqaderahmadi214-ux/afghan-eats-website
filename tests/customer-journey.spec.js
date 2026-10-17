@@ -237,6 +237,7 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
     else if(path==='portal.ownerDashboard')data={restaurant:ownerRestaurant,orders:[],stats:{orders_today:0,delivered_gmv:0,cancelled_today:0}};
     else if(path==='portal.ownerMenu')data=ownerMenu;
     else if(path==='portal.ownerChangeHistory')data=[];
+    else if(path==='portal.ownerUploadImage')data={url:'https://images.example.com/bolani.webp'};
     else if(path==='portal.ownerUpsertMenuItem'){
       ownerMenu.items.push({id:'new-bolani',restaurant_id:ownerRestaurant.id,category_id:input.categoryId,name:input.name,name_dari:input.nameDari,description:input.description,description_dari:input.descriptionDari,price:input.price,image_url:input.imageUrl,is_available:input.isAvailable,is_popular:input.isPopular,is_vegetarian:input.isVegetarian,is_spicy:input.isSpicy,sort_order:input.sortOrder,archived_at:null});
       data={success:true,item:ownerMenu.items.at(-1)};
@@ -256,10 +257,12 @@ test('a scoped restaurant owner can build a menu and maintain the public profile
   await page.locator('#ownerItemForm input[name="price"]').fill('120');
   await page.locator('#ownerItemForm select[name="categoryId"]').selectOption('main');
   expect(await page.locator('#ownerItemForm').evaluate(form=>form.checkValidity())).toBe(true);
+  await page.locator('#ownerItemImageFile').setInputFiles({name:'bolani.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aJxQAAAAASUVORK5CYII=','base64')});
+  await expect(page.locator('#ownerItemForm input[name="imageUrl"]')).toHaveValue('https://images.example.com/bolani.webp');
   const menuSaveRequest=page.waitForRequest(request=>request.url().endsWith('/portal.ownerUpsertMenuItem'));
   await page.locator('#ownerItemForm').getByRole('button',{name:'Save item'}).click();
   const menuRequest=await menuSaveRequest;
-  expect(menuRequest.postDataJSON().json).toMatchObject({name:'Bolani',nameDari:'بولانی',price:120,categoryId:'main',isAvailable:true});
+  expect(menuRequest.postDataJSON().json).toMatchObject({name:'Bolani',nameDari:'بولانی',price:120,categoryId:'main',isAvailable:true,imageUrl:'https://images.example.com/bolani.webp'});
   await page.getByRole('button',{name:'Store & profile'}).click();
   const profileForm=page.locator('#ownerProfileForm');
   await profileForm.evaluate(form=>{

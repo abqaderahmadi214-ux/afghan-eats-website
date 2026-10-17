@@ -1,0 +1,7 @@
+#restaurant-edit-panel,#restaurant-create-panel,#restaurant-campaigns{min-width:0;overflow-wrap:anywhere}
+#restaurant-edit-panel .field,#restaurant-create-panel .field{min-width:0}
+#restaurant-edit-panel input,#restaurant-edit-panel select,#restaurant-edit-panel textarea,#restaurant-create-panel input,#restaurant-create-panel select,#restaurant-create-panel textarea{min-width:0;max-width:100%}
+#restaurant-menu-workspace input[type=checkbox]{width:auto}
+#restaurant-menu-workspace img{max-width:100%}
+#restaurant-menu-workspace .review-card-head>div{min-width:0}
+@media(max-width:760px){.section-grid{grid-template-columns:minmax(0,1fr)}#restaurant-edit-panel .form-grid,#restaurant-create-panel .form-grid{grid-template-columns:minmax(0,1fr)}}

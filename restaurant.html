@@ -54,8 +54,10 @@
   <script src="/assets/whatsapp-order.js"></script>
   <script src="/assets/app.js?v=20261004-menu-timeout-1"></script>
   <script>document.addEventListener('DOMContentLoaded',()=>initRestaurantPage().catch(error=>{console.error('[Afghan Eats] Restaurant menu failed to load.',error);const host=document.getElementById('menuContent');if(host){const fa=localStorage.getItem('ae_lang')==='fa';host.innerHTML=`<div class="notice error" role="alert"><b>${fa?'منو بارگذاری نشد.':'Menu could not be loaded.'}</b><p>${fa?'اتصال بیشتر از ۱۰ ثانیه طول کشید یا پاسخ دریافت نشد. دوباره تلاش کنید.':'The request took longer than 10 seconds or no response was received. Please try again.'}</p><button class="btn btn-light" type="button" onclick="location.reload()">${fa?'دوباره تلاش کنید':'Retry'}</button></div>`}}))</script>
-  <script src="/assets/advanced.js?v=20260905-2"></script>
+  <script src="/assets/advanced.js?v=restaurant-workspace-1"></script>
   <script src="/assets/trust.js"></script>
   <script src="/assets/customer.js?v=premium-experience-2"></script>
-<script src="/assets/design-2026.js?v=20260913-final"></script></body>
+<script src="/assets/design-2026.js?v=20260913-final"></script><script src="/assets/growth.js?v=restaurant-workspace-1"></script>
+<script src="/assets/restaurant-video.js?v=1"></script>
+</body>
 </html>

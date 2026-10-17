@@ -262,3 +262,6 @@ jobs:
         run: node tests/restaurant-agent-browser.mjs
       - name: Verify restaurant discovery admin controls
         run: node tests/discovery-admin-browser.mjs
+
+      - name: Verify restaurant menu studio
+        run: node tests/restaurant-workspace-browser.mjs
