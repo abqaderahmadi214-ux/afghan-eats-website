@@ -480,10 +480,21 @@ function restaurantFields(item={}){
     <label class="switch-row"><span><b>Delivery available</b><small>Restaurant can receive delivery orders.</small></span><span class="switch"><input name="hasDelivery" type="checkbox" ${checked(item.has_delivery!==false)}><span></span></span></label>
     <label class="switch-row"><span><b>Dine-in available</b><small>Show dine-in as an option.</small></span><span class="switch"><input name="hasDineIn" type="checkbox" ${checked(Boolean(item.has_dine_in))}><span></span></span></label>
     <label class="switch-row"><span><b>Takeaway available</b><small>Show pickup as an option.</small></span><span class="switch"><input name="hasTakeaway" type="checkbox" ${checked(Boolean(item.has_takeaway))}><span></span></span></label>
+    <label class="field"><span>Description — Dari</span><textarea name="descriptionDari" maxlength="2000">${esc(item.description_dari??'')}</textarea></label>
+    <label class="field"><span>Address — Dari</span><input name="addressDari" type="text" value="${attr(item.address_dari??'')}"></label>
+    <label class="field"><span>Landmark</span><input name="landmark" type="text" value="${attr(item.landmark??'')}"></label>
+    <label class="field"><span>City</span><input name="city" type="text" value="${attr(item.city??'')}"></label>
+    <label class="field"><span>Second phone</span><input name="phone2" type="tel" value="${attr(item.phone2??'')}"></label>
+    <label class="field"><span>GPS latitude</span><input name="latitude" type="number" step="any" value="${attr(item.latitude??'')}"></label>
+    <label class="field"><span>GPS longitude</span><input name="longitude" type="number" step="any" value="${attr(item.longitude??'')}"></label>
+    <label class="field"><span>Opening hours (display text)</span><textarea name="openingHoursText" maxlength="2000">${esc(item.opening_hours_text??'')}</textarea></label>
+    <label class="field"><span>Delivery service area</span><textarea name="serviceArea" maxlength="2000">${esc(item.service_area??'')}</textarea></label>
+    <label class="field"><span>Delivery notes</span><textarea name="deliveryNotes" maxlength="2000">${esc(item.delivery_notes??'')}</textarea></label>
+    <label class="field"><span>Introduction video URL (YouTube, Vimeo or HTTPS MP4)</span><input name="introductionVideoUrl" type="url" value="${attr(item.introduction_video_url??'')}"></label>
     <label class="field full"><span>Internal operations notes</span><textarea name="internalNotes" maxlength="4000" rows="2">${esc(item.internal_notes||'')}</textarea></label>`;
 }
 function restaurantCreateForm() { return `<form id="restaurant-create-form" class="form-grid">${restaurantFields({has_delivery:true})}<div class="safety-card full"><strong>Created safely as a draft</strong><p>The restaurant will be inactive and closed by default. It will not accept customer orders until the listing is intentionally activated.</p></div><button class="button button-primary full" type="submit">Create inactive restaurant</button></form>`; }
-function restaurantEditForm(item) { return `<form id="restaurant-edit-form" class="form-grid"><input type="hidden" name="restaurantId" value="${attr(item.id)}">${restaurantFields(item)}<div class="safety-card full"><strong>Listing state is preserved</strong><p>Saving these details does not automatically activate or remove the restaurant. Use the listing controls separately.</p></div><button class="button button-primary full" type="submit">Save restaurant changes</button></form>`; }
+function restaurantEditForm(item) { return `<form id="restaurant-edit-form" class="form-grid"><input type="hidden" name="restaurantId" value="${attr(item.id)}">${restaurantFields(item)}<details class="full"><summary>Listing provenance, verification and structured hours</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(JSON.stringify({id:item.id,administrative_details:item.administrative_details,status:item.status,source:item.source_type,source_url:item.source_url,checked_at:item.source_checked_at,verification:item.verification_status,partnership:item.partnership_status,owner_confirmed:item.owner_confirmed,gallery:item.gallery_images,weekly_hours:item.opening_hours,created:item.created_at,updated:item.updated_at},null,2))}</pre></details><div class="safety-card full"><strong>Listing state is preserved</strong><p>Saving these details does not automatically activate or remove the restaurant. Use the listing controls separately.</p></div><button class="button button-primary full" type="submit">Save restaurant changes</button></form>`; }
 function restaurantFormPayload(form,d){
   const optionalNumber=value=>{const normalized=String(value??'').trim();return normalized===''?null:Number(normalized);};
   const category=String(d.get('category')||'').trim();
@@ -513,6 +524,17 @@ function restaurantFormPayload(form,d){
     has_delivery:form.elements.hasDelivery.checked,
     has_dine_in:form.elements.hasDineIn.checked,
     has_takeaway:form.elements.hasTakeaway.checked,
+    description_dari:String(d.get('descriptionDari')||'').trim()||null,
+    address_dari:String(d.get('addressDari')||'').trim()||null,
+    landmark:String(d.get('landmark')||'').trim()||null,
+    city:String(d.get('city')||'').trim()||"Herat",
+    phone2:String(d.get('phone2')||'').trim()||null,
+    latitude:optionalNumber(d.get('latitude')),
+    longitude:optionalNumber(d.get('longitude')),
+    opening_hours_text:String(d.get('openingHoursText')||'').trim()||null,
+    service_area:String(d.get('serviceArea')||'').trim()||null,
+    delivery_notes:String(d.get('deliveryNotes')||'').trim()||null,
+    introduction_video_url:String(d.get('introductionVideoUrl')||'').trim()||null,
     internal_notes:String(d.get('internalNotes')||'').trim()||null,
   };
 }
