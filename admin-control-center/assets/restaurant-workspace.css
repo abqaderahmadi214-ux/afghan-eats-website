@@ -5,3 +5,8 @@
 #restaurant-menu-workspace img{max-width:100%}
 #restaurant-menu-workspace .review-card-head>div{min-width:0}
 @media(max-width:760px){.section-grid{grid-template-columns:minmax(0,1fr)}#restaurant-edit-panel .form-grid,#restaurant-create-panel .form-grid{grid-template-columns:minmax(0,1fr)}}
+
+#restaurant-campaigns .field{min-width:0}#restaurant-campaigns input,#restaurant-campaigns select{min-width:0;max-width:100%}#restaurant-campaigns [data-campaign-item-list]{display:grid;gap:10px;max-height:240px;overflow:auto;padding:12px;border:1px solid var(--line);border-radius:12px}#restaurant-campaigns .campaign-dish{display:flex;align-items:flex-start;gap:10px}#restaurant-campaigns .campaign-dish input{width:auto;flex-shrink:0}#restaurant-campaigns a{text-decoration:underline}
+@media(max-width:760px){#restaurant-campaigns .form-grid{grid-template-columns:minmax(0,1fr)}}
+
+#restaurant-campaigns fieldset{border:0;padding:0;margin:0;min-width:0}
