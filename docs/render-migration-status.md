@@ -32,7 +32,7 @@
 - API health returns 200 and exact allowed origins for both production domains. A first request timed out during API cold start, then succeeded.
 - Production browser loaded 41 restaurant listings. Earlier preview inspection loaded Char Fasl's menu and retained a 650 AFN dish plus 20 AFN service fee in the local basket through checkout navigation.
 - Login, owner, support and tracking forms render. No signed-in customer session or private active order was available; successful login and authenticated tracking remain unverified.
-- Full Google Maps interaction remains unverified. Existing map-key and production referrer configuration were preserved.
+- Production restaurant map loaded 14 verified locations but displayed: Google Maps could not authenticate. The list fallback works. Existing map-key and production referrer configuration were preserved; Google Maps authentication needs separate investigation.
 - Existing growth loader declares AEGROWTH twice on restaurant pages; this was observed before cutover and is outside the hosting change.
 - Earlier automated Playwright suite could not run because the browser executable was missing and Chromium downloads were truncated; this is not a passing test.
 - No real order, payment, support ticket, password reset or customer notification was submitted.
