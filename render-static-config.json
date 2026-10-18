@@ -1,0 +1,246 @@
+{
+  "routes": [
+    {
+      "type": "redirect",
+      "source": "/operations",
+      "destination": "https://afghan-eats-admin.onrender.com/"
+    },
+    {
+      "type": "redirect",
+      "source": "/operations.html",
+      "destination": "https://afghan-eats-admin.onrender.com/"
+    },
+    {
+      "type": "redirect",
+      "source": "/admin",
+      "destination": "https://afghan-eats-admin.onrender.com/"
+    },
+    {
+      "type": "rewrite",
+      "source": "/restaurants",
+      "destination": "/restaurants.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/restaurant",
+      "destination": "/restaurant.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/orders",
+      "destination": "/orders.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/order",
+      "destination": "/order.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/account",
+      "destination": "/account.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/partner",
+      "destination": "/partner.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/claim",
+      "destination": "/claim.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/rider",
+      "destination": "/rider.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/help",
+      "destination": "/help.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/data-deletion",
+      "destination": "/data-deletion.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/owner",
+      "destination": "/owner.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/rider-portal",
+      "destination": "/rider-portal.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/discover",
+      "destination": "/discover.html"
+    }
+  ],
+  "headers": [
+    {
+      "path": "/*",
+      "name": "X-Frame-Options",
+      "value": "DENY"
+    },
+    {
+      "path": "/*",
+      "name": "X-Content-Type-Options",
+      "value": "nosniff"
+    },
+    {
+      "path": "/*",
+      "name": "Referrer-Policy",
+      "value": "strict-origin-when-cross-origin"
+    },
+    {
+      "path": "/*",
+      "name": "Permissions-Policy",
+      "value": "camera=(), microphone=(), geolocation=(self)"
+    },
+    {
+      "path": "/*",
+      "name": "Strict-Transport-Security",
+      "value": "max-age=31536000"
+    },
+    {
+      "path": "/*",
+      "name": "X-Permitted-Cross-Domain-Policies",
+      "value": "none"
+    },
+    {
+      "path": "/*",
+      "name": "Content-Security-Policy",
+      "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: https://maps.google.com https://maps.gstatic.com https://maps.googleapis.com https://*.googleapis.com https://*.ggpht.com; connect-src 'self' https://afghaneats-api.onrender.com https://maps.googleapis.com https://places.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests"
+    },
+    {
+      "path": "/*.html",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/config.js",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/.well-known/assetlinks.json",
+      "name": "Content-Type",
+      "value": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/.well-known/assetlinks.json",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/.well-known/apple-app-site-association",
+      "name": "Content-Type",
+      "value": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/.well-known/apple-app-site-association",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/service-worker.js",
+      "name": "Cache-Control",
+      "value": "no-store, max-age=0"
+    },
+    {
+      "path": "/assets/*",
+      "name": "Cache-Control",
+      "value": "public, max-age=300, must-revalidate"
+    },
+    {
+      "path": "/data/*",
+      "name": "Cache-Control",
+      "value": "public, max-age=300, must-revalidate"
+    },
+    {
+      "path": "/customer-app-config.json",
+      "name": "Content-Type",
+      "value": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/customer-app-config.json",
+      "name": "Cache-Control",
+      "value": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "path": "/data/platform-release.json",
+      "name": "Cache-Control",
+      "value": "no-store, max-age=0"
+    },
+    {
+      "path": "/",
+      "name": "Cache-Control",
+      "value": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "path": "/index.html",
+      "name": "Cache-Control",
+      "value": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "path": "/assets/live-search.js",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/assets/home-hero-v3.css",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/assets/home-hero-copy-v4.css",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/assets/home-experience.js",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/assets/hero-carousel.js",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/assets/sw.js",
+      "name": "Service-Worker-Allowed",
+      "value": "/"
+    },
+    {
+      "path": "/assets/sw.js",
+      "name": "Cache-Control",
+      "value": "no-cache, must-revalidate"
+    }
+  ]
+}
