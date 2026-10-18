@@ -173,16 +173,6 @@
       "value": "no-store, max-age=0"
     },
     {
-      "path": "/assets/*",
-      "name": "Cache-Control",
-      "value": "public, max-age=300, must-revalidate"
-    },
-    {
-      "path": "/data/*",
-      "name": "Cache-Control",
-      "value": "public, max-age=300, must-revalidate"
-    },
-    {
       "path": "/customer-app-config.json",
       "name": "Content-Type",
       "value": "application/json; charset=utf-8"
@@ -241,6 +231,131 @@
       "path": "/assets/sw.js",
       "name": "Cache-Control",
       "value": "no-cache, must-revalidate"
+    },
+    {
+      "path": "/restaurants",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/restaurant",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/checkout",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/orders",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/order",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/account",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/partner",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/claim",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/rider",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/help",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/about",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/privacy",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/terms",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/data-deletion",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/owner",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/rider-portal",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/discover",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/careers",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/activate",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/verify-email",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/partner-onboarding",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/portal-recovery",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/admin-reset",
+      "name": "Cache-Control",
+      "value": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/assets/*",
+      "name": "Cache-Control",
+      "value": "public, max-age=300, must-revalidate"
+    },
+    {
+      "path": "/data/*",
+      "name": "Cache-Control",
+      "value": "public, max-age=300, must-revalidate"
     }
   ]
 }
