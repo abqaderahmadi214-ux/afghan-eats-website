@@ -1,0 +1,14 @@
+.manager-page{font-size:1rem;line-height:1.6;min-width:0}
+.manager-intro{display:flex;justify-content:space-between;gap:24px;padding:24px;align-items:center;flex-wrap:wrap}
+.manager-intro h2{margin:0}.manager-intro p{margin:8px 0 0}
+.manager-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.manager-controls label{font-weight:700}.manager-controls select{min-height:44px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+.manager-page .button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;white-space:normal}
+.manager-page :is(button,a,select):focus-visible{outline:3px solid var(--ink-deep);outline-offset:3px}
+.manager-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.manager-specialist{padding:24px;display:flex;flex-direction:column;align-items:start;overflow-wrap:anywhere}
+.manager-specialist h3{margin:12px 0 0}.manager-specialist p{margin:12px 0}.manager-specialist .button{margin-top:auto}
+.manager-reference,.manager-snapshot{font-size:.875rem;color:var(--ink)}
+.manager-report{margin-top:24px;padding:24px}.manager-report pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin-bottom:0;unicode-bidi:plaintext}
+.manager-page[dir=rtl]{text-align:right}
+@media(max-width:1000px){.manager-grid{grid-template-columns:1fr}.manager-intro,.manager-specialist,.manager-report{padding:18px}}

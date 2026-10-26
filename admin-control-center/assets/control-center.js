@@ -105,6 +105,7 @@ function applyRoleNavigation(){
 function setShell() { loginView.classList.add('hidden'); appShell.classList.remove('hidden'); document.getElementById('admin-name').textContent = userLabel(); document.getElementById('admin-role').textContent = title(String(state.user?.role || 'administrator').replaceAll('_',' ')); document.getElementById('admin-initial').textContent = userLabel().slice(0, 1).toUpperCase(); applyRoleNavigation(); }
 
 const VIEW_META = {
+  manager: ['Management briefing', 'AI General Manager'],
   overview: ['Marketplace control', 'Overview'],
   dispatch: ['Live operations', 'Orders & dispatch'],
   restaurants: ['Partner operations', 'Restaurants'],
@@ -198,6 +199,7 @@ async function renderView(background = false) {
   if (!background) loading();
   try {
     const renderers = {
+      manager: () => window.AIManager.render(),
       overview: renderOverview, dispatch: renderDispatch, workers: () => window.WorkerQueue.renderPage(), restaurants: renderRestaurants,
       riders: renderRiders, customers: renderCustomers, promotions: renderPromotionsView,
       communications: renderCommunicationsView, support: renderSupportView,
@@ -1159,3 +1161,4 @@ document.addEventListener('DOMContentLoaded', async () => { if (!state.token) { 
 
 
 window.adminFreshness = AEFreshness.createFreshness({ document, navigator, getState: () => ({ token: state.token, view: state.view }), refresh: () => renderView(true) });
+
