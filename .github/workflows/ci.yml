@@ -269,3 +269,8 @@ jobs:
         run: node tests/admin-restaurant-offers-browser.mjs
       - name: Verify customer app messaging controls
         run: node tests/customer-messaging-browser.mjs
+      - name: Verify AI General Manager dashboard
+        run: |
+          node --check admin-control-center/assets/ai-manager.js
+          node tests/ai-manager-browser.mjs
+
