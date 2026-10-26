@@ -1,0 +1,21 @@
+name: AI manager dashboard
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node --check admin-control-center/assets/ai-manager.js
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/ai-manager-browser.mjs
