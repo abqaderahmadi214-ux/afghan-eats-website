@@ -2,11 +2,13 @@
 
 Public marketplace frontend for **afghaneats.net**.
 
-This repository contains the Netlify-ready Afghan Eats web application for Herat, Afghanistan. The website is intentionally separated from the API backend (`afghaneats-backend`) so frontend deployment and backend operations can evolve independently.
+This repository contains the static Afghan Eats web application for Herat, Afghanistan. Render serves the production website, while the previous Netlify deployment is retained for rollback. The website is intentionally separated from the API backend (`afghaneats-backend`) so frontend deployment and backend operations can evolve independently.
 
 ## Deployment
 
-Netlify deploys the repository root from the `main` branch. The configured build step renders platform association metadata before publishing the static site.
+Render serves the production site at https://afghaneats.net from the `afghaneats-public` static site. The Netlify deployment at https://afghaneats.netlify.app remains available for rollback and is not the current production deployment.
+
+The Render build runs `node scripts/build-render-static.cjs` and publishes the `render-public` directory.
 
 ## Backend
 
