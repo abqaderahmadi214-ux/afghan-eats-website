@@ -138,11 +138,10 @@
 .owner-premium .owner-menu-preview-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .owner-premium .owner-activity-row .status-badge{max-width:none}
 @media(max-width:600px){.owner-premium .owner-menu-preview-grid{grid-template-columns:1fr 1fr}.owner-premium .owner-preview-item b{font-size:14px}.owner-premium .owner-preview-item>div{padding:12px}}
-.owner-premium:has(#ownerDashboard.hidden) .header button[onclick="portalLogout()"]{display:none}
 @media(max-width:600px){
- .owner-premium .header .nav{display:flex;flex-wrap:nowrap;min-height:66px;height:auto;padding-block:10px;width:calc(100% - 24px)}
+ .owner-premium .header .nav{display:flex;flex-wrap:wrap;min-height:66px;height:auto;padding-block:10px;width:calc(100% - 24px)}
  .owner-premium .header .brand{flex-shrink:0;white-space:nowrap}
- .owner-premium .header .actions{display:flex;flex:1;flex-wrap:nowrap;justify-content:flex-end;width:auto}
+ .owner-premium .header .actions{display:flex;flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start;width:100%}
  .owner-premium .header .actions .btn{padding-inline:10px}
  .owner-premium .owner-activity-row .status-badge{display:inline-flex;justify-self:start}
 }

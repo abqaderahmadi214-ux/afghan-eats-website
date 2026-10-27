@@ -14,7 +14,7 @@ Restaurant-only visual and usability update to owner.html. Built on main f9df5fc
 
 Run `node tests/owner-workspace-browser.mjs` after installing Playwright Chromium. The test starts tests/server.mjs on 127.0.0.1:4173; all external requests are mocked. No production account, real order or real mutation is used.
 
-Covers queue counts, filters, menu search in Dari, availability, empty results, edit form population, unsaved draft retention across panels, cancellation dismissal, exact existing order command payload, filter focus during polling, stale feedback, signed-out gate, and all five panels at 375/390/768/1024/1440 pixels. Dari RTL checked on mobile. Screenshots generated under visual-proof/owner. Local Node 24.22.1 with packaged Chromium passed on 28 October 2026. JavaScript syntax and duplicate HTML ID checks passed.
+Covers queue counts, filters, menu search in Dari, availability, empty results, edit form population, unsaved draft retention across panels, cancellation dismissal, exact existing order command payload, filter focus during polling, stale feedback, signed-out gate, and all five panels at 320/375/390/768/1024/1440 pixels. Dari RTL checked on mobile. Includes the live city selector in the header. Screenshots generated under visual-proof/owner. Local Node 24.22.1 with packaged Chromium passed on 28 October 2026. JavaScript syntax and duplicate HTML ID checks passed.
 
 ## Release
 

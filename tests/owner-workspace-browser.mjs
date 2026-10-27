@@ -17,6 +17,8 @@ try{
   if(url.hostname==='127.0.0.1')return route.continue();
   if(req.method()==='OPTIONS')return route.fulfill({status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*','Access-Control-Allow-Methods':'*'}});
   const path=url.pathname.split('/').at(-1);let data=[];
+  if(path==='cities.publicCatalog')data=[{city_key:'herat',name_en:'Herat',name_dari:'هرات',ordering_enabled:true}];
+  if(path==='cities.publicContext')data={city:{city_key:'herat',name_en:'Herat',name_dari:'هرات',ordering_enabled:true},areas:[]};
   if(path==='portal.me')data={role:'owner',restaurant_id:'r1'};
   if(path==='portal.ownerDashboard'){
    if(fail)return route.fulfill({status:503,headers:{'Access-Control-Allow-Origin':'*'},body:'Unavailable'});
@@ -51,7 +53,7 @@ try{
  await page.locator('#ownerItemForm input[name=name]').fill('Unsaved dish');await page.locator('[data-owner-panel=ownerOrdersPanel]').click();await page.locator('[data-owner-panel=ownerMenuPanel]').click();
  assert.equal(await page.locator('#ownerItemForm input[name=name]').inputValue(),'Unsaved dish');
  const panels=['ownerOverviewPanel','ownerOrdersPanel','ownerMenuPanel','ownerStorePanel','ownerToolsPanel'];
- for(const width of [375,390,768,1024,1440]){
+ for(const width of [320,375,390,768,1024,1440]){
   await page.setViewportSize({width,height:900});
   for(const panel of panels){await page.locator(`[data-owner-panel=${panel}]`).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`${panel} overflow at ${width}: ${JSON.stringify(await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).map(e=>[e.tagName,e.className,e.getBoundingClientRect().width]).slice(-15)))}`)}
  }
@@ -61,5 +63,5 @@ try{
  await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/dari-mobile.png',fullPage:true});
  fail=true;await page.evaluate(()=>refreshOwnerOrders());assert.equal(await page.locator('#ownerDataStatus').getAttribute('data-state'),'stale');assert.equal(writes.length,1);assert.deepEqual(errors,[]);
  const signedOut=await browser.newPage({viewport:{width:375,height:812}});await signedOut.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await signedOut.goto('http://127.0.0.1:4173/owner.html');assert.equal(await signedOut.locator('#ownerAuth').isVisible(),true);assert.equal(await signedOut.locator('#ownerDashboard').isVisible(),false);await signedOut.screenshot({path:'visual-proof/owner/sign-in.png',fullPage:true});
- console.log('PASS: queue filters, menu search, Dari, draft retention, cancellation guard, exact command, polling focus, stale state, signed-out gate, five viewports across all panels; one mocked mutation only.');
+ console.log('PASS: queue filters, menu search, Dari, draft retention, cancellation guard, exact command, polling focus, stale state, signed-out gate, six viewports across all panels; one mocked mutation only.');
 }finally{await browser.close();server.kill()}
