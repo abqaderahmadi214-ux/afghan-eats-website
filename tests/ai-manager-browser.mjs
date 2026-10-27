@@ -25,6 +25,9 @@ try {
     if (req.method() !== 'GET') writes++;
     const path = url.pathname.split('/').at(-1);
     let data = [];
+    if (path === 'platform.adminStatus') data = { controls: {}, incidents: [] };
+    if (path === 'riderOperations.adminBoard') data = { availability: [], riders: [] };
+    if (path === 'ruleWorkers.snapshot') data = { findings: [], runs: [], offset: 0, totalMatching: 0, enabled: false };
     if (path === 'auth.me') data = { id: 1, role: 'admin' };
     if (path === 'aiManager.report') {
       reads++;
@@ -38,7 +41,14 @@ try {
     return route.fulfill({ headers, json: { result: { data: { json: data } } } });
   });
   const page = await context.newPage(), errors = [];
-  page.on('pageerror', e => errors.push(e.message));
+  await page.addInitScript(() => {
+    window.voiceCalls = []; window.voiceCancels = 0;
+    window.testVoices = [{ name: 'Local English', lang: 'en-US', localService: true }, { name: 'Remote Dari', lang: 'fa-AF', localService: false }];
+    Object.defineProperty(window, 'speechSynthesis', { value: { getVoices: () => window.testVoices, addEventListener() {}, speak: u => window.voiceCalls.push({ text: u.text, lang: u.lang }), cancel: () => window.voiceCancels++ } });
+    window.SpeechSynthesisUtterance = class { constructor(text) { this.text = text; } };
+  });
+  await page.clock.install();
+  page.on('pageerror', e => errors.push(e.stack));
   await page.goto('http://127.0.0.1:8143/#manager');
   await page.locator('#manager-report-text').waitFor();
   assert.match(await page.locator('#manager-report-text').innerText(), /300.75 AFN/);
@@ -47,12 +57,42 @@ try {
   assert.equal(await page.getByText('Review needed', { exact: true }).count(), 2);
   assert.match(await page.locator('.manager-page').innerText(), /live operation remains unverified/);
   assert.match(await page.locator('.manager-snapshot').innerText(), /14:30/);
+  assert.equal(await page.locator('[data-manager-listen]').isEnabled(), true);
+  await page.locator('[data-manager-listen]').click();
+  assert.equal(await page.evaluate(() => voiceCalls.length), 1);
+  assert.match(await page.evaluate(() => voiceCalls[0].text), /300.75 AFN/);
+  await page.locator('[data-manager-listen]').blur();
+  const beforeSpeechTick = reads;
+  await page.clock.fastForward(310000);
+  assert.equal(reads, beforeSpeechTick, 'automatic refresh does not interrupt playback');
+  await page.locator('[data-manager-stop]').click();
+  assert.equal(await page.evaluate(() => voiceCancels), 1);
+  await page.locator('#manager-auto').uncheck();
+  await page.locator('#manager-auto').blur();
+  const beforePause = reads;
+  await page.clock.fastForward(310000);
+  assert.equal(reads, beforePause, 'paused updates do not fetch');
+  await page.locator('#manager-auto').check();
+  await page.locator('#manager-auto').blur();
+  await page.clock.fastForward(30000);
+  await page.waitForFunction(() => !renderBusy);
+  assert.equal(reads, beforePause + 1, 'shared controller refreshes overdue report once');
+  await page.clock.fastForward(30000);
+  assert.equal(reads, beforePause + 1, 'manager does not fetch every thirty seconds');
+  await page.locator('[data-manager-listen]').click();
+  const beforeLeave = await page.evaluate(() => voiceCancels);
+  await page.evaluate(() => setView('overview'));
+  await page.waitForFunction(() => !renderBusy);
+  assert.equal(await page.evaluate(() => voiceCancels), beforeLeave + 1, 'navigation stops private audio');
+  await page.evaluate(() => setView('manager'));
+  await page.locator('#manager-report-text').waitFor();
   for (const width of [375, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `no overflow at ${width}`);
   }
   await page.locator('#manager-language').selectOption('fa');
   await page.locator('.manager-page[lang=fa][dir=rtl]').waitFor();
+  assert.equal(await page.locator('[data-manager-listen]').isDisabled(), true, 'remote-only voice is not used');
   assert.match(await page.locator('#manager-report-text').innerText(), /300.75 افغانی/);
   await page.locator('[data-manager-refresh]').focus();
   const beforeRefresh = reads;
@@ -86,6 +126,6 @@ try {
   assert.equal(reads, beforeStaff, 'restricted staff cannot fetch report through navigation');
   assert.equal(writes, 0, 'dashboard never mutates');
   assert.deepEqual(errors, []);
-  console.log('PASS manager dashboard: English/Dari, escaped report, specialist states, Kabul time, responsive layouts, keyboard refresh, safe failures, logout isolation, restricted staff, zero writes.');
+  console.log('PASS manager dashboard: automatic updates and pause, local-only voice and navigation cancellation, English/Dari, escaped report, specialist states, Kabul time, responsive layouts, keyboard refresh, safe failures, logout isolation, restricted staff, zero writes.');
   await context.close();
 } finally { await browser?.close(); server.kill(); }

@@ -69,6 +69,7 @@ dialog.addEventListener('close', async () => { const callback = state.confirmCal
 
 function saveSession(token, user) { state.token = token; state.user = user; sessionStorage.setItem(TOKEN_KEY, token); sessionStorage.setItem(USER_KEY, JSON.stringify(user)); }
 async function logout(show = true) {
+  window.AIManager?.reset();
   const logoutToken = state.token;
   let confirmed = true;
   if (show && logoutToken) {
@@ -126,7 +127,7 @@ const VIEW_META = {
 };
 
 function setActiveNav() { document.querySelectorAll('#primary-nav a').forEach(link => link.classList.toggle('active', link.dataset.view === state.view)); const meta = VIEW_META[state.view] || VIEW_META.overview; document.getElementById('page-kicker').textContent = meta[0]; document.getElementById('page-title').textContent = meta[1]; }
-function setView(view) { if (view !== state.view) window.AdminMfa?.clearEnrollment(); window.adminFreshness?.clearDirty(); const requested=VIEW_META[view] ? view : defaultView(); state.view=canView(requested)?requested:defaultView(); if (location.hash.slice(1) !== state.view) history.replaceState(null, '', `#${state.view}`); setActiveNav(); clearNotice(); renderView(); }
+function setView(view) { window.AIManager?.stopVoice(); if (view !== state.view) window.AdminMfa?.clearEnrollment(); window.adminFreshness?.clearDirty(); const requested=VIEW_META[view] ? view : defaultView(); state.view=canView(requested)?requested:defaultView(); if (location.hash.slice(1) !== state.view) history.replaceState(null, '', `#${state.view}`); setActiveNav(); clearNotice(); renderView(); }
 
 async function verifySession() {
   if (!state.token) return false;
