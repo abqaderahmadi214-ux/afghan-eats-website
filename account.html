@@ -26,7 +26,7 @@
       <p class="en-copy">Save addresses, follow orders and return to your favourites faster.</p>
       <p class="fa-copy">آدرس‌ها را ذخیره کنید، سفارش‌ها را پیگیری کنید و سریع‌تر به غذاهای دلخواه‌تان برگردید.</p>
       <div class="account-auth-benefits">
-        <span>✓ <span class="en-copy">Guest checkout stays available</span><span class="fa-copy">سفارش مهمان همچنان فعال است</span></span>
+        <span>✓ <span class="en-copy">Track guest orders here or in your account</span><span class="fa-copy">سفارش‌های مهمان را اینجا یا در حساب خود پیگیری کنید</span></span>
         <span>★ <span class="en-copy">Eligible rewards and offers when active</span><span class="fa-copy">امتیازها و پیشنهادهای واجد شرایط هنگام فعال بودن</span></span>
         <span>⌂ <span class="en-copy">Saved addresses and cross-device order history</span><span class="fa-copy">آدرس‌های ذخیره‌شده و سابقه سفارش در دستگاه‌های مختلف</span></span>
       </div>
@@ -49,8 +49,8 @@
       </div>
       <div id="customerRegisterPane" class="hidden">
         <h1 class="en-copy">Create your Afghan Eats account</h1><h1 class="fa-copy">حساب افغان ایتس بسازید</h1>
-        <p class="muted en-copy">Creating an account is optional. Guest checkout remains available.</p>
-        <p class="muted fa-copy">ساخت حساب اختیاری است و سفارش مهمان همچنان فعال می‌ماند.</p>
+        <p class="muted en-copy">Creating an account is optional. Keep order history and saved addresses together.</p>
+        <p class="muted fa-copy">ساخت حساب اختیاری است. سابقه سفارش و آدرس‌های ذخیره‌شده را یکجا نگه دارید.</p>
         <form class="grid2" onsubmit="customerRegister(event)">
           <label class="field"><span class="en-copy">Full name</span><span class="fa-copy">نام کامل</span><input name="name" required minlength="2" autocomplete="name"></label>
           <label class="field"><span class="en-copy">Phone number</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+93"></label>
@@ -78,7 +78,7 @@
         <p class="fa-copy">سفارش‌ها، آدرس‌ها و مزایای واجد شرایط شما در یک محل.</p>
       </div>
       <div class="account-hero-actions">
-        <a class="btn account-hero-light" href="/restaurants"><span class="en-copy">Order food</span><span class="fa-copy">سفارش غذا</span></a>
+        <a class="btn account-hero-light" href="/restaurants"><span class="en-copy">Browse restaurants</span><span class="fa-copy">دیدن رستورانت‌ها</span></a>
         <button class="btn account-hero-ghost" onclick="customerLogout()"><span class="en-copy">Log out</span><span class="fa-copy">خروج</span></button>
       </div>
     </section>
@@ -129,7 +129,7 @@
         </section>
 
         <section class="account-panel" data-account-panel="orders">
-          <div class="account-panel-head"><div><span class="account-panel-kicker"><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></span><h2><span class="en-copy">Your order history</span><span class="fa-copy">سابقه سفارش‌های شما</span></h2><p class="en-copy">Orders placed while signed in stay connected to your account.</p><p class="fa-copy">سفارش‌هایی که هنگام ورود ثبت می‌شوند به حساب شما متصل می‌مانند.</p></div><a class="btn btn-primary" href="/restaurants"><span class="en-copy">Order food</span><span class="fa-copy">سفارش غذا</span></a></div>
+          <div class="account-panel-head"><div><span class="account-panel-kicker"><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></span><h2><span class="en-copy">Your order history</span><span class="fa-copy">سابقه سفارش‌های شما</span></h2><p class="en-copy">Orders placed while signed in stay connected to your account.</p><p class="fa-copy">سفارش‌هایی که هنگام ورود ثبت می‌شوند به حساب شما متصل می‌مانند.</p></div><a class="btn btn-primary" href="/restaurants"><span class="en-copy">Browse restaurants</span><span class="fa-copy">دیدن رستورانت‌ها</span></a></div>
           <div class="account-surface"><div id="customerOrders"></div></div>
           <details class="account-disclosure">
             <summary><span><b><span class="en-copy">Add a previous guest order</span><span class="fa-copy">افزودن سفارش مهمان قبلی</span></b><small class="en-copy">Use the order ID and checkout phone.</small><small class="fa-copy">شناسه سفارش و شماره تماس همان سفارش را وارد کنید.</small></span><span>＋</span></summary>
