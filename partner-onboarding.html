@@ -32,8 +32,8 @@
     <div class="onboarding-intro">
       <span class="hero-kicker"><span class="en-copy">Restaurant onboarding</span><span class="fa-copy">ثبت رستورانت</span></span>
       <h1><span class="en-copy">Become an Afghan Eats partner</span><span class="fa-copy">همکار افغان ایتس شوید</span></h1>
-      <p class="en-copy">Complete four short steps. If the live application endpoint is not available yet, your details remain on this page for safe follow-up and our team will contact you.</p>
-      <p class="fa-copy">چهار مرحله کوتاه را تکمیل کنید. اگر سیستم آنلاین درخواست هنوز فعال نباشد، معلومات شما برای پیگیری محفوظ می‌ماند و تیم ما با شما تماس می‌گیرد.</p>
+      <p class="en-copy">Complete four short steps and submit your application. If we cannot confirm receipt, the page will tell you how to retry or contact our team.</p>
+      <p class="fa-copy">چهار مرحله کوتاه را تکمیل و درخواست خود را ارسال کنید. اگر دریافت درخواست تأیید نشود، صفحه راهنمای تلاش دوباره یا تماس با تیم ما را نشان می‌دهد.</p>
     </div>
 
     <div class="onboarding-steps" aria-label="Onboarding steps">
@@ -47,20 +47,20 @@
       <section class="onboarding-panel" data-onboarding-step>
         <h2><span class="en-copy">Restaurant details</span><span class="fa-copy">جزئیات رستورانت</span></h2>
         <div class="grid2">
-          <label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="restaurantName" required minlength="2"></label>
-          <label class="field"><span class="en-copy">Owner / manager</span><span class="fa-copy">مالک / مدیر</span><input name="ownerName" required minlength="2"></label>
-          <label class="field"><span class="en-copy">Phone</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required placeholder="+93"></label>
-          <label class="field"><span>WhatsApp</span><input name="whatsapp" type="tel" placeholder="+93"></label>
-          <label class="field"><span class="en-copy">Email</span><span class="fa-copy">ایمیل</span><input name="email" type="email"></label>
-          <label class="field"><span class="en-copy">District / area</span><span class="fa-copy">ناحیه / ساحه</span><input name="district" required></label>
-          <label class="field full"><span class="en-copy">Address / landmark</span><span class="fa-copy">آدرس / نشانی نزدیک</span><input name="address" required minlength="5"></label>
+          <label class="field"><span class="en-copy">Restaurant name</span><span class="fa-copy">نام رستورانت</span><input name="restaurantName" required minlength="2" maxlength="200"></label>
+          <label class="field"><span class="en-copy">Owner / manager</span><span class="fa-copy">مالک / مدیر</span><input name="ownerName" required minlength="2" maxlength="200"></label>
+          <label class="field"><span class="en-copy">Phone</span><span class="fa-copy">شماره تماس</span><input name="phone" type="tel" required minlength="9" maxlength="50" autocomplete="tel" placeholder="+93"></label>
+          <label class="field"><span>WhatsApp</span><input name="whatsapp" type="tel" maxlength="50" placeholder="+93"></label>
+          <label class="field"><span class="en-copy">Email (required)</span><span class="fa-copy">ایمیل (ضروری)</span><input name="email" type="email" required maxlength="320" autocomplete="email"><small class="muted en-copy">Email verification is required before approval.</small><small class="muted fa-copy">تأیید ایمیل پیش از تأیید درخواست ضروری است.</small></label>
+          <label class="field"><span class="en-copy">District / area</span><span class="fa-copy">ناحیه / ساحه</span><input name="district" required minlength="2" maxlength="120"></label>
+          <label class="field full"><span class="en-copy">Address / landmark</span><span class="fa-copy">آدرس / نشانی نزدیک</span><input name="address" required minlength="5" maxlength="800"></label>
         </div>
       </section>
 
       <section class="onboarding-panel" data-onboarding-step hidden>
         <h2><span class="en-copy">Menu</span><span class="fa-copy">منو</span></h2>
         <div class="grid2">
-          <label class="field"><span class="en-copy">Cuisine / specialties</span><span class="fa-copy">نوع غذا / تخصص</span><input name="cuisine" required placeholder="Afghan, kebab, pizza..."></label>
+          <label class="field"><span class="en-copy">Cuisine / specialties</span><span class="fa-copy">نوع غذا / تخصص</span><input name="cuisine" required maxlength="300" placeholder="Afghan, kebab, pizza..."></label>
           <label class="field"><span class="en-copy">Existing menu link</span><span class="fa-copy">لینک منوی فعلی</span><input name="menuUrl" type="url" placeholder="https://..."></label>
           <label class="field full"><span class="en-copy">Menu items</span><span class="fa-copy">اقلام منو</span><textarea name="menuItems" rows="5" required placeholder="Kabuli pulao — 250 AFN&#10;Chicken kebab — 180 AFN"></textarea></label>
           <label class="field full"><span class="en-copy">Menu notes</span><span class="fa-copy">یادداشت منو</span><textarea name="menuNotes" rows="4" placeholder="Price ranges, family platters, catering, availability..."></textarea></label>
@@ -85,6 +85,9 @@
         <div class="notice onboarding-note"><span class="en-copy">Do not enter bank passwords, PINs, card numbers, or other secrets here.</span><span class="fa-copy">رمز بانکی، پین، شماره کارت یا معلومات محرمانه را اینجا وارد نکنید.</span></div>
       </section>
 
+      <p class="notice onboarding-note en-copy">We use the details you provide to review and manage your partner application and contact you. Read the <a href="/privacy#partner-applications">partner application privacy notice</a>.</p>
+      <p class="notice onboarding-note fa-copy">ما از معلوماتی که می‌دهید برای بررسی و مدیریت درخواست همکاری و تماس با شما استفاده می‌کنیم. <a href="/privacy#partner-applications">اطلاعیه حریم خصوصی درخواست همکاری</a> را بخوانید.</p>
+
       <div class="onboarding-actions">
         <button id="onboardingPrev" class="btn btn-light" type="button" onclick="partnerOnboardingPrev()" hidden><span class="en-copy">Back</span><span class="fa-copy">قبلی</span></button>
         <div class="right">
@@ -92,7 +95,7 @@
           <button id="onboardingSubmit" class="btn btn-primary" type="submit" hidden><span class="en-copy">Submit</span><span class="fa-copy">ارسال</span></button>
         </div>
       </div>
-      <div id="partnerOnboardingResult" class="notice" hidden></div>
+      <div id="partnerOnboardingResult" class="notice" role="status" aria-live="polite" hidden></div>
     </form>
   </div>
 </main>

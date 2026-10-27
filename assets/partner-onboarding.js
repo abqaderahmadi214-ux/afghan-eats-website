@@ -57,23 +57,33 @@
 
   function payloadFromForm(form) {
     const data = new FormData(form);
+    const value = name => String(data.get(name) || '').trim();
+    const noteSections = [
+      ['Menu items', 'menuItems'],
+      ['Menu notes', 'menuNotes'],
+      ['Menu link', 'menuUrl'],
+      ['Delivery zones', 'deliveryZones'],
+      ['Payout method', 'payoutMethod'],
+      ['Payout contact name', 'payoutName'],
+      ['Payout contact phone', 'payoutPhone']
+    ];
+    const notes = noteSections
+      .map(([label, name]) => [label, value(name)])
+      .filter(([, content]) => content)
+      .map(([label, content]) => `${label}: ${content}`)
+      .join('\n');
+
     return {
-      restaurantName: String(data.get('restaurantName') || '').trim(),
-      ownerName: String(data.get('ownerName') || '').trim(),
-      phone: String(data.get('phone') || '').trim(),
-      whatsapp: String(data.get('whatsapp') || '').trim(),
-      email: String(data.get('email') || '').trim(),
-      district: String(data.get('district') || '').trim(),
-      address: String(data.get('address') || '').trim(),
-      cuisine: String(data.get('cuisine') || '').trim(),
-      menuItems: String(data.get('menuItems') || '').trim(),
-      menuNotes: String(data.get('menuNotes') || '').trim(),
-      menuUrl: String(data.get('menuUrl') || '').trim(),
-      deliveryZones: String(data.get('deliveryZones') || '').trim(),
-      deliveryModel: String(data.get('deliveryModel') || '').trim(),
-      payoutMethod: String(data.get('payoutMethod') || '').trim(),
-      payoutName: String(data.get('payoutName') || '').trim(),
-      payoutPhone: String(data.get('payoutPhone') || '').trim()
+      restaurantName: value('restaurantName'),
+      ownerName: value('ownerName'),
+      phone: value('phone'),
+      whatsapp: value('whatsapp'),
+      email: value('email'),
+      district: value('district'),
+      address: value('address'),
+      deliveryModel: value('deliveryModel') || 'afghan_eats',
+      cuisine: value('cuisine'),
+      notes
     };
   }
 
@@ -85,13 +95,36 @@
     result.hidden = false;
   }
 
-  function safeFallback(payload, reason) {
-    console.warn('[Afghan Eats] Partner onboarding fell back to local confirmation.', reason || '');
+  function showSubmissionFailure() {
     showResult(
-      'success',
-      "Thanks — we've saved your application details for follow-up. The Afghan Eats team will contact you.",
-      'تشکر — معلومات درخواست شما برای پیگیری آماده شد. تیم افغان ایتس با شما تماس خواهد گرفت.'
+      'error',
+      "We couldn't confirm that your application was received. Don't assume it was submitted. Please try again later or contact support@afghaneats.net.",
+      'دریافت درخواست شما تأیید نشد؛ فرض نکنید که درخواست ارسال شده است. لطفاً بعداً دوباره تلاش کنید یا با support@afghaneats.net تماس بگیرید.'
     );
+  }
+
+  function successMessage(result) {
+    const reference = result.reference.trim();
+    const openingEn = result.duplicate
+      ? `An existing application was found. Reference: ${reference}. `
+      : `Your application was submitted. Reference: ${reference}. `;
+    const openingFa = result.duplicate
+      ? `درخواست قبلی شما پیدا شد. شماره پیگیری: ${reference}. `
+      : `درخواست شما ارسال شد. شماره پیگیری: ${reference}. `;
+
+    if (result.emailVerified) {
+      return [openingEn + 'Your email is already verified.', openingFa + 'ایمیل شما قبلاً تأیید شده است.'];
+    }
+    if (result.verificationEmailSent) {
+      return [
+        openingEn + 'A verification link was sent to your email; please verify it before approval.',
+        openingFa + 'لینک تأیید به ایمیل شما فرستاده شد؛ لطفاً پیش از تأیید درخواست، ایمیل را تأیید کنید.'
+      ];
+    }
+    return [
+      openingEn + 'The application is saved, but we could not send the verification email yet. Contact support if you need help.',
+      openingFa + 'درخواست ثبت شده است، اما فعلاً ایمیل تأیید فرستاده نشد. در صورت نیاز با پشتیبانی تماس بگیرید.'
+    ];
   }
 
   async function submit(event) {
@@ -101,50 +134,48 @@
     const form = event.currentTarget;
     const button = document.getElementById('onboardingSubmit');
     const payload = payloadFromForm(form);
+
+    if (payload.notes.length > 1000) {
+      showResult(
+        'error',
+        'The extra menu, delivery and payout notes exceed the 1,000-character limit. Shorten them before submitting.',
+        'یادداشت‌های منو، ارسال و پرداخت بیش از حد ۱۰۰۰ نویسه است. پیش از ارسال، آن‌ها را کوتاه کنید.'
+      );
+      return;
+    }
+
     const base = String(window.AFGHAN_EATS_CONFIG?.apiBaseUrl || '').replace(/\/$/, '');
+    if (!base) {
+      showSubmissionFailure();
+      return;
+    }
 
     if (button) button.disabled = true;
 
     try {
-      if (!base) {
-        safeFallback(payload, 'API base URL is not configured');
-        return;
-      }
-
-      const response = await fetch(`${base}/api/partners/apply`, {
+      const response = await fetch(`${base}/api/trpc/operations.applyPartner`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ json: payload })
       });
+      if (!response.ok) throw new Error('Request failed');
 
-      if (!response.ok) {
-        safeFallback(payload, `Endpoint unavailable or rejected request (${response.status})`);
-        return;
+      const body = await response.json();
+      const result = body?.result?.data?.json ?? body?.result?.data;
+      if (result?.success !== true || typeof result.reference !== 'string' || !result.reference.trim()) {
+        throw new Error('Application receipt could not be confirmed');
       }
 
-      let result = {};
-      try {
-        result = await response.json();
-      } catch {}
-
-      const reference = result?.reference || result?.applicationReference || result?.id || '';
-      showResult(
-        'success',
-        reference
-          ? `Application submitted successfully. Reference: ${reference}`
-          : 'Application submitted successfully. Afghan Eats will contact you with the next steps.',
-        reference
-          ? `درخواست با موفقیت ارسال شد. شماره پیگیری: ${reference}`
-          : 'درخواست با موفقیت ارسال شد. افغان ایتس برای مراحل بعدی با شما تماس می‌گیرد.'
-      );
+      const [en, fa] = successMessage(result);
+      showResult('success', en, fa);
       form.reset();
       step = 0;
       updateStep();
-    } catch (error) {
-      safeFallback(payload, error?.message || 'Network error');
+    } catch {
+      showSubmissionFailure();
     } finally {
       if (button) button.disabled = false;
     }
