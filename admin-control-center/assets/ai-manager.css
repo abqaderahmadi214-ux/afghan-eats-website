@@ -11,4 +11,7 @@
 .manager-reference,.manager-snapshot{font-size:.875rem;color:var(--ink)}
 .manager-report{margin-top:24px;padding:24px}.manager-report pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin-bottom:0;unicode-bidi:plaintext}
 .manager-page[dir=rtl]{text-align:right}
+.manager-page label:has(#manager-auto){display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer}
+.manager-page #manager-auto{width:22px;height:22px;accent-color:var(--ink-deep)}
+.manager-page button:disabled{opacity:.6;cursor:not-allowed}
 @media(max-width:1000px){.manager-grid{grid-template-columns:1fr}.manager-intro,.manager-specialist,.manager-report{padding:18px}}

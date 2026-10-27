@@ -1,7 +1,7 @@
 'use strict';
 (function (global) {
   function canRefresh({ token, hidden, online, busy, dirty, editing, dialogOpen, view }) {
-    return Boolean(token && !hidden && online !== false && !busy && !dirty && !editing && !dialogOpen && ['overview', 'dispatch', 'support'].includes(view));
+    return Boolean(token && !hidden && online !== false && !busy && !dirty && !editing && !dialogOpen && ['overview', 'dispatch', 'support', 'manager'].includes(view));
   }
   function createFreshness({ document, navigator, getState, refresh, now = Date.now, setTimer = setInterval }) {
     let lastUpdated = 0, busy = false, dirty = false, failures = 0;
@@ -16,10 +16,12 @@
     function tick() {
       paint();
       const active = document.activeElement;
-      if (canRefresh({ ...getState(), hidden: document.hidden, online: navigator.onLine, busy, dirty, editing: Boolean(active?.matches?.('input,textarea,select,[contenteditable="true"]')), dialogOpen: Boolean(document.querySelector('dialog[open]')) })) void refresh();
+      const current = getState();
+      if (current.view === 'manager' && !global.AIManager?.canAutoRefresh()) return;
+      if (canRefresh({ ...current, hidden: document.hidden, online: navigator.onLine, busy, dirty, editing: Boolean(active?.matches?.('input,textarea,select,[contenteditable="true"]') || (current.view === 'manager' && active?.closest?.('#view-root'))), dialogOpen: Boolean(document.querySelector('dialog[open]')) })) void refresh();
     }
-    document.addEventListener('input', event => { if (event.target.closest?.('#view-root')) { dirty = true; paint(); } });
-    document.addEventListener('change', event => { if (event.target.closest?.('#view-root')) { dirty = true; paint(); } });
+    document.addEventListener('input', event => { if (event.target.closest?.('#view-root') && getState().view !== 'manager') { dirty = true; paint(); } });
+    document.addEventListener('change', event => { if (event.target.closest?.('#view-root') && getState().view !== 'manager') { dirty = true; paint(); } });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
     global.addEventListener?.('online', tick);
     global.addEventListener?.('offline', paint);
@@ -36,3 +38,4 @@
   global.AEFreshness = { canRefresh, createFreshness };
   if (typeof module !== 'undefined') module.exports = global.AEFreshness;
 })(typeof window !== 'undefined' ? window : globalThis);
+
