@@ -48,9 +48,20 @@ try{
  await page.goto('http://127.0.0.1:4173/owner.html');
  await page.locator('#ownerServiceSummary button').first().waitFor();
  assert.equal(await page.locator('#ownerError').isVisible(),false);
+ assert.equal(await page.getByRole('navigation',{name:'Restaurant workspace'}).count(),1,'English navigation landmark should have a localized name');
+ for(const name of ['Menu','Store & profile','Business tools'])assert.equal(await page.getByRole('button',{name,exact:true}).count(),1,`${name} should use its visible English label`);
+ assert.equal(await page.getByRole('button',{name:'Refresh dashboard',exact:true}).count(),1,'refresh control should have a descriptive English name');
+ assert.equal(await page.getByRole('button',{name:'Open item editor',exact:true}).count(),2,'menu shortcuts should preserve their distinct English accessible name');
+ assert.equal(await page.getByRole('region',{name:'Kitchen queue'}).count(),1,'kitchen queue should have a named region');
  assert.deepEqual(await page.locator('#ownerServiceSummary button strong').allTextContents(),['1','2','1']);
  await page.screenshot({path:'visual-proof/owner/desktop.png',fullPage:true});
- await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'en');await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
+ await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'en');
+ assert.equal(await page.getByLabel('Monday opening time',{exact:true}).count(),1,'English opening-hours input should have a descriptive accessible name');
+ assert.equal(await page.getByLabel('Monday closing time',{exact:true}).count(),1,'English closing-hours input should have a descriptive accessible name');
+ await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
+ await page.locator('[data-owner-panel=ownerOrdersPanel]').click();
+ assert.equal(await page.getByRole('group',{name:'Filter orders'}).count(),1,'order filter group should have a localized accessible name');
+ await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
  await page.locator('[data-queue="placed"]').click();
  assert.equal(await page.locator('#ownerOrders .portal-order').count(),1);
  assert.equal(new URL(page.url()).hash,'#orders');
@@ -62,6 +73,7 @@ try{
  assert.equal(await page.locator('[data-filter=preparing]').getAttribute('aria-pressed'),'true');
  assert.equal(await page.locator('[data-filter=preparing]').evaluate(el=>el===document.activeElement),true);
  await page.locator('[data-owner-panel=ownerMenuPanel]').click();
+ assert.equal(await page.locator('#ownerCategoryForm').getByRole('spinbutton',{name:'Display order',exact:true}).count(),1,'category display order should have a named input');
  await page.locator('#ownerMenuSearch').fill('منتو');assert.equal(await page.locator('#ownerMenu .owner-menu-card').count(),1);
  await page.locator('#ownerMenuAvailability').selectOption('available');assert.match(await page.locator('#ownerMenu').innerText(),/No matching dishes/);
  await page.locator('#ownerMenuSearch').fill('');await page.locator('#ownerMenuAvailability').selectOption('all');
@@ -75,7 +87,18 @@ try{
  }
  await page.setViewportSize({width:390,height:844});await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/mobile.png',fullPage:true});
  await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));await page.reload();await page.locator('#ownerServiceSummary button').first().waitFor();assert.equal(await page.locator('html').getAttribute('dir'),'rtl');
- await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'fa');await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
+ await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'fa');
+ assert.equal(await page.getByLabel('ساعت شروع دوشنبه',{exact:true}).count(),1,'Dari opening-hours input should have a localized accessible name');
+ assert.equal(await page.getByLabel('ساعت پایان دوشنبه',{exact:true}).count(),1,'Dari closing-hours input should have a localized accessible name');
+ await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
+ assert.equal(await page.getByRole('navigation',{name:'فضای کاری رستورانت'}).count(),1,'Dari navigation landmark should have a localized name');
+ for(const name of ['منو و آیتم‌ها','تنظیمات رستورانت','ابزارهای کسب‌وکار'])assert.equal(await page.getByRole('button',{name,exact:true}).count(),1,`${name} should use its visible Dari label`);
+ assert.equal(await page.getByRole('button',{name:'به‌روزرسانی داشبورد',exact:true}).count(),1,'refresh control should have a descriptive Dari name');
+ assert.equal(await page.getByRole('button',{name:'باز کردن ویرایشگر منو',exact:true}).count(),2,'menu shortcuts should have a distinct Dari accessible name');
+ assert.equal(await page.getByRole('region',{name:'صف آشپزخانه'}).count(),1,'kitchen queue should have a Dari region name');
+ await page.locator('[data-owner-panel=ownerOrdersPanel]').click();assert.equal(await page.getByRole('group',{name:'فیلتر سفارش‌ها'}).count(),1,'order filter group should have a Dari name');
+ await page.locator('[data-owner-panel=ownerMenuPanel]').click();assert.equal(await page.locator('#ownerCategoryForm').getByRole('spinbutton',{name:'ترتیب نمایش',exact:true}).count(),1,'category display order should have a Dari name');
+ await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
  for(const panel of panels){await page.locator(`[data-owner-panel=${panel}]`).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`RTL ${panel} overflow`)}
  await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/dari-mobile.png',fullPage:true});
  fail=true;await page.evaluate(()=>refreshOwnerOrders());assert.equal(await page.locator('#ownerDataStatus').getAttribute('data-state'),'stale');assert.equal(writes.length,1);assert.deepEqual(errors,[]);
