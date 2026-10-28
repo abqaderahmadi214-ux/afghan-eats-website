@@ -28,7 +28,7 @@ for (const route of ['/owner','/rider-portal']) {
     await expect(page.locator('#aeCitySelect')).toBeVisible();
     if(language==='fa') await page.locator('.header .lang').click();
     await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
-    const controls=page.locator('.header .actions button,.header .actions select');
+    const controls=page.locator('.header .actions button:visible,.header .actions select:visible');
     for(const control of await controls.all()) {
      const bounds=await control.boundingBox();
      expect(bounds).toBeTruthy();
