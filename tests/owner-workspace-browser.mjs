@@ -2,6 +2,21 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
+
+async function assertOwnerDescriptionLabels(page, locale) {
+ const labels=[
+  ['description','English description','توضیحات انگلیسی'],
+  ['descriptionDari','Dari description','توضیحات دری'],
+ ];
+ for(const [field,english,dari] of labels){
+  const label=page.locator(`#ownerProfileForm textarea[name="${field}"]`).locator('xpath=..');
+  const active=locale==='fa'?'.fa-copy':'.en-copy',inactive=locale==='fa'?'.en-copy':'.fa-copy';
+  assert.equal(await label.locator(active).isVisible(),true,`${field} ${locale} label should be visible`);
+  assert.equal((await label.locator(active).textContent()).trim(),locale==='fa'?dari:english);
+  assert.equal(await label.locator(inactive).isVisible(),false,`${field} inactive-language label should be hidden`);
+ }
+}
+
 const server=spawn(process.execPath,['tests/server.mjs'],{stdio:'pipe'});
 await new Promise((resolve,reject)=>{server.once('error',reject);const check=()=>fetch('http://127.0.0.1:4173/owner.html').then(resolve).catch(()=>setTimeout(check,100));check()});
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
@@ -35,6 +50,7 @@ try{
  assert.equal(await page.locator('#ownerError').isVisible(),false);
  assert.deepEqual(await page.locator('#ownerServiceSummary button strong').allTextContents(),['1','2','1']);
  await page.screenshot({path:'visual-proof/owner/desktop.png',fullPage:true});
+ await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'en');await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
  await page.locator('[data-queue="placed"]').click();
  assert.equal(await page.locator('#ownerOrders .portal-order').count(),1);
  assert.equal(new URL(page.url()).hash,'#orders');
@@ -59,6 +75,7 @@ try{
  }
  await page.setViewportSize({width:390,height:844});await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/mobile.png',fullPage:true});
  await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));await page.reload();await page.locator('#ownerServiceSummary button').first().waitFor();assert.equal(await page.locator('html').getAttribute('dir'),'rtl');
+ await page.locator('[data-owner-panel=ownerStorePanel]').click();await assertOwnerDescriptionLabels(page,'fa');await page.locator('[data-owner-panel=ownerOverviewPanel]').click();
  for(const panel of panels){await page.locator(`[data-owner-panel=${panel}]`).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`RTL ${panel} overflow`)}
  await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/dari-mobile.png',fullPage:true});
  fail=true;await page.evaluate(()=>refreshOwnerOrders());assert.equal(await page.locator('#ownerDataStatus').getAttribute('data-state'),'stale');assert.equal(writes.length,1);assert.deepEqual(errors,[]);
