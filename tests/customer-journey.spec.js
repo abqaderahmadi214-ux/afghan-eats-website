@@ -106,14 +106,21 @@ test('checkout submits a real order payload and opens order confirmation', async
 test('Dari customer chrome and discovery stay localized', async ({page})=>{
   await mockApi(page);
   await page.goto('/');
+  await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
+  await expect(page.locator('.ae-value-strip button')).toHaveAccessibleName('Switch language to Dari');
   await page.evaluate(()=>{localStorage.setItem('ae_lang','fa');localStorage.setItem('ae_mode','pickup')});
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
+  await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
+  await expect(page.locator('.ae-value-strip button')).toHaveAccessibleName('تغییر زبان به انگلیسی');
   await expect(page.locator('.mode-tabs button[data-mode="pickup"]')).toContainText('دریافت حضوری');
   await page.goto('/restaurants');
   await expect(page.locator('.restaurant-card').first()).toContainText('آشپزخانه هرات');
   await expect(page.locator('.restaurant-card').first()).toContainText('افغانی');
   await expect(page.locator('#search')).toHaveAttribute('placeholder',/رستورانت/);
+  await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
+  await page.goto('/checkout');
+  await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
 });
 
 test('recommended discovery prioritizes orderable restaurants and hides test inventory', async ({page})=>{

@@ -39,7 +39,7 @@ test('premium home keeps its local discovery paths clear in English and Dari at 
   await expect(strip).toContainText('ساخته‌شده برای هرات');
   await expect(strip).toContainText('انگلیسی + دری');
   await expect(strip).toContainText('سفارش خود را پیگیری کنید');
-  const languageButton = page.getByRole('button', { name: 'تغییر زبان میان انگلیسی و دری' });
+  const languageButton = page.locator('.ae-value-strip button');
   await expect(languageButton).toBeVisible();
 
   for (const width of [360, 390, 768, 1280]) {
