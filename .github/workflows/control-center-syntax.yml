@@ -21,5 +21,6 @@ jobs:
       - run: node tests/premium-foundation.test.mjs
       - run: node --check admin-control-center/assets/csv-export.js
       - run: node tests/experience-release.test.mjs
+      - run: node --test tests/rule-workers-ui.test.mjs
       - run: node --check admin-control-center/assets/admin-mfa.js
       - run: node --check admin-control-center/assets/rule-workers.js
