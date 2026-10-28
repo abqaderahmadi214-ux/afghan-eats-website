@@ -63,5 +63,12 @@ try{
  await page.locator('[data-owner-panel=ownerOverviewPanel]').click();await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'visual-proof/owner/dari-mobile.png',fullPage:true});
  fail=true;await page.evaluate(()=>refreshOwnerOrders());assert.equal(await page.locator('#ownerDataStatus').getAttribute('data-state'),'stale');assert.equal(writes.length,1);assert.deepEqual(errors,[]);
  const signedOut=await browser.newPage({viewport:{width:375,height:812}});await signedOut.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());await signedOut.goto('http://127.0.0.1:4173/owner.html');assert.equal(await signedOut.locator('#ownerAuth').isVisible(),true);assert.equal(await signedOut.locator('#ownerDashboard').isVisible(),false);await signedOut.screenshot({path:'visual-proof/owner/sign-in.png',fullPage:true});
+ await signedOut.waitForFunction(()=>typeof window.openSecurityRecovery==='function'&&typeof window.openPortalRecovery==='function');
+ const recoveryControls=signedOut.locator('#ownerAuth .owner-forgot-link, #ownerAuth #aeForgotPassword');
+ assert.equal(await signedOut.locator('html').getAttribute('lang'),'en');assert.equal(await recoveryControls.count(),1,'English owner sign-in should show one recovery control');assert.equal((await recoveryControls.first().innerText()).trim(),'Forgot username or password?');
+ await recoveryControls.first().click();assert.equal(await signedOut.locator('#ownerRecoveryPanel').isVisible(),true,'English recovery button should open the owner recovery panel');
+ await signedOut.evaluate(()=>localStorage.setItem('ae_lang','fa'));await signedOut.reload();await signedOut.waitForFunction(()=>typeof window.openSecurityRecovery==='function'&&typeof window.openPortalRecovery==='function');
+ assert.equal(await signedOut.locator('html').getAttribute('lang'),'fa');assert.equal(await recoveryControls.count(),1,'Dari owner sign-in should show one recovery control');assert.equal((await recoveryControls.first().innerText()).trim(),'نام کاربری یا رمز را فراموش کرده‌اید؟');
+ await recoveryControls.first().click();assert.equal(await signedOut.locator('#ownerRecoveryPanel').isVisible(),true,'Dari recovery button should open the owner recovery panel');
  console.log('PASS: queue filters, menu search, Dari, draft retention, cancellation guard, exact command, polling focus, stale state, signed-out gate, six viewports across all panels; one mocked mutation only.');
 }finally{await browser.close();server.kill()}
