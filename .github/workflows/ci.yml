@@ -274,3 +274,6 @@ jobs:
           node --check admin-control-center/assets/ai-manager.js
           node tests/ai-manager-browser.mjs
 
+
+      - name: Verify restaurant owner workspace
+        run: node tests/owner-workspace-browser.mjs
