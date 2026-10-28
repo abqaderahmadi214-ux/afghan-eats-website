@@ -105,7 +105,7 @@ jobs:
             retry_contains "https://afghaneats.net/assets/account-dashboard.js" "data-account-tab" /tmp/ae-account-dashboard-v2.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Account v2" /tmp/ae-account-css-v2.css
             retry_contains "https://afghaneats.net/orders" "id=\"ordersMembership\"" /tmp/ae-orders-member.html
-            retry_contains "https://afghaneats.net/assets/orders-hub.js" "Guest ordering" /tmp/ae-orders-hub.js
+            retry_contains "https://afghaneats.net/assets/orders-hub.js" "Guest orders" /tmp/ae-orders-hub.js
             retry_contains "https://afghaneats.net/assets/app.js" "directory-menu-grid" /tmp/ae-menu-grid-v3.js
             retry_contains "https://afghaneats.net/assets/app.js" "menu-name-fallback" /tmp/ae-menu-rtl-v3.js
             retry_contains "https://afghaneats.net/assets/customer-premium.css" "Menu v3" /tmp/ae-menu-css-v3.css
