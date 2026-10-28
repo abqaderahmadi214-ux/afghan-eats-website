@@ -16,7 +16,7 @@ const directoryListing = {
 };
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing]}={}){
+async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing],quoteHandler}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
@@ -24,6 +24,7 @@ async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRow
     else if(path.endsWith('/restaurants.getMenu'))data=menu;
     else if(path.endsWith('/orders.quote')){
       const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{"json":{}}').json||{};
+      if(quoteHandler){await quoteHandler(route,input);return}
       if(deliveryUnavailable&&input.fulfillment!=='pickup'){
         await route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({error:{json:{message:'Delivery is not available for this address'}}})});
         return;
@@ -101,6 +102,63 @@ test('checkout submits a real order payload and opens order confirmation', async
   });
   expect(payload.clientRequestId).toBeTruthy();
   await expect(page).toHaveURL(/\/order(?:\.html)?\?id=33333333-3333-4333-8333-333333333333$/);
+});
+
+test('a late quote cannot replace the fee for the latest checkout address', async ({page})=>{
+  const requests=[];
+  await mockApi(page,{quoteHandler:async(route,input)=>{
+    if(input.fulfillment!=='delivery'||!['Gulha Circle','Tank Markaz Street'].includes(input.deliveryAddress)){
+      const value=input.fulfillment==='pickup'?{...quote,fulfillment:'pickup',deliveryFee:0,zone:null,source:'pickup'}:quote;
+      await route.fulfill({status:200,contentType:'application/json',body:trpc(value)});
+      return;
+    }
+    let finish;
+    const completed=new Promise(resolve=>{finish=resolve});
+    let responded=false;
+    requests.push({input,respond:async value=>{
+      if(responded)return;
+      responded=true;
+      await route.fulfill({status:200,contentType:'application/json',body:trpc(value)});
+      finish();
+    }});
+    return completed;
+  }});
+  await page.addInitScript(({restaurant,menu})=>{
+    localStorage.setItem('ae_cart',JSON.stringify([{id:menu.items[0].id,restaurantId:restaurant.id,restaurantName:restaurant.name,name:menu.items[0].name,price:menu.items[0].price,qty:1,selections:[]} ]));
+    localStorage.setItem('ae_mode','delivery');
+    localStorage.setItem('ae_address','Gulha Circle');
+  },{restaurant,menu});
+  await page.goto('/checkout');
+  await expect.poll(()=>requests.some(request=>request.input.deliveryAddress==='Gulha Circle')).toBe(true);
+  await page.locator('input[name="name"]').fill('Test Customer');
+  await page.locator('input[name="phone"]').fill('+93 700 000 123');
+  await page.locator('input[name="address"]').fill('Tank Markaz Street');
+  await expect.poll(()=>requests.some(request=>request.input.deliveryAddress==='Tank Markaz Street')).toBe(true);
+  await page.waitForTimeout(300);
+  const oldRequests=requests.filter(request=>request.input.deliveryAddress==='Gulha Circle');
+  const newRequests=requests.filter(request=>request.input.deliveryAddress==='Tank Markaz Street');
+  const oldRequest=oldRequests[oldRequests.length-1];
+  const newRequest=newRequests[newRequests.length-1];
+  expect(oldRequest).toBeTruthy();
+  expect(newRequest).toBeTruthy();
+  const submit=page.getByRole('button',{name:'Place order'});
+  await expect(submit).toBeDisabled();
+
+  const latestQuote={...quote,deliveryFee:25,zone:{id:'tank-markaz',name:'Tank Markaz',nameDari:'تانک مرکز'}};
+  const staleQuote={...quote,deliveryFee:95,zone:{id:'gulha',name:'Gulha',nameDari:'گل‌ها'}};
+  await newRequest.respond(latestQuote);
+  await expect(page.locator('#deliveryQuotePanel')).toContainText('Tank Markaz');
+  await expect(page.locator('#cartDelivery')).toContainText('25');
+  await expect(submit).toBeEnabled();
+  await oldRequest.respond(staleQuote);
+
+  await expect(page.locator('#deliveryQuotePanel')).toContainText('Tank Markaz');
+  await expect(page.locator('#deliveryQuotePanel')).not.toContainText('Gulha');
+  await expect(page.locator('#cartDelivery')).toContainText('25');
+  await Promise.all(requests.map(request=>request.respond(request.input.deliveryAddress==='Tank Markaz Street'?latestQuote:staleQuote)));
+  await expect(page.locator('#deliveryQuotePanel')).toContainText('Tank Markaz');
+  await expect(page.locator('#cartDelivery')).toContainText('25');
+  await expect(submit).toBeEnabled();
 });
 
 test('Dari customer chrome and discovery stay localized', async ({page})=>{
