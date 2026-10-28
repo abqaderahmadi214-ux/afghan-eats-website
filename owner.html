@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/assets/portal.css">
   <link rel="stylesheet" href="/assets/owner-premium.css?v=20260902-image-upload-1">
   <link rel="stylesheet" href="/assets/notifications.css">
-  <link rel="stylesheet" href="/assets/owner-workspace.css?v=1">
+  <link rel="stylesheet" href="/assets/owner-workspace.css?v=2">
   <link rel="stylesheet" href="/assets/owner-experience.css?v=20261029-premium-1">
   <script src="/config.js"></script>
 </head>
@@ -66,12 +66,12 @@
         <div class="owner-app-shell">
           <aside class="owner-side-nav">
             <div class="owner-side-brand"><span class="owner-side-mark">AE</span><div><b>Afghan Eats</b><small class="en-copy">Restaurant Portal</small><small class="fa-copy">پورتال رستورانت</small></div></div>
-            <nav class="owner-side-links" aria-label="Restaurant workspace">
+            <nav class="owner-side-links" aria-labelledby="ownerNavLabel"><span id="ownerNavLabel" class="owner-accessible-copy"><span class="en-copy">Restaurant workspace</span><span class="fa-copy">فضای کاری رستورانت</span></span>
               <button class="owner-tab owner-nav-item active" type="button" data-owner-panel="ownerOverviewPanel" onclick="showOwnerPanel('ownerOverviewPanel',this)"><span>⌂</span><span class="en-copy">Overview</span><span class="fa-copy">داشبورد</span></button>
               <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerOrdersPanel" onclick="showOwnerPanel('ownerOrdersPanel',this)"><span>▤</span><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></button>
-              <button class="owner-tab owner-nav-item" type="button" aria-label="Menu" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span>☷</span><span class="en-copy">Menu</span><span class="fa-copy">منو و آیتم‌ها</span></button>
-              <button class="owner-tab owner-nav-item" type="button" aria-label="Store & profile" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span>⚙</span><span class="en-copy">Store & profile</span><span class="fa-copy">تنظیمات رستورانت</span></button>
-              <button class="owner-tab owner-nav-item" type="button" aria-label="Business tools" data-owner-panel="ownerToolsPanel" onclick="showOwnerPanel('ownerToolsPanel',this)"><span>◈</span><span class="en-copy">Business tools</span><span class="fa-copy">ابزارهای کسب‌وکار</span></button>
+              <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerMenuPanel" onclick="showOwnerPanel('ownerMenuPanel',this)"><span aria-hidden="true">☷</span><span class="en-copy">Menu</span><span class="fa-copy">منو و آیتم‌ها</span></button>
+              <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerStorePanel" onclick="showOwnerPanel('ownerStorePanel',this)"><span aria-hidden="true">⚙</span><span class="en-copy">Store & profile</span><span class="fa-copy">تنظیمات رستورانت</span></button>
+              <button class="owner-tab owner-nav-item" type="button" data-owner-panel="ownerToolsPanel" onclick="showOwnerPanel('ownerToolsPanel',this)"><span aria-hidden="true">◈</span><span class="en-copy">Business tools</span><span class="fa-copy">ابزارهای کسب‌وکار</span></button>
             </nav>
             <div class="owner-side-support">
               <a href="/help"><span>?</span><span class="en-copy">Support</span><span class="fa-copy">پشتیبانی</span></a>
@@ -93,18 +93,19 @@
                 <p class="fa-copy">سفارش‌ها را به‌موقع آماده کنید و منوی خود را به‌روز نگه دارید.</p>
                 <div class="owner-hero-actions">
                   <button class="btn btn-primary" type="button" onclick="ownerGoPanel('ownerOrdersPanel')"><span class="en-copy">View orders</span><span class="fa-copy">مشاهده سفارش‌ها</span></button>
-                  <button class="btn btn-light" type="button" aria-label="Open item editor" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span></button>
+                  <button class="btn btn-light" type="button" aria-labelledby="ownerHeroMenuLabel" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span><span id="ownerHeroMenuLabel" class="owner-accessible-copy"><span class="en-copy">Open item editor</span><span class="fa-copy">باز کردن ویرایشگر منو</span></span></button>
                   <a id="ownerPublicLink" class="btn btn-light" href="/restaurants" target="_blank" rel="noopener"><span class="en-copy">View public listing</span><span class="fa-copy">مشاهده صفحه عمومی</span></a>
                 </div>
               </div>
-              <button class="owner-refresh" type="button" onclick="loadOwnerDashboard()" aria-label="Refresh">↻</button>
+              <button class="owner-refresh" type="button" onclick="loadOwnerDashboard()" aria-labelledby="ownerRefreshLabel">↻<span id="ownerRefreshLabel" class="owner-accessible-copy"><span class="en-copy">Refresh dashboard</span><span class="fa-copy">به‌روزرسانی داشبورد</span></span></button>
             </section>
 
             <div id="ownerActivationNotice" class="notice hidden"></div>
             <section id="ownerOnboardingGuide" class="owner-onboarding-guide hidden" aria-live="polite"></section>
 
             <section id="ownerOverviewPanel" class="owner-panel">
-              <section id="ownerServiceSummary" class="owner-service-summary" aria-label="Kitchen queue"></section>
+              <span id="ownerServiceSummaryLabel" class="owner-accessible-copy"><span class="en-copy">Kitchen queue</span><span class="fa-copy">صف آشپزخانه</span></span>
+              <section id="ownerServiceSummary" class="owner-service-summary" aria-labelledby="ownerServiceSummaryLabel"></section>
               <div class="owner-section-caption"><span class="en-copy">Your restaurant at a glance</span><span class="fa-copy">رستورانت شما در یک نگاه</span></div>
               <div id="ownerStats" class="owner-kpi-grid"></div>
               <div class="owner-overview-grid">
@@ -119,7 +120,7 @@
               </div>
 
               <section class="owner-premium-card owner-menu-preview-card">
-                <div class="owner-premium-head"><div><span class="owner-card-kicker"><span class="en-copy">Menu</span><span class="fa-copy">منو</span></span><h2><span class="en-copy">Menu highlights</span><span class="fa-copy">آیتم‌های منو</span></h2></div><button class="owner-text-action" type="button" aria-label="Open item editor" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span> →</button></div>
+                <div class="owner-premium-head"><div><span class="owner-card-kicker"><span class="en-copy">Menu</span><span class="fa-copy">منو</span></span><h2><span class="en-copy">Menu highlights</span><span class="fa-copy">آیتم‌های منو</span></h2></div><button class="owner-text-action" type="button" aria-labelledby="ownerOverviewMenuLabel" onclick="ownerGoPanel('ownerMenuPanel')"><span class="en-copy">Manage menu</span><span class="fa-copy">مدیریت منو</span> <span aria-hidden="true">→</span><span id="ownerOverviewMenuLabel" class="owner-accessible-copy"><span class="en-copy">Open item editor</span><span class="fa-copy">باز کردن ویرایشگر منو</span></span></button></div>
                 <div id="ownerOverviewMenu" class="owner-menu-preview-grid"></div>
               </section>
 
@@ -134,7 +135,7 @@
 
             <section id="ownerOrdersPanel" class="owner-panel hidden">
               <div class="owner-panel-heading"><div><span class="owner-card-kicker"><span class="en-copy">Orders</span><span class="fa-copy">سفارش‌ها</span></span><h2><span class="en-copy">Live & recent orders</span><span class="fa-copy">سفارش‌های زنده و اخیر</span></h2><p class="en-copy">Review incoming orders and move them through preparation.</p><p class="fa-copy">سفارش‌های جدید را بررسی کرده و مراحل آماده‌سازی را مدیریت کنید.</p></div></div>
-              <div id="ownerOrderFilters" class="owner-filters" role="group" aria-label="Filter orders"></div><p class="owner-filter-note"><span class="en-copy">Showing the orders returned by your restaurant account. Completed orders stay in All orders.</span><span class="fa-copy">سفارش‌های حساب رستورانت شما نمایش داده می‌شود. سفارش‌های تکمیل‌شده در بخش همه سفارش‌ها می‌مانند.</span></p><section class="owner-premium-card"><div id="ownerOrders" class="portal-list owner-orders-list"></div></section>
+              <span id="ownerOrderFiltersLabel" class="owner-accessible-copy"><span class="en-copy">Filter orders</span><span class="fa-copy">فیلتر سفارش‌ها</span></span><div id="ownerOrderFilters" class="owner-filters" role="group" aria-labelledby="ownerOrderFiltersLabel"></div><p class="owner-filter-note"><span class="en-copy">Showing the orders returned by your restaurant account. Completed orders stay in All orders.</span><span class="fa-copy">سفارش‌های حساب رستورانت شما نمایش داده می‌شود. سفارش‌های تکمیل‌شده در بخش همه سفارش‌ها می‌مانند.</span></p><section class="owner-premium-card"><div id="ownerOrders" class="portal-list owner-orders-list"></div></section>
             </section>
 
             <section id="ownerMenuPanel" class="owner-panel hidden">
@@ -172,7 +173,7 @@
                   <div class="portal-actions"><button class="btn btn-primary" type="submit"><span class="en-copy">Save item</span><span class="fa-copy">ذخیره آیتم</span></button><button class="btn btn-light" type="button" onclick="startNewOwnerItem()"><span class="en-copy">Clear</span><span class="fa-copy">پاک‌کردن</span></button></div>
                 </form>
               </section>
-              <section class="portal-card"><h3 class="en-copy">Menu categories</h3><h3 class="fa-copy">دسته‌بندی‌های منو</h3><form id="ownerCategoryForm" class="owner-category-form"><input name="id" type="hidden"><label class="field"><span class="en-copy">Category name</span><span class="fa-copy">نام دسته‌بندی</span><input name="name" required maxlength="200" placeholder="Main dishes"></label><label class="field"><span class="en-copy">Category name — Dari</span><span class="fa-copy">نام دسته‌بندی — دری</span><input name="nameDari" maxlength="200" placeholder="غذاهای اصلی" dir="rtl"></label><input name="sortOrder" type="number" min="0" max="999" value="0" aria-label="Display order"><button class="btn btn-primary btn-sm" type="submit"><span class="en-copy">Save category</span><span class="fa-copy">ذخیره دسته‌بندی</span></button></form><div id="ownerCategories" class="portal-list owner-category-list"></div></section>
+              <section class="portal-card"><h3 class="en-copy">Menu categories</h3><h3 class="fa-copy">دسته‌بندی‌های منو</h3><form id="ownerCategoryForm" class="owner-category-form"><input name="id" type="hidden"><span id="ownerCategorySortOrderLabel" class="owner-accessible-copy"><span class="en-copy">Display order</span><span class="fa-copy">ترتیب نمایش</span></span><label class="field"><span class="en-copy">Category name</span><span class="fa-copy">نام دسته‌بندی</span><input name="name" required maxlength="200" placeholder="Main dishes"></label><label class="field"><span class="en-copy">Category name — Dari</span><span class="fa-copy">نام دسته‌بندی — دری</span><input name="nameDari" maxlength="200" placeholder="غذاهای اصلی" dir="rtl"></label><input name="sortOrder" type="number" min="0" max="999" value="0" aria-labelledby="ownerCategorySortOrderLabel"><button class="btn btn-primary btn-sm" type="submit"><span class="en-copy">Save category</span><span class="fa-copy">ذخیره دسته‌بندی</span></button></form><div id="ownerCategories" class="portal-list owner-category-list"></div></section>
             </aside>
           </div>
         </section>
@@ -233,7 +234,7 @@
     </div>
   </main>
   <script src="/assets/app.js"></script>
-  <script src="/assets/portal.js?v=restaurant-workspace-1"></script>
+  <script src="/assets/portal.js?v=restaurant-workspace-2"></script>
   <script src="/assets/notifications.js"></script>
   <script src="/assets/owner-workspace.js?v=1"></script>
 
