@@ -138,6 +138,9 @@
 .owner-premium .owner-menu-preview-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .owner-premium .owner-activity-row .status-badge{max-width:none}
 @media(max-width:600px){.owner-premium .owner-menu-preview-grid{grid-template-columns:1fr 1fr}.owner-premium .owner-preview-item b{font-size:14px}.owner-premium .owner-preview-item>div{padding:12px}}
+/* Keep the English-switch label from shrinking or wrapping in the RTL owner header. */
+.owner-premium.rtl .header .actions .lang,
+html[dir="rtl"] .owner-premium .header .actions .lang{flex:0 0 auto;white-space:nowrap}
 @media(max-width:600px){
  .owner-premium .header .nav{display:flex;flex-wrap:wrap;min-height:66px;height:auto;padding-block:10px;width:calc(100% - 24px)}
  .owner-premium .header .brand{flex-shrink:0;white-space:nowrap}
