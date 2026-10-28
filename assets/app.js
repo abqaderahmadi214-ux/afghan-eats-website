@@ -185,7 +185,7 @@ function captureDeliveryLocation(){
   )
 }
 window.captureDeliveryLocation=captureDeliveryLocation;
-async function placeOrder(e){e.preventDefault();const er=$('#checkoutError'),btn=e.target.querySelector('button[type=submit]'),state=$('#orderSubmitState');if(er){er.textContent='';er.classList.add('hidden')}if(!cart.length){if(er){er.textContent=t('empty');er.classList.remove('hidden')}return}const f=new FormData(e.target),fulfillment=String(f.get('fulfillment')||mode||'delivery');if(fulfillment==='delivery'&&window.AE_CHECKOUT_QUOTE_STATUS===false){if(er){er.textContent=lang==='fa'?'پیش از ثبت سفارش، آدرس قابل ارسال را تأیید کنید.':'Confirm a deliverable address before placing the order.';er.classList.remove('hidden')}return}let scheduledFor;try{if(String(f.get('scheduleMode')||'asap')==='later'){const raw=String(f.get('scheduledFor')||'');if(!raw)throw new Error(lang==='fa'?'تاریخ و زمان سفارش را انتخاب کنید.':'Choose a scheduled date and time.');scheduledFor=new Date(raw).toISOString()}}catch(error){if(er){er.textContent=error.message;er.classList.remove('hidden')}return}const x=totals(),r=restaurants.find(z=>z.id===cart[0].restaurantId)||{id:cart[0].restaurantId,name:cart[0].restaurantName},deliveryLocation=fulfillment==='delivery'?normalizeCheckoutLocation(window.AE_DELIVERY_LOCATION):null,p={restaurantId:r.id,restaurantName:displayName(r),items:cart.map(i=>({id:i.id,quantity:i.qty,selections:i.selections||[],name:i.name,price:Number(i.price)})),subtotal:x.subtotal,deliveryFee:x.delivery,total:x.total,customerName:String(f.get('name')||''),customerPhone:String(f.get('phone')||''),deliveryArea:fulfillment==='pickup'?'Pickup':String(f.get('district')||''),deliveryAddress:fulfillment==='pickup'?'Pickup order':String(f.get('address')||''),landmark:fulfillment==='pickup'?'':String(f.get('landmark')||''),notes:String(f.get('instructions')||''),fulfillment,promoCode:String($('#promo')?.value||sessionStorage.getItem('ae_promo')||'').trim(),tipAmount:Number(f.get('tipAmount')||0),scheduledFor};if(deliveryLocation)p.deliveryLocation=deliveryLocation;try{if(btn)btn.disabled=true;if(state){state.textContent=lang==='fa'?'در حال تأیید قیمت، موجودی و ثبت سفارش…':'Confirming prices, availability and placing your order…';state.classList.add('show')}const d=await trpcMutation('orders.place',p);if(!d?.success)throw new Error(lang==='fa'?'سفارش ثبت نشد.':'Order could not be placed.');const restaurantLocation=normalizeCheckoutLocation(r?.location),saved={...d,...p,...(restaurantLocation?{restaurantLocation}:{}),total:d.pricing?.total??p.total,subtotal:d.pricing?.subtotal??p.subtotal,deliveryFee:d.pricing?.deliveryFee??p.deliveryFee,serviceFee:d.pricing?.serviceFee,discount:d.pricing?.discount,status:'placed',createdAt:new Date().toISOString()};localStorage.setItem('ae_last_order',JSON.stringify(saved));const history=JSON.parse(localStorage.getItem('ae_orders')||'[]');localStorage.setItem('ae_orders',JSON.stringify([saved,...history.filter(o=>o.orderId!==saved.orderId)].slice(0,20)));cart=[];saveCart();sessionStorage.removeItem('ae_discount');sessionStorage.removeItem('ae_promo');if(state)state.textContent=lang==='fa'?'سفارش با موفقیت ثبت شد.':'Order placed successfully.';location.href=`/order.html?id=${encodeURIComponent(d.orderId)}`}catch(error){console.error(error);if(er){er.textContent=error?.message||t('backend');er.classList.remove('hidden')}if(btn)btn.disabled=false;if(state)state.classList.remove('show')}}
+async function placeOrder(e){e.preventDefault();const er=$('#checkoutError'),btn=e.target.querySelector('button[type=submit]'),state=$('#orderSubmitState');if(er){er.textContent='';er.classList.add('hidden')}if(!cart.length){if(er){er.textContent=t('empty');er.classList.remove('hidden')}return}const f=new FormData(e.target),fulfillment=String(f.get('fulfillment')||mode||'delivery');if(fulfillment==='delivery'&&window.AE_CHECKOUT_QUOTE_PENDING===true){if(er){er.textContent=lang==='fa'?'لطفاً تا پایان بررسی آدرس و هزینهٔ ارسال صبر کنید.':'Wait for the delivery address and fee check to finish.';er.classList.remove('hidden')}return}if(fulfillment==='delivery'&&window.AE_CHECKOUT_QUOTE_STATUS===false){if(er){er.textContent=lang==='fa'?'پیش از ثبت سفارش، آدرس قابل ارسال را تأیید کنید.':'Confirm a deliverable address before placing the order.';er.classList.remove('hidden')}return}let scheduledFor;try{if(String(f.get('scheduleMode')||'asap')==='later'){const raw=String(f.get('scheduledFor')||'');if(!raw)throw new Error(lang==='fa'?'تاریخ و زمان سفارش را انتخاب کنید.':'Choose a scheduled date and time.');scheduledFor=new Date(raw).toISOString()}}catch(error){if(er){er.textContent=error.message;er.classList.remove('hidden')}return}const x=totals(),r=restaurants.find(z=>z.id===cart[0].restaurantId)||{id:cart[0].restaurantId,name:cart[0].restaurantName},deliveryLocation=fulfillment==='delivery'?normalizeCheckoutLocation(window.AE_DELIVERY_LOCATION):null,p={restaurantId:r.id,restaurantName:displayName(r),items:cart.map(i=>({id:i.id,quantity:i.qty,selections:i.selections||[],name:i.name,price:Number(i.price)})),subtotal:x.subtotal,deliveryFee:x.delivery,total:x.total,customerName:String(f.get('name')||''),customerPhone:String(f.get('phone')||''),deliveryArea:fulfillment==='pickup'?'Pickup':String(f.get('district')||''),deliveryAddress:fulfillment==='pickup'?'Pickup order':String(f.get('address')||''),landmark:fulfillment==='pickup'?'':String(f.get('landmark')||''),notes:String(f.get('instructions')||''),fulfillment,promoCode:String($('#promo')?.value||sessionStorage.getItem('ae_promo')||'').trim(),tipAmount:Number(f.get('tipAmount')||0),scheduledFor};if(deliveryLocation)p.deliveryLocation=deliveryLocation;try{if(btn)btn.disabled=true;if(state){state.textContent=lang==='fa'?'در حال تأیید قیمت، موجودی و ثبت سفارش…':'Confirming prices, availability and placing your order…';state.classList.add('show')}const d=await trpcMutation('orders.place',p);if(!d?.success)throw new Error(lang==='fa'?'سفارش ثبت نشد.':'Order could not be placed.');const restaurantLocation=normalizeCheckoutLocation(r?.location),saved={...d,...p,...(restaurantLocation?{restaurantLocation}:{}),total:d.pricing?.total??p.total,subtotal:d.pricing?.subtotal??p.subtotal,deliveryFee:d.pricing?.deliveryFee??p.deliveryFee,serviceFee:d.pricing?.serviceFee,discount:d.pricing?.discount,status:'placed',createdAt:new Date().toISOString()};localStorage.setItem('ae_last_order',JSON.stringify(saved));const history=JSON.parse(localStorage.getItem('ae_orders')||'[]');localStorage.setItem('ae_orders',JSON.stringify([saved,...history.filter(o=>o.orderId!==saved.orderId)].slice(0,20)));cart=[];saveCart();sessionStorage.removeItem('ae_discount');sessionStorage.removeItem('ae_promo');if(state)state.textContent=lang==='fa'?'سفارش با موفقیت ثبت شد.':'Order placed successfully.';location.href=`/order.html?id=${encodeURIComponent(d.orderId)}`}catch(error){console.error(error);if(er){er.textContent=error?.message||t('backend');er.classList.remove('hidden')}if(btn)btn.disabled=false;if(state)state.classList.remove('show')}}
 function safeStoredList(key){try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch{return[]}}
 function saveAddressCard(e){e.preventDefault();const f=new FormData(e.target),a=safeStoredList('ae_addresses');a.push({label:String(f.get('label')||''),district:String(f.get('district')||''),address:String(f.get('address')||''),landmark:String(f.get('landmark')||'')});localStorage.setItem('ae_addresses',JSON.stringify(a.slice(-8)));e.target.reset();renderAddresses()}
 function renderAddresses(){const e=$('#addresses');if(!e)return;const a=safeStoredList('ae_addresses');e.innerHTML=a.length?a.map(x=>`<div class="saved-card"><b>${esc(x.label)}</b><p>${esc(x.address)}, ${esc(x.district)}</p></div>`).join(''):`<p class="muted">${lang==='fa'?'هنوز آدرسی ذخیره نشده است.':'No saved addresses yet.'}</p>`}
@@ -193,14 +193,185 @@ function renderLocalOrders(){const e=$('#orderHistory');if(!e)return;let o=null;
 const DELIVERY_QUOTE_TTL=5*60*1000;function quoteCacheKey(r,fulfillment,area,address){return`ae_quote:${r.id}:${fulfillment}:${String(area).trim().toLowerCase()}:${String(address).trim().toLowerCase()}`}function clearQuoteCache(){for(let i=sessionStorage.length-1;i>=0;i--){const key=sessionStorage.key(i);if(key?.startsWith('ae_quote:'))sessionStorage.removeItem(key)}}
 function readQuoteCache(key){try{const item=JSON.parse(sessionStorage.getItem(key)||'null');if(item&&Date.now()-Number(item.savedAt||0)<DELIVERY_QUOTE_TTL)return item.quote}catch{}return null}
 async function requestDeliveryQuote(r,{fulfillment=mode,area='',address='',fresh=false}={}){if(!r?.id)throw new Error('Restaurant is unavailable');const key=quoteCacheKey(r,fulfillment,area,address),cached=!fresh&&readQuoteCache(key);if(cached)return cached;const quote=await trpcQuery('orders.quote',{restaurantId:r.id,fulfillment,deliveryArea:area||address||undefined,deliveryAddress:address||area||undefined});try{sessionStorage.setItem(key,JSON.stringify({savedAt:Date.now(),quote}))}catch{}return quote}
-let deliveryContextPromise=null;async function hydrateDeliveryContext(){if(deliveryContextPromise)return deliveryContextPromise;deliveryContextPromise=(async()=>{restaurants.forEach(r=>{delete r._deliveryUnavailable;if(mode==='pickup'&&isOrderableRestaurant(r))r._deliveryQuote={restaurantId:r.id,fulfillment:'pickup',deliveryFee:0,minimumOrder:Number(r.min_order_amount||0),etaMin:r.delivery_time_min??null,etaMax:r.delivery_time_max??null,source:'pickup'}});const address=localStorage.getItem('ae_address')?.trim();if(mode!=='delivery'||!address)return;const candidates=restaurants.filter(r=>isOrderableRestaurant(r)&&r.has_delivery!==false),queue=[...candidates];async function worker(){while(queue.length){const r=queue.shift();try{r._deliveryQuote=await requestDeliveryQuote(r,{fulfillment:'delivery',area:address,address});r._deliveryUnavailable=false}catch(error){const msg=String(error?.message||'');if(/not available|not configured|outside|coverage|service area/i.test(msg))r._deliveryUnavailable=true;else console.warn('Delivery quote unavailable',r.id,msg)}}}await Promise.all(Array.from({length:Math.min(4,queue.length)},worker))})();try{await deliveryContextPromise}finally{deliveryContextPromise=null}}
+let deliveryContextPromise = null;
+let deliveryContextGeneration = 0;
+async function hydrateDeliveryContext() {
+  if (deliveryContextPromise) return deliveryContextPromise;
+  const generation = ++deliveryContextGeneration;
+  const requestedMode = mode;
+  deliveryContextPromise = (async () => {
+    restaurants.forEach((restaurant) => {
+      delete restaurant._deliveryUnavailable;
+      if (requestedMode === 'pickup' && isOrderableRestaurant(restaurant)) {
+        restaurant._deliveryQuote = {
+          restaurantId: restaurant.id,
+          fulfillment: 'pickup',
+          deliveryFee: 0,
+          minimumOrder: Number(restaurant.min_order_amount || 0),
+          etaMin: restaurant.delivery_time_min ?? null,
+          etaMax: restaurant.delivery_time_max ?? null,
+          source: 'pickup',
+        };
+      }
+    });
+    const address = localStorage.getItem('ae_address')?.trim();
+    if (requestedMode !== 'delivery' || !address) return;
+    const candidates = restaurants.filter((restaurant) => isOrderableRestaurant(restaurant) && restaurant.has_delivery !== false);
+    const queue = [...candidates];
+    const isStillCurrent = (restaurant) => {
+      if (generation !== deliveryContextGeneration || mode !== requestedMode || localStorage.getItem('ae_address')?.trim() !== address) return false;
+      const checkout = $('form[onsubmit*="placeOrder"]');
+      const selectedMode = checkout?.querySelector('input[name=fulfillment]:checked')?.value || mode;
+      if (checkout && restaurant.id === cart[0]?.restaurantId && selectedMode === 'delivery') {
+        const selectedAddress = String(checkout.elements.address?.value || '').trim();
+        if (selectedAddress !== address || window.AE_CHECKOUT_QUOTE_PENDING === true) return false;
+      }
+      return true;
+    };
+    async function worker() {
+      while (queue.length) {
+        const restaurant = queue.shift();
+        try {
+          const quote = await requestDeliveryQuote(restaurant, { fulfillment: 'delivery', area: address, address });
+          if (!isStillCurrent(restaurant)) continue;
+          restaurant._deliveryQuote = quote;
+          restaurant._deliveryUnavailable = false;
+        } catch (error) {
+          if (!isStillCurrent(restaurant)) continue;
+          const message = String(error?.message || '');
+          if (/not available|not configured|outside|coverage|service area/i.test(message)) restaurant._deliveryUnavailable = true;
+          else console.warn('Delivery quote unavailable', restaurant.id, message);
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(4, queue.length) }, worker));
+  })();
+  try {
+    await deliveryContextPromise;
+  } finally {
+    deliveryContextPromise = null;
+  }
+}
 function renderAddressContext(){const e=$('#addressSummary');if(!e)return;const address=localStorage.getItem('ae_address')?.trim(),modeLabel=t(mode==='pickup'?'pickup':'delivery'),change=lang==='fa'?'تغییر آدرس':'Change address';e.innerHTML=address?`<span><b>${esc(modeLabel)}</b> · 📍 ${esc(address)}</span><button class="btn btn-light" type="button" onclick="localStorage.removeItem('ae_address');clearQuoteCache();location.reload()">${esc(change)}</button>`:`<span><b>${esc(modeLabel)}</b> · 📍 ${esc(t('address'))}</span>`}
 function useCheckoutAddress(button){const form=$('form[onsubmit*="placeOrder"]');if(!form)return;const district=button.dataset.district||'',address=button.dataset.address||'',landmark=button.dataset.landmark||'';if(form.elements.district&&[...form.elements.district.options].some(o=>o.value===district))form.elements.district.value=district;if(form.elements.address)form.elements.address.value=address;if(form.elements.landmark)form.elements.landmark.value=landmark;scheduleCheckoutQuote();form.elements.address?.focus()}
 function renderCheckoutAddressChoices(remote=[]){const host=$('#savedAddressChoices');if(!host)return;const local=safeStoredList('ae_addresses'),seen=new Set(),items=[...(Array.isArray(remote)?remote:[]),...local].filter(x=>{const key=`${x.district}|${x.address}|${x.landmark||''}`.toLowerCase();if(!x.address||seen.has(key))return false;seen.add(key);return true}).slice(0,5);host.innerHTML=items.length?`<span class="saved-address-label">${lang==='fa'?'آدرس‌های ذخیره‌شده':'Saved addresses'}</span><div class="saved-address-list">${items.map(x=>`<button class="saved-address-chip" type="button" data-district="${esc(x.district||'')}" data-address="${esc(x.address||'')}" data-landmark="${esc(x.landmark||'')}" onclick="useCheckoutAddress(this)"><b>${esc(x.label||x.district||t('saved'))}</b><small>${esc(x.address)}</small></button>`).join('')}</div>`:''}
-let checkoutQuoteTimer=null;window.AE_CHECKOUT_QUOTE_STATUS=null;function checkoutDeliveryFields(fulfillment){$$('.delivery-only').forEach(el=>{el.classList.toggle('hidden',fulfillment==='pickup');el.querySelectorAll('[data-delivery-required]').forEach(field=>field.required=fulfillment==='delivery')})}
-async function refreshCheckoutDeliveryQuote(){const form=$('form[onsubmit*="placeOrder"]'),panel=$('#deliveryQuotePanel');if(!form||!panel)return;const fulfillment=String(form.querySelector('input[name=fulfillment]:checked')?.value||mode||'delivery'),r=restaurants.find(x=>x.id===cart[0]?.restaurantId);mode=fulfillment;localStorage.setItem('ae_mode',fulfillment);checkoutDeliveryFields(fulfillment);if(!r||!cart.length){window.AE_CHECKOUT_QUOTE_STATUS=false;panel.className='delivery-quote-panel notice';panel.textContent=t('empty');return}if(fulfillment==='pickup'){r._deliveryQuote=await requestDeliveryQuote(r,{fulfillment:'pickup',fresh:true}).catch(()=>({deliveryFee:0,minimumOrder:Number(r.min_order_amount||0),etaMin:r.delivery_time_min??null,etaMax:r.delivery_time_max??null,source:'pickup'}));window.AE_CHECKOUT_QUOTE_STATUS=true;panel.className='delivery-quote-panel notice success';panel.textContent=lang==='fa'?'دریافت حضوری انتخاب شد. هزینه ارسال ندارد.':'Pickup selected. No delivery fee.';renderCart();return}const area=String(form.elements.district?.value||''),address=String(form.elements.address?.value||'').trim(),landmark=String(form.elements.landmark?.value||'').trim();if(address.length<5){window.AE_CHECKOUT_QUOTE_STATUS=false;delete r._deliveryQuote;panel.className='delivery-quote-panel notice';panel.textContent=lang==='fa'?'آدرس را وارد کنید تا هزینه و محدوده ارسال بررسی شود.':'Enter your address to check delivery coverage and fee.';renderCart();return}panel.className='delivery-quote-panel notice';panel.textContent=lang==='fa'?'در حال بررسی محدوده و هزینه ارسال…':'Checking delivery coverage and fee…';try{const quote=await requestDeliveryQuote(r,{fulfillment:'delivery',area,address:`${address} ${landmark}`.trim(),fresh:true});r._deliveryQuote=quote;window.AE_CHECKOUT_QUOTE_STATUS=true;localStorage.setItem('ae_address',address);const zone=quote.zone?(lang==='fa'?(quote.zone.nameDari||quote.zone.name):quote.zone.name):area,min=Number(quote.minimumOrder||0),eta=quote.etaMin!=null&&quote.etaMax!=null?`${quote.etaMin}–${quote.etaMax} ${t('min')}`:'';panel.className='delivery-quote-panel notice success';panel.innerHTML=`<b>✓ ${lang==='fa'?'ارسال تأیید شد':'Delivery confirmed'}</b><span><bdi>${esc(zone||area)}</bdi> · <bdi>${money(quote.deliveryFee)}</bdi>${eta?` · <bdi>${esc(eta)}</bdi>`:''}${min?` · <bdi>${lang==='fa'?'حداقل سفارش':'minimum'} ${money(min)}</bdi>`:''}</span>`}catch(error){delete r._deliveryQuote;const msg=String(error?.message||''),coverage=/not available|not configured|outside|coverage|service area/i.test(msg);window.AE_CHECKOUT_QUOTE_STATUS=coverage?false:null;panel.className=`delivery-quote-panel notice ${coverage?'error':''}`;panel.textContent=coverage?(lang==='fa'?'ارسال به این آدرس هنوز در دسترس نیست. آدرس دیگری یا دریافت حضوری را انتخاب کنید.':'Delivery is not available to this address yet. Try another address or choose pickup.'):(lang==='fa'?'فعلاً بررسی آنلاین هزینه ارسال ممکن نیست. هزینه نهایی هنگام ثبت سفارش در سرور بررسی می‌شود.':'Live fee check is temporarily unavailable. The server will verify the final fee when you place the order.')}finally{renderCart();syncCheckoutButton()}}
-function syncCheckoutButton(){const form=$('form[onsubmit*="placeOrder"]'),button=form?.querySelector('button[type=submit]');if(!button)return;const fulfillment=form.querySelector('input[name=fulfillment]:checked')?.value||mode;button.disabled=!cart.length||(fulfillment==='delivery'&&window.AE_CHECKOUT_QUOTE_STATUS===false)}
-function scheduleCheckoutQuote(){clearTimeout(checkoutQuoteTimer);checkoutQuoteTimer=setTimeout(()=>refreshCheckoutDeliveryQuote(),260)}
+let checkoutQuoteTimer = null;
+let checkoutQuoteGeneration = 0;
+window.AE_CHECKOUT_QUOTE_STATUS = null;
+window.AE_CHECKOUT_QUOTE_PENDING = false;
+function checkoutDeliveryFields(fulfillment) {
+  $$('.delivery-only').forEach((el) => {
+    el.classList.toggle('hidden', fulfillment === 'pickup');
+    el.querySelectorAll('[data-delivery-required]').forEach((field) => {
+      field.required = fulfillment === 'delivery';
+    });
+  });
+}
+async function refreshCheckoutDeliveryQuote() {
+  const generation = ++checkoutQuoteGeneration;
+  const isCurrent = () => generation === checkoutQuoteGeneration;
+  const form = $('form[onsubmit*="placeOrder"]');
+  const panel = $('#deliveryQuotePanel');
+  if (!form || !panel) return;
+  const fulfillment = String(form.querySelector('input[name=fulfillment]:checked')?.value || mode || 'delivery');
+  const restaurant = restaurants.find((item) => item.id === cart[0]?.restaurantId);
+  mode = fulfillment;
+  localStorage.setItem('ae_mode', fulfillment);
+  checkoutDeliveryFields(fulfillment);
+  if (!restaurant || !cart.length) {
+    window.AE_CHECKOUT_QUOTE_STATUS = false;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+    panel.className = 'delivery-quote-panel notice';
+    panel.textContent = t('empty');
+    syncCheckoutButton();
+    return;
+  }
+  if (fulfillment === 'pickup') {
+    window.AE_CHECKOUT_QUOTE_STATUS = true;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+    panel.className = 'delivery-quote-panel notice success';
+    panel.textContent = lang === 'fa' ? 'دریافت حضوری انتخاب شد. هزینه ارسال ندارد.' : 'Pickup selected. No delivery fee.';
+    renderCart();
+    const pickupQuote = await requestDeliveryQuote(restaurant, { fulfillment: 'pickup', fresh: true }).catch(() => ({ deliveryFee: 0, minimumOrder: Number(restaurant.min_order_amount || 0), etaMin: restaurant.delivery_time_min ?? null, etaMax: restaurant.delivery_time_max ?? null, source: 'pickup' }));
+    if (!isCurrent()) return;
+    restaurant._deliveryQuote = pickupQuote;
+    renderCart();
+    syncCheckoutButton();
+    return;
+  }
+  const area = String(form.elements.district?.value || '');
+  const address = String(form.elements.address?.value || '').trim();
+  const landmark = String(form.elements.landmark?.value || '').trim();
+  if (address.length < 5) {
+    window.AE_CHECKOUT_QUOTE_STATUS = false;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+    delete restaurant._deliveryQuote;
+    panel.className = 'delivery-quote-panel notice';
+    panel.textContent = lang === 'fa' ? 'آدرس را وارد کنید تا هزینه و محدوده ارسال بررسی شود.' : 'Enter your address to check delivery coverage and fee.';
+    renderCart();
+    syncCheckoutButton();
+    return;
+  }
+  window.AE_CHECKOUT_QUOTE_STATUS = null;
+  window.AE_CHECKOUT_QUOTE_PENDING = true;
+  delete restaurant._deliveryQuote;
+  panel.className = 'delivery-quote-panel notice';
+  panel.textContent = lang === 'fa' ? 'در حال بررسی محدوده و هزینه ارسال…' : 'Checking delivery coverage and fee…';
+  syncCheckoutButton();
+  renderCart();
+  try {
+    const nextQuote = await requestDeliveryQuote(restaurant, { fulfillment: 'delivery', area, address: `${address} ${landmark}`.trim(), fresh: true });
+    if (!isCurrent()) return;
+    restaurant._deliveryQuote = nextQuote;
+    window.AE_CHECKOUT_QUOTE_STATUS = true;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+    localStorage.setItem('ae_address', address);
+    const zone = nextQuote.zone ? (lang === 'fa' ? (nextQuote.zone.nameDari || nextQuote.zone.name) : nextQuote.zone.name) : area;
+    const minimum = Number(nextQuote.minimumOrder || 0);
+    const eta = nextQuote.etaMin != null && nextQuote.etaMax != null ? `${nextQuote.etaMin}–${nextQuote.etaMax} ${t('min')}` : '';
+    panel.className = 'delivery-quote-panel notice success';
+    panel.innerHTML = `<b>✓ ${lang === 'fa' ? 'ارسال تأیید شد' : 'Delivery confirmed'}</b><span><bdi>${esc(zone || area)}</bdi> · <bdi>${money(nextQuote.deliveryFee)}</bdi>${eta ? ` · <bdi>${esc(eta)}</bdi>` : ''}${minimum ? ` · <bdi>${lang === 'fa' ? 'حداقل سفارش' : 'minimum'} ${money(minimum)}</bdi>` : ''}</span>`;
+  } catch (error) {
+    if (!isCurrent()) return;
+    delete restaurant._deliveryQuote;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+    const message = String(error?.message || '');
+    const coverage = /not available|not configured|outside|coverage|service area/i.test(message);
+    window.AE_CHECKOUT_QUOTE_STATUS = coverage ? false : null;
+    panel.className = `delivery-quote-panel notice ${coverage ? 'error' : ''}`;
+    panel.textContent = coverage ? (lang === 'fa' ? 'ارسال به این آدرس هنوز در دسترس نیست. آدرس دیگری یا دریافت حضوری را انتخاب کنید.' : 'Delivery is not available to this address yet. Try another address or choose pickup.') : (lang === 'fa' ? 'فعلاً بررسی آنلاین هزینه ارسال ممکن نیست. هزینه نهایی هنگام ثبت سفارش در سرور بررسی می‌شود.' : 'Live fee check is temporarily unavailable. The server will verify the final fee when you place the order.');
+  } finally {
+    if (isCurrent()) {
+      renderCart();
+      syncCheckoutButton();
+    }
+  }
+}
+function syncCheckoutButton() {
+  const form = $('form[onsubmit*="placeOrder"]');
+  const button = form?.querySelector('button[type=submit]');
+  if (!button) return;
+  const fulfillment = form.querySelector('input[name=fulfillment]:checked')?.value || mode;
+  button.disabled = !cart.length || (fulfillment === 'delivery' && (window.AE_CHECKOUT_QUOTE_PENDING === true || window.AE_CHECKOUT_QUOTE_STATUS === false));
+}
+function scheduleCheckoutQuote() {
+  clearTimeout(checkoutQuoteTimer);
+  checkoutQuoteGeneration += 1;
+  const form = $('form[onsubmit*="placeOrder"]');
+  const fulfillment = form?.querySelector('input[name=fulfillment]:checked')?.value || mode;
+  if (fulfillment === 'delivery') {
+    window.AE_CHECKOUT_QUOTE_STATUS = null;
+    window.AE_CHECKOUT_QUOTE_PENDING = true;
+    const restaurant = restaurants.find((item) => item.id === cart[0]?.restaurantId);
+    if (restaurant) delete restaurant._deliveryQuote;
+  } else {
+    window.AE_CHECKOUT_QUOTE_STATUS = true;
+    window.AE_CHECKOUT_QUOTE_PENDING = false;
+  }
+  syncCheckoutButton();
+  renderCart();
+  checkoutQuoteTimer = setTimeout(() => refreshCheckoutDeliveryQuote(), 260);
+}
 function initCheckoutDelivery(){const form=$('form[onsubmit*="placeOrder"]');if(!form)return;const selected=form.querySelector(`input[name=fulfillment][value="${mode==='pickup'?'pickup':'delivery'}"]`);if(selected)selected.checked=true;const savedAddress=localStorage.getItem('ae_address')?.trim();if(mode==='delivery'&&savedAddress&&form.elements.address&&!String(form.elements.address.value||'').trim()){form.elements.address.value=savedAddress;const district=form.elements.district,match=district?[...district.options].find(option=>savedAddress.toLowerCase().includes(String(option.value||'').toLowerCase())):null;if(match)district.value=match.value}form.querySelectorAll('input[name=fulfillment]').forEach(el=>el.addEventListener('change',()=>{mode=el.value;localStorage.setItem('ae_mode',mode);refreshCheckoutDeliveryQuote()}));['district','address','landmark'].forEach(name=>{const el=form.elements[name];if(el){el.addEventListener('input',scheduleCheckoutQuote);el.addEventListener('change',scheduleCheckoutQuote)}});refreshCheckoutDeliveryQuote();syncCheckoutButton()}
 function renderConnectivityState({restored=false}={}){let bar=$('#aeConnectivity');if(navigator.onLine&&!restored){bar?.remove();return}if(!bar){bar=document.createElement('div');bar.id='aeConnectivity';bar.className='ae-connectivity';bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');document.body.prepend(bar)}bar.classList.toggle('online',navigator.onLine);bar.innerHTML=navigator.onLine?`<span>✓ ${esc(t('backOnline'))}</span>`:`<span>⚠ ${esc(t('offline'))}</span><button type="button" onclick="refreshConnectivity()">${esc(t('retry'))}</button>`;if(navigator.onLine)setTimeout(()=>bar?.remove(),3200)}
 async function refreshConnectivity(){renderConnectivityState();if(!navigator.onLine)return;restaurantDataPromise=null;await loadData();await refreshLiveRestaurants();renderRestaurantSurfaces()}
