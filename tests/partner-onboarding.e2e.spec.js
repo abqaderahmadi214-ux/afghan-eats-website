@@ -67,9 +67,13 @@ async function startLocalBackend() {
         responseReleased = true;
         resolveResponse({ status: 503, body: { error: 'Local test backend closed' } });
       }
-      await new Promise((resolve, reject) => {
+      const closed = new Promise((resolve, reject) => {
         server.close(error => error ? reject(error) : resolve());
       });
+      // Playwright may retain the completed response's keep-alive socket until
+      // its page fixture tears down, after this afterEach hook has started.
+      server.closeAllConnections();
+      await closed;
     }
   };
 }
