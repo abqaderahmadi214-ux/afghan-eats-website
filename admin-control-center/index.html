@@ -80,7 +80,7 @@
   </div>
 
   <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title">
-    <form method="dialog"><p class="eyebrow">Confirm operational change</p><h2 id="confirm-title">Confirm action</h2><p id="confirm-copy"></p><div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancel</button><button id="confirm-action" class="button button-danger" value="confirm">Confirm change</button></div></form>
+    <form method="dialog"><p class="eyebrow">Confirm operational change</p><h2 id="confirm-title">Confirm action</h2><p id="confirm-copy"></p><label id="confirm-reason-field" class="field hidden"><span>Cancellation reason (required)</span><textarea id="confirm-reason" name="confirmReason" rows="3" minlength="3" maxlength="300" aria-describedby="confirm-reason-help"></textarea><small id="confirm-reason-help">The reason will be saved with the order and admin audit.</small></label><div class="dialog-actions"><button class="button button-secondary" value="cancel" formnovalidate>Cancel</button><button id="confirm-action" class="button button-danger" value="confirm">Confirm change</button></div></form>
   </dialog>
 
   <dialog id="mfa-recovery-dialog" class="confirm-dialog" aria-labelledby="mfa-recovery-title">
@@ -90,7 +90,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="assets/csv-export.js?v=premium-experience-2"></script>
   <script src="assets/freshness.js?v=manager-2"></script>
-  <script src="assets/control-center.js?v=operations-premium-4"></script>
+  <script src="assets/control-center.js?v=operations-premium-5-admin-cancel"></script>
   <script src="assets/ai-manager.js?v=2"></script>
   <script src="assets/admin-mfa.js?v=admin-mfa-1-google-1"></script>
   <script src="assets/finance-workspace.js?v=premium-experience-2"></script>
@@ -103,4 +103,3 @@
 <script src="assets/customer-messaging.js?v=1"></script>
 </body>
 </html>
-

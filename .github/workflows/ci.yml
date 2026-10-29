@@ -221,7 +221,7 @@ jobs:
           reset=(root/'assets/admin-reset.js').read_text(encoding='utf-8')
           required_views=['#dispatch','#restaurants','#riders','#customers','#promotions','#communications','#support','#access','#security','#audit','#website']
           required_api=[
-              'orders.adminList','operations.adminPartnerApplications','operations.adminRiderApplications',
+              'orders.adminList','orders.adminCancel','operations.adminPartnerApplications','operations.adminRiderApplications',
               'operations.adminRiders','operations.adminAssignRider','operations.adminAssignments',
               'operations.adminUpdateAssignment','operations.adminUpdatePartnerApplication',
               'operations.adminUpdateRiderApplication','operations.adminUpdateRider',
@@ -256,6 +256,8 @@ jobs:
         run: npm run test:e2e
       - name: Verify Control Center MFA browser journey
         run: node tests/admin-mfa-browser.mjs
+      - name: Verify placed-order admin cancellation safety
+        run: node tests/admin-order-cancel-browser.mjs
       - name: Verify worker queue browser journey
         run: node tests/worker-queue-browser.mjs
       - name: Verify restaurant maintenance agent browser controls

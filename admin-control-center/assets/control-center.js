@@ -64,8 +64,40 @@ function setNotice(message, type = 'error') { notice.className = `notice notice-
 function clearNotice() { notice.className = 'notice hidden'; notice.textContent = ''; }
 function toast(message, type = 'success') { const region = document.getElementById('toast-region'); const item = document.createElement('div'); item.className = `toast ${type}`; item.textContent = message; region.appendChild(item); window.setTimeout(() => item.remove(), 4200); }
 function loading(label = 'Loading control data…') { root.innerHTML = `<div class="loading-panel"><span class="spinner"></span><p>${esc(label)}</p></div>`; }
-function openConfirm(titleText, copy, callback, danger = true) { document.getElementById('confirm-title').textContent = titleText; document.getElementById('confirm-copy').textContent = copy; document.getElementById('confirm-action').className = `button ${danger ? 'button-danger' : 'button-primary'}`; state.confirmCallback = callback; dialog.showModal(); }
-dialog.addEventListener('close', async () => { const callback = state.confirmCallback; state.confirmCallback = null; if (dialog.returnValue !== 'confirm' || !callback) return; try { await callback(); } catch (error) { setNotice(error.message || 'The requested control change could not be completed.'); } });
+function openConfirm(titleText, copy, callback, danger = true, options = {}) {
+  document.getElementById('confirm-title').textContent = titleText;
+  document.getElementById('confirm-copy').textContent = copy;
+  const confirmButton = document.getElementById('confirm-action');
+  confirmButton.className = `button ${danger ? 'button-danger' : 'button-primary'}`;
+  confirmButton.textContent = options.confirmLabel || 'Confirm change';
+  const reasonField = document.getElementById('confirm-reason-field');
+  const reasonInput = document.getElementById('confirm-reason');
+  const reasonRequired = Boolean(options.reasonRequired);
+  reasonField.classList.toggle('hidden', !reasonRequired);
+  reasonInput.value = '';
+  reasonInput.required = reasonRequired;
+  reasonInput.setCustomValidity('');
+  state.confirmCallback = callback;
+  dialog.showModal();
+  if (reasonRequired) reasonInput.focus();
+}
+document.getElementById('confirm-reason').addEventListener('input', event => {
+  const input = event.currentTarget;
+  input.setCustomValidity(input.required && input.value.trim().length < 3 ? 'Enter at least three non-space characters.' : '');
+});
+dialog.addEventListener('close', async () => {
+  const callback = state.confirmCallback;
+  state.confirmCallback = null;
+  if (dialog.returnValue !== 'confirm' || !callback) return;
+  const reasonInput = document.getElementById('confirm-reason');
+  const reason = String(reasonInput.value || '').trim();
+  if (reasonInput.required && reason.length < 3) {
+    setNotice('Enter a cancellation reason of at least three characters.');
+    return;
+  }
+  try { await callback(reasonInput.required ? reason : undefined); }
+  catch (error) { setNotice(error.message || 'The requested control change could not be completed.'); }
+});
 
 function saveSession(token, user) { state.token = token; state.user = user; sessionStorage.setItem(TOKEN_KEY, token); sessionStorage.setItem(USER_KEY, JSON.stringify(user)); }
 async function logout(show = true) {
@@ -321,7 +353,10 @@ function dispatchRow(order, riders, assignment) {
   const activeRiders = riders.filter(rider => rider.status === 'active' && rider.is_available && rider.shift_active && !rider.busy);
   const riderOptions = activeRiders.map(rider => `<option value="${attr(rider.id)}">${esc(rider.full_name)} · on shift · available</option>`).join('');
   const assignmentStatuses = ['assigned','accepted','at_restaurant','picked_up','on_the_way','delivered','cancelled'];
-  const control = assignment ? `<div class="button-stack"><select class="inline-select" data-assignment-status="${attr(assignment.id)}">${assignmentStatuses.map(status => `<option value="${status}" ${assignment.status === status ? 'selected' : ''}>${esc(status.replaceAll('_',' '))}</option>`).join('')}</select><button class="button button-primary button-small" type="button" data-action="update-assignment" data-id="${attr(assignment.id)}">Update</button></div>` : `<div class="button-stack"><select class="inline-select" data-order-rider="${attr(order.id)}"><option value="">Choose rider</option>${riderOptions}</select><button class="button button-primary button-small" type="button" data-action="assign-rider" data-id="${attr(order.id)}">Assign</button></div>`;
+  const assignmentControl = assignment ? `<select class="inline-select" data-assignment-status="${attr(assignment.id)}">${assignmentStatuses.map(status => `<option value="${status}" ${assignment.status === status ? 'selected' : ''}>${esc(status.replaceAll('_',' '))}</option>`).join('')}</select><button class="button button-primary button-small" type="button" data-action="update-assignment" data-id="${attr(assignment.id)}">Update</button>` : `<select class="inline-select" data-order-rider="${attr(order.id)}"><option value="">Choose rider</option>${riderOptions}</select><button class="button button-primary button-small" type="button" data-action="assign-rider" data-id="${attr(order.id)}">Assign</button>`;
+  const canCancelOrder = order.status === 'placed' && FULL_ADMIN_ROLES.has(String(state.user?.role || '').toLowerCase());
+  const cancelControl = canCancelOrder ? `<button class="button button-danger button-small" type="button" data-action="cancel-order" data-id="${attr(order.id)}" aria-label="Cancel order">Cancel order</button>` : '';
+  const control = `<div class="button-stack">${assignmentControl}${cancelControl}</div>`;
   return `<tr><td><span class="row-title">${esc(order.order_number || order.id)}</span><span class="row-sub">${money(order.total)}</span></td><td>${esc(order.customer_name || 'Customer')}<span class="row-sub">${esc(order.customer_phone || 'No phone')} · ${esc(order.delivery_address || 'No delivery address')}</span></td><td>${badge(order.status)}</td><td>${assignment ? `<span class="row-title">${esc(assignment.rider_name || 'Assigned rider')}</span><span class="row-sub">${badge(assignment.status)}</span>` : '<span class="row-sub">Unassigned</span>'}</td><td>${control}</td></tr>`;
 }
 
@@ -1014,6 +1049,18 @@ async function action(event) {
     const active = target.dataset.active === 'true';
     return openConfirm(active ? 'Activate promotion' : 'Pause promotion', active ? 'Activate this promotion for eligible checkout requests?' : 'Pause this promotion for new checkout requests?', async () => { await mutate('trust.adminUpdatePromotion', { id, active }); toast(`Promotion ${active ? 'activated' : 'paused'}.`); renderView(); }, !active);
   }
+  if (type === 'cancel-order') {
+    const order = (state.cache.dispatch?.orders || []).find(item => String(item.id) === String(id));
+    if (!order || order.status !== 'placed') return toast('Only newly placed orders can be cancelled here.', 'error');
+    const orderNumber = order.order_number || order.id;
+    return openConfirm(
+      'Cancel placed order',
+      `Cancel ${orderNumber}? Cancellation is available only while the order remains placed. Existing assignment, inventory, reward and customer-notification handling will run; payment status stays unchanged. Enter a reason for the admin audit.`,
+      async reason => { await mutate('orders.adminCancel', { orderId: id, reason }); toast('Placed order cancelled.'); renderView(); },
+      true,
+      { reasonRequired: true, confirmLabel: 'Confirm cancellation' },
+    );
+  }
   if (type === 'assign-rider') { const select = document.querySelector(`[data-order-rider="${CSS.escape(id)}"]`); if (!select?.value) return toast('Choose a rider before assigning.', 'error'); return openConfirm('Assign rider', 'Assign this rider to the active order?', async () => { await mutate('operations.adminAssignRider', { orderId: id, riderId: select.value }); toast('Rider assigned.'); renderView(); }, false); }
   if (type === 'update-assignment') { const select = document.querySelector(`[data-assignment-status="${CSS.escape(id)}"]`); if (!select?.value) return; return openConfirm('Update delivery status', `Set this delivery assignment to “${select.value.replaceAll('_', ' ')}”?`, async () => { await mutate('operations.adminUpdateAssignment', { id, status: select.value }); toast('Delivery status updated.'); renderView(); }, false); }
   if (type === 'edit-restaurant') { state.restaurantEditId=id; await renderRestaurants(); document.getElementById('restaurant-edit-panel')?.scrollIntoView({behavior:'smooth',block:'start'}); return; }
@@ -1186,4 +1233,3 @@ document.addEventListener('DOMContentLoaded', async () => { if (!state.token) { 
 
 
 window.adminFreshness = AEFreshness.createFreshness({ document, navigator, getState: () => ({ token: state.token, view: state.view }), refresh: () => renderView(true) });
-
