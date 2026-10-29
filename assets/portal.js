@@ -166,7 +166,7 @@ function renderOwnerProfile(){const r=AEOwner.restaurant||{},f=document.getEleme
 function ownerHoursPayload(){const out={};document.querySelectorAll('.owner-hour-row').forEach(row=>{out[row.dataset.day]=row.querySelector('.hour-closed').checked?'closed':`${row.querySelector('.hour-open').value}-${row.querySelector('.hour-close').value}`});return out}
 window.saveOwnerProfile=async function(event){if(event)event.preventDefault();const f=document.getElementById('ownerProfileForm');if(!f)return;if(f.dataset.imageUploading==='1')return ownerNotice(portalText('Wait for the photo upload to finish.','صبر کنید آپلود عکس کامل شود.'),true);const d=new FormData(f),payload={name:String(d.get('name')||''),nameDari:String(d.get('nameDari')||''),description:String(d.get('description')||''),descriptionDari:String(d.get('descriptionDari')||''),address:String(d.get('address')||''),addressDari:String(d.get('addressDari')||''),district:String(d.get('district')||''),neighborhood:String(d.get('neighborhood')||''),phone:String(d.get('phone')||''),logoUrl:String(d.get('logoUrl')||''),coverImageUrl:String(d.get('coverImageUrl')||''),openingHours:ownerHoursPayload()};if(event)portalSetBusy(f,true,portalText('Saving…','در حال ذخیره…'));try{await portalMutation('portal.ownerUpdateRestaurantContent',payload);ownerNotice(portalText('Restaurant profile and opening hours saved.','پروفایل و ساعات کاری رستورانت ذخیره شد.'));await loadOwnerDashboard()}catch(e){ownerNotice(e.message,true)}finally{if(event)portalSetBusy(f,false)}}
 function renderOwnerHistory(){const el=document.getElementById('ownerHistory');if(!el)return;el.innerHTML=AEOwner.history.length?AEOwner.history.slice(0,12).map(item=>`<div class="owner-history-row"><span>${portalEsc(item.action.replaceAll('.',' · '))}</span><time datetime="${portalEsc(item.created_at)}">${new Date(item.created_at).toLocaleString()}</time></div>`).join(''):`<div class="portal-empty">${portalText('No owner changes recorded yet.','هنوز تغییری ثبت نشده است.')}</div>`}
-window.ownerOrderStatus=async function(orderId,status){try{await portalMutation('portal.ownerUpdateOrderStatus',{orderId,status});ownerNotice(portalText('Order status updated.','وضعیت سفارش به‌روزرسانی شد.'));await loadOwnerDashboard()}catch(e){ownerNotice(e.message,true)}}
+window.ownerOrderStatus=async function(orderId,status){try{await portalMutation('portal.ownerUpdateOrderStatus',{orderId,status});ownerAlertPending.delete(String(orderId));if(!ownerAlertPending.size)stopOwnerAlertLoop();ownerNotice(portalText('Order status updated.','وضعیت سفارش به‌روزرسانی شد.'));await loadOwnerDashboard()}catch(e){ownerNotice(e.message,true)}}
 window.saveOwnerStore=async function(){try{await portalMutation('portal.ownerUpdateStore',{isOpen:document.getElementById('storeOpen').checked,hasDelivery:document.getElementById('storeDelivery').checked,hasTakeaway:document.getElementById('storePickup').checked,deliveryTimeMin:Number(document.getElementById('storeMinTime').value||25),deliveryTimeMax:Number(document.getElementById('storeMaxTime').value||45),deliveryFeeMin:Number(document.getElementById('storeDeliveryFee').value||0),minOrderAmount:Number(document.getElementById('storeMinOrder').value||0)});ownerNotice(portalText('Store settings saved.','تنظیمات رستورانت ذخیره شد.'));await loadOwnerDashboard()}catch(e){ownerNotice(e.message,true)}}
 
 const AERider={rider:null,assignments:[],performance:null,lastMile:null,refreshTimer:null,deadlineTimer:null};
@@ -226,7 +226,8 @@ function renderOwnerOrderList(orders){document.getElementById('ownerOrders').inn
 let ownerOrdersTimer = null;
 let ownerOrdersBusy = false;
 let ownerSoundContext = null;
-let ownerSoundEnabled = false;
+let ownerAlertPending = new Set();
+let ownerAlertTimer = null;
 function setPortalFreshness(role, success) {
   const el = document.getElementById(`${role}DataStatus`);
   if (!el) return;
@@ -235,26 +236,28 @@ function setPortalFreshness(role, success) {
   el.textContent = !navigator.onLine ? portalText('Offline · updates paused','آفلاین · به‌روزرسانی متوقف است') : success ? portalText('Orders updated just now','سفارش‌ها اکنون به‌روز شد') : portalText('Update failed · previous data shown','به‌روزرسانی ناموفق · اطلاعات قبلی نمایش داده می‌شود');
 }
 window.toggleOwnerOrderSound = async function () {
-  const button = document.getElementById('ownerOrderSound');
-  try {
-    if (!ownerSoundEnabled) {
-      const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) throw new Error('Sound unavailable');
-      ownerSoundContext ||= new Audio();
-      await ownerSoundContext.resume();
-    }
-    ownerSoundEnabled = !ownerSoundEnabled;
-    button?.setAttribute('aria-pressed', String(ownerSoundEnabled));
-    if (button) button.textContent = ownerSoundEnabled ? portalText('Order sound on','صدای سفارش روشن') : portalText('Enable order sound','فعال‌سازی صدای سفارش');
-  } catch { ownerNotice(portalText('Order sound is unavailable in this browser. Keep the order board visible.','صدای سفارش در این مرورگر موجود نیست. صفحه سفارش‌ها را باز نگه دارید.'), true); }
+  if (typeof AENOTIFY === 'undefined' || typeof AENOTIFY.setSoundEnabled !== 'function') return;
+  const enable = !AENOTIFY.soundEnabled || AENOTIFY.audioContext?.state !== 'running';
+  const enabled = await AENOTIFY.setSoundEnabled(enable);
+  if (!enabled && enable) ownerNotice(portalText('Sound is unavailable or blocked. Tap again after allowing audio; keep this order board visible.','صدا در دسترس نیست یا مسدود شده است. پس از اجازه صدا دوباره بزنید و صفحه سفارش‌ها را باز نگه دارید.'), true);
 };
-function playOwnerOrderSound() {
-  if (!ownerSoundEnabled || ownerSoundContext?.state !== 'running') return;
-  const oscillator = ownerSoundContext.createOscillator(), gain = ownerSoundContext.createGain();
-  oscillator.connect(gain); gain.connect(ownerSoundContext.destination);
-  oscillator.frequency.value = 740; gain.gain.value = 0.12;
-  oscillator.start(); oscillator.stop(ownerSoundContext.currentTime + 0.35);
+function stopOwnerAlertLoop(clearPending = false) {
+  if (ownerAlertTimer) clearInterval(ownerAlertTimer);
+  ownerAlertTimer = null;
+  if (clearPending) ownerAlertPending.clear();
 }
+function ownerAlertTick() {
+  if (!ownerAlertPending.size || !AEPortal.token || AEPortal.role !== 'owner' || !AENOTIFY?.soundEnabled || document.hidden || navigator.onLine === false) return;
+  AENOTIFY.notificationChime?.();
+}
+function startOwnerAlertLoop() {
+  if (!ownerAlertPending.size || !AENOTIFY?.soundEnabled || document.hidden || navigator.onLine === false || ownerAlertTimer) return;
+  ownerAlertTimer = setInterval(ownerAlertTick, 12000);
+}
+document.addEventListener('ae:notification-sound-change', event => {
+  if (event.detail?.enabled) startOwnerAlertLoop();
+  else stopOwnerAlertLoop(true);
+});
 async function refreshOwnerOrders() {
   if (ownerOrdersBusy || !AEPortal.token || AEPortal.role !== 'owner' || document.hidden || navigator.onLine === false || document.querySelector('#ownerOrders button:disabled') || document.activeElement?.closest?.('#ownerOrders')) return;
   ownerOrdersBusy = true;
@@ -262,16 +265,20 @@ async function refreshOwnerOrders() {
   try {
     const data = await portalQuery('portal.ownerDashboard');
     if (AEPortal.token !== token || AEPortal.role !== 'owner' || document.hidden || document.activeElement?.closest?.('#ownerOrders')) return;
-    const orders = data.orders || [], known = new Set((AEOwner.orders || []).map(o => o.id));
-    const fresh = orders.filter(o => !known.has(o.id) && !['delivered','cancelled','failed'].includes(o.status));
+    const orders = data.orders || [], known = new Set((AEOwner.orders || []).map(o => String(o.id)));
+    const fresh = orders.filter(o => !known.has(String(o.id)) && o.status === 'placed');
     const hadSnapshot = Array.isArray(AEOwner.orders);
+    const placedNow = new Set(orders.filter(o => o.status === 'placed').map(o => String(o.id)));
+    for (const id of ownerAlertPending) if (!placedNow.has(id)) ownerAlertPending.delete(id);
+    if (!ownerAlertPending.size) stopOwnerAlertLoop();
     AEOwner.orders = orders;
     renderOwnerOrderList(orders);
     setPortalFreshness('owner', true);
     if (hadSnapshot && fresh.length) {
+      if (AENOTIFY?.soundEnabled) fresh.forEach(order => ownerAlertPending.add(String(order.id)));
       const message = document.getElementById('ownerNewOrderNotice');
       if (message) message.textContent = portalText(`${fresh.length} new order(s). Open Orders to review.`,`${fresh.length} سفارش جدید. بخش سفارش‌ها را بررسی کنید.`);
-      playOwnerOrderSound();
+      if (AENOTIFY?.soundEnabled && !document.hidden && navigator.onLine !== false) { AENOTIFY.notificationChime?.(); startOwnerAlertLoop(); }
     }
   } catch { setPortalFreshness('owner', false); }
   finally { ownerOrdersBusy = false; }
@@ -281,7 +288,10 @@ function startOwnerOrderPolling() {
   ownerOrdersTimer = setInterval(refreshOwnerOrders, 20000);
 }
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) { if (AEPortal.role === 'owner') void refreshOwnerOrders(); else if (AEPortal.role === 'rider') void loadRiderDashboard(true); }
+  if (document.hidden) stopOwnerAlertLoop();
+  else { startOwnerAlertLoop(); if (AEPortal.role === 'owner') void refreshOwnerOrders(); else if (AEPortal.role === 'rider') void loadRiderDashboard(true); }
 });
-window.addEventListener('online', () => { if (AEPortal.role === 'owner') void refreshOwnerOrders(); else if (AEPortal.role === 'rider') void loadRiderDashboard(true); });
+window.addEventListener('online', () => { startOwnerAlertLoop(); if (AEPortal.role === 'owner') void refreshOwnerOrders(); else if (AEPortal.role === 'rider') void loadRiderDashboard(true); });
+window.addEventListener('offline', () => stopOwnerAlertLoop());
+window.addEventListener('pagehide', () => stopOwnerAlertLoop(true));
 window.addEventListener('offline', () => setPortalFreshness(AEPortal.role, false));
