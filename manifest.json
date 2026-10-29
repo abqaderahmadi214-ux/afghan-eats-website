@@ -1,14 +1,22 @@
 {
+  "id": "/",
   "name": "Afghan Eats",
   "short_name": "AfghanEats",
+  "description": "Browse Herat restaurants and order with Afghan Eats.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "theme_color": "#0D4A3A",
   "background_color": "#FFF8ED",
-  "lang": "fa-AF",
-  "dir": "rtl",
+  "lang": "en-AF",
+  "dir": "ltr",
   "icons": [
+    {
+      "src": "/assets/icons/afghan-eats-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/assets/icons/afghan-eats-192.png",
       "sizes": "192x192",

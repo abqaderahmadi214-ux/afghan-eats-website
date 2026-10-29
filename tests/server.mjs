@@ -13,7 +13,9 @@ http.createServer(async (req,res)=>{
     const local = normalize(join(root, path));
     if (!local.startsWith(root)) throw new Error('Invalid path');
     const body = await readFile(local);
-    res.writeHead(200, {'Content-Type':types[extname(local)]||'application/octet-stream'});res.end(body);
+    const headers = {'Content-Type':types[extname(local)]||'application/octet-stream'};
+    if (url.pathname === '/assets/sw.js') headers['Service-Worker-Allowed'] = '/';
+    res.writeHead(200, headers);res.end(body);
   } catch {
     res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});res.end('Not found');
   }
