@@ -5,6 +5,9 @@ const TOKEN_KEY = 'ae_control_center_token';
 const USER_KEY = 'ae_control_center_user';
 const ALLOWED_ROLES = new Set(['admin', 'superadmin', 'restaurant_staff', 'rider_staff', 'operations_staff']);
 const FULL_ADMIN_ROLES = new Set(['admin', 'superadmin']);
+const ADMIN_ACK_KEY='ae_admin_acknowledged_orders';
+let adminOrderSnapshotInitialized=false,adminKnownOrders=new Map(),adminPendingOrders=new Set(),adminAcknowledgedOrders=new Set(),adminSoundEnabled=false,adminAudioContext=null,adminOrderSoundTimer=null,adminOrderPollTimer=null,adminOrderPollBusy=false,adminOrderLastSeenAt=0;
+try{adminAcknowledgedOrders=new Set(JSON.parse(sessionStorage.getItem(ADMIN_ACK_KEY)||'[]').map(String))}catch{}
 const state = { token: sessionStorage.getItem(TOKEN_KEY) || '', user: safeJson(sessionStorage.getItem(USER_KEY)), view: location.hash.slice(1) || 'overview', cache: {}, invite: null, setupReviewId: null, partnerReviewId: null, partnerReviewDetail: null, riderReviewId: null, riderReviewDetail: null, restaurantEditId: null, confirmCallback: null };
 
 const root = document.getElementById('view-root');
@@ -60,6 +63,21 @@ async function request(path, input, method = 'GET', authenticated = true) {
 const query = (path, input) => request(path, input, 'GET');
 const mutate = (path, input) => request(path, input, 'POST');
 
+
+function adminSoundLabel(){return adminSoundEnabled?(adminAudioContext?.state==='running'?'Mute order sounds':'Tap to enable order sounds'):'Enable order sounds'}
+function updateAdminSoundButton(){const button=document.getElementById('admin-order-sound');if(button){button.textContent=adminSoundLabel();button.setAttribute('aria-pressed',String(adminSoundEnabled))}}
+function stopAdminOrderAlerts(clearPending=false){if(adminOrderSoundTimer)clearInterval(adminOrderSoundTimer);adminOrderSoundTimer=null;if(clearPending)adminPendingOrders.clear()}
+function adminOrderChime(){if(!adminSoundEnabled||!state.token||document.hidden||navigator.onLine===false||adminAudioContext?.state!=='running')return;try{const ctx=adminAudioContext,now=ctx.currentTime;[[587,0],[784,.12]].forEach(([frequency,offset])=>{const oscillator=ctx.createOscillator(),gain=ctx.createGain();oscillator.type='sine';oscillator.frequency.value=frequency;gain.gain.setValueAtTime(.0001,now+offset);gain.gain.exponentialRampToValueAtTime(.065,now+offset+.02);gain.gain.exponentialRampToValueAtTime(.0001,now+offset+.19);oscillator.connect(gain);gain.connect(ctx.destination);oscillator.start(now+offset);oscillator.stop(now+offset+.20)})}catch{}}
+function adminOrderAlertTick(){if(!adminPendingOrders.size||!adminSoundEnabled||!state.token||document.hidden||navigator.onLine===false)return;adminOrderChime()}
+function startAdminOrderAlerts(){if(!adminPendingOrders.size||!adminSoundEnabled||!state.token||document.hidden||navigator.onLine===false||adminOrderSoundTimer)return;adminOrderSoundTimer=setInterval(adminOrderAlertTick,12000)}
+function acknowledgeAdminOrder(id,button){const key=String(id);adminAcknowledgedOrders.add(key);try{sessionStorage.setItem(ADMIN_ACK_KEY,JSON.stringify([...adminAcknowledgedOrders].slice(-200)))}catch{}adminPendingOrders.delete(key);if(!adminPendingOrders.size)stopAdminOrderAlerts();if(button){button.textContent='Acknowledged';button.disabled=true;button.setAttribute('aria-label',`Order ${key} acknowledged locally`)}updateAdminSoundButton()}
+function observeAdminOrders(orders){const rows=asArray(orders),current=new Map(rows.filter(order=>order?.id!==undefined&&order?.id!==null).map(order=>[String(order.id),String(order.status||'').toLowerCase()]));adminOrderLastSeenAt=Date.now();if(!adminOrderSnapshotInitialized){adminKnownOrders=new Map(current);adminOrderSnapshotInitialized=true;return}let discoveredPlaced=false;for(const [id,status] of current){const wasKnown=adminKnownOrders.has(id);adminKnownOrders.set(id,status);if(status!=='placed'){adminPendingOrders.delete(id);continue}if(!wasKnown&&!adminAcknowledgedOrders.has(id)){adminPendingOrders.add(id);discoveredPlaced=true}}if(!adminPendingOrders.size)stopAdminOrderAlerts();else if(adminSoundEnabled){if(discoveredPlaced)adminOrderChime();startAdminOrderAlerts()}}
+async function toggleAdminOrderSound(){const enable=!adminSoundEnabled||adminAudioContext?.state!=='running';if(enable){try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw new Error('Unavailable');adminAudioContext||=new Audio();await adminAudioContext.resume();if(adminAudioContext.state!=='running')throw new Error('Blocked');adminSoundEnabled=true;try{localStorage.setItem('ae_admin_order_sound','1')}catch{}updateAdminSoundButton();if(adminPendingOrders.size){adminOrderChime();startAdminOrderAlerts()}}catch{adminSoundEnabled=false;try{localStorage.setItem('ae_admin_order_sound','0')}catch{}updateAdminSoundButton();toast('Sound is unavailable or blocked. Try again after a tap and keep this tab visible.','error')}}else{adminSoundEnabled=false;try{localStorage.setItem('ae_admin_order_sound','0')}catch{}stopAdminOrderAlerts(true);updateAdminSoundButton()}}
+function initAdminOrderSound(){try{adminSoundEnabled=localStorage.getItem('ae_admin_order_sound')==='1'}catch{adminSoundEnabled=false}updateAdminSoundButton()}
+async function pollAdminOrderQueue(){if(!state.token||!canView('overview')||document.hidden||navigator.onLine===false||adminOrderPollBusy||Date.now()-adminOrderLastSeenAt<15000)return;adminOrderPollBusy=true;const token=state.token;try{const orders=await query('orders.adminList',{limit:100,offset:0});if(state.token===token&&!document.hidden&&navigator.onLine!==false)observeAdminOrders(orders)}catch{}finally{adminOrderPollBusy=false}}
+function startAdminOrderPolling(){if(!adminOrderPollTimer)adminOrderPollTimer=setInterval(()=>void pollAdminOrderQueue(),20000);void pollAdminOrderQueue()}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAdminOrderAlerts();else{startAdminOrderAlerts();void pollAdminOrderQueue()}});
+window.addEventListener('online',()=>{startAdminOrderAlerts();void pollAdminOrderQueue()});window.addEventListener('offline',()=>stopAdminOrderAlerts());window.addEventListener('pagehide',()=>stopAdminOrderAlerts());
 function setNotice(message, type = 'error') { notice.className = `notice notice-${type}`; notice.textContent = message; notice.classList.remove('hidden'); }
 function clearNotice() { notice.className = 'notice hidden'; notice.textContent = ''; }
 function toast(message, type = 'success') { const region = document.getElementById('toast-region'); const item = document.createElement('div'); item.className = `toast ${type}`; item.textContent = message; region.appendChild(item); window.setTimeout(() => item.remove(), 4200); }
@@ -112,7 +130,7 @@ async function logout(show = true) {
   }
  // A previous request may have expired while the user signed in again.
  if (state.token !== logoutToken) return;
- window.AdminMfa?.clearSecrets(); window.WorkerQueue?.reset(); window.adminFreshness?.reset(); financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); window.initGoogleStaffSignIn?.(); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
+ window.AdminMfa?.clearSecrets(); window.WorkerQueue?.reset(); window.adminFreshness?.reset(); if(typeof stopAdminOrderAlerts==='function'){stopAdminOrderAlerts(true);adminSoundEnabled=false;adminOrderSnapshotInitialized=false;adminKnownOrders.clear();adminAcknowledgedOrders.clear();try{sessionStorage.removeItem(ADMIN_ACK_KEY);localStorage.setItem('ae_admin_order_sound','0')}catch{}updateAdminSoundButton()} financeState.statement = null; financeState.data = {}; sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY); state.token = ''; state.user = null; state.cache = {}; root.replaceChildren(); state.invite = null; appShell.classList.add('hidden'); loginView.classList.remove('hidden'); window.initGoogleStaffSignIn?.(); if (show) toast(confirmed ? 'You have been signed out.' : 'Signed out on this device. Server sign-out could not be confirmed.', confirmed ? 'success' : 'error'); }
 function userLabel() { return state.user?.name || state.user?.username || state.user?.email || 'Administrator'; }
 function currentRole(){ return String(state.user?.role || '').toLowerCase(); }
 function isFullAdmin(){ return FULL_ADMIN_ROLES.has(currentRole()); }
@@ -135,7 +153,7 @@ function applyRoleNavigation(){
   const allowed=allowedViews();
   document.querySelectorAll('#primary-nav a').forEach(link=>link.classList.toggle('hidden',!allowed.has(link.dataset.view)));
 }
-function setShell() { loginView.classList.add('hidden'); appShell.classList.remove('hidden'); document.getElementById('admin-name').textContent = userLabel(); document.getElementById('admin-role').textContent = title(String(state.user?.role || 'administrator').replaceAll('_',' ')); document.getElementById('admin-initial').textContent = userLabel().slice(0, 1).toUpperCase(); applyRoleNavigation(); }
+function setShell() { loginView.classList.add('hidden'); appShell.classList.remove('hidden'); document.getElementById('admin-name').textContent = userLabel(); document.getElementById('admin-role').textContent = title(String(state.user?.role || 'administrator').replaceAll('_',' ')); document.getElementById('admin-initial').textContent = userLabel().slice(0, 1).toUpperCase(); applyRoleNavigation(); startAdminOrderPolling(); }
 
 const VIEW_META = {
   manager: ['Management briefing', 'AI General Manager'],
@@ -267,7 +285,7 @@ async function renderView(background = false) {
 
 async function overviewData() {
   const result = await Promise.allSettled([
-    query('orders.adminList', { limit: 25, offset: 0 }),
+    query('orders.adminList', { limit: 100, offset: 0 }),
     query('operations.adminPartnerApplications', { limit: 100 }),
     query('operations.adminRiderApplications', { limit: 100 }),
     query('operations.adminRiders', { availableOnly: false }),
@@ -280,7 +298,7 @@ async function overviewData() {
 }
 
 async function renderOverview() {
-  const data = await overviewData(); state.cache.overview = data;
+  const data = await overviewData(); state.cache.overview = data; observeAdminOrders(data.orders);
   const activeOrders = data.orders.filter(item => !['delivered','cancelled','failed'].includes(item.status)).length;
   const pendingPartners = data.partners.filter(item => ['pending','reviewing'].includes(item.status)).length;
   const pendingRiders = data.riderApps.filter(item => ['pending','reviewing'].includes(item.status)).length;
@@ -340,7 +358,7 @@ async function dispatchData() {
   return { orders: asArray(ordersData), riders: asArray(riders), assignments: asArray(assignments) };
 }
 async function renderDispatch() {
-  const data = await dispatchData(); state.cache.dispatch = data;
+  const data = await dispatchData(); state.cache.dispatch = data; observeAdminOrders(data.orders);
   const assignmentsByOrder = new Map(data.assignments.map(item => [String(item.order_id), item]));
   const active = data.orders.filter(item => !['delivered','cancelled','failed'].includes(item.status));
   const closed = data.orders.filter(item => ['delivered','cancelled','failed'].includes(item.status));
@@ -356,7 +374,8 @@ function dispatchRow(order, riders, assignment) {
   const assignmentControl = assignment ? `<select class="inline-select" data-assignment-status="${attr(assignment.id)}">${assignmentStatuses.map(status => `<option value="${status}" ${assignment.status === status ? 'selected' : ''}>${esc(status.replaceAll('_',' '))}</option>`).join('')}</select><button class="button button-primary button-small" type="button" data-action="update-assignment" data-id="${attr(assignment.id)}">Update</button>` : `<select class="inline-select" data-order-rider="${attr(order.id)}"><option value="">Choose rider</option>${riderOptions}</select><button class="button button-primary button-small" type="button" data-action="assign-rider" data-id="${attr(order.id)}">Assign</button>`;
   const canCancelOrder = order.status === 'placed' && FULL_ADMIN_ROLES.has(String(state.user?.role || '').toLowerCase());
   const cancelControl = canCancelOrder ? `<button class="button button-danger button-small" type="button" data-action="cancel-order" data-id="${attr(order.id)}" aria-label="Cancel order">Cancel order</button>` : '';
-  const control = `<div class="button-stack">${assignmentControl}${cancelControl}</div>`;
+  const alertAck=String(order.status).toLowerCase()==='placed'?`<button class="button button-secondary button-small" type="button" data-action="acknowledge-order" data-id="${attr(order.id)}" ${adminAcknowledgedOrders.has(String(order.id))?'disabled aria-label="Acknowledged locally"':''}>${adminAcknowledgedOrders.has(String(order.id))?'Acknowledged':'Acknowledge'}</button>`:'';
+  const control = `<div class="button-stack">${alertAck}${assignmentControl}${cancelControl}</div>`;
   return `<tr><td><span class="row-title">${esc(order.order_number || order.id)}</span><span class="row-sub">${money(order.total)}</span></td><td>${esc(order.customer_name || 'Customer')}<span class="row-sub">${esc(order.customer_phone || 'No phone')} · ${esc(order.delivery_address || 'No delivery address')}</span></td><td>${badge(order.status)}</td><td>${assignment ? `<span class="row-title">${esc(assignment.rider_name || 'Assigned rider')}</span><span class="row-sub">${badge(assignment.status)}</span>` : '<span class="row-sub">Unassigned</span>'}</td><td>${control}</td></tr>`;
 }
 
@@ -1008,6 +1027,7 @@ function ordersTable(items, includeControls) { return items.length ? `<div class
 async function action(event) {
   const target = event.target.closest('[data-action]'); if (!target) return;
   const type = target.dataset.action; const id = target.dataset.id;
+  if (type === 'acknowledge-order') { acknowledgeAdminOrder(id,target); return; }
   if (type === 'refresh-view') return renderView();
   if (type === 'market-toggle') {
     const open = target.dataset.open === 'true', controls = state.cache.overview?.platform?.controls || state.cache.website?.controls || {};
@@ -1061,8 +1081,8 @@ async function action(event) {
       { reasonRequired: true, confirmLabel: 'Confirm cancellation' },
     );
   }
-  if (type === 'assign-rider') { const select = document.querySelector(`[data-order-rider="${CSS.escape(id)}"]`); if (!select?.value) return toast('Choose a rider before assigning.', 'error'); return openConfirm('Assign rider', 'Assign this rider to the active order?', async () => { await mutate('operations.adminAssignRider', { orderId: id, riderId: select.value }); toast('Rider assigned.'); renderView(); }, false); }
-  if (type === 'update-assignment') { const select = document.querySelector(`[data-assignment-status="${CSS.escape(id)}"]`); if (!select?.value) return; return openConfirm('Update delivery status', `Set this delivery assignment to “${select.value.replaceAll('_', ' ')}”?`, async () => { await mutate('operations.adminUpdateAssignment', { id, status: select.value }); toast('Delivery status updated.'); renderView(); }, false); }
+  if (type === 'assign-rider') { const select = document.querySelector(`[data-order-rider="${CSS.escape(id)}"]`); if (!select?.value) return toast('Choose a rider before assigning.', 'error'); return openConfirm('Assign rider', 'Assign this rider to the active order?', async () => { await mutate('operations.adminAssignRider', { orderId: id, riderId: select.value }); acknowledgeAdminOrder(id); toast('Rider assigned.'); renderView(); }, false); }
+  if (type === 'update-assignment') { const select = document.querySelector(`[data-assignment-status="${CSS.escape(id)}"]`); if (!select?.value) return; return openConfirm('Update delivery status', `Set this delivery assignment to “${select.value.replaceAll('_', ' ')}”?`, async () => { await mutate('operations.adminUpdateAssignment', { id, status: select.value }); const orderId=state.cache.dispatch?.assignments?.find(item=>String(item.id)===String(id))?.order_id; if(orderId!==undefined)acknowledgeAdminOrder(orderId); toast('Delivery status updated.'); renderView(); }, false); }
   if (type === 'edit-restaurant') { state.restaurantEditId=id; await renderRestaurants(); document.getElementById('restaurant-edit-panel')?.scrollIntoView({behavior:'smooth',block:'start'}); return; }
   if (type === 'cancel-restaurant-edit') { state.restaurantEditId=null; return renderRestaurants(); }
   if (type === 'open-restaurant-create') { const panel = document.getElementById('restaurant-create-panel'); panel?.classList.remove('hidden'); panel?.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.setTimeout(() => document.querySelector('#restaurant-create-form [name="name"]')?.focus(), 180); return; }
@@ -1225,6 +1245,8 @@ root.addEventListener('click',event=>{
 
 document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const error = document.getElementById('login-error'); error.className = 'notice notice-error hidden'; const button = event.currentTarget.querySelector('button'); button.disabled = true; button.textContent = 'Signing in…'; try { const form = event.currentTarget; const fd = new FormData(form); const response = await request('auth.login', { username: String(fd.get('username') || ''), password: String(fd.get('password') || '') }, 'POST', false); if (await window.AdminMfa?.handleSignInResult(response)) return; if (!response?.token) throw new Error('Sign-in did not return a valid session.'); form.reset(); saveSession(response.token, response.admin || response.user || {}); await verifySession(); setShell(); setView(location.hash.slice(1) || 'overview'); } catch (err) { error.textContent = err.message || 'Sign-in failed.'; error.classList.remove('hidden'); } finally { button.disabled = false; button.textContent = 'Sign in securely'; } });
 document.getElementById('logout-button').addEventListener('click', () => logout());
+document.getElementById('admin-order-sound').addEventListener('click', () => { void toggleAdminOrderSound(); });
+initAdminOrderSound();
 document.getElementById('refresh-button').addEventListener('click', () => { if (window.adminFreshness?.isDirty() && !window.confirm('Refresh and discard unsaved edits on this page?')) return; void renderView(); });
 window.addEventListener('hashchange', () => setView(location.hash.slice(1) || 'overview'));
 
