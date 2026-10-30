@@ -454,3 +454,74 @@
 
 /* Keep the language-switch control visually consistent with its sibling links. */
 .premium-home button.ae-value-item { background: transparent; color: inherit; }
+
+
+/* A quiet desktop bridge from browsing on a computer to ordering on a phone. */
+.premium-home .ae-desktop-install {
+  padding-block: 22px 34px;
+  background: #faf7f0;
+}
+.premium-home .ae-desktop-install-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 30px;
+  padding: 26px 32px;
+  border: 1px solid #dedfd2;
+  border-radius: 20px;
+  background: linear-gradient(115deg, #fffefa 0%, #f1f2e8 100%);
+  color: #19382f;
+}
+.premium-home .ae-desktop-install-copy h2 {
+  max-width: 25ch;
+  margin: 0;
+  color: #173b30;
+  font-size: clamp(22px, 2.3vw, 30px);
+  font-weight: 780;
+  line-height: 1.25;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.premium-home.rtl .ae-desktop-install-copy h2 {
+  max-width: 32ch;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.premium-home .ae-desktop-install-copy p {
+  max-width: 58ch;
+  margin: 10px 0 0;
+  color: #44554c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.premium-home .ae-desktop-install-qr {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  margin: 0;
+}
+.premium-home .ae-desktop-install-qr img {
+  display: block;
+  width: 176px;
+  height: 176px;
+  padding: 8px;
+  border: 1px solid #d9ded2;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(23, 59, 48, .10);
+}
+.premium-home .ae-desktop-install-qr figcaption {
+  color: #31543c;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+}
+.premium-home.rtl .ae-desktop-install-qr figcaption { font-size: 13px; }
+@media (max-width: 900px) {
+  .premium-home .ae-desktop-install-card { gap: 20px; padding: 22px; }
+  .premium-home .ae-desktop-install-qr img { width: 156px; height: 156px; }
+}
+@media (max-width: 760px) {
+  .premium-home .ae-desktop-install { display: none; }
+}

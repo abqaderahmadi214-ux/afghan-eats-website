@@ -97,6 +97,50 @@ test('an already-installed iPhone web app does not show the install guide', asyn
   }
 });
 
+test('the homepage shows the existing bilingual QR callout on desktop with an accessible image', async ({ page, request }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+
+  const section = page.locator('#aeDesktopInstall');
+  await expect(section).toBeVisible();
+  await expect(section.getByRole('heading', { level: 2 })).toContainText('Scan to open Afghan Eats on your phone');
+  await expect(section.locator('h2 .fa-copy')).toContainText('برای باز کردن افغان ایتس در تلفن‌تان اسکن کنید');
+
+  const qr = section.locator('img');
+  await expect(qr).toHaveAttribute('src', '/assets/qr/afghan-eats-homepage.png');
+  await expect(qr).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
+  await expect(qr).toBeVisible();
+  const imageResponse = await request.get('/assets/qr/afghan-eats-homepage.png');
+  expect(imageResponse.status()).toBe(200);
+  expect(await qr.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+});
+
+test('the QR callout is hidden on narrow screens so iPhone visitors can use Safari guidance', async ({ browser }) => {
+  const { context, page } = await newIPhonePage(browser);
+  try {
+    await page.goto(LOCAL_HOME, { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#aeDesktopInstall')).toBeHidden();
+    await expect(page.locator('#aePwaInstall')).toBeVisible();
+    await expect(page.locator('#aePwaInstall')).toContainText('Add to Home Screen');
+  } finally {
+    await context.close();
+  }
+});
+
+test('the browser install prompt remains available when beforeinstallprompt fires', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => {
+    const event = new Event('beforeinstallprompt', { cancelable: true });
+    event.prompt = () => Promise.resolve();
+    event.userChoice = Promise.resolve({ outcome: 'accepted' });
+    window.dispatchEvent(event);
+  });
+
+  const guide = page.locator('#aePwaInstall');
+  await expect(guide).toBeVisible();
+  await expect(guide.locator('[data-pwa-install]')).toBeVisible();
+});
+
 test('the service worker registers at the site root and caches no HTML or customer data', async ({ page }) => {
   await page.goto('/');
   const scope = await page.evaluate(async () => {
