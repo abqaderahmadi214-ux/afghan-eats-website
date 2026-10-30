@@ -528,6 +528,10 @@
   .premium-home .ae-ios-app-slot img { width: min(100%, 156px); }
 }
 @media (max-width: 760px) {
-  .premium-home .ae-mobile-app-platforms,
-  .premium-home .ae-ios-app-guidance { display: none; }
+  .premium-home .ae-mobile-app-platforms {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .premium-home .ae-android-app-slot { display: none; }
+  .premium-home .ae-ios-app-slot { min-height: 0; }
+  .premium-home .ae-ios-app-guidance { display: block; }
 }

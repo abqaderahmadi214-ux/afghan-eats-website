@@ -129,21 +129,29 @@ test('the homepage places one accessible iPhone QR in the mobile-apps section an
 });
 
 for (const language of ['en', 'fa']) {
-  test(`footer QR copy is readable on the light footer and respects the width breakpoint (${language})`, async ({ page }) => {
+  test(`footer QR and copy stay readable without horizontal overflow across viewport sizes (${language})`, async ({ page }) => {
     await page.addInitScript(value => localStorage.setItem('ae_lang', value), language);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
 
     const section = page.locator('#aeMobileApps');
     const qr = section.locator('#aeIosQr img');
-    for (const width of [1280, 761]) {
+    const androidSlot = section.locator('#aeAndroidAppSlot');
+    for (const width of [1280, 900, 761, 760, 390, 320]) {
       await page.setViewportSize({ width, height: 900 });
+      await expect(section).toBeVisible();
       await qr.scrollIntoViewIfNeeded();
       await expect(qr).toBeVisible();
       await expect.poll(() => qr.evaluate(image => image.naturalWidth)).toBe(666);
       const box = await qr.boundingBox();
       expect(box.width).toBeGreaterThanOrEqual(156);
       expect(Math.abs(box.width - box.height)).toBeLessThan(1);
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(width);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      expect(await androidSlot.evaluate(element => element.children.length)).toBe(0);
+      if (width <= 760) await expect(androidSlot).toBeHidden();
+      else await expect(androidSlot).toBeVisible();
 
       const copyClass = language === 'fa' ? '.fa-copy' : '.en-copy';
       for (const selector of ['#aeIosQr figcaption strong', '.ae-mobile-app-scan-label', '.ae-ios-app-guidance']) {
@@ -171,23 +179,19 @@ for (const language of ['en', 'fa']) {
         expect(contrast, `${language} ${selector} needs readable contrast at ${width}px`).toBeGreaterThanOrEqual(4.5);
       }
     }
-
-    for (const width of [760, 390]) {
-      await page.setViewportSize({ width, height: 900 });
-      await expect(section).toBeVisible();
-      await expect(qr).toBeHidden();
-    }
+    await expect(qr).toHaveAttribute('src', '/assets/qr/afghan-eats-homepage.png');
+    await expect(qr).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
     await expect(page.locator('img[src="/assets/qr/afghan-eats-homepage.png"]')).toHaveCount(1);
-    expect(await section.locator('#aeAndroidAppSlot').evaluate(element => element.children.length)).toBe(0);
   });
 }
 
-test('the QR is hidden on phone-width screens while iPhone visitors get Safari install guidance', async ({ browser }) => {
+test('the footer QR stays visible on iPhone screens alongside Safari install guidance', async ({ browser }) => {
   const { context, page } = await newIPhonePage(browser);
   try {
     await page.goto(LOCAL_HOME, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#aeMobileApps')).toBeVisible();
-    await expect(page.locator('#aeIosQr')).toBeHidden();
+    await expect(page.locator('#aeIosQr img')).toBeVisible();
+    await expect(page.locator('#aeIosQr img')).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
     await expect(page.locator('#aePwaInstall')).toBeVisible();
     await expect(page.locator('#aePwaInstall')).toContainText('Add to Home Screen');
   } finally {
