@@ -97,29 +97,43 @@ test('an already-installed iPhone web app does not show the install guide', asyn
   }
 });
 
-test('the homepage shows the existing bilingual QR callout on desktop with an accessible image', async ({ page, request }) => {
+test('the homepage places one accessible iPhone QR in the mobile-apps section and leaves Android empty', async ({ page, request }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
 
-  const section = page.locator('#aeDesktopInstall');
+  const section = page.locator('#aeMobileApps');
   await expect(section).toBeVisible();
-  await expect(section.getByRole('heading', { level: 2 })).toContainText('Scan to open Afghan Eats on your phone');
-  await expect(section.locator('h2 .fa-copy')).toContainText('برای باز کردن افغان ایتس در تلفن‌تان اسکن کنید');
+  await expect(section.locator('#aeMobileAppsTitle')).toContainText('Mobile apps coming soon.');
+  await expect(section.locator('#aeMobileAppsTitle .fa-copy')).toContainText('اپلیکیشن‌های موبایل به‌زودی عرضه می‌شوند.');
 
-  const qr = section.locator('img');
+  const qrCard = section.locator('#aeIosQr');
+  await expect(qrCard).toBeVisible();
+  await expect(qrCard.locator('figcaption')).toContainText('iPhone / iOS');
+  await expect(qrCard.locator('figcaption strong .fa-copy')).toContainText('آیفون / iOS');
+  await expect(section.locator('.ae-ios-app-guidance')).toContainText('Safari');
+  await expect(section.locator('.ae-ios-app-guidance')).toContainText('Add to Home Screen');
+
+  const qr = qrCard.locator('img');
   await expect(qr).toHaveAttribute('src', '/assets/qr/afghan-eats-homepage.png');
   await expect(qr).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
   await expect(qr).toBeVisible();
+  await expect(page.locator('img[src="/assets/qr/afghan-eats-homepage.png"]')).toHaveCount(1);
   const imageResponse = await request.get('/assets/qr/afghan-eats-homepage.png');
   expect(imageResponse.status()).toBe(200);
   expect(await qr.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+
+  const androidSlot = section.locator('#aeAndroidAppSlot');
+  await expect(androidSlot).toBeVisible();
+  expect(await androidSlot.evaluate(element => element.textContent.trim())).toBe('');
+  expect(await androidSlot.evaluate(element => element.children.length)).toBe(0);
 });
 
-test('the QR callout is hidden on narrow screens so iPhone visitors can use Safari guidance', async ({ browser }) => {
+test('the QR is hidden on phone-width screens while iPhone visitors get Safari install guidance', async ({ browser }) => {
   const { context, page } = await newIPhonePage(browser);
   try {
     await page.goto(LOCAL_HOME, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#aeDesktopInstall')).toBeHidden();
+    await expect(page.locator('#aeMobileApps')).toBeVisible();
+    await expect(page.locator('#aeIosQr')).toBeHidden();
     await expect(page.locator('#aePwaInstall')).toBeVisible();
     await expect(page.locator('#aePwaInstall')).toContainText('Add to Home Screen');
   } finally {
