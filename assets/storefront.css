@@ -480,17 +480,21 @@
   border-radius: 16px;
   background: rgba(255, 255, 255, .04);
 }
+.premium-home .ae-ios-app-slot {
+  border-color: #d9e3d8;
+  background: #f3f7f1;
+}
 .premium-home .ae-ios-app-slot figcaption {
   display: grid;
   justify-items: center;
   gap: 5px;
-  color: #d9e5de;
+  color: #405b4f;
   font-size: 12px;
   line-height: 1.4;
   text-align: center;
 }
 .premium-home .ae-ios-app-slot figcaption strong {
-  color: #fff;
+  color: #0d4a3a;
   font-size: 14px;
   font-weight: 800;
 }
@@ -513,7 +517,7 @@
 .premium-home .ae-ios-app-guidance {
   max-width: none !important;
   margin: 13px 0 0 !important;
-  color: #d9e5de !important;
+  color: #405b4f !important;
   font-size: .8rem !important;
   line-height: 1.6 !important;
 }

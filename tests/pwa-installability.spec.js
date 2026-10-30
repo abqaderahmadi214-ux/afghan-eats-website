@@ -128,6 +128,60 @@ test('the homepage places one accessible iPhone QR in the mobile-apps section an
   expect(await androidSlot.evaluate(element => element.children.length)).toBe(0);
 });
 
+for (const language of ['en', 'fa']) {
+  test(`footer QR copy is readable on the light footer and respects the width breakpoint (${language})`, async ({ page }) => {
+    await page.addInitScript(value => localStorage.setItem('ae_lang', value), language);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+
+    const section = page.locator('#aeMobileApps');
+    const qr = section.locator('#aeIosQr img');
+    for (const width of [1280, 761]) {
+      await page.setViewportSize({ width, height: 900 });
+      await qr.scrollIntoViewIfNeeded();
+      await expect(qr).toBeVisible();
+      await expect.poll(() => qr.evaluate(image => image.naturalWidth)).toBe(666);
+      const box = await qr.boundingBox();
+      expect(box.width).toBeGreaterThanOrEqual(156);
+      expect(Math.abs(box.width - box.height)).toBeLessThan(1);
+
+      const copyClass = language === 'fa' ? '.fa-copy' : '.en-copy';
+      for (const selector of ['#aeIosQr figcaption strong', '.ae-mobile-app-scan-label', '.ae-ios-app-guidance']) {
+        const copy = section.locator(`${selector} ${copyClass}`);
+        await expect(copy).toBeVisible();
+        const contrast = await copy.evaluate(element => {
+          const rgba = value => {
+            const channels = value.match(/[\d.]+/g).map(Number);
+            return [...channels.slice(0, 3), channels[3] ?? 1];
+          };
+          const blend = (foreground, background) => foreground.slice(0, 3)
+            .map((value, index) => value * foreground[3] + background[index] * (1 - foreground[3]));
+          const ancestors = [];
+          for (let node = element; node; node = node.parentElement) ancestors.unshift(node);
+          const background = ancestors.reduce((color, node) =>
+            blend(rgba(getComputedStyle(node).backgroundColor), color), [255, 255, 255]);
+          const foreground = blend(rgba(getComputedStyle(element).color), background);
+          const luminance = color => color.map(value => {
+            const channel = value / 255;
+            return channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4;
+          }).reduce((sum, value, index) => sum + value * [.2126, .7152, .0722][index], 0);
+          const values = [luminance(foreground), luminance(background)].sort((a, b) => a - b);
+          return (values[1] + .05) / (values[0] + .05);
+        });
+        expect(contrast, `${language} ${selector} needs readable contrast at ${width}px`).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+
+    for (const width of [760, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expect(section).toBeVisible();
+      await expect(qr).toBeHidden();
+    }
+    await expect(page.locator('img[src="/assets/qr/afghan-eats-homepage.png"]')).toHaveCount(1);
+    expect(await section.locator('#aeAndroidAppSlot').evaluate(element => element.children.length)).toBe(0);
+  });
+}
+
 test('the QR is hidden on phone-width screens while iPhone visitors get Safari install guidance', async ({ browser }) => {
   const { context, page } = await newIPhonePage(browser);
   try {
