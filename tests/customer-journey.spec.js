@@ -424,3 +424,32 @@ test('one-time admin reset removes its token after a successful password change'
   expect(resetPayload).toEqual({token:'single-use-test-token',newPassword:'SecureAdmin!2026Herat'});
   await expect(page.locator('#adminResetForm')).toHaveClass(/hidden/);
 });
+
+
+test('Mawlana preview shows the live menu without enabling ordering', async ({page})=>{
+  const preview={...restaurant,id:'d273c5f8-d994-4f29-8f1b-fd36851d42d1',slug:'mawlana-restaurant',name:'Mawlana Restaurant',verification_status:'public_seeded',partnership_status:'prospect',owner_confirmed:false,menu_preview_only:true};
+  const liveMenu={
+    categories:Array.from({length:21},(_,i)=>({id:`live-category-${i}`,name:`Live category ${i}`,name_dari:`دسته ${i}`})),
+    items:Array.from({length:165},(_,i)=>({id:`live-dish-${i}`,category_id:`live-category-${i%21}`,name:`Live dish ${i}`,name_dari:`غذای ${i}`,description:'Owner menu photo entry',price:100+i,is_available:true}))
+  };
+  let menuRequests=0,mutationRequests=0;
+  await mockApi(page,{restaurants:[preview]});
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/restaurants.getMenu**',async route=>{
+    menuRequests++;
+    const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')).json;
+    expect(input.restaurantId).toBe(preview.id);
+    await route.fulfill({status:200,contentType:'application/json',body:trpc(liveMenu)});
+  });
+  page.on('request',request=>{if(request.method()!=='GET'&&request.url().includes('/api/trpc/'))mutationRequests++});
+  await page.goto('/restaurant.html?id=mawlana-restaurant');
+  await expect(page.locator('#menuContent .public-menu-item')).toHaveCount(165);
+  await expect(page.locator('#directoryMenuBrowser [role="tab"]')).toHaveCount(21);
+  await expect(page.getByRole('heading',{name:'Live dish 0',exact:true})).toBeVisible();
+  await expect(page.locator('#menuContent')).toContainText('؋ 100');
+  await expect(page.locator('#menuContent .add-btn')).toHaveCount(0);
+  await expect(page.locator('.cart-panel')).toBeHidden();
+  await expect(page.locator('#menuContent')).toContainText('ordering remains disabled');
+  expect(await page.evaluate(()=>window.currentRestaurant.menu_preview_only)).toBe(true);
+  expect(menuRequests).toBeGreaterThan(0);
+  expect(mutationRequests).toBe(0);
+});
