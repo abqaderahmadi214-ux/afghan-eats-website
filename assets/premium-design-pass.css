@@ -1543,3 +1543,9 @@
     transform: none !important;
   }
 }
+/* Photo-free menu items use a neutral block; do not fetch a placeholder image. */
+.ae-premium .menu-photo-placeholder {
+  background-color: #f1f3f5 !important;
+  background-image: none !important;
+  color: #667085 !important;
+}
