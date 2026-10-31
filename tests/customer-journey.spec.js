@@ -243,8 +243,9 @@ test('checkout schedule language does not leak across English and Dari', async (
   await expect(later).toHaveText('بعداً');
 });
 
-test('public Herat directory listings can show sourced menus without becoming orderable', async ({page})=>{
+test('public Herat directory listings retain sourced menus when no live catalog exists', async ({page})=>{
   await mockApi(page);
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/restaurants.getMenu**',async route=>route.fulfill({status:200,contentType:'application/json',body:trpc({categories:[],items:[]})}));
   await page.goto('/restaurants');
   const search=page.locator('#search');
   await search.fill('Jumeirah');
@@ -451,5 +452,37 @@ test('Mawlana preview shows the live menu without enabling ordering', async ({pa
   await expect(page.locator('#menuContent')).toContainText('ordering remains disabled');
   expect(await page.evaluate(()=>window.currentRestaurant.menu_preview_only)).toBe(true);
   expect(menuRequests).toBeGreaterThan(0);
+  expect(mutationRequests).toBe(0);
+});
+
+
+test('public directory pages prefer the current API catalog over stale source snapshots', async ({page})=>{
+  const currentCatalog={
+    categories:[{id:'current-directory-category',name:'Current catalog',name_dari:'منوی تازه'}],
+    items:[
+      {id:'current-directory-item-1',category_id:'current-directory-category',name:'Live Catalog Lamb',name_dari:'بره تازه',description:'Current menu item',price:725,image_url:null,is_available:true},
+      {id:'current-directory-item-2',category_id:'current-directory-category',name:'Live Catalog Rice',name_dari:'برنج تازه',description:'Current menu item',price:510,image_url:null,is_available:true}
+    ]
+  };
+  let queriedRestaurantId=null,mutationRequests=0;
+  await mockApi(page);
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/restaurants.getMenu**',async route=>{
+    const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{}').json||{};
+    queriedRestaurantId=input.restaurantId;
+    await route.fulfill({status:200,contentType:'application/json',body:trpc(currentCatalog)});
+  });
+  page.on('request',request=>{if(request.method()!=='GET'&&request.url().includes('/api/trpc/'))mutationRequests++});
+  await page.goto('/restaurant.html?id=jumeirah-fast-food-herat');
+  await expect(page.locator('#storeHero')).toContainText('Public listing');
+  await expect(page.locator('.directory-detail')).toContainText('Ordering not active yet');
+  await expect(page.locator('.directory-detail')).toContainText('Public menu');
+  await expect(page.locator('#menuContent .public-menu-item')).toHaveCount(2);
+  await expect(page.locator('#directoryMenuBrowser [role="tab"]')).toHaveCount(1);
+  await expect(page.getByRole('heading',{name:'Live Catalog Lamb',exact:true})).toBeVisible();
+  await expect(page.locator('.directory-detail')).toContainText('؋ 725');
+  await expect(page.locator('.directory-detail')).not.toContainText('Jumeirah Special Burger');
+  await expect(page.locator('.directory-detail .add-btn')).toHaveCount(0);
+  await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
+  expect(queriedRestaurantId).toBe(directoryListing.id);
   expect(mutationRequests).toBe(0);
 });
