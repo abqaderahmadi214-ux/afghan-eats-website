@@ -344,24 +344,37 @@ jobs:
           print('Delivery and pickup quote contracts passed')
           PY
 
-      - name: Verify database-backed restaurant directory
+      - name: Verify approved browse-preview catalog
         shell: bash
         run: |
           set -euo pipefail
-          list_url='https://afghaneats-api.onrender.com/api/trpc/restaurants.list?input=%7B%22json%22%3A%7B%7D%7D'
-          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$list_url" -o /tmp/restaurants-v48.json
+          preview_url='https://afghaneats-api.onrender.com/api/trpc/restaurants.listBrowsePreviews?input=%7B%22json%22%3A%7B%7D%7D'
+          curl -fsS --connect-timeout 10 --max-time 30 --retry 3 --retry-delay 3 "$preview_url" -o /tmp/browse-previews.json
           python - <<'PY'
           import json
-          data=json.load(open('/tmp/restaurants-v48.json')).get('result',{}).get('data',{}).get('json',[])
-          directory=[x for x in data if x.get('listing_mode')=='directory']
-          if len(directory)<19:
-              raise SystemExit(f'Expected at least 19 database-backed directory listings, found {len(directory)}')
-          required=next((x for x in directory if x.get('id')=='jumeirah-fast-food-herat'),None)
-          if not required or not required.get('source_url') or len(required.get('phone_numbers') or [])<1:
-              raise SystemExit(f'Directory metadata contract mismatch: {required}')
-          if required.get('has_delivery') is not False or required.get('has_takeaway') is not False or required.get('status')!='pending':
-              raise SystemExit(f'Directory ordering safety mismatch: {required}')
-          print('Database-backed directory contract passed')
+          expected={
+              '5df516b2-52d2-4c81-b90e-d7e55a034344',
+              'char-fasl-food-complex',
+              '5062b505-812d-48be-8079-712fd67a5361',
+              '4539c17d-8118-4e62-a112-05d57e2ec330',
+              'e388bc40-04b3-4da7-8d20-35559f65d923',
+              'maza-biryani-herat',
+              'mr-burger-herat',
+              'd3008f38-f9a4-4b1c-b8d5-e39be529fb5f',
+              'dee417e2-7c95-4b4a-8683-0034cec2dccc',
+              '683181f3-eac8-4b8e-b609-6007e10a69e7',
+              'a0af9735-5ea0-4dde-aa44-0c5fbb208c2b',
+              '9b3eed54-f239-4d6c-9cc9-9bf10bee3413',
+              'f0c6fbb1-7e3c-4989-b745-feefa717cc2b',
+          }
+          rows=json.load(open('/tmp/browse-previews.json')).get('result',{}).get('data',{}).get('json',[])
+          actual=[str(row.get('id') or '') for row in rows]
+          if len(actual)!=len(expected) or set(actual)!=expected:
+              raise SystemExit(f'Browse-preview ID mismatch: expected={sorted(expected)}, actual={sorted(actual)}')
+          empty=[row.get('id') for row in rows if int(row.get('menu_item_count') or 0)<=0]
+          if empty:
+              raise SystemExit(f'Approved browse previews must have nonempty menus: {empty}')
+          print('Exact 13 approved browse-preview IDs passed; every preview has at least one public menu item')
           PY
 
       - name: Production verification summary
@@ -376,6 +389,6 @@ jobs:
           echo 'Frontend security headers: live'
           echo 'API database health: live'
           echo 'Customer delivery quote contract: live'
-          echo 'Database-backed restaurant directory: live'
+          echo 'Approved browse-preview catalog: live'
           echo 'Backend v40 launch-readiness route: live and access-controlled'
           echo 'API hardening headers: live'
