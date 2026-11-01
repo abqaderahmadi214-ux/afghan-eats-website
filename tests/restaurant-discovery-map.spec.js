@@ -134,7 +134,8 @@ async function openMap(page, viewport) {
   await page.goto('/restaurants');
   await page.locator('[data-restaurant-view="map"]').click();
   await expect(page.locator('#restaurantDiscoveryMapView')).toBeVisible();
-  await expect.poll(() => page.locator('.fake-discovery-pin').count()).toBeGreaterThanOrEqual(9);
+  // Empty pending menus are hidden from the public directory and therefore from map pins.
+  await expect.poll(() => page.locator('.fake-discovery-pin').count()).toBeGreaterThanOrEqual(8);
 }
 
 test.beforeEach(() => fs.mkdirSync('visual-proof', { recursive: true }));
