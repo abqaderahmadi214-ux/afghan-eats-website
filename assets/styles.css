@@ -44,3 +44,29 @@ body{background:linear-gradient(180deg,#fff 0%,#fff 64%,#fcfdfb 100%)}
 @media(max-width:620px){.hero{padding:34px 0 40px}.hero:before{width:330px;height:330px;right:-180px;top:-220px}.hero h1{font-size:clamp(2.45rem,12vw,3.25rem);letter-spacing:-1.6px}.hero-trust span{white-space:normal}.address-box{padding:8px}.journey-section{padding:52px 0}.journey-layout{gap:28px}.journey-intro h2{font-size:2rem}.journey-steps{grid-template-columns:1fr;gap:10px}.journey-step{grid-template-columns:45px 1fr;gap:13px;padding:16px}.journey-number{width:42px;height:42px;border-radius:13px;font-size:.76rem}.journey-step h3{font-size:.96rem}.smart-discovery{padding-top:28px}.community-band{padding:54px 0}.community-band h2{font-size:2rem}.community-actions{grid-template-columns:1fr}.community-card{grid-template-columns:45px 1fr auto}.community-card-icon{width:42px;height:42px}.mobile-nav a{min-height:54px;padding-top:7px}.section-kicker{font-size:.7rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 @media(max-width:620px){.restaurant-not-found{align-items:stretch;flex-direction:column}.restaurant-not-found .btn{width:100%}}
+
+
+/* Browse-only menu previews: explicit status, no delivery or online-order promise. */
+.menu-preview-browse-only {
+  margin: 0 0 1rem;
+  padding: .85rem 1rem;
+  border: 1px solid #d9b15e;
+  border-radius: 12px;
+  background: #fff8e8;
+  color: #654b16;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.public-menu-item.menu-item-unavailable {
+  opacity: .82;
+}
+.public-menu-item .ae-soldout {
+  display: inline-flex;
+  margin-top: .55rem;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  background: #f1e8e7;
+  color: #7d3029;
+  font-size: .78rem;
+  font-weight: 700;
+}

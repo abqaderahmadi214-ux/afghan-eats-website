@@ -1,4 +1,6 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const restaurant = {
   id:'test-restaurant',name:'Herat Kitchen',name_dari:'آشپزخانه هرات',description:'Afghan food',description_dari:'غذای افغانی',
@@ -12,15 +14,17 @@ const directoryListing = {
   id:'jumeirah-fast-food-herat',name:'Jumeirah Fast Food',name_dari:'فست‌فود جمیرا',description:'Public restaurant listing',description_dari:'فهرست عمومی رستورانت',
   cuisine_tags:['Fast Food','Pizza'],category_primary:'Fast Food',address:'Mokhaberat Road, Herat',address_dari:'هرات، جاده مخابرات',district:'Jade Mokhaberat',city:'Herat',
   phone:'+93 728 778 355',phone2:'+93 728 213 595',phone_numbers:['+93 728 778 355','+93 728 213 595','+93 790 810 167'],source_url:'https://www.instagram.com/jumeirah____fastfood/',source_label:'Official Instagram profile',source_checked_at:'2026-08-09',
-  cover_image_url:null,logo_url:null,has_delivery:false,has_takeaway:false,status:'pending',is_open:false,rating:null,total_reviews:0,verification_status:'public_seeded',partnership_status:'prospect',listing_mode:'directory'
+  cover_image_url:null,logo_url:null,has_delivery:false,has_takeaway:false,status:'pending',is_open:false,rating:null,total_reviews:0,verification_status:'public_seeded',partnership_status:'prospect',listing_mode:'directory',public_menu_item_count:2
 };
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing],quoteHandler,menuData=menu}={}){
+async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing],quoteHandler,menuData=menu,menuPreviewRows=[],browseMenuData=menuData}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
-    if(path.endsWith('/restaurants.list'))data=restaurantRows;
+    if(path.endsWith('/restaurants.listBrowsePreviews'))data=menuPreviewRows;
+    else if(path.endsWith('/restaurants.getBrowseMenu'))data=browseMenuData;
+    else if(path.endsWith('/restaurants.list'))data=restaurantRows;
     else if(path.endsWith('/restaurants.getMenu'))data=menuData;
     else if(path.endsWith('/orders.quote')){
       const input=JSON.parse(new URL(route.request().url()).searchParams.get('input')||'{"json":{}}').json||{};
@@ -508,4 +512,172 @@ test('public directory pages prefer the current API catalog over stale source sn
   await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
   expect(queriedRestaurantId).toBe(directoryListing.id);
   expect(mutationRequests).toBe(0);
+});
+
+
+const approvedBrowseRestaurants = [
+  ['5df516b2-52d2-4c81-b90e-d7e55a034344', 'Arghawan Restaurant'],
+  ['char-fasl-food-complex', 'Char Fasl Food Complex'],
+  ['5062b505-812d-48be-8079-712fd67a5361', 'Hazar Dastan Café'],
+  ['4539c17d-8118-4e62-a112-05d57e2ec330', 'Isteqlal Restaurant'],
+  ['e388bc40-04b3-4da7-8d20-35559f65d923', 'Mahtab Restaurant'],
+  ['maza-biryani-herat', 'Maza Biryani'],
+  ['mr-burger-herat', 'Mr Burger Herat'],
+  ['d3008f38-f9a4-4b1c-b8d5-e39be529fb5f', 'Sar Ashpaz'],
+  ['dee417e2-7c95-4b4a-8683-0034cec2dccc', 'Shabha-ye Tehran Restaurant'],
+  ['683181f3-eac8-4b8e-b609-6007e10a69e7', 'Duniya Kabab'],
+  ['a0af9735-5ea0-4dde-aa44-0c5fbb208c2b', 'Navid Restaurant'],
+  ['9b3eed54-f239-4d6c-9cc9-9bf10bee3413', 'Padehda Restaurant'],
+  ['f0c6fbb1-7e3c-4989-b745-feefa717cc2b', 'Uranus Restaurant'],
+].map(([id, name]) => ({
+  id,
+  slug: id,
+  name,
+  name_dari: null,
+  status: 'active',
+  is_open: false,
+  has_delivery: id === 'dee417e2-7c95-4b4a-8683-0034cec2dccc',
+  has_takeaway: false,
+  city: 'Herat',
+  address: 'Herat',
+  cuisine_tags: ['Afghan'],
+  verification_status: 'public_seeded',
+  partnership_status: 'prospect',
+  public_menu_item_count: 24,
+}));
+
+async function clearPublicRestaurantFallbacks(page) {
+  for (const file of ['fallback-restaurants.json', 'public-herat-directory.json', 'researched-herat-restaurants.json']) {
+    await page.route(`**/data/${file}`, (route) => route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: '[]',
+    }));
+  }
+}
+
+test('all 13 approved active restaurants appear as clearly browse-only directory cards', async ({page}) => {
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page, {
+    restaurants: approvedBrowseRestaurants,
+    menuPreviewRows: approvedBrowseRestaurants.map((restaurant) => ({ id: restaurant.id, menu_item_count: 24 })),
+  });
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card.preview-card')).toHaveCount(13);
+  for (const restaurant of approvedBrowseRestaurants) {
+    await expect(page.getByRole('heading', { name: restaurant.name, exact: true })).toBeVisible();
+  }
+  await expect(page.locator('.restaurant-card .browse-card-meta').first()).toContainText('Browse only; delivery and online ordering are unavailable');
+  await expect(page.locator('.restaurant-card .status-pill')).toHaveCount(13);
+  await expect(page.locator('.restaurant-card .add-btn')).toHaveCount(0);
+});
+
+test('browse-only restaurant menus show unavailable items but expose no cart or ordering actions', async ({page}) => {
+  const target = approvedBrowseRestaurants.find((restaurant) => restaurant.name === 'Duniya Kabab');
+  const browseMenu = {
+    categories: [{ id: 'duniya-menu', name: 'Menu', name_dari: 'منو', sort_order: 0 }],
+    items: [
+      { id: 'duniya-dish-1', category_id: 'duniya-menu', name: 'Unavailable Kabab', name_dari: 'کباب ناموجود', description: 'Current menu item', price: 420, is_available: false, sort_order: 0 },
+      { id: 'duniya-dish-2', category_id: 'duniya-menu', name: 'Unavailable Rice', name_dari: 'برنج ناموجود', description: 'Current menu item', price: 180, is_available: false, sort_order: 1 },
+    ],
+  };
+  let previewMenuRequests = 0;
+  let mutationRequests = 0;
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page, {
+    restaurants: [target],
+    menuPreviewRows: [{ id: target.id, menu_item_count: 56 }],
+    browseMenuData: browseMenu,
+  });
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/restaurants.getBrowseMenu**', async (route) => {
+    previewMenuRequests++;
+    const input = JSON.parse(new URL(route.request().url()).searchParams.get('input') || '{}').json || {};
+    expect(input.restaurantId).toBe(target.id);
+    await route.fulfill({ status: 200, contentType: 'application/json', body: trpc(browseMenu) });
+  });
+  page.on('request', (request) => {
+    if (request.method() !== 'GET' && request.url().includes('/api/trpc/')) mutationRequests++;
+  });
+  await page.goto(`/restaurant.html?id=${encodeURIComponent(target.id)}`);
+  await expect(page.locator('.menu-preview-browse-only')).toContainText('Menu preview · browse only. Delivery and online ordering are unavailable.');
+  await expect(page.locator('#menuContent .public-menu-item')).toHaveCount(2);
+  await expect(page.locator('#menuContent .menu-item-unavailable')).toHaveCount(2);
+  await expect(page.locator('#menuContent .ae-soldout')).toHaveCount(2);
+  await expect(page.locator('#menuContent .add-btn')).toHaveCount(0);
+  await expect(page.locator('.cart-panel')).toHaveClass(/hidden/);
+  expect(await page.evaluate(() => window.currentMenuItems.every((item) => item.is_available === false))).toBe(true);
+  expect(previewMenuRequests).toBeGreaterThan(0);
+  expect(mutationRequests).toBe(0);
+});
+
+test('zero-item candidates and pending empty-directory records stay hidden', async ({page}) => {
+  const zeroItemApprovedCandidate = {
+    ...approvedBrowseRestaurants.find((restaurant) => restaurant.name === 'Shabha-ye Tehran Restaurant'),
+    public_menu_item_count: 0,
+  };
+  const zeroItemPendingDirectory = {
+    id: 'zero-item-pending-directory',
+    name: 'Empty Menu Restaurant',
+    status: 'pending',
+    listing_mode: 'directory',
+    is_open: false,
+    has_delivery: false,
+    has_takeaway: false,
+    public_menu_item_count: 0,
+    _items: [],
+  };
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page, { restaurants: [zeroItemApprovedCandidate, zeroItemPendingDirectory], menuPreviewRows: [] });
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card')).toHaveCount(0);
+  await expect(page.locator('#restaurantGrid')).toContainText('No matches. Try a dish, cuisine or fewer filters.');
+});
+
+test('empty, rejected and archived static fallback listings stay hidden', async ({page}) => {
+  const staticFallback = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fallback-restaurants.json'), 'utf8'));
+  const qoqnoos = staticFallback.find((entry) => entry.restaurant?.id === 'qoqnoos-restaurant');
+  expect(qoqnoos).toBeTruthy();
+  const fallbackMenu = [{ id: 'fallback-item', category_id: 'fallback-menu', name: 'Fallback item', price: 100, is_available: false }];
+  const fallbackRow = (id, name, restaurantFields = {}) => ({
+    restaurant: { id, name, status: 'pending', listing_mode: 'directory', is_open: false, has_delivery: false, has_takeaway: false, ...restaurantFields },
+    categories: [{ id: 'fallback-menu', name: 'Menu' }],
+    items: fallbackMenu,
+  });
+  const rows = [
+    qoqnoos,
+    fallbackRow('visible-fallback', 'Nonempty fallback listing'),
+    fallbackRow('rejected-fallback', 'Rejected fallback listing', { status: 'active', application_status: 'rejected' }),
+    fallbackRow('archived-status-fallback', 'Archived fallback listing', { status: 'archived' }),
+    fallbackRow('archived-date-fallback', 'Archived-date fallback listing', { status: 'active', archived_at: '2026-10-31T00:00:00.000Z' }),
+  ];
+  await page.route('**/data/fallback-restaurants.json', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(rows),
+  }));
+  await page.route('**/data/public-herat-directory.json', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: '[]',
+  }));
+  await mockApi(page, { restaurants: [], menuPreviewRows: [] });
+  await page.goto('/restaurants');
+  await expect(page.getByRole('heading', { name: 'Qoqnoos Restaurant', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Rejected fallback listing', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Archived fallback listing', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Archived-date fallback listing', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Nonempty fallback listing', exact: true })).toBeVisible();
+});
+
+test('a rejected approved-candidate listing stays hidden even if an old menu snapshot exists', async ({page}) => {
+  const rejected = {
+    ...approvedBrowseRestaurants.find((restaurant) => restaurant.name === 'Arghawan Restaurant'),
+    application_status: 'rejected',
+    _items: [{ id: 'stale-item', name: 'Stale snapshot', is_available: true }],
+  };
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page, { restaurants: [rejected], menuPreviewRows: [] });
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card')).toHaveCount(0);
+  await expect(page.locator('#restaurantGrid')).not.toContainText('Arghawan Restaurant');
 });
