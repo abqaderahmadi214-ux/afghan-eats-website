@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {createRequire} from 'node:module';
-import {readFileSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 
 const require = createRequire(import.meta.url);
 const {applyMenuItemImages, imageLabelMarkup} = require('../assets/menu-item-images.js');
@@ -187,9 +187,9 @@ test('manifest fetch failure returns the original usable live menu unchanged', a
   assert.equal(calls, 1, 'a single shared manifest promise should cache failure');
 });
 
-test('published manifest covers the approved 713-row image scope without changing any source fields', () => {
+test('published manifest covers the approved 787-row image scope without changing any source fields', () => {
   const manifest = JSON.parse(readFileSync('data/menu-item-images.json', 'utf8'));
-  assert.equal(Object.keys(manifest.restaurants).length, 13);
+  assert.equal(Object.keys(manifest.restaurants).length, 14);
   const counts = {original: 0, illustration: 0};
   const checkedAssets = new Set();
   for (const [restaurantId, restaurant] of Object.entries(manifest.restaurants)) {
@@ -200,6 +200,7 @@ test('published manifest covers the approved 713-row image scope without changin
       counts[entry.kind] += 1;
       if (entry.kind === 'original') assert.match(entry.source_url, /^https:\/\//);
       if (entry.src.startsWith('/assets/menu-item-images/') && !checkedAssets.has(entry.src)) {
+        assert.ok(existsSync('.' + entry.src), `Required menu image missing: ${entry.src}`);
         const bytes = readFileSync('.' + entry.src);
         assert.ok(bytes.length > 1024, entry.src);
         assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
@@ -224,8 +225,71 @@ test('published manifest covers the approved 713-row image scope without changin
       assert.equal(item.is_available, false);
     });
   }
-  assert.deepEqual(counts, {original: 5, illustration: 708});
-  assert.equal(checkedAssets.size, 68);
+  assert.deepEqual(counts, {original: 6, illustration: 781});
+  assert.equal(checkedAssets.size, 72);
+});
+
+test('Shah has exact baseline coverage, verified photo attribution, and active getMenu application', async () => {
+  const manifest = JSON.parse(readFileSync('data/menu-item-images.json', 'utf8'));
+  const expected = JSON.parse(readFileSync('tests/fixtures/shah-menu-items.json', 'utf8'));
+  const restaurant = manifest.restaurants['shah-restaurant-herat'];
+  assert.equal(restaurant.name, 'Shah Restaurant Herat');
+  assert.equal(Object.keys(restaurant.items).length, 74);
+  assert.deepEqual(Object.keys(restaurant.items).sort(), expected.map((item) => item.id).sort());
+  for (const item of expected) {
+    const entry = restaurant.items[item.id];
+    assert.equal(entry.item_name, item.name);
+    assert.equal(entry.expected_image_url, item.image_url);
+    if (item.id === 'shah-chicken-fingers') {
+      assert.equal(entry.kind, 'original');
+      assert.equal(entry.source_url, 'https://www.instagram.com/reel/DayAk_hiF0T/');
+      assert.match(entry.source_label, /Shah Restaurant official Instagram/);
+    } else {
+      assert.equal(entry.kind, 'illustration');
+      assert.equal(entry.source_url, '');
+      assert.equal(entry.source_label, 'AI-generated illustration; not an actual restaurant photo');
+    }
+    assert.match(entry.asset_key, /^[a-z0-9-]+$/);
+    assert.equal(entry.src, `/assets/menu-item-images/${entry.asset_key}.webp`);
+  }
+
+  const liveMenu = {categories: [{id: 'shah-kebab'}], items: expected.map((item) => ({
+    ...item, image_url: item.image_url, is_available: false, is_popular: true, price: 321,
+  }))};
+  const ctx = rendererContext({menu: liveMenu, fetchImpl: async () => ({ok: true, json: async () => manifest})});
+  const decorated = await ctx.getMenu({id: 'shah-restaurant-herat'});
+  assert.equal(decorated.items.length, 74);
+  assert.deepEqual(decorated.categories, liveMenu.categories);
+  for (const item of decorated.items) {
+    const entry = restaurant.items[item.id];
+    assert.equal(item.image_url, entry.src);
+    assert.equal(item._menuImagePresentation.kind, entry.kind);
+    assert.equal(item._menuImagePresentation.source_url, entry.source_url);
+    assert.equal(item._menuImagePresentation.source_label, entry.source_label);
+    assert.equal(item.is_available, false);
+    assert.equal(item.is_popular, true);
+    assert.equal(item.price, 321);
+  }
+  global.lang = 'en';
+  assert.match(imageLabelMarkup(decorated.items[0]._menuImagePresentation), /Illustrative image/);
+  assert.match(imageLabelMarkup(decorated.items[0]._menuImagePresentation), /Not an actual restaurant dish photo/);
+  global.lang = 'fa';
+  assert.match(imageLabelMarkup(decorated.items[0]._menuImagePresentation), /تصویر نمونه/);
+  assert.match(imageLabelMarkup(decorated.items[0]._menuImagePresentation), /عکس واقعی غذای رستورانت نیست/);
+  delete global.lang;
+});
+
+test('Shah mappings leave renamed items and changed owner photos untouched', () => {
+  const manifest = JSON.parse(readFileSync('data/menu-item-images.json', 'utf8'));
+  const entry = manifest.restaurants['shah-restaurant-herat'].items['shah-special-pizza'];
+  const renamed = {id: 'shah-special-pizza', name: 'Owner-renamed pizza', image_url: null};
+  const ownerPhoto = {id: 'shah-special-pizza', name: entry.item_name, image_url: '/uploads/shah-owner-photo.webp'};
+  const renamedMenu = {items: [renamed]};
+  const ownerMenu = {items: [ownerPhoto]};
+  assert.strictEqual(applyMenuItemImages(renamedMenu, 'shah-restaurant-herat', manifest), renamedMenu);
+  assert.strictEqual(applyMenuItemImages(ownerMenu, 'shah-restaurant-herat', manifest), ownerMenu);
+  assert.equal(renamed.image_url, null);
+  assert.equal(ownerPhoto.image_url, '/uploads/shah-owner-photo.webp');
 });
 
 test('all known obsolete poster-image notes are suppressed without losing portions or dish details', () => {

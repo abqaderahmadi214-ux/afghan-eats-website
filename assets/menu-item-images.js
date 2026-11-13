@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const MANIFEST_URL = '/data/menu-item-images.json';
+  const MANIFEST_URL = '/data/menu-item-images.json?v=20261113-shah-1';
   const FETCH_TIMEOUT_MS = 3500;
   let manifestPromise = null;
 
