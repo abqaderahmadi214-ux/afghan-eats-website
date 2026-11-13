@@ -6482,6 +6482,677 @@
           "asset_key": "lahmacun"
         }
       }
+    },
+    "shah-restaurant-herat": {
+      "name": "Shah Restaurant Herat",
+      "items": {
+        "shah-special-pizza": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Pizza",
+          "expected_image_url": null,
+          "asset_key": "generic-pizza"
+        },
+        "shah-digi-2": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/pot-kabab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Digi Kebab - Two Pieces",
+          "expected_image_url": null,
+          "asset_key": "pot-kabab"
+        },
+        "shah-arabic-tray-5": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/afghan-sharing-platter.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Arabic Tray - 5 People",
+          "expected_image_url": null,
+          "asset_key": "afghan-sharing-platter"
+        },
+        "shah-chalo-meat": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/rice-with-accompaniment.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Meat Chalo",
+          "expected_image_url": null,
+          "asset_key": "rice-with-accompaniment"
+        },
+        "shah-special-roll": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/wrap-roll.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Roll",
+          "expected_image_url": null,
+          "asset_key": "wrap-roll"
+        },
+        "shah-special-salad": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/salad.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Salad",
+          "expected_image_url": null,
+          "asset_key": "salad"
+        },
+        "shah-whole-lamb-shinwari": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/whole-roast-sheep.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Whole Lamb Shinwari",
+          "expected_image_url": null,
+          "asset_key": "whole-roast-sheep"
+        },
+        "shah-seasonal-salad": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/salad.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Seasonal Salad",
+          "expected_image_url": null,
+          "asset_key": "salad"
+        },
+        "shah-mixed-pizza": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Mixed Pizza",
+          "expected_image_url": null,
+          "asset_key": "generic-pizza"
+        },
+        "shah-digi-1": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/pot-kabab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Digi Kebab - One Piece",
+          "expected_image_url": null,
+          "asset_key": "pot-kabab"
+        },
+        "shah-arabic-tray-4": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/afghan-sharing-platter.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Arabic Tray - 4 People",
+          "expected_image_url": null,
+          "asset_key": "afghan-sharing-platter"
+        },
+        "shah-lamb-shoulder-tandoori": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/tandoori-lamb-shoulder.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Tandoori Lamb Shoulder",
+          "expected_image_url": null,
+          "asset_key": "tandoori-lamb-shoulder"
+        },
+        "shah-chalo-mahiche": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/rice-with-accompaniment.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Lamb Shank Chalo",
+          "expected_image_url": null,
+          "asset_key": "rice-with-accompaniment"
+        },
+        "shah-lahmacun": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/lahmacun.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Turkish Lahmacun",
+          "expected_image_url": null,
+          "asset_key": "lahmacun"
+        },
+        "shah-arabic-tray-3": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/afghan-sharing-platter.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Arabic Tray - 3 People",
+          "expected_image_url": null,
+          "asset_key": "afghan-sharing-platter"
+        },
+        "shah-lamb-ribs-tandoori": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/tandoori-ribs.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Tandoori Lamb Ribs",
+          "expected_image_url": null,
+          "asset_key": "tandoori-ribs"
+        },
+        "shah-meat-pizza": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Meat Pizza",
+          "expected_image_url": null,
+          "asset_key": "generic-pizza"
+        },
+        "shah-meat-pasta": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/pasta.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Meat Pasta",
+          "expected_image_url": null,
+          "asset_key": "pasta"
+        },
+        "shah-special-soup": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/soup.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Soup",
+          "expected_image_url": null,
+          "asset_key": "soup"
+        },
+        "shah-chalo-neck": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/rice-with-accompaniment.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Lamb Neck Chalo",
+          "expected_image_url": null,
+          "asset_key": "rice-with-accompaniment"
+        },
+        "shah-shishlik": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/tandoori-ribs.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shishlik Kebab",
+          "expected_image_url": null,
+          "asset_key": "tandoori-ribs"
+        },
+        "shah-chalo-akbar-chicken": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/rice-with-accompaniment.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Akbar Chicken Chalo",
+          "expected_image_url": null,
+          "asset_key": "rice-with-accompaniment"
+        },
+        "shah-chicken-pizza": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Chicken Pizza",
+          "expected_image_url": null,
+          "asset_key": "generic-pizza"
+        },
+        "shah-chopan-lamb": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/grilled-meat-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Chopan Lamb Kebab",
+          "expected_image_url": null,
+          "asset_key": "grilled-meat-kebab"
+        },
+        "shah-chicken-pasta": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/pasta.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Chicken Pasta",
+          "expected_image_url": null,
+          "asset_key": "pasta"
+        },
+        "shah-mahiche-kebab": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/lamb-shank.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Lamb Shank Kebab",
+          "expected_image_url": null,
+          "asset_key": "lamb-shank"
+        },
+        "shah-tea": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/hot-beverage.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Tea",
+          "expected_image_url": null,
+          "asset_key": "hot-beverage"
+        },
+        "shah-arabic-tray-2": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/afghan-sharing-platter.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Arabic Tray - 2 People",
+          "expected_image_url": null,
+          "asset_key": "afghan-sharing-platter"
+        },
+        "shah-kebab-tray-5": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/mixed-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Kebab Tray - 5 People",
+          "expected_image_url": null,
+          "asset_key": "mixed-kebab"
+        },
+        "shah-lamb-karahi": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/karahi.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shinwari Lamb Karahi",
+          "expected_image_url": null,
+          "asset_key": "karahi"
+        },
+        "shah-poshti": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/tandoori-ribs.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Poshti Kebab",
+          "expected_image_url": null,
+          "asset_key": "tandoori-ribs"
+        },
+        "shah-cheese-pasta": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/pasta.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Cheese Pasta",
+          "expected_image_url": null,
+          "asset_key": "pasta"
+        },
+        "shah-diet-pizza": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Diet Pizza",
+          "expected_image_url": null,
+          "asset_key": "generic-pizza"
+        },
+        "shah-chalo-koobideh": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/kebab-with-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Koobideh Chalo",
+          "expected_image_url": null,
+          "asset_key": "kebab-with-rice"
+        },
+        "shah-chalo-chicken": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/rice-with-accompaniment.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Chicken Chalo",
+          "expected_image_url": null,
+          "asset_key": "rice-with-accompaniment"
+        },
+        "shah-fried-chips": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fries.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Fried Chips",
+          "expected_image_url": null,
+          "asset_key": "fries"
+        },
+        "shah-special-sandwich": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/sandwich.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Sandwich",
+          "expected_image_url": null,
+          "asset_key": "sandwich"
+        },
+        "shah-kebab-tray-4": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/mixed-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Kebab Tray - 4 People",
+          "expected_image_url": null,
+          "asset_key": "mixed-kebab"
+        },
+        "shah-senkhi": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/grilled-meat-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Sikhi Kebab",
+          "expected_image_url": null,
+          "asset_key": "grilled-meat-kebab"
+        },
+        "shah-chicken-karahi": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/karahi.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shinwari Chicken Karahi",
+          "expected_image_url": null,
+          "asset_key": "karahi"
+        },
+        "shah-special-chicken-kebab": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/chicken-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Chicken Kebab",
+          "expected_image_url": null,
+          "asset_key": "chicken-kebab"
+        },
+        "shah-special-beef-burger": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/burger.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Russian Burger",
+          "expected_image_url": null,
+          "asset_key": "burger"
+        },
+        "shah-qabili-5": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Qabili Mooling - 5 People",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-kebab-tray-3": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/mixed-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Kebab Tray - 3 People",
+          "expected_image_url": null,
+          "asset_key": "mixed-kebab"
+        },
+        "shah-cheese-chips": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fries.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Cheese Chips",
+          "expected_image_url": null,
+          "asset_key": "fries"
+        },
+        "shah-lamb-rosh": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-stew.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Lamb Rosh Kebab",
+          "expected_image_url": null,
+          "asset_key": "generic-stew"
+        },
+        "shah-fried-fillet": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fried-chicken.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Fried Chicken Fillet",
+          "expected_image_url": null,
+          "asset_key": "fried-chicken"
+        },
+        "shah-tandoori-chicken": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/whole-chicken.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Tandoori Chicken",
+          "expected_image_url": null,
+          "asset_key": "whole-chicken"
+        },
+        "shah-qabili-4": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Qabili Mooling - 4 People",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-green-beef": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/sandwich.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Green Beef Sandwich",
+          "expected_image_url": null,
+          "asset_key": "sandwich"
+        },
+        "shah-fastfood-tray-4": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fast-food-sharing-tray.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Fast Food Tray - 4 People",
+          "expected_image_url": null,
+          "asset_key": "fast-food-sharing-tray"
+        },
+        "shah-chicken-kebab": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/chicken-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Chicken Kebab",
+          "expected_image_url": null,
+          "asset_key": "chicken-kebab"
+        },
+        "shah-qabili-3": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Qabili Mooling - 3 People",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-tandoori-fish": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fish.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Tandoori Fish",
+          "expected_image_url": null,
+          "asset_key": "fish"
+        },
+        "shah-special-koobideh": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/koobideh-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Koobideh Kebab",
+          "expected_image_url": null,
+          "asset_key": "koobideh-kebab"
+        },
+        "shah-green-chicken": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/sandwich.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Green Chicken Sandwich",
+          "expected_image_url": null,
+          "asset_key": "sandwich"
+        },
+        "shah-kentucky": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fried-chicken.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Kentucky Fried Chicken",
+          "expected_image_url": null,
+          "asset_key": "fried-chicken"
+        },
+        "shah-fastfood-tray-2": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fast-food-sharing-tray.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Fast Food Tray - 2 People",
+          "expected_image_url": null,
+          "asset_key": "fast-food-sharing-tray"
+        },
+        "shah-chicken-fingers": {
+          "kind": "original",
+          "src": "/assets/menu-item-images/shah-chicken-fingers-original.webp",
+          "source_url": "https://www.instagram.com/reel/DayAk_hiF0T/",
+          "source_label": "Shah Restaurant official Instagram; clean frame from Chicken Fingers video",
+          "item_name": "Chicken Fingers",
+          "expected_image_url": null,
+          "asset_key": "shah-chicken-fingers-original"
+        },
+        "shah-plain-koobideh": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/koobideh-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Plain Koobideh Kebab",
+          "expected_image_url": null,
+          "asset_key": "koobideh-kebab"
+        },
+        "shah-chicken-sandwich": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/sandwich.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Chicken Sandwich",
+          "expected_image_url": null,
+          "asset_key": "sandwich"
+        },
+        "shah-qabili-2": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Qabili Mooling - 2 People",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-negin-koobideh": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/koobideh-kebab.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Negin Koobideh Kebab",
+          "expected_image_url": null,
+          "asset_key": "koobideh-kebab"
+        },
+        "shah-qabili-neck": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Lamb Neck Qabili",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-shawarma": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/wrap-roll.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shawarma Sandwich",
+          "expected_image_url": null,
+          "asset_key": "wrap-roll"
+        },
+        "shah-fried-chicken": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/fried-chicken.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Fried Chicken",
+          "expected_image_url": null,
+          "asset_key": "fried-chicken"
+        },
+        "shah-qabili-mahiche": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Lamb Shank Qabili",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-special-cheeseburger": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/burger.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Cheeseburger",
+          "expected_image_url": null,
+          "asset_key": "burger"
+        },
+        "shah-special-zinger": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/zinger-chicken-burger.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Shah Special Zinger",
+          "expected_image_url": null,
+          "asset_key": "zinger-chicken-burger"
+        },
+        "shah-wings-pachin": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/chicken-wings.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Wings & Pachin",
+          "expected_image_url": null,
+          "asset_key": "chicken-wings"
+        },
+        "shah-qabili-lamb": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/qabuli-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Lamb Qabili",
+          "expected_image_url": null,
+          "asset_key": "qabuli-rice"
+        },
+        "shah-kichiri-neck": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/kichiri-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Lamb Neck Kichiri",
+          "expected_image_url": null,
+          "asset_key": "kichiri-rice"
+        },
+        "shah-kichiri-mahiche": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/kichiri-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Special Lamb Shank Kichiri",
+          "expected_image_url": null,
+          "asset_key": "kichiri-rice"
+        },
+        "shah-kichiri-meat": {
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/kichiri-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
+          "item_name": "Meat Kichiri",
+          "expected_image_url": null,
+          "asset_key": "kichiri-rice"
+        }
+      }
     }
   }
 }
