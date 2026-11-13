@@ -78,7 +78,7 @@ test('homepage to restaurant to mobile basket to quoted checkout', async ({page}
   await expect(page.locator('.delivery-only').first()).toHaveClass(/hidden/);
 });
 
-test('photo-free dishes render neutral menu media without image requests in details or basket', async ({page})=>{
+test('photo-free dishes receive bilingual local illustrations without remote image requests', async ({page})=>{
   const photoFreeMenu={categories:menu.categories,items:[
     {...menu.items[0],image_url:null},
     {...menu.items[0],id:'kebab-empty-image',name:'Kebab without image URL',image_url:''}
@@ -89,18 +89,32 @@ test('photo-free dishes render neutral menu media without image requests in deta
   await page.goto('/restaurant.html?id=test-restaurant');
   const menuCards=page.locator('.menu-item');
   await expect(menuCards).toHaveCount(2);
-  await expect(page.locator('.menu-item-media img')).toHaveCount(0);
-  await expect(page.locator('.menu-photo-placeholder').first()).toContainText('Photo not added');
-  await expect(page.locator('.menu-photo-placeholder').first()).toBeVisible();
+  const menuImages=page.locator('.menu-item-media img');
+  await expect(menuImages).toHaveCount(2);
+  await expect(page.locator('.menu-image-illustration')).toHaveCount(2);
+  await expect(menuCards.first()).toContainText('Illustration · تصویر نمونه');
+  await expect(menuCards.first()).toContainText('Not an actual dish photo · عکس واقعی غذا نیست');
+  const pageOrigin=new URL(page.url()).origin;
+  for(const image of await menuImages.all()){
+    const imageUrl=new URL(await image.evaluate(node=>node.src));
+    expect(imageUrl.origin).toBe(pageOrigin);
+    expect(imageUrl.pathname).toMatch(/^\/assets\/menu-item-images\//);
+    await expect(image).toHaveJSProperty('complete',true);
+    await expect.poll(()=>image.evaluate(node=>node.naturalWidth)).toBeGreaterThan(0);
+  }
   await menuCards.first().locator('.add-btn').click();
   await expect(page.locator('#itemModal')).toHaveClass(/open/);
   await expect(page.locator('#itemModal img')).toHaveCount(0);
-  await page.locator('#itemModal button[onclick="addCurrent()"]').click();
+  await page.locator(`#itemModal button[onclick="addCurrent()"]`).click();
   await expect(page.locator('#mobileBasketBar')).toHaveClass(/show/);
-  expect(imageRequests).toEqual([]);
-  expect(await page.locator('.menu-item-media').first().evaluate(el=>getComputedStyle(el.querySelector('.menu-photo-placeholder')).backgroundColor)).toBe('rgb(241, 243, 245)');
-  expect(await page.locator('.menu-item-media').first().evaluate(el=>getComputedStyle(el.querySelector('.menu-photo-placeholder')).backgroundImage)).toBe('none');
+  expect(imageRequests.length).toBeGreaterThan(0);
+  for(const url of imageRequests){
+    const imageUrl=new URL(url);
+    expect(imageUrl.origin).toBe(pageOrigin);
+    expect(imageUrl.pathname).toMatch(/^\/assets\/menu-item-images\//);
+  }
 });
+
 test('checkout submits a real order payload and opens order confirmation', async ({page})=>{
   await mockApi(page);
   await page.addInitScript(({restaurant,menu})=>{

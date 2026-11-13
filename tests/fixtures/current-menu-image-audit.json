@@ -1,0 +1,3946 @@
+{
+  "restaurants": [
+    {
+      "id": "5df516b2-52d2-4c81-b90e-d7e55a034344",
+      "name": "Arghawan Restaurant",
+      "items": [
+        {
+          "id": "7bbc4de6-4079-44a6-a188-74628d62d6fa",
+          "name": "Mixed Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "char-fasl-food-complex",
+      "name": "Char Fasl Food Complex",
+      "items": []
+    },
+    {
+      "id": "d490f576-1690-42c9-a548-c58831a07b9c",
+      "name": "Char Fasl Restaurant",
+      "items": [
+        {
+          "id": "324620a5-ed3f-4b6a-9d20-f8e4299d5b45",
+          "name": "Special Platter for 5 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b9bf8ece-664f-41ea-8bff-e87e8288580e",
+          "name": "Shishlik Kebab with Rice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9de66419-6800-47cb-a8bd-feea6e7011ef",
+          "name": "Shepherd Kebab with Rice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "13ee5c27-0641-4c92-93fe-96f1c1a5154b",
+          "name": "Qabili Mutton for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "be5780ce-1959-414b-a957-d67bbe88a28d",
+          "name": "Rice with Neck Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e4f6001c-8845-4fb2-a685-9bbec35873ce",
+          "name": "Poshti Kebab with Rice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fdea396a-ed45-40f9-ae36-eafca10da49c",
+          "name": "Special Chicken Kebab with Rice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e51849c6-47bf-4561-ad41-09b206bc96f6",
+          "name": "Rice with Shank Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d9653924-f151-48a3-b066-6cfb1ff8af0e",
+          "name": "Rice with Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "914d1a62-3c61-4358-ace0-a7b9320fabbf",
+          "name": "Koobideh Kebab with Rice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d2fe0ac5-90cb-4c00-90de-79b0f4bb07c7",
+          "name": "Fried Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2b40fd7b-cccb-4fc0-adcc-2d83faaae29d",
+          "name": "Tandoori Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "d6003f47-34b0-4b36-9aa9-d7b684da3fd1",
+      "name": "Darbar Herat Restaurant",
+      "items": [
+        {
+          "id": "5da53ac4-ad9a-49a2-bda9-3328fe355e63",
+          "name": "Negin Dar Kebab",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "267a4375-9293-41bb-8d7a-851ea1f6229e",
+          "name": "Afghan Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bfea3332-f145-4f54-a15e-e624ea3d239d",
+          "name": "Three-Person Tray",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "f43a3d3b-593e-4290-9bb8-dac98e5a5459",
+          "name": "Chelo Gardan",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "7dd699a6-b09e-41c7-bf19-52a8b6946e11",
+          "name": "Qabeli Palaw",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "da22364d-a74b-4d97-8c94-72c66724475b",
+          "name": "Special Gardan",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1e9de247-f9ac-4110-a985-b4c2e1b6a6e7",
+          "name": "Shishlik Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5523a4c-3839-42d8-88ba-bf4cde10ea39",
+          "name": "Pushti Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "10fa3ba2-6639-479b-bec7-4688a8311443",
+          "name": "Mahicha Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5c2198b0-16df-4da7-bf56-7afa544797b4",
+          "name": "Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f83d798e-283c-46dd-b28a-04dafe56a4ef",
+          "name": "Special Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cad739eb-2b9f-48b6-995a-b98e12f14934",
+          "name": "Luqma Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dfd0cc0e-7147-46aa-b612-2255dc6328d4",
+          "name": "Spiral Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fbd679e8-54ea-4e5a-8b19-49186685a4f6",
+          "name": "Joojeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5353674-0e4e-4211-9778-f35aa541a63d",
+          "name": "Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "b788fe91-2d51-4b77-9b39-4ec875d43b3a",
+          "name": "Kichri Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2e14f50f-2b90-4d14-9657-a6114fcc49bc",
+          "name": "Kichri Gardan",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e7c7fa60-972a-4825-ace5-b84e1921e3cc",
+          "name": "Kichri Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c22b73cf-7e7a-415f-a837-1f26f8eec0b1",
+          "name": "Kichri Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "de12bc13-580d-4aa0-8938-96edacc016ff",
+          "name": "Qabili Gardan",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ccbc155b-6232-41db-9ebe-0eab7371b888",
+          "name": "Qabili Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ed8d8061-e1f2-4b72-ab15-0dbf7b96581a",
+          "name": "Qabili Gosht",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "0b6239dd-dcbc-4149-9f13-0d050f494415",
+          "name": "Plain Qabili",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ca52cfa4-6e26-4f6f-993e-ac91624397d6",
+          "name": "Plain Kichri",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8fd12406-4b06-43c4-990e-28d4cefadeea",
+          "name": "Special Chalo Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fdb7cd55-b1fa-426c-b943-b3574ccb44fa",
+          "name": "Chalo Pushti Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "48365426-38c8-4d68-a948-77e1e166cfe0",
+          "name": "Chalo Shishlik",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "298efa8a-2a00-4222-80e6-d4e11128fa3d",
+          "name": "Chalo Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "460db0cb-804d-43fd-9a82-38e9faa9d8e3",
+          "name": "Chalo Spiral Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bdab1293-f3f4-40fc-a6bd-b596b7b6b985",
+          "name": "Chalo Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5eb064df-54b1-4248-abc9-2bf8841e3efb",
+          "name": "Special Chalo Luqma",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8b365e11-ae5f-4acf-85ae-8381031148c8",
+          "name": "Chalo Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c2b903df-7be6-443b-8e31-a7fef41daeff",
+          "name": "Akbar Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "054f2360-9bbe-4a48-87bb-abeb36f1527c",
+          "name": "Plain Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9666ce45-a8ef-4f60-a368-3f4d566320d9",
+          "name": "Special Kateh Gardan Service",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a2847bc8-128d-4f0e-81ea-2581ad5a5a1e",
+          "name": "Special Kateh Mahicha Service",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "078f3ab6-82f4-47c6-9c2f-611f5304eb00",
+          "name": "Special Kateh Koobideh Service",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7f3bc33e-1c38-4fa4-ba6e-d90e6a76f5b2",
+          "name": "Special Kateh Joojeh Service",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1429f2c6-1b57-48d7-ac1a-5e3b10459564",
+          "name": "Special Four-Person Tray",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "80e8b030-ad68-4a37-a126-200a9b35abcd",
+          "name": "Two-Person Tray",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "288ed8d7-32a4-4e71-8f00-9fd715cc9c3d",
+          "name": "Darbar Special Five-Person Tray",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a7915646-58f9-4ecc-a289-087f63062b95",
+          "name": "Darbar Special Four-Person Tray",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "61acd725-a7b4-49a7-a501-b03752c8e431",
+          "name": "Darbar Special Two-Person Tray",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "387e8873-8b51-43e0-8d95-2b1b4e9c37b9",
+          "name": "Darbar Special Mixed Platter",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "867172b4-a328-4df1-9246-d28786534400",
+          "name": "Darbar Mixed Platter — 7 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1397aab6-8281-4919-a070-13aa90d96f68",
+          "name": "Darbar Mixed Platter — 12 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "98b30758-1ddf-4da5-bf0a-f1ec98aecf6d",
+          "name": "First-Grade Qori",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c93bafcb-b7dc-4781-97e1-80b7244f486a",
+          "name": "Second-Grade Qori",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c54fd643-6e56-4ec6-ada5-fe6f710b1ab2",
+          "name": "Third-Grade Qori",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "947ed68b-7cbf-421c-b2b7-0720976e0845",
+          "name": "Darbar Special Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cd766a34-3e41-4ed8-9ed3-70a0b3501890",
+          "name": "Cheeseburger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6a5d52b5-7fca-4b31-abe8-17f4504ff54d",
+          "name": "Zinger Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "92b339a8-fec5-440e-9d19-a799cdc976b4",
+          "name": "Darbar Special Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "75abb483-15d1-4a38-98cd-c3842e0b960c",
+          "name": "Corn Chicken Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ba4f75e8-2928-43b5-8928-0f48f440e666",
+          "name": "Corn Beef Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a275e383-74c3-421f-90d6-52538ef498da",
+          "name": "Shawarma Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bc1c546a-839e-4171-9c6b-fb6ed6ea7edd",
+          "name": "Chicken Spring Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7b3db754-b1ce-4aec-8a03-57de895bcbe4",
+          "name": "Chicken Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c5f61793-d44d-4947-8046-9d02d2c8c688",
+          "name": "Italian Dish — 4 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "141e064b-b2a2-4683-bc21-4a8c10c53be1",
+          "name": "Italian Dish — 2 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0f2cf531-fb54-489b-a612-031342f2ee17",
+          "name": "Turkish Kebab — 2 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4281b450-f5ed-4603-89c9-139e32d2b7b5",
+          "name": "Istanbuli",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "80aabd08-48f5-4759-a9a1-bb786f62fa8b",
+          "name": "Roulette",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "41c0af55-3621-428a-85ef-0e256f85b84a",
+          "name": "Turkish Lahmacun",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a04176b8-68ba-440c-8a86-937ba7301dd9",
+          "name": "Arabic Kentucky Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1b358ff1-282e-40ac-8b2f-e46d5acb38c6",
+          "name": "Fried Fillet",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "eed3f155-89fd-473a-b31c-54fd2a9547bf",
+          "name": "Chicken Fly",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d97afce4-e9bd-4bfc-9449-87c19c830710",
+          "name": "Popcorn",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a9ee5016-7d5c-4222-be7d-83f9430673af",
+          "name": "Fried Chips",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "571b4b83-9356-4337-acf6-de143283f041",
+          "name": "Darbar Special Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cdd17cc7-458c-4a40-91ac-af9335454141",
+          "name": "Meat Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e0ea0642-511d-42e9-88ef-e947f9fce725",
+          "name": "Chicken Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5fbd5cfa-cec5-4832-aa2a-a1ff768fc717",
+          "name": "Almas Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b03e2ea3-a31d-460c-a860-ae6a8f013bef",
+          "name": "Cheese Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "26bcb368-5f36-421f-bba9-ad08d9a6f6ea",
+          "name": "Darbar Herat Special Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c8913976-7d83-4728-b293-ca459a2dbed5",
+          "name": "Degi Sardast Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "65c07234-ba95-43e9-b5b4-2d5743ecb41e",
+          "name": "Degi Mutton Mahicha Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "75993196-af33-4c6b-b6bc-8f8fdc81a1d5",
+          "name": "Degi Mutton Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "63144e52-627a-4560-8d9b-30080bee89ed",
+          "name": "Rosh Mutton Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "125fda52-36ce-4d03-b244-a442044e8109",
+          "name": "Darbar Mixed Karahi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "683181f3-eac8-4b8e-b609-6007e10a69e7",
+      "name": "Duniya Kabab",
+      "items": []
+    },
+    {
+      "id": "e1a8fde0-af6f-473d-b50a-4f3ee9cbbbe2",
+      "name": "Food Box Restaurant",
+      "items": [
+        {
+          "id": "cffe81ce-87e4-4a8a-804d-1992cd7bbe72",
+          "name": "Food Box Special Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f9a7aa71-4901-4937-99dc-06411343d180",
+          "name": "Kabuli Biryani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5766be7-30f1-44fc-8769-da011c696f4d",
+          "name": "Fried Chicken (2 pieces)",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "23606de6-0502-4987-9a6c-38cd65ac0514",
+          "name": "Special Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d6b325a0-d929-4e6a-a9a2-9aa4a1490acb",
+          "name": "Chicken Doner with Lavash",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1dfc8257-ada0-4416-b6dd-b436b1380576",
+          "name": "Arabic Tray for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1b0f441e-3392-4ffa-aea5-84c44701e64f",
+          "name": "Food Box Special Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "493e5f72-c1e5-4767-a88e-5498b70089f9",
+          "name": "Chicken Biryani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7352826f-af33-4345-872a-a6f05797217a",
+          "name": "Arabic Tray for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "91b6ecf3-10ad-4b5d-aaff-1a5241515643",
+          "name": "Fried Chicken (4 pieces)",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "9786a3c4-edbb-4361-94ce-3e2e685e1971",
+          "name": "Meat Doner with Lavash",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e40eaf1c-075a-4fe8-a0a6-df04aef8ef37",
+          "name": "Chicken Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2425090f-ac9c-4fae-ae56-afd5eb48e9fd",
+          "name": "Arabic Tray for Four",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8cc25217-1c2d-41f4-b7d3-6202f2c0fc83",
+          "name": "Food Box Special Pizza (Large)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "22f9a164-bc71-4e2e-9fd5-9b7cc513577c",
+          "name": "Meat Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bef6c3b3-dc29-4500-bcd6-17cf5fe0be8d",
+          "name": "Meat Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fcdd7195-a462-40c7-b4aa-062a555aa81e",
+          "name": "Meat Pizza (Large)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "64fbd988-4b8e-4feb-94ca-84cd4b7a958b",
+          "name": "Chicken Pizza (Large)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dcbb9d6e-7770-4dd6-9df6-a9d5b1d3a02d",
+          "name": "Chef's Special Pizza (Large)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a38a4f47-fa20-4e88-a4f3-92222798025d",
+          "name": "Mini Chicken Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "5062b505-812d-48be-8079-712fd67a5361",
+      "name": "Hazar Dastan Café",
+      "items": [
+        {
+          "id": "408e5982-22bd-4692-868a-1691f18e3005",
+          "name": "Café Snacks",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "3468d9fe-52be-41a5-9a24-8b0279cb4ff8",
+      "name": "Istanbul Doner & Pizza House",
+      "items": [
+        {
+          "id": "2c10b164-4d0a-4eca-a8d6-52b3656737a2",
+          "name": "Et Pizza (Meat Pizza)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cd6ac12e-1137-469a-b709-4d2d4af3154b",
+          "name": "Iskender Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "da4bca56-594f-4d20-b663-c6a75ec56810",
+          "name": "Simple Chicken Doner with Lavash",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fb586dda-bc7a-4c30-b0d1-fc7483aedc6e",
+          "name": "Double Meat Doner with Lavash",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cd2a88c8-b464-495c-b39b-45cee1c4207d",
+          "name": "Chef Special Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7101bbc4-62d4-41a1-972e-4c79b17db929",
+          "name": "Adana Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5165c723-da13-47fc-bbd2-62541e18f074",
+          "name": "Shish Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dad74a17-b40c-44b8-874e-3cef39daeda0",
+          "name": "Mixed Family Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "42faba3a-53a2-4d9a-aab5-aa3ba381410a",
+          "name": "Special Doner Box",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dd6201df-fbf7-48d9-9e79-f99319229e8a",
+          "name": "Kosh Bashla Pideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "4539c17d-8118-4e62-a112-05d57e2ec330",
+      "name": "Isteqlal Restaurant",
+      "items": [
+        {
+          "id": "68632906-8b17-4632-9299-8d23a5da0234",
+          "name": "Traditional Afghan Dishes",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "e388bc40-04b3-4da7-8d20-35559f65d923",
+      "name": "Mahtab Restaurant",
+      "items": [
+        {
+          "id": "18ab9967-2e4e-42ba-aedd-ee826f441c32",
+          "name": "Traditional Afghan Dishes",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5675bc6a-5f24-4c7d-b8c2-ef44a68a33e7",
+          "name": "Afghan Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "d273c5f8-d994-4f29-8f1b-fd36851d42d1",
+      "name": "Mawlana Restaurant",
+      "items": [
+        {
+          "id": "bd8b2b39-7a1f-4e60-b1ab-479b7f895acc",
+          "name": "Fruit Dessert",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ac4c6366-5f57-459c-99c6-19de80539043",
+          "name": "Arabic Kebab Platter for One",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f808e75e-f5db-4db0-8a48-5f6085bb9bf5",
+          "name": "Medium Chelo Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "996309a9-9407-454a-a338-a35ca60edaab",
+          "name": "Single Dizi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "359b0120-0acd-47dc-97c4-257fef420132",
+          "name": "Medium Kichiri Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "95889004-3160-4a91-927e-fbb2b161d35e",
+          "name": "Plain Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "96fec881-1acf-4c04-84e2-ab18645c9b83",
+          "name": "Fresh Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ab0aaa3e-8e55-4191-b112-c8107e89f793",
+          "name": "Chelo Shishlik",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a3f9104b-e5e2-478d-98b2-e947b33f4179",
+          "name": "Kebab Platter for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "250040ff-0a00-4f6a-997e-80b17394720e",
+          "name": "Single Kaseh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1e5f096c-d73c-4f4b-ae73-5f486dfd7c52",
+          "name": "Espresso",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "db7b06fa-166a-4fea-803d-365277db6212",
+          "name": "Special Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ff3b1df4-9f7c-4abc-bbf4-cd06ae8baf00",
+          "name": "Tandoori Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5c4f8d45-ad99-4d8e-ad32-4caffd3e0604",
+          "name": "Pineapple Smoothie",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d3306156-c37a-4b9b-b81e-9bfcd572e23e",
+          "name": "Marjan Chicken for One",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a8ed2358-a8f8-4ab3-aa52-8279b09474e6",
+          "name": "Single Kozeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "59f4280f-c205-40d2-895a-12eff67a0465",
+          "name": "Oven Qabili for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "adbe6eea-c26b-4be0-a3d8-db24eeee832d",
+          "name": "Relaxing Herbal Infusion",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a5f5a85c-5aab-4f41-abf7-59da62e16e2b",
+          "name": "Vegetable Side",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d72caf5e-02f6-450a-bbfd-a2fbc2326b0e",
+          "name": "Plain Milk Ice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "600e9380-b696-491f-b586-4ae721f129d4",
+          "name": "Chelo Kofta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f9cf268f-8968-4487-bd9b-c4bd2cf69e6b",
+          "name": "Shishlik Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e1ffed44-b811-4bad-a864-4f4369ba2bdd",
+          "name": "Oven Qabili for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0dd2e89e-d538-43b7-b8c7-ab5659c230fd",
+          "name": "Chelo Marjan Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5f9181b7-28a3-419d-9de0-3586128e2fb5",
+          "name": "Mojun",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "3c2023b6-65de-4187-85e7-0f4c135c06b7",
+          "name": "Double Dizi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6387dcfe-2f5d-44b8-a49d-5b34347dd68c",
+          "name": "Sour Herbal Infusion",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "101594c6-5cd2-471d-811e-427e6a800904",
+          "name": "Special Chelo Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4ea01b3c-c24c-4b09-b676-6ffbd6c86eb7",
+          "name": "Sour Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7d18c168-e671-40df-9e1b-cbd64c4cf24e",
+          "name": "Chelo Chopan",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2cf9594f-8ef0-45a2-ad3e-dbd768601790",
+          "name": "Vanilla Dessert",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9642b52a-e259-4f91-a304-4df298303315",
+          "name": "Double Espresso",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "40953e72-a875-486d-a550-d70f16c0d754",
+          "name": "Chelo Keema Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "32b8258b-600d-4720-a472-b154f8749596",
+          "name": "Special Milk Ice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a7aa09b9-e53f-4203-9355-8007a0b4b48e",
+          "name": "Double Kozeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "72d16230-40fd-4f0d-801f-ba48cbeafdad",
+          "name": "Garlic Pickle",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ea73a6db-b592-4393-b252-19c178a855ae",
+          "name": "Kiwi Smoothie",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "873a4974-e942-4cd1-b31d-54ac76d9a05a",
+          "name": "Special Kebab Platter for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a904b14a-c973-4188-b682-6d921ab15a59",
+          "name": "Arabic Kebab Platter for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "27f2db9e-4d13-444e-81c5-d3658c9102fc",
+          "name": "Fruit Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "79636f85-5513-4d08-b1a8-b68accdf82e6",
+          "name": "Special Kichiri Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "24d36c02-a233-4333-8797-80a24d81cb29",
+          "name": "Special Mojun",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ec25a6ac-51ce-4d70-b9d4-72871d155828",
+          "name": "Strawberry Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2fc8fb5e-1982-4475-ad59-140009d80a8b",
+          "name": "Kebab Platter for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5e162aa-da3f-48dd-9f44-36bfa079af71",
+          "name": "Nescafe",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "113249c7-9a80-4256-97cd-2fbd97ee126b",
+          "name": "Pickled Cucumber",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9aec0768-84b3-4ae2-9293-4b66e083b91c",
+          "name": "Chelo Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e962e264-5481-4f60-97a1-f3426cfa8809",
+          "name": "Tandoori Lamb Leg Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "691db867-97a2-4cf7-a805-a4aaec4cb613",
+          "name": "Special Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8aa78d71-17ac-4b58-8630-e5bd3ff6fe4e",
+          "name": "Whole Marjan Chicken per Kilogram",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9d727104-30ab-4c58-8aaa-db7e7d1331a7",
+          "name": "Medium Qabili Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cb4d2b14-2387-4e7e-940e-153b5ae05576",
+          "name": "Medium Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2921b724-8112-48d8-8cf4-d73cdab1f507",
+          "name": "Cinnamon Herbal Infusion",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "22c009fd-6d24-4a0f-9b0a-2611d66da479",
+          "name": "Strawberry Smoothie",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4de55270-4aac-470b-a2f0-c8fc2d47bd3b",
+          "name": "Chelo Do Piaza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "af5d8fdf-476f-4e04-834c-ca723054bf76",
+          "name": "Special Arabic Platter for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "456da365-47f0-45f7-8ae1-8ee8525fdaf9",
+          "name": "Three-Person Kozeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7e9af416-4433-477d-bf54-94c1683149bb",
+          "name": "Oven Qabili for Four",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "ab485359-3a7c-43f8-9761-51cc00b0c24c",
+          "name": "Four-Person Kozeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fed58881-30a9-44a3-a682-f825f17044f5",
+          "name": "Simple Arabic Platter for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "db70c6aa-e861-4871-a5b2-844449b07a95",
+          "name": "Chocolate Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c76a1f20-8968-4e46-b3e0-c5bd0a6f7aa3",
+          "name": "Sour Tea with Honey",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2b6769b7-d1c7-493e-bd15-1c5c7144ceb0",
+          "name": "Special Gosht Land",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e7ed1824-f321-41e1-aa08-9e1ba7681016",
+          "name": "Pickled Okra",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "885355e9-c0e6-407a-915f-6981b4df5684",
+          "name": "Orange Blossom Herbal Infusion",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "06ddff5e-ba67-4b4e-8509-5e8e95aa8169",
+          "name": "Lamb Skewer Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a2d341ba-1142-4507-8a1f-5a8f6e7a0c46",
+          "name": "Nescafe with Milk",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8716e315-0fb5-419a-9b32-d0f00c2ec54d",
+          "name": "Packaged Milk",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "372d2219-3dcb-4fe7-9aae-d81bb71abaac",
+          "name": "Special Qabili Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d7952fb6-6b63-4d3e-b942-ab4ca4b9f35c",
+          "name": "Chelo Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "db57c151-dfd4-412b-9578-3227e3701e2a",
+          "name": "Kebab Platter for Four",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "86121559-04f1-4159-bacb-6ff38e73cd03",
+          "name": "Chelo Kamar",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "34f62370-72f8-4c7f-b412-fad04c95306d",
+          "name": "Mixed Smoothie",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c99d97b4-ca1b-420a-a02d-6b87bcd74b64",
+          "name": "Smoothie with Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e99ee72e-d67b-4cf7-a033-de8b3cb0664a",
+          "name": "Black Coffee",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fb0be7f2-d209-4964-ab52-68e8f60bd451",
+          "name": "Back Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0bf06b66-0397-4ade-b9a0-a3aa948303f4",
+          "name": "Medium Kichiri Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7a802f03-8c5a-437b-9b24-79c2ac781960",
+          "name": "Qabili Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d2c5422e-712a-426b-960a-f696f3e8ab59",
+          "name": "Chelo Shana",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e49a8536-9e59-4341-8022-186dcb405308",
+          "name": "Cantaloupe Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2eaa90c5-69b3-4331-ae3d-bc0373d4aa86",
+          "name": "Pickled Apple",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1d2fdea2-7793-4cfa-a97b-311a41070684",
+          "name": "Mowlana Arabic Platter for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0a537185-1042-4dfa-9fe5-6bc03d4171f7",
+          "name": "Three-Person Kichiri Gosht Land Platter",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cb0c7c9c-6c6b-4a46-b197-8531b8be5fdd",
+          "name": "Mojito",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a30524a1-fac6-46ec-beca-c91c623bef37",
+          "name": "Lemon Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d5054624-3c1c-4304-878c-7b0cc15ad38a",
+          "name": "Mocha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "37e7a2d6-537a-42a5-97d3-aaacfd3c9d68",
+          "name": "Banana Milk",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cbf76516-b2e7-4edb-a165-1cbbe64347de",
+          "name": "Chili Pickle",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4feab7d4-99e2-4b01-b4a9-dcb57b209e9f",
+          "name": "Pineapple and Lemon Punch",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "21d55abc-2eff-4b80-aebc-e21e4500e926",
+          "name": "Kichiri Tandoori Shoulder Platter",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "90f7fa9d-b6e9-4ad1-973c-ad4ac1a5cabc",
+          "name": "Special Arabic Platter for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fa822592-61f7-4270-9e56-3ca664deff12",
+          "name": "Skewer Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dd418cde-48bb-4910-8484-568944d8bc8e",
+          "name": "Special Kichiri Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0ef366fe-bf17-4213-b8bb-1598f9ded352",
+          "name": "Shewed Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ceef7566-9953-44d8-af6c-fdc9138e9542",
+          "name": "Chelo Skewer Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "87cc09fc-745e-4c9b-a9fa-4ab22f59861e",
+          "name": "Mowlana Special Tea Service",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "57d542c4-2c6d-4ba0-8b89-cd120c227ae6",
+          "name": "Orange Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6a23354d-3406-4793-b5d5-6674a9e1fb94",
+          "name": "Joojeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0a5c4b20-bb86-4d4f-b60e-9093ff9af975",
+          "name": "Brewed Coffee",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8c72a430-f8df-4eef-aa45-0fa862619448",
+          "name": "Olive Pickle",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "3870a0d9-9df2-424a-8a44-19a903e81235",
+          "name": "Chelo Poshti",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "12d7a481-8192-4491-8ff8-67d5b4db6580",
+          "name": "Kichiri Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1518fd6b-7664-4592-90f5-14a8a7761c24",
+          "name": "Medium Shewed Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "074302b0-c608-45f6-94b4-1eb61f27d856",
+          "name": "Biryani Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "96802e2f-3af1-43f5-a35e-c73984cef9be",
+          "name": "Pineapple Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b8920581-7022-446a-93ec-b436cd546255",
+          "name": "Special Shewed Gosht",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "803a2459-89db-447d-95bf-fb06fdb1d27a",
+          "name": "Mixed Pickle",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ed5e0069-ff8a-4a64-8173-67c62e0bb229",
+          "name": "Chelo Pachin",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "45527bf0-99f3-4474-8d7f-417412b47ece",
+          "name": "Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0ca8e7d9-1fa9-431c-a146-7c722ea9f01f",
+          "name": "Iced Latte",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "24ec9bb9-42fc-46ad-bf20-c11aa14be649",
+          "name": "Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ba20f8b7-0dcd-40b1-a6f9-0c0bddc16c63",
+          "name": "Cappuccino",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e6ccc101-7106-4a58-a4a9-c56e9d6f4a3b",
+          "name": "Dast Tandoori Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "70c58b0e-d2ec-4399-971a-bc309bc5d993",
+          "name": "Medium Gosht Biryani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bc9afe42-d0b4-43ba-b314-1811e2c998e9",
+          "name": "Apple Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "498ba229-1c6e-4cc3-89ec-9ed8fadeaa62",
+          "name": "Chelo Barg",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f8409815-4617-4fd6-a8a2-e5e254880604",
+          "name": "Americano",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "eaff0862-0878-4400-8440-458853db67f7",
+          "name": "Kamar Tandoori Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9f01afd4-ec6c-4982-b1eb-5d3ab60a2508",
+          "name": "Chelo Bakhtiari",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9004d560-5ed4-4011-bc6c-7540af9457d4",
+          "name": "Watermelon Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "76eb2551-fb2a-4576-9344-4cf30dd06b99",
+          "name": "Special Gosht Biryani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a26e3b86-4725-4aa5-b60b-3898e9425c5e",
+          "name": "Chopan Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b8fbe9f6-2bd7-4594-b38d-6bfa6a5c18f8",
+          "name": "Chelo Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fddcd344-f59b-486b-a326-3233c07f6ae4",
+          "name": "Chelo Soltani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "85059e70-d1cb-4ccc-b8a9-bcc07f2dfa02",
+          "name": "Hot Chocolate",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "926f6523-bd29-4ecf-944e-1f802c3b1359",
+          "name": "Pomegranate Juice",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f7919685-f167-48ac-8792-6200bb1ed9d2",
+          "name": "Chelo Turkish Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "df5b6020-b0fb-4064-ae9c-3e4a613eb1ed",
+          "name": "Qabili with Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fae540d1-c46c-4439-96fb-c4cbd013c979",
+          "name": "Lemonade",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "df0c69b1-8ac2-460c-923b-42dc3b4e8bbe",
+          "name": "Mahicha Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "27de9961-4b69-42c1-ab10-c7d46ba41605",
+          "name": "Kichiri with Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "86e2300c-c843-4cd4-a022-b895761cb73c",
+          "name": "Carrot with Ice Cream",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6a325318-9ad7-4903-b3de-46fec465e63a",
+          "name": "Chelo Waziri",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "86a92dfb-b0cd-4743-bf70-8803868f07cd",
+          "name": "Kamar Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "152a03a1-1aef-4632-a137-0d7009397a12",
+          "name": "Shana Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8c94bcc9-0dd6-4ebe-b166-b37038a3e88a",
+          "name": "Cafe Glace",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "563de815-41dc-4029-aa1d-06a70e972665",
+          "name": "Chelo Special Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "97f90aa8-da70-4158-962f-50bf05d03f4f",
+          "name": "Shewed Rice with Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bea963be-e2e5-4803-88fc-757dddcf43d6",
+          "name": "Barg Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "57e8d9eb-60e9-40fd-b3b8-8f0b3caf0004",
+          "name": "Chelo Masti Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5a2c0641-b357-46e8-8de9-99f576854391",
+          "name": "Biryani with Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "219bd95d-1594-4d5d-ae55-525cc552d787",
+          "name": "Chocolate Shake",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "452dfad5-a612-4579-b0e9-e2178e2c79bd",
+          "name": "Cantaloupe Shake",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5dfa0b2f-7cb2-443d-84b8-8026bde2af32",
+          "name": "Bakhtiari Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d43959ac-adf7-4bf3-99cc-c1c9e7a11393",
+          "name": "Chelo Chinese Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bc662be7-8cc2-4d9a-870e-133840d6d5de",
+          "name": "Soltani Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "55578b98-0c5b-42a5-b9bd-3ae4c8a3c607",
+          "name": "Chelo Special Skewer Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "40cd08cb-bb03-4f67-9e79-a148d072ae8c",
+          "name": "Strawberry Shake",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "394c752d-bfa8-4a1a-b765-c9f3410b33d1",
+          "name": "Pachin Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "93a29019-ef56-41a2-b1d2-64a2038c04e8",
+          "name": "Special Cantaloupe",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f9a0c956-73bb-4db4-bdd8-fb16e1f969a3",
+          "name": "Special Joojeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fabcad94-b704-47d8-ac1a-2a5c25834b82",
+          "name": "Doogh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c32dfca4-9106-40d8-99c3-0a6d242db091",
+          "name": "Doogh 1.5 L",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b4f8d8d9-08cf-44d4-ac4f-5a0a2e974c9c",
+          "name": "Masti Joojeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d8f19609-8bcd-47bd-846d-dece25655423",
+          "name": "Chinese Joojeh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "894add55-4ca5-4a1f-bd60-4385c5c86cc1",
+          "name": "Mast",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "20f1c79c-147c-4fbf-a4e7-577cd06c9a12",
+          "name": "Chaka",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fa514d26-3f7e-4f00-b2f0-8fd44070516f",
+          "name": "Turkish Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b08c2267-be36-4c95-b0b4-9c78c5420f30",
+          "name": "Family Soft Drink",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5e72e9d-64b0-40a9-969a-dc3ef28e59e7",
+          "name": "Special Skewer Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "abd667f3-b4de-464e-a14a-487aecaa9464",
+          "name": "Pepsi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d22dce42-c6bb-4838-9b1c-1a7bd171070c",
+          "name": "Waziri Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "18d0c4a7-e9af-4f97-9fd3-7aece0b83d21",
+          "name": "Arabic Pepsi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "107e0189-fda4-4c5e-9fef-06b17c7de720",
+          "name": "Large Mineral Water",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7d639302-432a-4f38-a13e-4eb0cacb3759",
+          "name": "Small Mineral Water",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "maza-biryani-herat",
+      "name": "Maza Biryani",
+      "items": [
+        {
+          "id": "17cc6b64-a824-4d76-9ea2-b25452ce777e",
+          "name": "Chicken Biryani",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c7db64f4-65a7-42fb-851d-50974780a32f",
+          "name": "Special Biryani",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "05551ce9-862f-4beb-b459-54959f85220a",
+          "name": "Plain Biryani",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5f941908-7c39-4c7b-8f8a-4883e2246875",
+          "name": "Zinger Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "46d296a4-bc10-429e-84ac-2fe3fc2622c5",
+          "name": "Plain Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4c207ab1-c72d-4a1e-80b7-5de2971ba346",
+          "name": "Malai Boti Roll",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "954f46ff-6c47-4413-9715-5cf162f3dc5e",
+          "name": "Samosa (1 Piece)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e664f39d-78ae-4657-b4a0-6793fa891799",
+          "name": "Plain Fries",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "07dde194-3345-4506-abe2-5248f57ea188",
+          "name": "Qabuli Palaw",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "34af587b-4ae8-43bd-8d58-2fd8885af7ee",
+          "name": "Special Qabuli Palaw",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1c154ef5-14ca-4832-be3d-0c922ff2c4c2",
+          "name": "Beef Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7573d771-b31a-43a1-a537-e3793bc6f08c",
+          "name": "Chicken Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c47b341d-a3f8-471e-b804-901bda40db71",
+          "name": "Chicken Kati Roll",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "636c0f03-06e8-4bd4-a2c7-e89c019ee1da",
+          "name": "Special Fries",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "987afaa3-1c1d-44a2-ae2b-69b7c4a461ad",
+          "name": "Chicken Karahi (1 kg)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2ac3c066-72d4-4b0f-a95c-b3100c2297fc",
+          "name": "Chicken Karahi (1 Serving)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "439acd76-6316-45dc-bc34-2eff1d12dd12",
+          "name": "Lamb Karahi (1 kg)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "78a4c0b8-5734-4535-bf73-b071a38d99ba",
+          "name": "Lamb Karahi (½ kg)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4a5c880d-0d3f-4d18-888d-578c6540e54e",
+          "name": "Chicken Chargha",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "802fef13-5ddc-400d-aefa-215c08df85ab",
+          "name": "Lamb Rosh",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "mr-burger-herat",
+      "name": "Mr Burger Herat",
+      "items": [
+        {
+          "id": "4ae57c8d-1a43-4dcf-b7bf-336a9620e02a",
+          "name": "Big Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7803577f-c60c-4c80-93a6-7d822500ab1e",
+          "name": "Chili Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4259f273-9d0e-483c-9d16-f953734366e9",
+          "name": "Mac Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1535dc92-3e22-4a50-a3ea-0766e54c82b6",
+          "name": "Cheese Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "201ae57f-5f28-4dc2-ac8d-9f4346eb348b",
+          "name": "Chicken Fillet — Small Portion",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4c1752d3-4387-4b59-8c22-1430740a6ece",
+          "name": "Simple Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7b6fcaa9-dbcb-44a3-81c7-6b00b2baee07",
+          "name": "Special Mini Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bd8f9767-e6f1-4cc0-98e7-3fc968d3639d",
+          "name": "Simple Mini Burger",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2164dc00-5315-4eb7-a6b2-fe27192e0420",
+          "name": "Plain Fries — Appetizer",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f7261737-6e35-4a20-be0c-451b9f65e91a",
+          "name": "Black Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ab499638-f7e9-46e0-a21f-aa9a15a96ac7",
+          "name": "Double Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b30bb771-12dc-45f1-bcae-2352ce983a41",
+          "name": "Special Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "71fff8a2-bb78-4843-b0de-9b991e55e815",
+          "name": "Royal Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "06edbd27-28f2-4412-9c3c-14947489d625",
+          "name": "Special Mushroom Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "72081b09-d05b-4617-b50b-58dfc40ad4b6",
+          "name": "Spicy Chili Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "806a15e0-081e-4b05-b4ff-52bbb8bb31f2",
+          "name": "Natural Burger — Business Class",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7bbaf6f5-b110-4c66-bcf7-ed0a99af87e2",
+          "name": "Chicken Fillet — Large Portion",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "029b7ce4-ad8a-421b-b28b-c5366e55d136",
+          "name": "Black Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a74c93d2-5341-4560-b405-20ce44044fb3",
+          "name": "Special Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e2514d74-a79e-4170-87c5-3815f7bf5764",
+          "name": "Royal Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f2dc1c0b-66af-4eb8-ba62-e9cb316cb8fd",
+          "name": "Mushroom Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fd79ff10-e2e9-41f3-a69d-30a2e202bc39",
+          "name": "Zinger Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e0d9d297-590e-42c4-bb27-9cbd9b6a4b14",
+          "name": "Grill Burger — VIP",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a2baa209-3fb7-48d6-b368-b7589f1db3cd",
+          "name": "Mr Special Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "21ba1e6d-debb-4192-9fca-4cb3e859d95a",
+          "name": "Mr Special Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "18a1b729-09b9-4d68-81d7-a708f4826260",
+          "name": "Mushroom & Meat Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b8cbf9d5-3329-40fa-97f8-480e041f5b02",
+          "name": "Mushroom & Meat Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "83495c4d-ca10-4043-8cba-aae26e062f54",
+          "name": "Mushroom & Meat Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1b8fc087-f34f-48da-b758-54029fa791ea",
+          "name": "Tuna Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0470d656-5f7b-4789-8576-57d94d1ccc27",
+          "name": "Tuna Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ad147e46-e488-4f98-8f08-5f7945b2dd0e",
+          "name": "Tuna Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a9654aeb-09d9-4ada-a3d1-55cf13bedf64",
+          "name": "Roast Beef Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "3f5900b0-4888-4403-ad6b-f933b0a198a8",
+          "name": "Roast Beef Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c7e9b1ab-45ef-45d4-9994-3437a336d6a1",
+          "name": "Alfredo Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8e38bbc5-135f-4532-8c08-0bbe027590a5",
+          "name": "Alfredo Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bcd12eb3-246a-42f7-93e0-88232a7f47cd",
+          "name": "Pepperoni Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e474c52e-b670-402e-a0cc-850681f530cd",
+          "name": "Bacon Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "881d7668-1b16-41bd-8481-d8e86257780b",
+          "name": "Bacon Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5909af55-cc03-4c19-ab8a-cd71c3934434",
+          "name": "Barbecue Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b5caf2cd-203a-47c0-bd3b-2130f30ef4ed",
+          "name": "Vegetable Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a85ecf6a-1e59-4245-859c-d0ce44925182",
+          "name": "Vegetable Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1dd703f7-74a3-4e03-958d-044d8832049e",
+          "name": "Roast Beef Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "72ae50ce-b30a-45a6-823b-d0e6affb9008",
+          "name": "Alfredo Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6a51fd8c-601a-4b58-bf20-aaeb74fc0599",
+          "name": "Pepperoni Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "eaee63cd-6150-4d16-ab64-9d1792558633",
+          "name": "Pepperoni Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c0a7ecb0-d876-410b-908a-57ff2ee1a668",
+          "name": "Barbecue Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "03ed8647-12a5-49e4-bf89-cdb7bb2286a7",
+          "name": "Barbecue Pizza — Large",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7ae08dc6-74d7-436d-b85e-e37417bac5e6",
+          "name": "Vegetable Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "eb837ec1-fae5-4f16-8356-deea49eb57ff",
+          "name": "Mr Special Pizza — Small",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ea6519e8-d19c-42ed-b9d2-3edc00f2568b",
+          "name": "Bacon Pizza — Medium",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "a0af9735-5ea0-4dde-aa44-0c5fbb208c2b",
+      "name": "Navid Restaurant",
+      "items": []
+    },
+    {
+      "id": "fe1d445c-0f51-4236-93f5-d552a94badcf",
+      "name": "New Mahtab Shinwari",
+      "items": [
+        {
+          "id": "4803411f-40ad-4d7c-878d-dfb186527c7e",
+          "name": "Chicken Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b3c57675-f0c8-4bc5-b701-4e2ec2184c6e",
+          "name": "Tray for Two",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "777c7f40-ea6e-4889-bba2-ec7d28f0d68d",
+          "name": "Meat Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "93f11523-b54f-400b-b4d0-cc879cd54bc3",
+          "name": "Qabeli Palaw (Single)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9d70b0cd-1ed8-4c5a-bf76-c7bd63b80f9c",
+          "name": "Chapli Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "69133d1c-895d-44e2-ba6c-f9947e164446",
+          "name": "Chicken Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "47f0d51f-dd29-4129-b434-45e7bceb0a7b",
+          "name": "Beef Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d25a259b-5b6e-4613-a592-15f984b667f4",
+          "name": "Meat Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f0639e15-dfd1-42d4-85b0-91b699a58099",
+          "name": "Tray for Three",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0e4e0fea-246c-414b-b47c-9e2ac9376629",
+          "name": "Meat Chelow",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f33a8a83-f09e-4972-b812-5b330b652188",
+          "name": "Chicken Biryani",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "570113ad-8a11-4346-9627-657d6d838aeb",
+          "name": "Tandoori Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7046b7a1-306f-4db5-b1c6-280c118a5006",
+          "name": "Meat Pizza (Large)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9e38f96e-9559-4fdd-aeee-74f1e5f42d3d",
+          "name": "Tray for Four",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0da8ce2d-129e-414e-84fb-bb9a2ac28fef",
+          "name": "Tray for Five",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "9b3eed54-f239-4d6c-9cc9-9bf10bee3413",
+      "name": "Padehda Restaurant",
+      "items": [
+        {
+          "id": "2f6ce697-bbd5-4dd5-9aba-2e584657e891",
+          "name": "Qabuli with Lamb Neck",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bbf2a6ca-0863-444a-b90a-eeb9235bf035",
+          "name": "Qabuli with Pushti Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8357b380-d8c5-4795-9b40-b880ef5c26b2",
+          "name": "Qabuli with Lamb Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8dccaa9e-f1f3-41ea-be91-d962280d8209",
+          "name": "Qabuli with Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "049da0ad-d1ea-480c-a443-f9eb1d172033",
+          "name": "Qabuli with Spicy Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6117db7c-ac8d-4566-ba91-0d9a5570e06b",
+          "name": "Qabuli with Pushti Kebab (2 Pieces)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "90a14168-4ba0-4479-9688-8361471a1575",
+          "name": "Qabuli with Single Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bcab2e54-4f53-46fb-a415-d94084226e62",
+          "name": "Qabuli with Mixed Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "685d08a5-bb62-4fb5-bc83-e4c8c9cd3f40",
+          "name": "Qabuli with Pushti Kebab (1 Piece)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d2b64c45-b8c0-4f5a-ba0d-2b81d7220c3f",
+          "name": "Qabuli with Chicken Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8ca69c9f-a0f0-4c8b-ba31-ae82eeb2b682",
+          "name": "Qabuli with Chicken Leg",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "93db74f0-7f40-443f-a988-e64bd75c998e",
+          "name": "Qabuli with Koobideh Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b4b0065e-4ea5-487e-b767-8e34b4d767fb",
+          "name": "Qabuli with Qorma Sabzi",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e2deacb4-20f4-438d-aaba-7587af6f8dbe",
+          "name": "Qabuli with Qeema",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "21bc89f2-7ba2-4976-ac09-2ec6b6832ab8",
+          "name": "Chalaw with Lamb Neck",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fbcc4e28-922a-46c5-a994-fbfee8b9b6d4",
+          "name": "Chalaw with Pushti Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "da615acd-9881-47c6-af10-4c22816b92fb",
+          "name": "Chalaw with Lamb Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6bf1796d-d946-40a6-817f-01ba326e4397",
+          "name": "Chalaw with Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "69d974fb-6d6b-401a-9fc9-86972196ed65",
+          "name": "Chalaw with Spicy Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fd9977d9-9369-4160-a81f-77d78707f60b",
+          "name": "Chalaw with Pushti Kebab (2 Pieces)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5a821444-0b3d-4c8a-a5ea-f3e52dc2dc5f",
+          "name": "Chalaw with Single Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2ec2b0e4-124a-4054-91ce-4bfd80b75095",
+          "name": "Chalaw with Mixed Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f14c17ad-907d-4301-842c-801d69f89493",
+          "name": "Chalaw with Pushti Kebab (1 Piece)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2436c9f7-04b0-4f09-9aef-b089afc110d0",
+          "name": "Chalaw with Chicken Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c4735b0a-66a3-4d2a-aa15-7ca2181a0b17",
+          "name": "Chalaw with Chicken Leg",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a3c5f83a-d414-40a4-8db2-2ba2b97bc743",
+          "name": "Chalaw with Koobideh Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a678bb13-4720-4a4b-9f4d-4d71d1f59cf8",
+          "name": "Chalaw with Qorma Sabzi",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4c26719f-8467-42ff-a29d-7afe4ef35137",
+          "name": "Chalaw with Qeema",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "423c82fa-e6a7-4022-a2b5-6e7e67be5b00",
+          "name": "Kichiri with Lamb Neck",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2113f709-1883-4e86-bb19-70efea5bf55e",
+          "name": "Kichiri with Pushti Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5a98a233-7731-4dd3-af0a-0cf67c13c7d3",
+          "name": "Kichiri with Lamb Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dbc7950f-e4cf-4020-9592-fdda8bc4ba4a",
+          "name": "Kichiri with Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1faccd21-962d-4d49-bd56-2cfdf9d7e434",
+          "name": "Kichiri with Spicy Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "eac7f47f-8349-4efd-a886-8d6093da75c0",
+          "name": "Kichiri with Pushti Kebab (2 Pieces)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b6ceefbe-ab80-4895-8531-5bf600be3b74",
+          "name": "Kichiri with Single Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "49b08bcf-61f7-4321-a2b9-bcb84cfb56c0",
+          "name": "Kichiri with Mixed Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bcd9de43-afa0-4a02-b4f3-cc7a3c845dde",
+          "name": "Kichiri with Pushti Kebab (1 Piece)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "081113bb-59b3-4ef4-b572-3cdb3b4df12f",
+          "name": "Kichiri with Chicken Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ed61b55c-87cb-4175-ae9f-33683feae9d8",
+          "name": "Kichiri with Chicken Leg",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c3246b61-0be6-40d7-8b80-7b6f8d595691",
+          "name": "Kichiri with Koobideh Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "9c34ea62-15c1-4959-8c5f-5c24900d6a4c",
+          "name": "Kichiri with Qorma Sabzi",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c31d61e2-8379-4f20-be38-77fdffcae095",
+          "name": "Kichiri with Qeema",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6ab10ee1-c8ef-4f42-b80a-b81b9fafbb18",
+          "name": "Whole Lamb Neck",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f42ea45d-8b13-48bb-8fa7-60189fcf23c7",
+          "name": "Tandoori Chicken",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cd47dd86-f97f-4d4d-b5de-a25091aaff7b",
+          "name": "Pushti Kebab (3 Pieces)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2f479d33-d63f-4972-a5e7-17150cf313fc",
+          "name": "Pushti Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2e344a75-b90f-4a7e-8c9b-14a5167990e2",
+          "name": "Lamb Shank",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "669a7917-ab03-4580-86f4-6378c646d567",
+          "name": "Special Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fb986db3-0261-44cd-b26c-1304766334fc",
+          "name": "Pushti Kebab (2 Pieces)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "99d104a7-f5b9-4b82-a063-dec1b3acadd5",
+          "name": "Skewered Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "14cd0412-0565-4ccf-b5fc-2d6f3bfc7773",
+          "name": "Mixed Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8917075d-95ff-4c79-90eb-8d8f597e8e09",
+          "name": "Single Meat",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7765db34-65df-49f1-9bfb-4dca8f4435ab",
+          "name": "Grilled Chicken Wings",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b8ea29b7-fc15-45ad-964c-7d39e56da66e",
+          "name": "Chicken Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b97d5f2e-8d42-4bd3-9c1a-9ae0ea9c1d73",
+          "name": "Chicken Leg",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2a3b2497-f9de-4023-a202-223f26fe3019",
+          "name": "Koobideh Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c52fb81e-31cf-47ab-8f1b-58ce55c35289",
+          "name": "Grilled Tomato",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ba0c95a4-ca32-45c0-9f72-70f234fedb09",
+          "name": "Padehda Special National Platter",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "406a5b46-03e8-4b25-9623-f539cab7dfec",
+          "name": "National Platter — Grade 1",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c21c0978-d7db-437c-9d3f-0660a62b43dd",
+          "name": "National Platter — Grade 2",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2f0bf53f-9083-409d-9b2b-bfebac646e51",
+          "name": "National Platter — Grade 3",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "28773f0c-87c2-4498-a53d-da576de94321",
+          "name": "Arabic Platter (5 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "27906bb5-1b57-4e0d-be09-d374d9db12f4",
+          "name": "Arabic Platter (4 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "98eb3cab-297d-4ea3-b22e-9b6af1aae440",
+          "name": "Arabic Platter (3 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "351946c6-43ad-43e2-9abc-cd8e852443bc",
+          "name": "Arabic Platter (2 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "be00d329-787a-4add-aefe-a39910dc2e35",
+          "name": "Special Pizza (2 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "068be6fc-a24d-43f8-bea2-61f1de2cbae9",
+          "name": "Mixed Pizza (2 People)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4e24583f-0edd-43ca-8f0e-79f1918835dc",
+          "name": "Special Pizza (1 Person)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6d85bd6b-e1dc-4870-84d3-cb2326f56239",
+          "name": "Mixed Pizza (1 Person)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "04dbfbfa-a077-4944-b410-34525cc4e035",
+          "name": "Chicken Pizza (1 Person)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "22478563-f5b8-4135-b1fb-e72a0fe28de3",
+          "name": "Single Pizza (1 Person)",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1fdd44f7-d15e-4361-938b-63a1de2bc954",
+          "name": "Doogh",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bbeb5804-9427-47d3-91ff-d274755390a9",
+          "name": "Abrisham Kebab",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "acb0ea31-b7a1-488a-96b3-47ffb617dc47",
+          "name": "Firni",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0b70a857-43b3-40aa-9e82-8d010f6c9fc2",
+          "name": "Large Yogurt",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4bd64b69-9b55-4175-979e-b509e698aa03",
+          "name": "Small Yogurt",
+          "image_state": "replaced-reference",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "8213b74f-3680-44c8-871a-783302bffbf5",
+      "name": "Parmis Restaurant",
+      "items": [
+        {
+          "id": "878400ef-625c-450a-99f4-5094e59c8f13",
+          "name": "Royal Burger (Simple)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a01e7327-aab9-4c8e-a1f9-c784c3bcb432",
+          "name": "Qabeli with Neck Meat",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "4ae825c6-da25-4f90-a821-bddc9943a8e9",
+          "name": "Special Pizza (Small)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "3ee2cf53-526c-451c-926d-1dedd57c490e",
+          "name": "Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7ccf0a03-3082-4809-85b6-685dae0b9daa",
+          "name": "Chicken Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "afc46740-b525-4020-894b-273c2ed3d067",
+          "name": "Kichiri Gardan",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "537c6049-465f-4434-a836-686c12832c2c",
+          "name": "Special Pizza (Medium)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "9945d5ab-4be3-48b4-84f7-458380abcaf4",
+          "name": "Chelo Special Mahicha",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "f58a8939-cda6-401c-987a-b4f8e4286d17",
+          "name": "Shishlik Kebab",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "bdecd8bf-4bcb-4535-8543-3a1cf7a90ba3",
+          "name": "Special Pizza (Big)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "c8045b0b-6801-4645-a4ca-a906bc719a5a",
+          "name": "Chelo Gardan",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "cbd44dbd-c5f7-4afe-983a-e63f065bcb9f",
+          "name": "Turkish Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "597e0a40-e23c-471e-952f-f20d3a3de192",
+          "name": "Chelo Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2aec439c-be28-41fa-b2d6-99d9f6806f57",
+          "name": "Meat Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c99de2af-c605-41d4-8941-23bb1aee85b2",
+          "name": "Chicken Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "6ccc5808-f78a-4bb8-a1d2-b10a5672811f",
+          "name": "Parmis Special Pizza (Small)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "2cc98239-9865-4af1-a28d-9fdf0eceb506",
+          "name": "Special Gardan",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ba4c7fb2-04b9-494a-bef2-b23ed5f46665",
+          "name": "Parmis Special Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e33d2c21-686f-49ee-9ad9-6efc499697db",
+          "name": "Chelo Shishlik",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "f314e101-9886-4e64-a0e3-540a6de5208d",
+          "name": "Turkish Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0ca662a1-0ded-4581-bf6d-77caf5d13f38",
+          "name": "Special Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "caa599ff-1e06-442a-ac12-e24af29849c4",
+          "name": "Turkish Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e96d6fe8-d635-40db-8553-e3b1818de6d6",
+          "name": "Chelo Poshti Kebab",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "3da4aaa3-e145-4923-85ec-82e6bf288a85",
+          "name": "Poshti Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "cb157148-bcb5-45e4-934c-00e450e25ae4",
+          "name": "Toronto Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a240bcc2-fc78-4a5e-a7ad-d6b75eb0d51f",
+          "name": "Sabzi Pulao with Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "99ff263c-9876-47b6-b9b9-16aae80eabc4",
+          "name": "Tikka Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ac6ec2d3-a7bf-4062-95a5-f7f602a1cce3",
+          "name": "Toronto Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "111dfdbc-22a3-4052-a87d-e0d56d28d05b",
+          "name": "Toronto Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "c0e246cb-90cd-4a37-8464-49ae2fa028ed",
+          "name": "Sabzi Pulao with Gardan",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "78ad8d10-ddb9-4438-bc8e-3258a2867ff5",
+          "name": "Landi Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ea5743ed-25e0-406b-8865-01bd4acdd2db",
+          "name": "Meat Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "183a3342-e43f-4e49-9800-b2586fe43f8f",
+          "name": "Meat Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fb09a961-8917-4eab-b7ae-6f1dd3474de3",
+          "name": "Chelo Chicken Roll",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "530b6368-552d-4688-9864-82009cccaebe",
+          "name": "Chicken Roll",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a6513727-5f93-4125-a187-ed53465cc169",
+          "name": "Chicken Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ca03d149-7057-448b-ae80-83349f9aeae2",
+          "name": "Chelo Loqma Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "458e0382-67d4-4259-bda0-cd5c62674226",
+          "name": "Chicken Pizza (Medium)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "eff982e2-b41c-46c3-8ea3-a506084bd4b8",
+          "name": "Loqma Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f56ed0ba-1f5d-4762-bde0-c610ddf03e46",
+          "name": "Chelo Zereshki Joojeh",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "e32768b0-03b1-40b4-a4c6-84b9a3f03c92",
+          "name": "Zereshki Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "80a694a6-6570-4c71-b490-6586408ade0d",
+          "name": "Four Seasons Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "fe6a57d6-c207-4748-b9ab-f561bad2db07",
+          "name": "Four Seasons Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "75ce7d7e-d54b-4f6e-a10a-a939beeadb95",
+          "name": "Chelo Pachin",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "218c440f-0ec9-40c2-915b-ae64067a5c89",
+          "name": "Chicken Pachin",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dd405988-e1f6-4e47-be83-208545b003ce",
+          "name": "Four Seasons Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "60a9d22b-282e-4333-b32f-b4eebe5b2cd4",
+          "name": "Tuna & Cheese Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8ca81e23-1c15-4c01-8e72-3a3b1a9dc6ba",
+          "name": "Chelo Yogurt Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "485b433d-d02b-47ca-ad78-bc6aa68c4522",
+          "name": "Yogurt Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "82218a11-a09a-477a-9168-58ffc1cc57c9",
+          "name": "Tuna & Cheese Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a61f5275-509c-47b7-a698-672e5c7f7373",
+          "name": "Tuna & Cheese Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "78043894-496c-49ae-a447-675865235540",
+          "name": "Chelo Joojeh Kebab",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "a413e244-d6db-4d05-81f3-68ed17f03229",
+          "name": "Chicken & Mushroom Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "43223d03-56a5-491e-8fc6-b592c46eb1de",
+          "name": "Chelo Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ebdfa9f3-ac0d-460b-8d56-d5abaad71642",
+          "name": "Chicken & Mushroom Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "1661a87b-e465-4232-af73-01c625e4963a",
+          "name": "Chicken & Mushroom Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a12e2eab-5abb-4361-a852-d87f202b90fa",
+          "name": "Meat & Mushroom Pizza (Small)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "3ebac4c6-aba1-4d26-9ee4-9ec3608732b2",
+          "name": "Chelo Special Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2fdd0952-2230-409c-b429-956dcd8608a3",
+          "name": "Special Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "2b5a3580-413f-4e58-abb5-3895d37bb685",
+          "name": "Meat & Mushroom Pizza (Medium)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7435513d-38a0-4ef8-90ff-182ad3195dd6",
+          "name": "Chelo Sour Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "990a089d-d52c-4b0b-9c56-499b6f3d56b2",
+          "name": "Meat & Mushroom Pizza (Big)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "29292be2-3e7c-432c-936b-4f3da5129a12",
+          "name": "Sour Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "35043e7e-35fa-45c2-a46a-efd41934e44f",
+          "name": "Chelo Spiral Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e98a42b9-32c2-4864-bcf2-84258ee73ada",
+          "name": "Spiral Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "778cdb35-c5ff-4b1a-b868-b1732edbe942",
+          "name": "Chelo Akbar Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "bf6c9726-c138-42f3-888c-fdf9fb02d07c",
+          "name": "Akbar Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "db45d8d5-2e53-4958-b097-aad5a1ef64c8",
+          "name": "Rosh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a144e6c6-57f2-4a30-b1ef-09c65782ee78",
+          "name": "Special Kateh Gardan Meal",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "49e49dcf-ee8e-412b-915d-199418170752",
+          "name": "Special Kateh Mahicha Meal",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5438b18a-5335-4bce-8776-70a5598c83a1",
+          "name": "Kateh Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "092c58bf-f17d-4aaf-bcb8-f94849be4cc1",
+          "name": "Special Kateh Koobideh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "534bc959-ac08-416a-aa7d-e04977cff2c0",
+          "name": "Kateh Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "212afd66-1f6a-45b4-aa89-3d305af10f83",
+          "name": "Kateh Yogurt Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "648fb666-c0c1-4a09-8a26-933d11a61a4c",
+          "name": "Kateh Sour Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "084b42b1-d554-4e51-ad75-e8abfc18d4ba",
+          "name": "Kateh Spiral Joojeh",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ba21034d-b003-4c6f-832a-4c72a41e5819",
+          "name": "BS Tandoori Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "5d0961fc-40ef-4974-9673-82af244dcd68",
+          "name": "CS Tandoori Sandwich",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "f07f7980-2154-445d-956e-6e479ecae070",
+          "name": "Special Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "58614a9b-a725-4f9b-b872-81d4fe240069",
+          "name": "Kark Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "69629b58-c86c-4de5-b60c-f831487c28e6",
+          "name": "Special Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d4702b69-8c44-47e4-bfad-79a08ad59751",
+          "name": "Cheeseburger",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "e58b3251-fc9d-4b22-951c-e6f0f92b3e0e",
+          "name": "Double Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "7d612a29-b76f-430d-aa68-a84d3b560515",
+          "name": "Zinger Burger (Simple)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "159401a4-bf48-45c6-91db-a5d2fca0077d",
+          "name": "Zinger Burger (Special)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "65c01db9-ff87-4f98-a1a0-f0e9db0d2159",
+          "name": "Royal Burger (Special)",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "36dd7652-151b-46b6-b42b-42d79d90e913",
+          "name": "Mushroom Burger (Simple)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "ab16d6d6-31d0-4edc-af89-3f0f36cb49ff",
+          "name": "Mushroom Burger (Special)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "29791e57-d5a4-4c2f-8b8a-a494644c0a2a",
+          "name": "Alpino Burger (Simple)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "470858c1-59a2-47bf-93c9-92c5b3f0c98d",
+          "name": "Alpino Burger (Special)",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "dee566ba-4ee2-4599-8e39-288c3cbc7366",
+          "name": "Fried Fillet",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "a7b86790-9bed-4328-be6e-a0bcfe9da10a",
+          "name": "Popcorn",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "b9b7b0e6-c40a-4c9d-aa75-348328a7150b",
+          "name": "Fried Mushrooms",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8702856e-2e6d-440a-8d19-b0bcb29e044a",
+          "name": "Fried Chips",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "e2d4cd38-0820-4a5d-89e9-fc8ef875e7a5",
+          "name": "Local Platter",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "476e558a-505e-47f7-a3e2-aa574e6eb4b5",
+          "name": "Qabeli Meling",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "0378a73c-490a-4347-8d73-18fdbf570661",
+          "name": "Qabeli with Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "e2e01ed5-9530-4a95-a01d-ad6811f8fd7e",
+          "name": "Qabeli with Meat",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "33a7d568-18a0-4fff-bfb4-f432250181c7",
+          "name": "Kichiri with Landi Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "4658e822-17fa-4ac5-914d-f5a56b0e606b",
+          "name": "Kichiri with Mahicha",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "368faaf8-3624-4b81-859d-6672389f66c1",
+          "name": "Kichiri with Meat",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "f78ee809-1415-45e6-b54b-633c93e6307b",
+          "name": "Special Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "09f463f9-aac9-4bcb-9648-0d7d14f15133",
+          "name": "Caesar Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "d0101f97-1404-4169-96fb-67445a098078",
+          "name": "Seasonal Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "8d2436af-88a7-46f9-90a3-bcdd8c4efff8",
+          "name": "Special Platter (3 People)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "b7f64129-7d9b-4939-9823-c7d89a2d849d",
+          "name": "Special Platter (4 People)",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        },
+        {
+          "id": "34411e15-8868-4a79-a474-667219b7135e",
+          "name": "Calzone Pizza",
+          "image_state": "preserved-live-photo",
+          "presentation_kind": "live"
+        }
+      ]
+    },
+    {
+      "id": "1327d332-053d-4702-a5d7-05abd85fa73c",
+      "name": "Qoqnoos Restaurant",
+      "items": [
+        {
+          "id": "5af4d500-4d3c-41ad-a0bd-157fe99cb6dd",
+          "name": "Kebab Platter",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "365dfac3-27ee-4fbc-b6bd-3b721f95e926",
+          "name": "Rice Dishes",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        }
+      ]
+    },
+    {
+      "id": "d3008f38-f9a4-4b1c-b8d5-e39be529fb5f",
+      "name": "Sar Ashpaz",
+      "items": []
+    },
+    {
+      "id": "dee417e2-7c95-4b4a-8683-0034cec2dccc",
+      "name": "Shabha-ye Tehran Restaurant",
+      "items": []
+    },
+    {
+      "id": "shah-restaurant-herat",
+      "name": "Shah Restaurant Herat",
+      "items": [
+        {
+          "id": "shah-special-pizza",
+          "name": "Shah Special Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-digi-2",
+          "name": "Digi Kebab - Two Pieces",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-arabic-tray-5",
+          "name": "Shah Special Arabic Tray - 5 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-meat",
+          "name": "Shah Special Meat Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-roll",
+          "name": "Shah Special Roll",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-salad",
+          "name": "Shah Special Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-whole-lamb-shinwari",
+          "name": "Whole Lamb Shinwari",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-seasonal-salad",
+          "name": "Seasonal Salad",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-mixed-pizza",
+          "name": "Shah Mixed Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-digi-1",
+          "name": "Digi Kebab - One Piece",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-arabic-tray-4",
+          "name": "Shah Arabic Tray - 4 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-lamb-shoulder-tandoori",
+          "name": "Tandoori Lamb Shoulder",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-mahiche",
+          "name": "Shah Special Lamb Shank Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-lahmacun",
+          "name": "Turkish Lahmacun",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-arabic-tray-3",
+          "name": "Shah Arabic Tray - 3 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-lamb-ribs-tandoori",
+          "name": "Tandoori Lamb Ribs",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-meat-pizza",
+          "name": "Meat Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-meat-pasta",
+          "name": "Meat Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-soup",
+          "name": "Shah Special Soup",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-neck",
+          "name": "Shah Special Lamb Neck Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-shishlik",
+          "name": "Shishlik Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-akbar-chicken",
+          "name": "Special Akbar Chicken Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-pizza",
+          "name": "Chicken Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chopan-lamb",
+          "name": "Chopan Lamb Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-pasta",
+          "name": "Chicken Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-mahiche-kebab",
+          "name": "Lamb Shank Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-tea",
+          "name": "Tea",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-arabic-tray-2",
+          "name": "Shah Arabic Tray - 2 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kebab-tray-5",
+          "name": "Shah Kebab Tray - 5 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-lamb-karahi",
+          "name": "Shinwari Lamb Karahi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-poshti",
+          "name": "Poshti Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-cheese-pasta",
+          "name": "Cheese Pasta",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-diet-pizza",
+          "name": "Diet Pizza",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-koobideh",
+          "name": "Special Koobideh Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chalo-chicken",
+          "name": "Special Chicken Chalo",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-fried-chips",
+          "name": "Fried Chips",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-sandwich",
+          "name": "Shah Special Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kebab-tray-4",
+          "name": "Shah Kebab Tray - 4 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-senkhi",
+          "name": "Sikhi Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-karahi",
+          "name": "Shinwari Chicken Karahi",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-chicken-kebab",
+          "name": "Special Chicken Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-beef-burger",
+          "name": "Special Russian Burger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-5",
+          "name": "Qabili Mooling - 5 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kebab-tray-3",
+          "name": "Shah Kebab Tray - 3 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-cheese-chips",
+          "name": "Cheese Chips",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-lamb-rosh",
+          "name": "Lamb Rosh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-fried-fillet",
+          "name": "Fried Chicken Fillet",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-tandoori-chicken",
+          "name": "Tandoori Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-4",
+          "name": "Qabili Mooling - 4 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-green-beef",
+          "name": "Green Beef Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-fastfood-tray-4",
+          "name": "Shah Special Fast Food Tray - 4 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-kebab",
+          "name": "Chicken Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-3",
+          "name": "Qabili Mooling - 3 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-tandoori-fish",
+          "name": "Tandoori Fish",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-koobideh",
+          "name": "Special Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-green-chicken",
+          "name": "Green Chicken Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kentucky",
+          "name": "Kentucky Fried Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-fastfood-tray-2",
+          "name": "Shah Special Fast Food Tray - 2 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-fingers",
+          "name": "Chicken Fingers",
+          "image_state": "missing",
+          "presentation_kind": "original"
+        },
+        {
+          "id": "shah-plain-koobideh",
+          "name": "Plain Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-chicken-sandwich",
+          "name": "Chicken Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-2",
+          "name": "Qabili Mooling - 2 People",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-negin-koobideh",
+          "name": "Negin Koobideh Kebab",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-neck",
+          "name": "Special Lamb Neck Qabili",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-shawarma",
+          "name": "Shawarma Sandwich",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-fried-chicken",
+          "name": "Fried Chicken",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-mahiche",
+          "name": "Special Lamb Shank Qabili",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-cheeseburger",
+          "name": "Shah Special Cheeseburger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-special-zinger",
+          "name": "Shah Special Zinger",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-wings-pachin",
+          "name": "Wings & Pachin",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-qabili-lamb",
+          "name": "Lamb Qabili",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kichiri-neck",
+          "name": "Special Lamb Neck Kichiri",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kichiri-mahiche",
+          "name": "Special Lamb Shank Kichiri",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        },
+        {
+          "id": "shah-kichiri-meat",
+          "name": "Meat Kichiri",
+          "image_state": "missing",
+          "presentation_kind": "illustration"
+        }
+      ]
+    },
+    {
+      "id": "f0c6fbb1-7e3c-4989-b745-feefa717cc2b",
+      "name": "Uranus Restaurant",
+      "items": []
+    }
+  ]
+}
