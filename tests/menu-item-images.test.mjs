@@ -300,10 +300,46 @@ test('published manifest and sanitized audit cover all current restaurants and e
       });
     }
   }
-  assert.deepEqual(kinds, {original: 18, illustration: 595});
+  assert.deepEqual(kinds, {original: 12, illustration: 601});
   assert.equal(testedMissingImages, 467);
-  assert.equal(checkedAssets.size, 64);
+  assert.equal(checkedAssets.size, 60);
   assert.doesNotMatch(serialized, /[?&]token=/i);
+});
+
+test('promotional poster assets are replaced by relevant labeled illustrations', () => {
+  const manifest = JSON.parse(readFileSync('data/menu-item-images.json', 'utf8'));
+  const audit = JSON.parse(readFileSync('tests/fixtures/current-menu-image-audit.json', 'utf8'));
+  const replacements = [
+    ['Food Box Restaurant', 'Food Box Special Pizza (Small)', 'generic-pizza.webp'],
+    ['Food Box Restaurant', 'Food Box Special Pizza (Medium)', 'generic-pizza.webp'],
+    ['Food Box Restaurant', 'Food Box Special Pizza (Large)', 'generic-pizza.webp'],
+    ['Food Box Restaurant', 'Kabuli Biryani', 'biryani-rice.webp'],
+    ['Food Box Restaurant', 'Arabic Tray for Two', 'afghan-sharing-platter.webp'],
+    ['Parmis Restaurant', 'Parmis Special Pizza (Big)', 'generic-pizza.webp'],
+  ];
+  const removedPosterFiles = [
+    'food-box-restaurant-food-box-special-pizza-small-1e301dbd.jpg',
+    'food-box-restaurant-kabuli-biryani-e52dba4a.jpg',
+    'food-box-restaurant-arabic-tray-for-two-b7bff281.jpg',
+    'parmis-restaurant-parmis-special-pizza-big-1b793f27.jpg',
+  ];
+  for (const [restaurantName, itemName, imageFile] of replacements) {
+    const restaurant = audit.restaurants.find((row) => row.name === restaurantName);
+    const item = restaurant?.items.find((row) => row.name === itemName);
+    assert.ok(item, `Missing audit row: ${restaurantName} / ${itemName}`);
+    const entry = manifest.restaurants[restaurant.id].items[item.id];
+    assert.equal(entry.kind, 'illustration');
+    assert.equal(entry.src, `/assets/menu-item-images/${imageFile}`);
+    assert.equal(entry.source_url, '');
+    assert.equal(entry.source_label, 'AI-generated illustration; not an actual restaurant photo');
+    const label = imageLabelMarkup({kind: entry.kind, source_url: entry.source_url, source_label: entry.source_label});
+    assert.match(label, /Illustration · تصویر نمونه/);
+    assert.match(label, /Not an actual dish photo · عکس واقعی غذا نیست/);
+  }
+  for (const filename of removedPosterFiles) {
+    assert.equal(existsSync(`assets/menu-item-images/${filename}`), false);
+    assert.equal(JSON.stringify(manifest).includes(filename), false);
+  }
 });
 
 test('Shah keeps exact 74-item baseline, verified photo attribution, and bilingual illustration labels', async () => {

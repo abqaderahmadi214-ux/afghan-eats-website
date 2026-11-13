@@ -594,13 +594,13 @@
           "id": "cffe81ce-87e4-4a8a-804d-1992cd7bbe72",
           "name": "Food Box Special Pizza (Small)",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "f9a7aa71-4901-4937-99dc-06411343d180",
           "name": "Kabuli Biryani",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "b5766be7-30f1-44fc-8769-da011c696f4d",
@@ -624,13 +624,13 @@
           "id": "1dfc8257-ada0-4416-b6dd-b436b1380576",
           "name": "Arabic Tray for Two",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "1b0f441e-3392-4ffa-aea5-84c44701e64f",
           "name": "Food Box Special Pizza (Medium)",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "493e5f72-c1e5-4767-a88e-5498b70089f9",
@@ -672,7 +672,7 @@
           "id": "8cc25217-1c2d-41f4-b7d3-6202f2c0fc83",
           "name": "Food Box Special Pizza (Large)",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "22f9a164-bc71-4e2e-9fd5-9b7cc513577c",
@@ -2921,7 +2921,7 @@
           "id": "ba4c7fb2-04b9-494a-bef2-b23ed5f46665",
           "name": "Parmis Special Pizza (Big)",
           "image_state": "missing",
-          "presentation_kind": "original"
+          "presentation_kind": "illustration"
         },
         {
           "id": "e33d2c21-686f-49ee-9ad9-6efc499697db",

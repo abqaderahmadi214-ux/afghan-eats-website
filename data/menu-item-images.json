@@ -749,18 +749,18 @@
       "items": {
         "cffe81ce-87e4-4a8a-804d-1992cd7bbe72": {
           "item_name": "Food Box Special Pizza (Small)",
-          "kind": "original",
-          "src": "/assets/menu-item-images/food-box-restaurant-food-box-special-pizza-small-1e301dbd.jpg",
-          "source_url": "https://www.facebook.com/foodboxresturant/posts/1120562783681947/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "f9a7aa71-4901-4937-99dc-06411343d180": {
           "item_name": "Kabuli Biryani",
-          "kind": "original",
-          "src": "/assets/menu-item-images/food-box-restaurant-kabuli-biryani-e52dba4a.jpg",
-          "source_url": "https://www.facebook.com/foodboxresturant/posts/636979908706906/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/biryani-rice.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "b5766be7-30f1-44fc-8769-da011c696f4d": {
@@ -789,18 +789,18 @@
         },
         "1dfc8257-ada0-4416-b6dd-b436b1380576": {
           "item_name": "Arabic Tray for Two",
-          "kind": "original",
-          "src": "/assets/menu-item-images/food-box-restaurant-arabic-tray-for-two-b7bff281.jpg",
-          "source_url": "https://www.facebook.com/foodboxresturant/posts/1000224202382473/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/afghan-sharing-platter.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "1b0f441e-3392-4ffa-aea5-84c44701e64f": {
           "item_name": "Food Box Special Pizza (Medium)",
-          "kind": "original",
-          "src": "/assets/menu-item-images/food-box-restaurant-food-box-special-pizza-small-1e301dbd.jpg",
-          "source_url": "https://www.facebook.com/foodboxresturant/posts/1120562783681947/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "493e5f72-c1e5-4767-a88e-5498b70089f9": {
@@ -853,10 +853,10 @@
         },
         "8cc25217-1c2d-41f4-b7d3-6202f2c0fc83": {
           "item_name": "Food Box Special Pizza (Large)",
-          "kind": "original",
-          "src": "/assets/menu-item-images/food-box-restaurant-food-box-special-pizza-small-1e301dbd.jpg",
-          "source_url": "https://www.facebook.com/foodboxresturant/posts/1120562783681947/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "22f9a164-bc71-4e2e-9fd5-9b7cc513577c": {
@@ -3893,10 +3893,10 @@
         },
         "ba4c7fb2-04b9-494a-bef2-b23ed5f46665": {
           "item_name": "Parmis Special Pizza (Big)",
-          "kind": "original",
-          "src": "/assets/menu-item-images/parmis-restaurant-parmis-special-pizza-big-1b793f27.jpg",
-          "source_url": "https://www.facebook.com/Parmisresturant/posts/1153600417338750/",
-          "source_label": "Official Facebook post",
+          "kind": "illustration",
+          "src": "/assets/menu-item-images/generic-pizza.webp",
+          "source_url": "",
+          "source_label": "AI-generated illustration; not an actual restaurant photo",
           "expected_image_path": ""
         },
         "f314e101-9886-4e64-a0e3-540a6de5208d": {
