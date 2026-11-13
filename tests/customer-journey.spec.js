@@ -94,8 +94,11 @@ test('photo-free dishes receive bilingual local illustrations without remote ima
   await expect(page.locator('.menu-image-illustration')).toHaveCount(2);
   await expect(menuCards.first()).toContainText('Illustration · تصویر نمونه');
   await expect(menuCards.first()).toContainText('Not an actual dish photo · عکس واقعی غذا نیست');
+  const pageOrigin=new URL(page.url()).origin;
   for(const image of await menuImages.all()){
-    await expect(image).toHaveAttribute('src',/^\/assets\/menu-item-images\//);
+    const imageUrl=new URL(await image.evaluate(node=>node.src));
+    expect(imageUrl.origin).toBe(pageOrigin);
+    expect(imageUrl.pathname).toMatch(/^\/assets\/menu-item-images\//);
     await expect(image).toHaveJSProperty('complete',true);
     await expect.poll(()=>image.evaluate(node=>node.naturalWidth)).toBeGreaterThan(0);
   }
@@ -105,7 +108,11 @@ test('photo-free dishes receive bilingual local illustrations without remote ima
   await page.locator(`#itemModal button[onclick="addCurrent()"]`).click();
   await expect(page.locator('#mobileBasketBar')).toHaveClass(/show/);
   expect(imageRequests.length).toBeGreaterThan(0);
-  for(const url of imageRequests)expect(new URL(url).pathname).toMatch(/^\/assets\/menu-item-images\//);
+  for(const url of imageRequests){
+    const imageUrl=new URL(url);
+    expect(imageUrl.origin).toBe(pageOrigin);
+    expect(imageUrl.pathname).toMatch(/^\/assets\/menu-item-images\//);
+  }
 });
 
 test('checkout submits a real order payload and opens order confirmation', async ({page})=>{
