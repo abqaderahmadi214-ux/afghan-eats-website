@@ -251,6 +251,10 @@ jobs:
               sys.exit(1)
           print('Final admin legacy parity passed')
           PY
+      - name: Verify menu image-only preservation and disclosure
+        run: |
+          node --check assets/menu-item-images.js
+          node --test tests/menu-item-images.test.mjs
       - name: Install Chromium for the customer journey
         run: npx playwright install --with-deps chromium
       - name: Run customer journey browser tests

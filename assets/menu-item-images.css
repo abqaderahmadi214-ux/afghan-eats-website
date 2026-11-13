@@ -1,0 +1,19 @@
+.restaurant-page .menu-item-media{position:relative}
+.restaurant-page .premium-menu-card .menu-item-media img[data-menu-image-src]{object-fit:contain;background:#fbf4e8}
+.restaurant-page .menu-image-presentation,
+.restaurant-page .menu-image-source{
+  position:absolute;z-index:2;inset-inline-start:6px;max-width:calc(100% - 12px);
+  border-radius:999px;padding:4px 7px;background:rgba(20,35,29,.88);color:#fff;
+  font-size:.65rem;font-weight:800;line-height:1.25;text-decoration:none;
+  box-shadow:0 1px 4px rgba(0,0,0,.18)
+}
+.restaurant-page .menu-image-presentation{inset-block-end:6px}
+.restaurant-page .menu-image-disclaimer{display:block;margin:5px 0 7px;color:#706253;font-size:.66rem;font-weight:600;line-height:1.4}
+.restaurant-page .menu-image-source{inset-block-start:6px;inset-inline-start:auto;inset-inline-end:6px;background:rgba(255,255,255,.94);color:#24483c}
+.restaurant-page .menu-image-illustration{background:#775019}
+.restaurant-page .menu-image-source:hover{text-decoration:underline}
+.restaurant-page [data-menu-image-label][hidden]{display:none!important}
+@media(max-width:620px){
+  .restaurant-page .menu-image-presentation{font-size:.59rem;padding:4px 6px}
+  .restaurant-page .menu-image-disclaimer{font-size:.62rem}
+}
