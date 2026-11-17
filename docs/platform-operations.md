@@ -45,9 +45,9 @@ Recent worker checks show the latest ten success/failure/skipped attempts, durat
 
 ## Native production source
 
-Customer native releases use `afghaneats-backend`, branch `customer-production`, preserved from the newer `feat/customer-ota-live-sync-v18` source. The older `customer-staging` remains a separate web staging deployment and must not overwrite this source. Customer release candidate 1.2.4/build19 retains runtime 1.2.3 because its native dependencies are unchanged. Rider releases use `afghan-eats-rider-app`, main, with candidate 1.1.10/build14.
+Customer native releases use `afghaneats-backend`. The latest verified customer private build, 1.2.9/versionCode 27, came from `release/customer-play-1.2.9-build27` based on the newer development source; the obsolete `customer-staging` web deployment must not overwrite it. Its Play closed-testing draft is inactive and is not a public release. Play internal testing is active on the older 1.2.6/versionCode 24, which is not reviewed. Rider releases use `afghan-eats-rider-app`, main; latest signed private main build: 1.1.11/versionCode 15. Its Play/public status is unconfirmed.
 
-Candidate source versions are not proof of a signed artifact, installed app, store publication or tested background delivery. Record each build result separately. Existing legacy branch workflows are not disabled merely by creating the canonical branch; do not publish production updates from obsolete source.
+Candidate versions are not claims of public availability or proof of an installed app or tested background delivery. Record each build result separately; do not infer rider store status from the private build. This website metadata update does not change store links, ordering controls or menu browsing. Existing legacy branch workflows are not disabled merely by creating the canonical branch; do not publish production updates from obsolete source.
 
 ## Rider pay
 
