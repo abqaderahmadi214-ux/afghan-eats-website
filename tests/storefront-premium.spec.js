@@ -52,3 +52,28 @@ test('premium home keeps its local discovery paths clear in English and Dari at 
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
   await expect(page.locator('.ae-value-strip')).toContainText('Made for Herat');
 });
+
+test('homepage browse tiles and links have tactile hover feedback that respects reduced motion', async ({ page }) => {
+  await page.route('https://afghaneats-api.onrender.com/**', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    body: JSON.stringify({ result: { data: { json: {} } } })
+  }));
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+
+  const cuisine = page.locator('.ae-cuisine').first();
+  const photo = cuisine.locator('.ae-cuisine-photo');
+  await cuisine.hover();
+  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
+  const browseLink = page.locator('.ae-browse-link');
+  await browseLink.hover();
+  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
+  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
+});
