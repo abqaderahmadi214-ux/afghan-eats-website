@@ -38,36 +38,38 @@
     },
     "customerNative": {
       "repository": "abqaderahmadi214-ux/afghaneats-backend",
-      "sourceBranch": "customer-production",
+      "sourceBranch": "release/customer-play-1.2.9-build27",
       "package": "net.afghaneats.customer",
-      "sourceVersion": "1.2.4",
-      "sourceAndroidBuild": 19,
+      "sourceVersion": "1.2.9",
+      "sourceAndroidBuild": 27,
       "installedBuildVerified": false,
+      "playInternalTesting": {
+        "status": "active",
+        "version": "1.2.6",
+        "versionCode": 24,
+        "reviewStatus": "not_reviewed"
+      },
       "androidCandidate": {
-        "sourceCommit": "77845098723941021c10c6ba9f68ea418e9bf68b",
-        "releaseUrl": "https://github.com/abqaderahmadi214-ux/afghaneats-backend/releases/tag/customer-1.2.4-build19-38900776389-1",
-        "sha256": "3493a90342c9af3ade7994a9f8fa61bb0f6dafe877f6b00f730a397102b60efd",
-        "packageAndSignatureVerified": true,
-        "publicNativeSmokeVerified": true,
-        "physicalDeviceVerified": false,
-        "storePublicationVerified": false
+        "version": "1.2.9",
+        "versionCode": 27,
+        "verificationStatus": "verified_private_build",
+        "playStatus": "inactive_closed_testing_draft",
+        "publicAvailability": "not_public"
       }
     },
     "riderNative": {
       "repository": "abqaderahmadi214-ux/afghan-eats-rider-app",
       "sourceBranch": "main",
       "package": "net.afghaneats.rider",
-      "sourceVersion": "1.1.10",
-      "sourceAndroidBuild": 14,
+      "sourceVersion": "1.1.11",
+      "sourceAndroidBuild": 15,
       "installedBuildVerified": false,
       "androidCandidate": {
-        "sourceCommit": "076efd810f51b8413881c63b0b0a4b5f8d873f2f",
-        "releaseUrl": "https://github.com/abqaderahmadi214-ux/afghan-eats-rider-app/releases/tag/rider-1.1.10-build14-38895599840-1",
-        "sha256": "2461b66eba51208d1f1ce8d6e111ef13991664440f8deada5ee13136265435df",
-        "packageAndSignatureVerified": true,
-        "publicNativeSmokeVerified": false,
-        "physicalDeviceVerified": false,
-        "storePublicationVerified": false
+        "version": "1.1.11",
+        "versionCode": 15,
+        "verificationStatus": "signed_private_main_build",
+        "playStatus": "unconfirmed",
+        "publicAvailability": "unconfirmed"
       }
     }
   },
@@ -76,7 +78,7 @@
     "Use the API and admin health endpoints for actual deployed Git commit identifiers.",
     "The legacy admin.afghaneats.net hosting migration is pending; use the maintained admin URL.",
     "Rider pay supports fixed salary, per completed delivery and hybrid. Fixed salary is the initial draft model; no rate is assumed.",
-    "Android candidates are private GitHub prereleases requiring repository access; they are not app-store publications. Customer emulator validation uses a temporary test-signed APK derived from the signed production bundle.",
+    "Customer Play internal testing is active on 1.2.6/build24; 1.2.9/build27 is a verified private candidate with an inactive closed-testing draft, not a public release. Rider 1.1.11/build15 is a signed private main-branch candidate; Play/public availability is unconfirmed. Candidate metadata is not proof of an installed app or public release.",
     "Control Center MFA is optional per account, requires confirmed authenticator setup and protects password and Google sign-in. Availability does not mean staff enrollment is complete.",
     "Worker queue ownership and history track staff follow-up; only successful monitoring sweeps clear flags. Workers still depend on the API service being awake."
   ]
