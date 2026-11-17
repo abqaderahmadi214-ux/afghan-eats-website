@@ -98,6 +98,24 @@
 @media(max-width:760px){
  .premium-home .ae-cuisines,.ae-premium.restaurants-page .dish-category-row{margin-inline-end:0;max-width:100%;padding-inline-end:3px}
 }
+
+/* Give homepage discovery links and tiles a restrained, tactile response. */
+.premium-home .ae-cuisine-photo{transition:transform .22s cubic-bezier(.2,.75,.25,1),box-shadow .22s ease}
+.premium-home .ae-cuisine:hover .ae-cuisine-photo,
+.premium-home .ae-cuisine:focus-visible .ae-cuisine-photo{transform:translateY(-3px) scale(1.035)}
+.premium-home :is(.ae-browse-link,.ae-order-box .address-box .btn-primary){transition:transform .2s ease,box-shadow .2s ease}
+.premium-home .ae-browse-link:hover,
+.premium-home .ae-order-box .address-box .btn-primary:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 10px 22px #173e3220}
+.premium-home .ae-order-box .address-box .btn-primary:not(:disabled):active{transform:translateY(0) scale(.98)}
+@media(prefers-reduced-motion:reduce){
+ .premium-home .ae-cuisine-photo,
+ .premium-home :is(.ae-browse-link,.ae-order-box .address-box .btn-primary){transition:none!important}
+ .premium-home .ae-cuisine:hover .ae-cuisine-photo,
+ .premium-home .ae-cuisine:focus-visible .ae-cuisine-photo,
+ .premium-home .ae-browse-link:hover,
+ .premium-home .ae-order-box .address-box .btn-primary:not(:disabled):hover,
+ .premium-home .ae-order-box .address-box .btn-primary:not(:disabled):active{transform:none!important}
+}
 @media(max-width:760px){
  .ae-premium.restaurants-page .restaurant-image{height:156px!important;min-height:156px!important}
  .ae-premium.premium-home .mobile-nav a[aria-current]{color:#0d4a3a;background:#eaf0e5}
