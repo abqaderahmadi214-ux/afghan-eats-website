@@ -59,3 +59,25 @@ test('ordering pause is clear across customer paths without hiding restaurant re
   await expect(page.locator('.ae-cart')).toHaveAttribute('href', '/checkout');
   await expect(page.locator('.ae-cart .ae-cart-label .en-copy')).toHaveText('Basket');
 });
+
+
+test('checkout stays hidden and blocked when ordering status cannot be fetched', async ({ page }) => {
+  const orderRequests = [];
+  page.on('request', request => {
+    if (request.url().includes('/api/trpc/orders.place')) orderRequests.push(request.url());
+  });
+  await page.route('https://afghaneats-api.onrender.com/**', async route => {
+    await route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"unavailable"}' });
+  });
+  await page.goto('/checkout');
+  await expect(page.locator('#aeOrderingPauseNote')).toContainText('could not verify');
+  await expect(page.locator('#checkoutShell')).toBeHidden();
+  await expect(page.locator('.checkout-place-order')).toBeDisabled();
+  const submissionBlocked = await page.locator('#checkoutShell').evaluate(form => {
+    const event = new Event('submit', { bubbles: true, cancelable: true });
+    form.dispatchEvent(event);
+    return event.defaultPrevented;
+  });
+  expect(submissionBlocked).toBe(true);
+  expect(orderRequests).toHaveLength(0);
+});

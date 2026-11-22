@@ -15,10 +15,53 @@ async function growthRecordEvent(id,type){try{await grMutation('growth.recordSpo
 window.growthSponsoredClick=function(id){sessionStorage.setItem('ae_sponsor_campaign',id);void growthRecordEvent(id,'click')}
 function grPublicCity(){try{if(typeof AECITY!=='undefined'&&AECITY.context?.name_en)return AECITY.context.name_en}catch{}return(window.AFGHAN_EATS_CONFIG||{}).launchCity||'Herat'}
 async function grLoadMarket(){try{AEGROWTH.market=await grQuery('growth.publicMarketplace',{city:grPublicCity()});grRenderPublic()}catch(e){console.warn('Growth marketplace unavailable',e)}}
-function grRenderPublic(){const m=AEGROWTH.market;if(!m)return;const path=location.pathname.toLowerCase(),publicList=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path==='/restaurants';if(publicList){let anchor=document.querySelector('#smartPicks')?.closest('section')||document.querySelector('#restaurantGrid')?.closest('section')||document.querySelector('main');if(anchor&&!document.getElementById('aeGrowthMarketplace')){const sec=document.createElement('section');sec.id='aeGrowthMarketplace';sec.className='section growth-section';sec.innerHTML=`<div class="container">${m.sponsored?.length?`<div class="growth-head"><div><h2>${grText('Sponsored restaurants','رستورانت‌های حمایت‌شده')}</h2><p class="growth-disclosure">${grText('Paid placements are clearly labelled and shown separately. Payment never changes Afghan Eats’ organic restaurant ranking.','جایگاه‌های پولی به‌وضوح علامت‌گذاری و جدا نمایش داده می‌شوند. پرداخت هیچ‌گاه رتبه‌بندی عادی افغان ایتس را تغییر نمی‌دهد.')}</p></div></div><div class="growth-shelf">${m.sponsored.map(c=>grCampaignCard(c,true)).join('')}</div>`:''}${m.offers?.length?`<div class="growth-head" style="margin-top:24px"><div><h2>${grText('Offers from restaurants','پیشنهادهای رستورانت‌ها')}</h2><p class="growth-disclosure">${grText('Merchant-funded discounts are verified again by the server when you place the order.','تخفیف‌های رستورانت هنگام ثبت سفارش دوباره در سرور بررسی می‌شوند.')}</p></div></div><div class="growth-shelf">${m.offers.map(c=>grCampaignCard(c,false)).join('')}</div>`:''}</div>`;if(sec.textContent.trim())anchor.parentNode.insertBefore(sec,anchor);m.sponsored?.forEach(c=>void growthRecordEvent(c.id,'impression'))}}
-  const params=new URLSearchParams(location.search),sponsor=params.get('sponsor'),offer=params.get('offer');if(sponsor){sessionStorage.setItem('ae_sponsor_campaign',sponsor);void growthRecordEvent(sponsor,'click')}if(offer){sessionStorage.setItem('ae_growth_promo',offer);sessionStorage.setItem('ae_promo',offer)}
-  if(path.endsWith('/restaurant.html')||path==='/restaurant')grRestaurantOffers();if(path.endsWith('/checkout.html')||path==='/checkout')grCheckoutOffer();}
-async function grRestaurantOffers(){const rid=window.currentRestaurant?.id||new URLSearchParams(location.search).get('id');if(!rid||document.getElementById('aeGrowthOfferBanner'))return;try{const d=await grQuery('growth.publicRestaurant',{restaurantId:rid}),c=d.offers?.[0];if(!c)return;const target=document.querySelector('.restaurant-layout')||document.querySelector('.container');if(!target)return;const box=document.createElement('div');box.id='aeGrowthOfferBanner';box.className='growth-offer-banner';box.innerHTML=`<div><b>🏷️ ${grEsc(grOfferText(c))}</b><div>${grEsc(c.name)}</div><p>${grEsc(grOfferConditions(c))}</p><small class="muted">${grText('Merchant-funded · final eligibility and budget checked at checkout.','تأمین‌شده توسط رستورانت · شرایط و بودجه در پرداخت بررسی می‌شود.')}</small></div><button class="btn btn-primary" type="button" onclick="growthUseOffer('${grEsc(c.code||'')}')">${grText('Use offer','استفاده از پیشنهاد')}</button>`;target.insertBefore(box,target.firstChild)}catch{}}
+function grCampaignIsCurrent(c,now=Date.now()){
+  if(!c||typeof c!=='object')return false;
+  const startsAt=c?.startsAt??c?.starts_at;
+  if(startsAt!=null&&startsAt!==''){
+    const starts=Date.parse(startsAt);
+    if(!Number.isFinite(starts)||starts>now)return false;
+  }
+  const endsAt=c?.endsAt??c?.ends_at;
+  if(endsAt!=null&&endsAt!==''){
+    const ends=Date.parse(endsAt);
+    if(!Number.isFinite(ends)||ends<=now)return false;
+  }
+  return true;
+}
+function grCurrentCampaigns(campaigns){return Array.isArray(campaigns)?campaigns.filter(c=>grCampaignIsCurrent(c)):[]}
+function grRenderPublic(){
+  const m=AEGROWTH.market;if(!m)return;
+  const sponsored=grCurrentCampaigns(m.sponsored),offers=grCurrentCampaigns(m.offers);
+  const path=location.pathname.toLowerCase(),publicList=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path==='/restaurants';
+  if(publicList){
+    let anchor=document.querySelector('#smartPicks')?.closest('section')||document.querySelector('#restaurantGrid')?.closest('section')||document.querySelector('main');
+    if(anchor&&!document.getElementById('aeGrowthMarketplace')){
+      const sec=document.createElement('section');sec.id='aeGrowthMarketplace';sec.className='section growth-section';
+      sec.innerHTML=`<div class="container">${sponsored.length?`<div class="growth-head"><div><h2>${grText('Sponsored restaurants','رستورانت‌های حمایت‌شده')}</h2><p class="growth-disclosure">${grText('Paid placements are clearly labelled and shown separately. Payment never changes Afghan Eats’ organic restaurant ranking.','جایگاه‌های پولی به‌وضوح علامت‌گذاری و جدا نمایش داده می‌شوند. پرداخت هیچ‌گاه رتبه‌بندی عادی افغان ایتس را تغییر نمی‌دهد.')}</p></div></div><div class="growth-shelf">${sponsored.map(c=>grCampaignCard(c,true)).join('')}</div>`:''}${offers.length?`<div class="growth-head" style="margin-top:24px"><div><h2>${grText('Offers from restaurants','پیشنهادهای رستورانت‌ها')}</h2><p class="growth-disclosure">${grText('Merchant-funded discounts are verified again by the server when you place the order.','تخفیف‌های رستورانت هنگام ثبت سفارش دوباره در سرور بررسی می‌شوند.')}</p></div></div><div class="growth-shelf">${offers.map(c=>grCampaignCard(c,false)).join('')}</div>`:''}</div>`;
+      if(sec.textContent.trim())anchor.parentNode.insertBefore(sec,anchor);
+      sponsored.forEach(c=>void growthRecordEvent(c.id,'impression'));
+    }
+  }
+  const params=new URLSearchParams(location.search),sponsor=params.get('sponsor'),offer=params.get('offer');
+  if(sponsor){sessionStorage.setItem('ae_sponsor_campaign',sponsor);void growthRecordEvent(sponsor,'click')}
+  if(offer){sessionStorage.setItem('ae_growth_promo',offer);sessionStorage.setItem('ae_promo',offer)}
+  if(path.endsWith('/restaurant.html')||path==='/restaurant')grRestaurantOffers();
+  if(path.endsWith('/checkout.html')||path==='/checkout')grCheckoutOffer();
+}
+async function grRestaurantOffers(){
+  const rid=window.currentRestaurant?.id||new URLSearchParams(location.search).get('id');
+  if(!rid||document.getElementById('aeGrowthOfferBanner'))return;
+  try{
+    const d=await grQuery('growth.publicRestaurant',{restaurantId:rid}),c=grCurrentCampaigns(d.offers)[0];
+    if(!c)return;
+    const target=document.querySelector('.restaurant-layout')||document.querySelector('.container');
+    if(!target)return;
+    const box=document.createElement('div');box.id='aeGrowthOfferBanner';box.className='growth-offer-banner';
+    box.innerHTML=`<div><b>🏷️ ${grEsc(grOfferText(c))}</b><div>${grEsc(c.name)}</div><p>${grEsc(grOfferConditions(c))}</p><small class="muted">${grText('Merchant-funded · final eligibility and budget checked at checkout.','تأمین‌شده توسط رستورانت · شرایط و بودجه در پرداخت بررسی می‌شود.')}</small></div><button class="btn btn-primary" type="button" onclick="growthUseOffer('${grEsc(c.code||'')}')">${grText('Use offer','استفاده از پیشنهاد')}</button>`;
+    target.insertBefore(box,target.firstChild);
+  }catch{}
+}
 window.growthUseOffer=function(code){if(!code)return;sessionStorage.setItem('ae_growth_promo',code);sessionStorage.setItem('ae_promo',code);const el=document.getElementById('promo');if(el)el.value=code;alert(grText('Offer saved. It will be verified when you place the order.','پیشنهاد ذخیره شد و هنگام ثبت سفارش تأیید می‌شود.'))}
 function grCheckoutOffer(){const code=sessionStorage.getItem('ae_growth_promo');if(!code)return;const apply=()=>{const el=document.getElementById('promo');if(!el)return false;el.value=code;let note=document.getElementById('aeGrowthCheckoutNote');if(!note){note=document.createElement('div');note.id='aeGrowthCheckoutNote';note.className='notice';note.style.margin='8px 0';el.closest('.field')?.appendChild(note)}note.textContent=grText('Restaurant offer saved. The server calculates the final eligible discount when the order is submitted.','پیشنهاد رستورانت ذخیره شده است. تخفیف نهایی واجد شرایط هنگام ثبت سفارش در سرور محاسبه می‌شود.');return true};if(!apply())setTimeout(apply,700)}
 function grPatchCheckout(){if(AEGROWTH.patched||typeof window.trpcMutation!=='function')return;const original=window.trpcMutation;window.trpcMutation=async function(path,input){const sponsor=sessionStorage.getItem('ae_sponsor_campaign'),promo=sessionStorage.getItem('ae_growth_promo');if(path==='orders.place'&&promo&&!input?.promoCode)input={...input,promoCode:promo};const result=await original(path,input);if(path==='orders.place'&&result?.success){if(sponsor&&result.orderId&&input?.customerPhone){grMutation('growth.recordSponsoredOrder',{campaignId:sponsor,orderId:result.orderId,phone:input.customerPhone}).catch(()=>{})}sessionStorage.removeItem('ae_sponsor_campaign');sessionStorage.removeItem('ae_growth_promo')}return result};AEGROWTH.patched=true}
