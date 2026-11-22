@@ -17,7 +17,7 @@ for (const name of fs.readdirSync(root)) {
     fs.copyFileSync(path.join(root, name), path.join(out, name));
   }
 }
-for (const dir of ['assets', 'data', '.well-known']) {
+for (const dir of ['assets', 'data', '.well-known', 'organizations']) {
   fs.cpSync(path.join(root, dir), path.join(out, dir), { recursive: true, filter: source => !source.endsWith('.template') });
 }
 console.log('Render storefront assets prepared in render-public.');

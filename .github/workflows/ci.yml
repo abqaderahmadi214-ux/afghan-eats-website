@@ -131,7 +131,7 @@ jobs:
           print(f'Google Maps coordinates: resolved={resolved} unresolved={unresolved} total={len(location_rows)}')
 
           missing=[]
-          for page in root.glob('*.html'):
+          for page in [*root.glob('*.html'), root/'organizations/index.html']:
               text=page.read_text(encoding='utf-8')
               for ref in re.findall(r'(?:href|src)=["\']([^"\']+)', text):
                   if '${' in ref or ref.startswith(('http://','https://','#','mailto:','tel:','javascript:')):
@@ -147,6 +147,8 @@ jobs:
               sys.exit(1)
           print('Frontend validation passed')
           PY
+      - name: Organizations page regression test
+        run: node --test tests/organizations-page.test.mjs
       - name: Security regression checks
         run: |
           python - <<'PY'
@@ -187,7 +189,7 @@ jobs:
           import pathlib,re,sys
           root=pathlib.Path('.')
           problems=[]
-          for page in root.glob('*.html'):
+          for page in [*root.glob('*.html'), root/'organizations/index.html']:
               text=page.read_text(encoding='utf-8')
               low=text.lower()
               if not re.search(r'<html[^>]+lang=["\'][^"\']+["\']',text,re.I): problems.append(f'{page}: html lang is missing')
