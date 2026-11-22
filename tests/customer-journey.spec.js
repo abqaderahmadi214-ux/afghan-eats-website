@@ -18,11 +18,12 @@ const directoryListing = {
 };
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
-async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRows=[restaurant,directoryListing],quoteHandler,menuData=menu,menuPreviewRows=[],browseMenuData=menuData}={}){
+async function mockApi(page,{deliveryUnavailable=false,orderingEnabled=false,restaurants:restaurantRows=[restaurant,directoryListing],quoteHandler,menuData=menu,menuPreviewRows=[],browseMenuData=menuData}={}){
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route=>{
     const path = new URL(route.request().url()).pathname;
     let data=[];
-    if(path.endsWith('/restaurants.listBrowsePreviews'))data=menuPreviewRows;
+    if(path.endsWith('/platform.publicStatus'))data={orderingEnabled};
+    else if(path.endsWith('/restaurants.listBrowsePreviews'))data=menuPreviewRows;
     else if(path.endsWith('/restaurants.getBrowseMenu'))data=browseMenuData;
     else if(path.endsWith('/restaurants.list'))data=restaurantRows;
     else if(path.endsWith('/restaurants.getMenu'))data=menuData;
@@ -49,7 +50,7 @@ async function mockApi(page,{deliveryUnavailable=false,restaurants:restaurantRow
 }
 
 test('homepage to restaurant to mobile basket to quoted checkout', async ({page})=>{
-  await mockApi(page);
+  await mockApi(page,{orderingEnabled:true});
   await page.goto('/');
   await page.locator('.address-box input[name="address"]').fill('Gulha Circle');
   await page.locator('.address-box button').click();
@@ -116,7 +117,7 @@ test('photo-free dishes receive bilingual local illustrations without remote ima
 });
 
 test('checkout submits a real order payload and opens order confirmation', async ({page})=>{
-  await mockApi(page);
+  await mockApi(page,{orderingEnabled:true});
   await page.addInitScript(({restaurant,menu})=>{
     localStorage.setItem('ae_cart',JSON.stringify([{id:menu.items[0].id,restaurantId:restaurant.id,restaurantName:restaurant.name,name:menu.items[0].name,price:menu.items[0].price,qty:1,selections:[]} ]));
     localStorage.setItem('ae_mode','delivery');
@@ -147,7 +148,7 @@ test('checkout submits a real order payload and opens order confirmation', async
 
 test('a late quote cannot replace the fee for the latest checkout address', async ({page})=>{
   const requests=[];
-  await mockApi(page,{quoteHandler:async(route,input)=>{
+  await mockApi(page,{orderingEnabled:true,quoteHandler:async(route,input)=>{
     if(input.fulfillment!=='delivery'||!['Gulha Circle','Tank Markaz Street'].includes(input.deliveryAddress)){
       const value=input.fulfillment==='pickup'?{...quote,fulfillment:'pickup',deliveryFee:0,zone:null,source:'pickup'}:quote;
       await route.fulfill({status:200,contentType:'application/json',body:trpc(value)});
@@ -274,7 +275,7 @@ test('failed restaurant images reveal a branded fallback instead of an empty car
 });
 
 test('checkout schedule language does not leak across English and Dari', async ({page})=>{
-  await mockApi(page);
+  await mockApi(page,{orderingEnabled:true});
   await page.goto('/checkout');
   const later=page.locator('label:has(input[name="scheduleMode"][value="later"]) > span');
   await expect(later).toHaveText('Later');
@@ -422,7 +423,7 @@ test('a rider can complete a protected delivery without exposing closed-job cust
 });
 
 test('saved checkout addresses can be reused without a client-invented promo discount', async ({page})=>{
-  await mockApi(page);
+  await mockApi(page,{orderingEnabled:true});
   await page.addInitScript(({restaurant,menu})=>{
     localStorage.setItem('ae_cart',JSON.stringify([{id:menu.items[0].id,restaurantId:restaurant.id,restaurantName:restaurant.name,name:menu.items[0].name,price:menu.items[0].price,qty:1}]));
     localStorage.setItem('ae_addresses',JSON.stringify([{label:'Home',district:'Gulha',address:'Gulha Circle',landmark:'Near the clinic'}]));
