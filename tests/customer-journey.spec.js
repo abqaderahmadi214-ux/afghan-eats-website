@@ -86,7 +86,7 @@ test('photo-free dishes receive bilingual local illustrations without remote ima
   ]};
   const imageRequests=[];
   page.on('request',request=>{if(request.resourceType()==='image'&&!new URL(request.url()).pathname.endsWith('/food-placeholder.svg'))imageRequests.push(request.url())});
-  await mockApi(page,{menuData:photoFreeMenu});
+  await mockApi(page,{orderingEnabled:true,menuData:photoFreeMenu});
   await page.goto('/restaurant.html?id=test-restaurant');
   const menuCards=page.locator('.menu-item');
   await expect(menuCards).toHaveCount(2);
@@ -442,7 +442,7 @@ test('saved checkout addresses can be reused without a client-invented promo dis
 });
 
 test('an unavailable delivery address shows a compact change-address notice', async ({page})=>{
-  await mockApi(page,{deliveryUnavailable:true});
+  await mockApi(page,{orderingEnabled:true,deliveryUnavailable:true});
   await page.goto('/');
   await page.locator('.address-box input[name="address"]').fill('Outside delivery area');
   await page.locator('.address-box button').click();
