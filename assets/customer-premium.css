@@ -348,6 +348,7 @@
   margin:0 auto 30px;
   gap:6px;
 }
+.checkout-page .checkout-shell[hidden]{display:none!important}
 .checkout-page .checkout-step{
   background:#f4f2ed;
   border-radius:999px;

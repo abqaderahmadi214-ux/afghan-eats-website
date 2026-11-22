@@ -14,6 +14,8 @@ test('homepage promotes organization services with the approved copy and clear n
   assert.match(home, /Food services for your programs, powered by local restaurants\./);
   assert.match(home, /Afghan Eats helps organizations arrange meals for trainings, meetings, events, staff, and community programs/);
   assert.match(home, /Tell us where and when you need food, how many people you’re serving, and what you have in mind\./);
+  assert.match(home, /<nav class="navlinks"[^>]*>.*?<a href="\/organizations\/"><span class="en-copy">Organizations<\/span>/s);
+  assert.match(home, /href="\/organizations\/\#request-a-quote"/);
   assert.match(home, /href="\/organizations\/\#how-it-works"/);
 });
 
@@ -28,7 +30,9 @@ test('organizations page contains all approved service types, process steps, and
     'We check local options.',
     'Review the proposal.',
     'We coordinate the confirmed service.',
-    'Serving more than one location?',
+    'Where can we currently serve?',
+    'published restaurant marketplace focuses on Herat',
+    'Multi-location service is not confirmed until each location appears in an agreed written proposal.',
     'Availability, delivery areas, and order size depend on local restaurant capacity.',
   ]) assert.ok(page.includes(phrase), `missing approved page copy: ${phrase}`);
   assert.match(page, /id="how-it-works"/);
@@ -37,10 +41,13 @@ test('organizations page contains all approved service types, process steps, and
 });
 
 test('quote contact uses the existing support mailbox and does not pretend a web form was submitted', () => {
-  assert.match(page, /mailto:support@afghaneats\.net\?subject=Organizational%20food%20service%20quote/);
+  assert.match(page, /mailto:support@afghaneats\.net\?subject=Organizational%20food%20service%20quote&amp;body=Organization%3A/);
   assert.match(page, /support@afghaneats\.net/);
   assert.match(page, /attach your RFQ/i);
   assert.match(page, /no web form is submitted/i);
+  assert.match(page, /Vendor-registration or other procurement documents your process requires/);
+  assert.match(page, /does not publish standard organizational payment or invoicing terms/i);
+  assert.match(page, /quote-validity period, payment method and due date/i);
   assert.doesNotMatch(page, /<form\b/i);
 });
 

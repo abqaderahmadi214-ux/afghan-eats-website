@@ -26,7 +26,7 @@ const orderId='33333333-3333-4333-8333-333333333333';
 
 function trpc(data){return JSON.stringify({result:{data:{json:data}}})}
 
-async function mockApi(page,{trackedOrder=null,riderLocation=null}={}){
+async function mockApi(page,{trackedOrder=null,riderLocation=null,orderingEnabled=false}={}){
   await page.route('https://afghaneats-api.onrender.com/**',async route=>{
     const request=route.request(),url=new URL(request.url()),path=url.pathname;
     if(path.includes('/api/orders/')&&path.endsWith('/rider-location')){
@@ -42,7 +42,8 @@ async function mockApi(page,{trackedOrder=null,riderLocation=null}={}){
       return;
     }
     let data=[];
-    if(path.endsWith('/restaurants.list'))data=[restaurant];
+    if(path.endsWith('/platform.publicStatus'))data={orderingEnabled};
+    else if(path.endsWith('/restaurants.list'))data=[restaurant];
     else if(path.endsWith('/restaurants.getMenu'))data=menu;
     else if(path.endsWith('/orders.quote'))data=quote;
     else if(path.endsWith('/orders.place'))data={success:true,orderId,orderNumber:'AE-2026-4242',pricing:{subtotal:250,deliveryFee:60,total:310}};
@@ -91,7 +92,7 @@ async function mockGoogleMaps(page){
 test.beforeEach(()=>fs.mkdirSync('visual-proof',{recursive:true}));
 
 test('checkout captures GPS and sends deliveryLocation',async({page})=>{
-  await mockApi(page);
+  await mockApi(page,{orderingEnabled:true});
   await page.addInitScript(({restaurant,menu})=>{
     localStorage.setItem('ae_cart',JSON.stringify([{id:menu.items[0].id,restaurantId:restaurant.id,restaurantName:restaurant.name,name:menu.items[0].name,price:menu.items[0].price,qty:1,selections:[]}]));
     localStorage.setItem('ae_mode','delivery');

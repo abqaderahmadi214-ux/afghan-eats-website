@@ -190,6 +190,8 @@
 .ae-org-email-address { margin: 20px 0 0; color: #e0e8df; font-size: 13px !important; }
 .ae-org-email-address a { color: #fffdf8; font-weight: 800; text-underline-offset: 4px; }
 .ae-org-email-note { margin: 8px 0 0; color: #c3d1c5 !important; font-size: 12px !important; }
+.ae-org-terms-note { margin: 16px 0 0; padding: 13px 15px; border-inline-start: 3px solid #e6c88e; border-radius: 8px; background: #ffffff12; color: #e0e8df; font-size: 12px; line-height: 1.8; }
+.ae-org-terms-note strong { color: #fffdf8; }
 .ae-org-checklist { padding: 27px; border: 1px solid #ffffff2b; border-radius: 19px; background: #ffffff0d; }
 .ae-org-checklist h3 { margin: 0 0 17px; color: #fffdf8; font-size: 19px; }
 .ae-org-checklist ul { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
