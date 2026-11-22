@@ -14,6 +14,11 @@ test('homepage promotes organization services with the approved copy and clear n
   assert.match(home, /Food services for your programs, powered by local restaurants\./);
   assert.match(home, /Afghan Eats helps organizations arrange meals for trainings, meetings, events, staff, and community programs/);
   assert.match(home, /Tell us where and when you need food, how many people you’re serving, and what you have in mind\./);
+  assert.match(home, /Current service area for organization programs: Herat\./);
+  assert.match(home, /We typically respond to quote requests within three business days\./);
+  assert.match(home, /For organization and RFQ inquiries, email <a href="mailto:support@afghaneats\.net">support@afghaneats\.net<\/a>/);
+  assert.match(home, /محدودهٔ کنونی خدمات برنامه‌های سازمانی: هرات\./);
+  assert.match(home, /معمولاً حداکثر ظرف سه روز کاری/);
   assert.match(home, /<nav class="navlinks"[^>]*>.*?<a href="\/organizations\/"><span class="en-copy">Organizations<\/span>/s);
   assert.match(home, /href="\/organizations\/\#request-a-quote"/);
   assert.match(home, /href="\/organizations\/\#how-it-works"/);
@@ -31,7 +36,8 @@ test('organizations page contains all approved service types, process steps, and
     'Review the proposal.',
     'We coordinate the confirmed service.',
     'Where can we currently serve?',
-    'published restaurant marketplace focuses on Herat',
+    'Our current organizational service area is Herat.',
+    'محدودهٔ کنونی خدمات سازمانی ما هرات است.',
     'Multi-location service is not confirmed until each location appears in an agreed written proposal.',
     'Availability, delivery areas, and order size depend on local restaurant capacity.',
   ]) assert.ok(page.includes(phrase), `missing approved page copy: ${phrase}`);
@@ -43,6 +49,8 @@ test('organizations page contains all approved service types, process steps, and
 test('quote contact uses the existing support mailbox and does not pretend a web form was submitted', () => {
   assert.match(page, /mailto:support@afghaneats\.net\?subject=Organizational%20food%20service%20quote&amp;body=Organization%3A/);
   assert.match(page, /support@afghaneats\.net/);
+  assert.match(page, /We typically respond to quote requests within three business days\./);
+  assert.match(page, /معمولاً حداکثر ظرف سه روز کاری به درخواست‌های نرخ پاسخ می‌دهیم/);
   assert.match(page, /attach your RFQ/i);
   assert.match(page, /no web form is submitted/i);
   assert.match(page, /Vendor-registration or other procurement documents your process requires/);
