@@ -9,7 +9,7 @@ async function stubPublicApi(page) {
   });
 }
 
-test('sample app-screen hero video and category artwork load without attributing them to a restaurant', async ({ page }) => {
+test('sample app-screen hero video and department artwork load without attributing them to a restaurant', async ({ page }) => {
   await stubPublicApi(page);
   await page.goto('/');
   const hero = page.locator('.ae-hero-visual video.ae-feast');
@@ -35,8 +35,8 @@ test('sample app-screen hero video and category artwork load without attributing
   await expect(control).toHaveAccessibleName('Play sample app preview');
   await control.click();
   await expect.poll(() => hero.evaluate(video => !video.paused), { timeout: 10000 }).toBe(true);
-  for (const category of ['Kebab', 'Biryani', 'Sandwiches']) {
-    const photo = page.locator('.ae-cuisine').filter({ hasText: category }).locator('img');
+  for (const department of ['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
+    const photo = page.locator(`.ae-home-department-nav [data-department="${department}"] img`);
     await photo.scrollIntoViewIfNeeded();
     await expect(photo).toHaveAttribute('alt', '');
     await expect.poll(() => photo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
@@ -68,12 +68,12 @@ test('mobile hero imagery is visible early and motion stops when reduced motion 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
-test('motion-enabled category cards reveal when brought into view', async ({ page }) => {
+test('motion-enabled department cards reveal when brought into view', async ({ page }) => {
   await stubPublicApi(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveClass(/ae-motion-enabled/);
-  const card = page.locator('.ae-cuisine').first();
+  const card = page.locator('.ae-department-tile').first();
   await card.scrollIntoViewIfNeeded();
   await expect(card).toHaveClass(/ae-motion-visible/);
   await expect(card).toBeVisible();

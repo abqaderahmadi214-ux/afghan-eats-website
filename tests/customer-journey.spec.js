@@ -914,26 +914,30 @@ test('mobile filters stage before applying and manual address quotes preserve th
   await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
 });
 
-test('marketplace departments keep restaurant browsing active and other sections clearly coming soon', async ({page})=>{
+test('homepage presents premium top-level departments while restaurant cuisines stay on the Restaurants page', async ({page})=>{
   await clearPublicRestaurantFallbacks(page);
   await mockApi(page,{restaurants:[restaurant,directoryListing]});
   let orderSubmissions=0;
   page.on('request',request=>{if(new URL(request.url()).pathname.endsWith('/orders.place'))orderSubmissions+=1;});
-  await page.goto('/restaurants');
+  await page.setViewportSize({width:1440,height:1000});
+  await page.goto('/');
   const departments=page.getByRole('navigation',{name:'Marketplace departments'});
   await expect(departments).toBeVisible();
   await expect(departments.locator('[data-department]')).toHaveCount(7);
   await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
   const departmentKeys=await departments.locator('.ae-department-row > [data-department]').evaluateAll(nodes=>nodes.map(node=>node.dataset.department));
   expect(departmentKeys).toEqual(['restaurants','groceries','health-beauty','convenience','gifts','electronics','pet-supplies']);
-  await expect(departments.locator('.dish-category-row')).toHaveCount(0);
-  await expect(page.locator('.dish-category-row')).toBeVisible();
+  await expect(page.locator('.ae-cuisine-section')).toHaveCount(0);
+  await expect(page.locator('.dish-category-row')).toHaveCount(0);
   await expect(departments.locator('a')).toHaveCount(1);
   const restaurantsTile=departments.locator('[data-department="restaurants"]');
   await expect(restaurantsTile).toHaveAttribute('href','/restaurants');
-  await expect(restaurantsTile).toHaveAttribute('aria-current','page');
   await expect(restaurantsTile).toContainText('Restaurants');
   await expect(restaurantsTile).toContainText('Browse menus');
+  const restaurantPhoto=restaurantsTile.locator('.ae-department-art img');
+  await expect(restaurantPhoto).toHaveAttribute('src','/assets/images/afghan-feast-small.webp');
+  await restaurantPhoto.scrollIntoViewIfNeeded();
+  await expect.poll(()=>restaurantPhoto.evaluate(image=>image.naturalWidth)).toBeGreaterThan(0);
   const futureDepartments=[
     ['groceries','Groceries','groceries.jpg'],['health-beauty','Health & Beauty','health-beauty.jpg'],
     ['convenience','Convenience','convenience.jpg'],['gifts','Gifts','gifts.jpg'],
@@ -946,15 +950,17 @@ test('marketplace departments keep restaurant browsing active and other sections
     await expect(tile).toContainText('Coming soon');
     const photo=tile.locator('.ae-department-art img');
     await expect(photo).toHaveAttribute('src',`/assets/department-images/${imageName}`);
+    await photo.scrollIntoViewIfNeeded();
     await expect.poll(()=>photo.evaluate(image=>image.naturalWidth)).toBeGreaterThan(0);
   }
   await page.setViewportSize({width:390,height:844});
   const mobileDepartmentLayout=await page.evaluate(()=>{
     const row=document.querySelector('.ae-department-row');
-    return{viewport:window.innerWidth,pageWidth:document.documentElement.scrollWidth,rowClientWidth:row.clientWidth,rowScrollWidth:row.scrollWidth};
+    return{viewport:window.innerWidth,pageWidth:document.documentElement.scrollWidth,rowClientWidth:row.clientWidth,rowScrollWidth:row.scrollWidth,columns:getComputedStyle(row).gridTemplateColumns.split(' ').length};
   });
   expect(mobileDepartmentLayout.pageWidth).toBeLessThanOrEqual(mobileDepartmentLayout.viewport+1);
-  expect(mobileDepartmentLayout.rowScrollWidth).toBeGreaterThan(mobileDepartmentLayout.rowClientWidth);
+  expect(mobileDepartmentLayout.rowScrollWidth).toBeLessThanOrEqual(mobileDepartmentLayout.rowClientWidth+1);
+  expect(mobileDepartmentLayout.columns).toBe(2);
   await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
@@ -972,6 +978,11 @@ test('marketplace departments keep restaurant browsing active and other sections
     await expect(tile).toContainText(label);
     await expect(tile).toContainText('به‌زودی');
   }
+  await page.goto('/restaurants');
+  await expect(page.locator('.ae-home-department-nav')).toHaveCount(0);
+  await expect(page.locator('[data-department]')).toHaveCount(0);
+  await expect(page.locator('.dish-category-row')).toBeVisible();
+  await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
   expect(orderSubmissions).toBe(0);
 });
 
@@ -982,8 +993,8 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   await page.setViewportSize({width:1440,height:1000});
   await page.goto('/restaurants');
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(2);
-  await expect(page.locator('.ae-department-nav')).toBeVisible();
-  await expect(page.locator('.ae-department-row [data-department]')).toHaveCount(7);
+  await expect(page.locator('.ae-department-nav')).toHaveCount(0);
+  await expect(page.locator('.dish-category-row')).toBeVisible();
   fs.mkdirSync(path.join(__dirname,'../visual-proof'),{recursive:true});
   const captureWidths=async(locale)=>{
     for(const [width,height,label] of [[1440,1000,'desktop'],[768,1024,'tablet'],[390,844,'mobile'],[360,800,'stress']]){
@@ -994,11 +1005,11 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
           const tile=document.querySelector('.dish-category-chip')?.getBoundingClientRect();
           const departmentRow=document.querySelector('.ae-department-row');
           const sort=document.querySelector('#sort')?.getBoundingClientRect();
-          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortWidth:sort?.width||0,departmentScrolls:Boolean(departmentRow&&departmentRow.scrollWidth>departmentRow.clientWidth),pageWidth:document.documentElement.scrollWidth};
+          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortWidth:sort?.width||0,departmentsAbsent:!departmentRow,pageWidth:document.documentElement.scrollWidth};
         });
         expect(mobileLayout.tileFullyVisible).toBe(true);
         expect(mobileLayout.sortWidth).toBeGreaterThanOrEqual(138);
-        expect(mobileLayout.departmentScrolls).toBe(true);
+        expect(mobileLayout.departmentsAbsent).toBe(true);
         expect(mobileLayout.pageWidth).toBeLessThanOrEqual(width+1);
       }
       await stampFixtureLabel(page);
@@ -1027,8 +1038,7 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(2);
   await expect(page.locator('#search')).toHaveAttribute('placeholder','نام رستورانت یا غذا را جستجو کنید');
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
-  await expect(page.locator('[data-department="groceries"]')).toContainText('به‌زودی');
-  await expect(page.locator('[data-department="pet-supplies"]')).toContainText('لوازم حیوانات خانگی');
+  await expect(page.locator('.ae-department-nav')).toHaveCount(0);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانه هرات');
   await expect(page.locator('#restaurantGrid .browse-card-meta').first()).toContainText('زمان ارسال در انتظار تأیید');
   await expect(page.locator('#restaurantGrid .browse-card-meta').first()).not.toContainText('۲۰–۳۵');

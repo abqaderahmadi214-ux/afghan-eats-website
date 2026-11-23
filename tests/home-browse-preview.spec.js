@@ -39,26 +39,34 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await expect(page.locator('.ae-org-link[href="/organizations/"]')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
   await expect(page.locator('#homeRestaurants .restaurant-card').first()).toBeVisible();
-  await expect(page.locator('.ae-cuisine')).toHaveCount(8);
-
-  const categoryLinks = await page.locator('.ae-cuisine').evaluateAll(cards => cards.map(card => card.getAttribute('href')));
-  expect(categoryLinks).toEqual([
-    '/restaurants?c=Afghan',
-    '/restaurants?c=Kebab',
-    '/restaurants?c=Pizza',
-    '/restaurants?c=Fast%20Food',
-    '/restaurants?c=Rice',
-    '/restaurants?c=Biryani',
-    '/restaurants?c=Sandwiches',
-    '/restaurants?c=Caf%C3%A9'
-  ]);
+  await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
+  const departments = page.locator('.ae-home-department-nav');
+  await expect(departments).toBeVisible();
+  await expect(departments.locator('[data-department]')).toHaveCount(7);
+  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
+  await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
+  await expect(page.locator('.ae-cuisine')).toHaveCount(0);
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
+  for (const key of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
+    await expect(departments.locator(`[data-department="${key}"]`)).toContainText('Coming soon');
+  }
 
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
   await expect(page.locator('.ae-browse-link .fa-copy')).toBeVisible();
-  await expect(page.locator('.ae-cuisine').filter({ hasText: 'ساندویچ‌ها' })).toBeVisible();
-  await expect(page.locator('.ae-cuisine').filter({ hasText: 'بریانی' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
+  const comingSoonDari = [
+    ['groceries', 'مواد خوراکی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزانه'],
+    ['gifts', 'هدایا'], ['electronics', 'لوازم الکترونیکی'], ['pet-supplies', 'لوازم حیوانات خانگی']
+  ];
+  for (const [key, label] of comingSoonDari) {
+    const tile = departments.locator(`[data-department="${key}"]`);
+    await expect(tile).toContainText(label);
+    await expect(tile).toContainText('به‌زودی');
+  }
 
   for (const width of [360, 390, 768, 1280]) {
     await page.setViewportSize({ width, height: 900 });
@@ -67,15 +75,16 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   }
 });
 
-test('mobile cuisine cards fill their grid tracks', async ({ page }) => {
+test('mobile department cards fill their grid tracks', async ({ page }) => {
   await routeApi(page);
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto('/');
-  const grid = await page.locator('.ae-cuisines').boundingBox();
-  const card = await page.locator('.ae-cuisine').first().boundingBox();
-  const photo = await page.locator('.ae-cuisine-photo').first().boundingBox();
+  const grid = await page.locator('.ae-department-row').boundingBox();
+  const card = await page.locator('.ae-department-tile').first().boundingBox();
+  const art = await page.locator('.ae-department-art').first().boundingBox();
+  const photo = await page.locator('.ae-department-art img').first().boundingBox();
   expect(card.width).toBeGreaterThan(grid.width * 0.45);
-  expect(photo.width).toBeGreaterThan(card.width * 0.95);
+  expect(photo.width).toBeGreaterThan(art.width * 0.95);
 });
 
 test('merchant growth bundle is loaded once without a duplicate declaration error', async ({ page }) => {
@@ -224,10 +233,10 @@ test('homepage motion respects a reduced-motion preference', async ({ page }) =>
   await routeApi(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(page.locator('.ae-cuisine').first()).toBeVisible();
+  await expect(page.locator('.ae-department-tile').first()).toBeVisible();
   const motion = await page.evaluate(() => ({
     enabled: document.documentElement.classList.contains('ae-motion-enabled'),
-    photoTransition: getComputedStyle(document.querySelector('.ae-cuisine-photo img')).transitionDuration,
+    photoTransition: getComputedStyle(document.querySelector('.ae-department-art img')).transitionDuration,
     linkTransition: getComputedStyle(document.querySelector('.ae-browse-link')).transitionDuration
   }));
   expect(motion.enabled).toBe(false);
