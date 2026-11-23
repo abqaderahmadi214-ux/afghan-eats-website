@@ -77,13 +77,32 @@
   }
 
   function etaText(restaurant) {
-    const min = Number(restaurant?.delivery_time_min);
-    const max = Number(restaurant?.delivery_time_max);
-    if (Number.isFinite(min)) {
-      const end = Number.isFinite(max) ? max : min + 15;
-      return isFa() ? `${min}–${end} دقیقه` : `${min}–${end} min`;
+    const quote = restaurant?._deliveryQuote;
+    const pickup = localStorage.getItem('ae_mode') === 'pickup';
+    const quoteMatchesMode = pickup
+      ? quote?.fulfillment === 'pickup' || quote?.source === 'pickup'
+      : Boolean(quote) && quote.fulfillment !== 'pickup' && quote.source !== 'pickup';
+    const pickupMin = quoteMatchesMode && pickup ? quote?.pickupEtaMin ?? quote?.collectionEtaMin : null;
+    const pickupMax = quoteMatchesMode && pickup ? quote?.pickupEtaMax ?? quote?.collectionEtaMax : null;
+    const etaMin = pickup ? pickupMin : quoteMatchesMode ? quote?.etaMin : null;
+    const etaMax = pickup ? pickupMax : quoteMatchesMode ? quote?.etaMax : null;
+    const min = Number(etaMin);
+    const max = Number(etaMax);
+    const hasEta = etaMin != null && etaMin !== '' && Number.isFinite(min);
+    const eta = hasEta ? (Number.isFinite(max) ? `${min}–${max}` : `${min}`) : '';
+    const parts = [];
+    if (hasEta) parts.push(pickup
+      ? (isFa() ? `زمان دریافت ${eta} دقیقه` : `Pickup ${eta} min`)
+      : (isFa() ? `ارسال ${eta} دقیقه` : `Delivery ${eta} min`));
+    else parts.push(pickup
+      ? (isFa() ? 'زمان دریافت تأیید نشده' : 'Pickup timing not confirmed')
+      : (isFa() ? 'زمان و هزینه پس از تأیید آدرس' : 'Time and fee need address confirmation'));
+    if (!pickup && quoteMatchesMode) {
+      if (quote.deliveryFee == null) parts.push(isFa() ? 'هزینه پس از تأیید آدرس' : 'Fee after address confirmation');
+      else if (Number(quote.deliveryFee) === 0) parts.push(isFa() ? 'ارسال رایگان' : 'Free delivery');
+      else parts.push(isFa() ? `هزینه ارسال: ${quote.deliveryFee} افغانی` : `Fee: AFN ${quote.deliveryFee}`);
     }
-    return isFa() ? 'زمان در حال تأیید' : 'ETA confirming';
+    return parts.join(' · ');
   }
 
   function setStatus(en, fa, state = 'ready') {
@@ -375,18 +394,19 @@
     button.addEventListener('click', () => setView(button.dataset.restaurantView || 'list'));
   });
 
-  const observer = new MutationObserver(() => {
-    if (document.body.classList.contains('restaurant-map-mode')) syncMap();
-  });
+  let mapSyncTimer = null;
+  function scheduleMapSync() {
+    clearTimeout(mapSyncTimer);
+    mapSyncTimer = setTimeout(() => {
+      if (document.body.classList.contains('restaurant-map-mode')) syncMap();
+    }, 80);
+  }
+
+  const observer = new MutationObserver(scheduleMapSync);
   observer.observe(listGrid, { childList: true, subtree: true });
 
-  window.addEventListener('ae:restaurantsrefreshed', () => {
-    if (document.body.classList.contains('restaurant-map-mode')) syncMap();
-  });
-
-  document.addEventListener('ae:languagechange', () => {
-    if (document.body.classList.contains('restaurant-map-mode')) syncMap();
-  });
+  window.addEventListener('ae:restaurantsrefreshed', scheduleMapSync);
+  document.addEventListener('ae:languagechange', scheduleMapSync);
 
   loadCatalog();
 })();

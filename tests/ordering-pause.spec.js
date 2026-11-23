@@ -21,7 +21,7 @@ test('ordering pause is clear across customer paths without hiding restaurant re
 
   await page.goto('/');
   await expect(page.locator('#aePlatformStatus')).toContainText('New ordering is temporarily paused');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Restaurant listings are for discovery only');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
   await expect(page.locator('#aeOrderingPauseContext a[href="/partner"]')).toBeVisible();
   await expect(page.locator('.ae-platform-partner-link[href="/partner"]')).toBeVisible();
   await expect(page.locator('.ae-order-box .mode-tabs button').first()).toBeDisabled();
@@ -32,24 +32,30 @@ test('ordering pause is clear across customer paths without hiding restaurant re
   await expect(page.locator('.ae-join-restaurant[href="/partner"]')).toBeVisible();
 
   await page.goto('/restaurants');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
-  await expect(page.locator('.restaurants-page .mode-tabs button').first()).toBeDisabled();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
+  await expect(page.locator('#aePlatformStatus')).toBeHidden();
+  await expect(page.locator('.restaurants-page .mode-tabs button[data-mode="delivery"]')).toBeEnabled();
+  await expect(page.locator('.restaurants-page .mode-tabs button[data-mode="pickup"]')).toBeEnabled();
+  await page.locator('.restaurants-page .mode-tabs button[data-mode="pickup"]').click();
+  await expect(page.locator('.restaurants-page .mode-tabs button[data-mode="pickup"]')).toHaveClass(/active/);
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
 
   await page.goto('/discover');
   await expect(page.locator('.discovery-intro > .btn-primary')).toHaveText('Browse Afghan Eats restaurant listings');
   await expect(page.locator('#aeOrderingPauseContext a[href="/partner"]')).toBeVisible();
 
   await page.goto('/orders');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
   await expect(page.locator('.orders-head > a .en-copy')).toHaveText('Browse restaurants');
   await expect(page.locator('#ordersMembership .orders-member-card.guest b')).toHaveText('Guest orders');
 
   await page.goto('/account');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
   await expect(page.locator('.account-container')).toContainText('Track guest orders here or in your account');
 
   await page.goto('/checkout');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
   await expect(page.locator('#aeOrderingPauseNote')).toBeVisible();
   await expect(page.locator('.checkout-place-order')).toBeDisabled();
 

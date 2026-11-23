@@ -2,8 +2,12 @@
   'use strict';
 
   const CATEGORY_TERMS = {
-    afghan: ['afghan', 'traditional', 'herati', 'افغانی', 'سنتی', 'هراتی'],
-    kebab: ['kebab', 'kabob', 'کباب'],
+    afghan: ['afghan', 'traditional', 'herati', 'qabuli', 'qabili', 'kabuli', 'biryani', 'afghan rice', 'افغانی', 'سنتی', 'هراتی', 'قابلی', 'کابلی', 'بریانی', 'پلو'],
+    'rice-dishes': ['qabili', 'qabuli', 'kabuli', 'biryani', 'rice', 'pulao', 'pilaf', 'قابلی', 'کابلی', 'بریانی', 'برنج', 'پلو'],
+    kebab: ['kebab', 'kabob', 'koobideh', 'doner', 'grilled meat', 'کباب', 'کوبیده', 'دونر'],
+    pizza: ['pizza', 'پیتزا'],
+    burgers: ['burger', 'hamburger', 'cheeseburger', 'برگر'],
+    desserts: ['dessert', 'sweets', 'fruit', 'vanilla', 'ice cream', 'bakery', 'دسر', 'شیرینی', 'میوه', 'وانیل', 'بستنی'],
     iftar: ['iftar', 'ramadan', 'افطار', 'رمضان'],
     'family-platter': ['family platter', 'family', 'platter', 'خانوادگی', 'سینی', 'پلاتر'],
     catering: ['catering', 'event', 'events', 'کترینگ', 'محفل', 'مهمانی'],
@@ -12,6 +16,7 @@
 
   let timer = null;
   let requestController = null;
+  let requestSequence = 0;
 
   function esc(value) {
     return String(value ?? '')
@@ -51,9 +56,9 @@
     return `<a class="smart-card dish-result-card" href="/restaurant.html?id=${encodeURIComponent(dish.restaurantId)}">
       ${media}
       <div class="smart-card-content">
-        <div class="smart-card-title"><h3>${esc(name)}</h3><b dir="ltr">${esc(price)}</b></div>
-        <div class="tagline">${esc(restaurantName || (fa ? 'رستورانت هرات' : 'Herat restaurant'))}</div>
-        <span class="smart-reason">🍽️ ${fa ? 'مشاهده در منو' : 'View on menu'}</span>
+        <div class="smart-card-title"><h3 dir="auto">${esc(name)}</h3><b dir="ltr">${esc(price)}</b></div>
+        <div class="tagline" dir="auto">${esc(restaurantName || (fa ? 'رستورانت هرات' : 'Herat restaurant'))}</div>
+        <span class="smart-reason">${fa ? 'مشاهده در منو' : 'View on menu'}</span>
       </div>
     </a>`;
   }
@@ -61,13 +66,20 @@
   function renderDishResults(items, query) {
     const host = document.getElementById('dishResults');
     if (!host) return;
-    const dishes = (Array.isArray(items) ? items : []).map(normalizeDish).filter((dish) => dish.name && dish.restaurantId).slice(0, 12);
-    if (!query || !dishes.length) {
+    host.setAttribute('aria-live', 'polite');
+    host.setAttribute('aria-busy', 'false');
+    const dishes = (Array.isArray(items) ? items : []).map(normalizeDish).filter(dish => dish.name && dish.restaurantId).slice(0, 12);
+    if (!query) {
       host.innerHTML = '';
       host.hidden = true;
       return;
     }
     host.hidden = false;
+    if (!dishes.length) {
+      const message = currentLanguage() === 'fa' ? 'غذای مطابق پیدا نشد؛ جستجوی دیگری را امتحان کنید.' : 'No matching dishes. Try another search.';
+      host.innerHTML = `<p class="dish-search-empty" role="status">${esc(message)}</p>`;
+      return;
+    }
     host.innerHTML = dishes.map(dishResultMarkup).join('');
   }
 
@@ -93,26 +105,13 @@
     return results;
   }
 
-  function filterExistingCards(query) {
-    const needle = String(query || '').trim().toLowerCase();
-    const cards = [...document.querySelectorAll('#restaurantGrid .restaurant-card[data-name][data-cuisine]')];
-    if (!cards.length || !needle) return;
-    const directMatches = cards.filter((card) => `${card.dataset.name || ''} ${card.dataset.cuisine || ''}`.toLowerCase().includes(needle));
-    if (!directMatches.length) return;
-    cards.forEach((card) => {
-      card.hidden = !directMatches.includes(card);
-    });
-  }
-
-  async function fetchDishResults(query) {
+  async function fetchDishResults(query, signal) {
     const base = String(window.AFGHAN_EATS_CONFIG?.apiBaseUrl || '').replace(/\/$/, '');
     if (!base) throw new Error('Dish API is not configured');
 
-    requestController?.abort();
-    requestController = new AbortController();
     const response = await fetch(`${base}/api/dishes?q=${encodeURIComponent(query)}`, {
       headers: { Accept: 'application/json' },
-      signal: requestController.signal
+      signal
     });
     if (!response.ok) throw new Error(`Dish search unavailable (${response.status})`);
     const data = await response.json();
@@ -126,23 +125,33 @@
   async function runSearch() {
     const input = document.getElementById('search');
     const query = String(input?.value || '').trim();
+    const requestId = ++requestSequence;
+    requestController?.abort();
+    requestController = null;
 
-    if (typeof window.advancedRestaurantSearch === 'function') {
-      window.advancedRestaurantSearch();
-    }
-
+    if (typeof window.advancedRestaurantSearch === 'function') window.advancedRestaurantSearch();
     if (query.length < 2) {
       renderDishResults([], '');
       return;
     }
 
+    const controller = new AbortController();
+    requestController = controller;
+    const host = document.getElementById('dishResults');
+    if (host) {
+      host.hidden = false;
+      host.setAttribute('aria-busy', 'true');
+    }
+
     try {
-      const results = await fetchDishResults(query);
+      const results = await fetchDishResults(query, controller.signal);
+      if (requestId !== requestSequence || query !== String(input?.value || '').trim()) return;
       renderDishResults(results.length ? results : localDishMatches(query), query);
     } catch (error) {
-      if (error?.name === 'AbortError') return;
-      filterExistingCards(query);
+      if (error?.name === 'AbortError' || requestId !== requestSequence || query !== String(input?.value || '').trim()) return;
       renderDishResults(localDishMatches(query), query);
+    } finally {
+      if (requestId === requestSequence && host) host.setAttribute('aria-busy', 'false');
     }
   }
 
@@ -152,7 +161,7 @@
   }
 
   function setCategory(button) {
-    document.querySelectorAll('[data-dish-category]').forEach((chip) => {
+    document.querySelectorAll('[data-dish-category]').forEach(chip => {
       const active = chip === button;
       chip.classList.toggle('active', active);
       chip.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -170,7 +179,7 @@
     if (initialQuery && !input.value) input.value = initialQuery;
 
     input.addEventListener('input', scheduleSearch);
-    document.querySelectorAll('[data-dish-category]').forEach((chip) => {
+    document.querySelectorAll('[data-dish-category]').forEach(chip => {
       chip.addEventListener('click', () => setCategory(chip));
     });
 

@@ -37,7 +37,7 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await expect(page.locator('.ae-order-box')).toBeHidden();
   await expect(page.locator('.ae-browse-link[href="/restaurants"]')).toBeVisible();
   await expect(page.locator('.ae-org-link[href="/organizations/"]')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Restaurant listings are for discovery only');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
   await expect(page.locator('#homeRestaurants .restaurant-card').first()).toBeVisible();
   await expect(page.locator('.ae-cuisine')).toHaveCount(8);
 
@@ -213,7 +213,7 @@ test('public browse-only restaurant menus stay visible while all ordering paths 
   });
 
   await page.goto(`/restaurant.html?id=${restaurant.id}`);
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
   await expect(page.locator('#menuContent')).toContainText('Kabuli Pulao');
   await expect(page.locator('#menuContent')).toContainText('Menu preview · browse only');
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
