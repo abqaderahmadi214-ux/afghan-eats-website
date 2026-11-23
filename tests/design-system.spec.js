@@ -4,11 +4,18 @@ for(const route of ['/','/restaurants','/checkout','/owner','/rider-portal']){
   await page.route('https://afghaneats-api.onrender.com/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({result:{data:{json:[]}}})}));
   await page.goto(route);
   await expect.poll(()=>page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--ae-action').trim())).toBe('#0d4a3a');
-  const button=page.locator('.btn-primary').first();
+  const button=route==='/'?page.locator('.ae-org-actions .btn-primary'):page.locator('.btn-primary').first();
   await expect(button).toBeAttached();
+  if(route==='/') await expect(button).toBeEnabled();
   await expect.poll(()=>button.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(13, 74, 58)');
   const size=await button.boundingBox();
   if(size) expect(size.height).toBeGreaterThanOrEqual(40);
+  if(route==='/') {
+   await expect(page.locator('.ae-order-box .mode-tabs button')).toHaveCount(2);
+   for(const control of await page.locator('.ae-order-box .mode-tabs button').all()) await expect(control).toBeDisabled();
+   await expect(page.locator('#deliveryAddress')).toBeDisabled();
+   await expect(page.locator('.ae-order-box .address-box button[type="submit"]')).toBeDisabled();
+  }
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  });
 }

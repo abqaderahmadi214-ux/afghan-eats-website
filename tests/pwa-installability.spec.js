@@ -120,7 +120,8 @@ test('the homepage places one accessible iPhone QR in the mobile-apps section an
   await expect(page.locator('img[src="/assets/qr/afghan-eats-homepage.png"]')).toHaveCount(1);
   const imageResponse = await request.get('/assets/qr/afghan-eats-homepage.png');
   expect(imageResponse.status()).toBe(200);
-  expect(await qr.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+  await qr.scrollIntoViewIfNeeded();
+  await expect.poll(() => qr.evaluate(image => image.naturalWidth)).toBe(666);
 
   const androidSlot = section.locator('#aeAndroidAppSlot');
   await expect(androidSlot).toBeVisible();

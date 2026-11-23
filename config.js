@@ -44,7 +44,21 @@ function aeRoutePath() { const path = location.pathname.toLowerCase().replace(/\
 (function loadPersonalizedHome(){const path=aeRoutePath(),enabled=path==='/'||path.endsWith('/index.html');if(!enabled)return;const script=document.createElement('script');script.src='/assets/personalization.js?v=20260905-2';script.async=true;script.dataset.aePersonalizationModule='1';document.head.appendChild(script)})();
 (function loadSupportResolution(){const path=aeRoutePath(),enabled=path.endsWith('/help.html')||path.endsWith('/account.html')||path.endsWith('/operations.html')||path==='/help'||path==='/account'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/support-resolution.js';script.async=true;script.dataset.aeSupportResolution='1';document.head.appendChild(script)})();
 (function prepareGrowthLayout(){document.addEventListener('DOMContentLoaded',()=>document.querySelector('.container.menu-layout')?.classList.add('restaurant-layout'))})();
-(function loadMerchantGrowth(){const path=aeRoutePath(),enabled=path==='/'||path.endsWith('/index.html')||path.endsWith('/restaurants.html')||path.endsWith('/restaurant.html')||path.endsWith('/checkout.html')||path.endsWith('/owner.html')||path.endsWith('/operations.html')||path==='/restaurants'||path==='/restaurant'||path==='/checkout'||path==='/owner'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/growth.js';script.async=true;script.dataset.aeGrowthModule='1';document.head.appendChild(script)})();
+(function loadMerchantGrowth() {
+  const path = aeRoutePath();
+  const enabled = path === '/' || path.endsWith('/index.html') || path.endsWith('/restaurants.html') || path.endsWith('/restaurant.html') || path.endsWith('/checkout.html') || path.endsWith('/owner.html') || path.endsWith('/operations.html') || path === '/restaurants' || path === '/restaurant' || path === '/checkout' || path === '/owner' || path === '/operations';
+  if (!enabled) return;
+  const load = () => {
+    if (document.querySelector('script[src*="/assets/growth.js"]')) return;
+    const script = document.createElement('script');
+    script.src = '/assets/growth.js';
+    script.async = true;
+    script.dataset.aeGrowthModule = '1';
+    document.head.appendChild(script);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });
+  else load();
+})();
 (function loadMerchantFinanceV30(){const path=aeRoutePath(),enabled=path.endsWith('/owner.html')||path.endsWith('/operations.html')||path==='/owner'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/merchant-finance-v30.js';script.async=true;script.dataset.aeMerchantFinanceV30='1';document.head.appendChild(script)})();
 (function loadCompensationV31(){const path=aeRoutePath(),enabled=path.endsWith('/help.html')||path.endsWith('/account.html')||path.endsWith('/checkout.html')||path.endsWith('/operations.html')||path==='/help'||path==='/account'||path==='/checkout'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/compensation.js';script.async=true;script.dataset.aeCompensationV31='1';document.head.appendChild(script)})();
 (function loadFoodSafetyV32(){const path=aeRoutePath(),enabled=path.endsWith('/restaurant.html')||path.endsWith('/checkout.html')||path.endsWith('/account.html')||path.endsWith('/owner.html')||path.endsWith('/operations.html')||path==='/restaurant'||path==='/checkout'||path==='/account'||path==='/owner'||path==='/operations';if(!enabled)return;const script=document.createElement('script');script.src='/assets/food-safety.js';script.async=true;script.dataset.aeFoodSafetyV32='1';document.head.appendChild(script)})();

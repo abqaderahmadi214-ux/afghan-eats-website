@@ -32,6 +32,8 @@
   ]);
   let browsePreviewRows = [];
   let liveRestaurantRows = [];
+  let liveRestaurantPromise = null;
+  let browsePreviewPromise = null;
 
   function previewCounts(rows) {
     return new Map((Array.isArray(rows) ? rows : [])
@@ -106,11 +108,13 @@
     restaurantDataPromise = (async () => {
       const loaded = await Promise.all([loadRestaurantSeeds(), loadRestaurantResearch()]);
       restaurantFallbackEntries = loaded[0];
-      const livePromise = trpcQuery('restaurants.list', {}).catch((error) => {
+      liveRestaurantPromise = trpcQuery('restaurants.list', {}).catch((error) => {
         console.warn('Live restaurant API unavailable', error);
         return [];
       });
-      const previewsPromise = fetchBrowsePreviewRows();
+      browsePreviewPromise = fetchBrowsePreviewRows();
+      const livePromise = liveRestaurantPromise;
+      const previewsPromise = browsePreviewPromise;
       const [live, previews] = await Promise.all([
         Promise.race([livePromise, new Promise((resolve) => setTimeout(() => resolve([]), 1800))]),
         Promise.race([previewsPromise, new Promise((resolve) => setTimeout(() => resolve([]), 1800))]),
@@ -244,6 +248,18 @@
   const originalInitRestaurantPage = initRestaurantPage;
   initRestaurantPage = async function initRestaurantPageWithBrowseNotice(...args) {
     await loadData();
+    const requestedId = new URLSearchParams(location.search).get('id');
+    const hasFallbackMatch = requestedId && fallbackRestaurants(restaurantFallbackEntries)
+      .some((restaurant) => matchesRestaurantRoute(restaurant, requestedId));
+    if (hasFallbackMatch && !restaurants.some((restaurant) => matchesRestaurantRoute(restaurant, requestedId))) {
+      const [liveRows, previewRows] = await Promise.all([
+        liveRestaurantPromise || Promise.resolve([]),
+        browsePreviewPromise || Promise.resolve([]),
+      ]);
+      if (Array.isArray(liveRows) && liveRows.length) liveRestaurantRows = liveRows;
+      if (Array.isArray(previewRows) && previewRows.length) browsePreviewRows = previewRows;
+      rebuildRestaurantRows(restaurantFallbackEntries);
+    }
     const unfilteredRows = restaurants;
     const liveIds = new Set(liveRestaurantRows.map((restaurant) => String(restaurant?.id || '')));
     restaurants = restaurants.filter((restaurant) => !isHiddenListing(restaurant)
