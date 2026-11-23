@@ -6,7 +6,7 @@
 
 | Screen element | Source / behavior | Display rule in this review |
 |---|---|---|
-| Department strip | Static markup in `restaurants.html`; does not read category inventory | Restaurants links to the existing restaurant listing and is the only active browsing department. Groceries, Health & Beauty, Alcohol, Convenience, Gifts, Electronics, and Pet Supplies are disabled controls labeled “Coming soon” / “به‌زودی”. No non-restaurant catalogue, inventory, or order flow is connected. This row does not claim stock, delivery coverage, or order availability. Site-wide ordering remains paused. |
+| Department strip | Static markup in `restaurants.html`; does not read category inventory | Restaurants links to the existing restaurant listing and is the only active browsing department. Groceries, Health & Beauty, Convenience, Gifts, Electronics, and Pet Supplies are top-level disabled controls labeled “Coming soon” / “به‌زودی”, with local category photos. Restaurant cuisines remain a separate filter. No non-restaurant catalogue, inventory, or order flow is connected. Photos are illustrative and do not claim stock, delivery coverage, or order availability. Site-wide ordering remains paused. |
 
 ## Restaurant cards and listing
 
