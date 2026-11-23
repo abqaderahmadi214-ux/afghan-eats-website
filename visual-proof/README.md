@@ -17,7 +17,7 @@ The submitted address uses the existing read-only `orders.quote` GET contract fo
 
 ## Marketplace departments
 
-The reference-inspired department strip is separate from restaurant cuisine filters. Restaurants is the only active browsing link; Groceries, Health & Beauty, Alcohol, Convenience, Gifts, Electronics, and Pet Supplies are disabled and labeled **Coming soon** (Dari: **به‌زودی**). No non-restaurant inventory, catalogue, or order flow is connected. Ordering remains paused site-wide.
+The reference-inspired department strip is separate from restaurant cuisine filters. Restaurants is the only active browsing link; Groceries, Health & Beauty, Convenience, Gifts, Electronics, and Pet Supplies are top-level disabled sections with real category photos, labeled **Coming soon** (Dari: **به‌زودی**). The photos are illustrative only; no non-restaurant inventory, catalogue, or order flow is connected. Ordering remains paused site-wide.
 
 | Language | Desktop | Mobile |
 |---|---|---|
