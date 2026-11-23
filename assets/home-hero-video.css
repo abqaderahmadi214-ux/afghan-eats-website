@@ -38,6 +38,23 @@
   font-size: 14px;
   line-height: 1;
 }
+.ae-premium #aeHeroJourney {
+  object-fit: contain;
+  background-color: #08231d;
+}
+.ae-premium #aeHeroJourney ~ .ae-hero-accent {
+  display: none;
+}
+.ae-premium #aeHeroJourney ~ figcaption {
+  position: relative;
+  inset: auto;
+  inset-inline-start: auto;
+  inset-inline-end: auto;
+  bottom: auto;
+  z-index: 2;
+  max-width: calc(100% - 20px);
+  margin: 10px 10px 0;
+}
 @media (max-width: 760px) {
   .ae-premium .ae-video-toggle {
     inset-block-start: 12px;

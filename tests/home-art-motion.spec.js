@@ -18,7 +18,11 @@ test('sample app-screen hero video and category artwork load without attributing
   await expect(hero).toHaveAttribute('loop', '');
   await expect(hero).toHaveAttribute('playsinline', '');
   await expect(hero.locator('source')).toHaveAttribute('src', '/assets/video/afghan-eats-hero-journey.mp4?v=app-preview-20261123');
-  await expect(page.locator('.ae-hero-accent')).toContainText('APP SCREEN PREVIEW');
+  await expect(hero).toHaveCSS('object-fit', 'contain');
+  await expect(page.locator('.ae-hero-accent')).toBeHidden();
+  const videoBox = await hero.boundingBox();
+  const captionBox = await page.locator('.ae-hero-visual figcaption').boundingBox();
+  expect(captionBox.y).toBeGreaterThanOrEqual(videoBox.y + videoBox.height);
   await expect(page.locator('.ae-hero-visual figcaption')).toContainText(/simulated cash-only checkout/i);
   await expect(page.locator('.ae-hero-visual figcaption')).toContainText(/new orders remain paused/i);
   await expect(page.locator('.ae-hero-visual figcaption strong .fa-copy')).toContainText('ثبت سفارش جدید متوقف است');
@@ -50,6 +54,9 @@ test('mobile hero imagery is visible early and motion stops when reduced motion 
   const box = await hero.boundingBox();
   expect(box.y).toBeLessThan(350);
   expect(box.height).toBeGreaterThan(160);
+  await expect(hero).toHaveCSS('object-fit', 'contain');
+  const captionBox = await page.locator('.ae-hero-visual figcaption').boundingBox();
+  expect(captionBox.y).toBeGreaterThanOrEqual(box.y + box.height);
   await expect(hero).toHaveJSProperty('paused', true);
   await expect(page.locator('[data-hero-video-toggle]')).toHaveAccessibleName('Play sample app preview');
   await expect(page.locator('.ae-browse-link')).toBeVisible();
