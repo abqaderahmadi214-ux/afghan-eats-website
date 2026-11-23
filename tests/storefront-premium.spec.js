@@ -63,9 +63,9 @@ test('homepage browse tiles and links have tactile hover feedback that respects 
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
 
-  const cuisine = page.locator('.ae-cuisine').first();
-  const photo = cuisine.locator('.ae-cuisine-photo');
-  await cuisine.hover();
+  const department = page.locator('.ae-department-tile').first();
+  const photo = department.locator('.ae-department-art img');
+  await department.hover();
   await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
   const browseLink = page.locator('.ae-browse-link');
   await browseLink.hover();

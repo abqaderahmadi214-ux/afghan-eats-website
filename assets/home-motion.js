@@ -9,16 +9,16 @@
   root.classList.add('ae-motion-enabled');
 
   const revealSelector = [
+    '.ae-home-departments .ae-departments-head',
+    '.ae-home-department-nav .ae-department-tile',
     '.ae-value-item',
-    '.ae-cuisine-section .section-head',
-    '.ae-cuisine',
     '.ae-restaurants .section-head',
     '.ae-restaurants .restaurant-card',
     '.ae-community-head',
     '.ae-join-card'
   ].join(', ');
   const staggerGroups = new WeakMap();
-  const groupSelector = '.ae-value-list, .ae-cuisines, .restaurant-grid, .ae-join-grid';
+  const groupSelector = '.ae-value-list, .ae-department-row, .ae-cuisines, .restaurant-grid, .ae-join-grid';
   const revealObserver = 'IntersectionObserver' in window
     ? new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
