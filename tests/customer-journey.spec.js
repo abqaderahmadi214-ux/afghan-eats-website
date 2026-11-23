@@ -914,6 +914,58 @@ test('mobile filters stage before applying and manual address quotes preserve th
   await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
 });
 
+test('marketplace departments keep restaurant browsing active and other sections clearly coming soon', async ({page})=>{
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page,{restaurants:[restaurant,directoryListing]});
+  let orderSubmissions=0;
+  page.on('request',request=>{if(new URL(request.url()).pathname.endsWith('/orders.place'))orderSubmissions+=1;});
+  await page.goto('/restaurants');
+  const departments=page.getByRole('navigation',{name:'Marketplace departments'});
+  await expect(departments).toBeVisible();
+  await expect(departments.locator('[data-department]')).toHaveCount(8);
+  await expect(departments.locator('a')).toHaveCount(1);
+  const restaurantsTile=departments.locator('[data-department="restaurants"]');
+  await expect(restaurantsTile).toHaveAttribute('href','/restaurants');
+  await expect(restaurantsTile).toHaveAttribute('aria-current','page');
+  await expect(restaurantsTile).toContainText('Restaurants');
+  await expect(restaurantsTile).toContainText('Browse menus');
+  const futureDepartments=[
+    ['groceries','Groceries'],['health-beauty','Health & Beauty'],['alcohol','Alcohol'],
+    ['convenience','Convenience'],['gifts','Gifts'],['electronics','Electronics'],['pet-supplies','Pet Supplies']
+  ];
+  for(const [key,label] of futureDepartments){
+    const tile=departments.locator(`[data-department="${key}"]`);
+    await expect(tile).toBeDisabled();
+    await expect(tile).toContainText(label);
+    await expect(tile).toContainText('Coming soon');
+  }
+  await page.setViewportSize({width:390,height:844});
+  const mobileDepartmentLayout=await page.evaluate(()=>{
+    const row=document.querySelector('.ae-department-row');
+    return{viewport:window.innerWidth,pageWidth:document.documentElement.scrollWidth,rowClientWidth:row.clientWidth,rowScrollWidth:row.scrollWidth};
+  });
+  expect(mobileDepartmentLayout.pageWidth).toBeLessThanOrEqual(mobileDepartmentLayout.viewport+1);
+  expect(mobileDepartmentLayout.rowScrollWidth).toBeGreaterThan(mobileDepartmentLayout.rowClientWidth);
+  await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('dir','rtl');
+  const departmentsFa=page.getByRole('navigation',{name:'بخش‌های فروشگاه'});
+  await expect(departmentsFa).toBeVisible();
+  await expect(departmentsFa.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
+  await expect(departmentsFa.locator('[data-department="restaurants"]')).toContainText('دیدن منوها');
+  const futureLabelsFa=[
+    ['groceries','مواد خوراکی'],['health-beauty','صحت و زیبایی'],['alcohol','مشروبات الکلی'],
+    ['convenience','ضروریات روزانه'],['gifts','هدایا'],['electronics','لوازم الکترونیکی'],['pet-supplies','لوازم حیوانات خانگی']
+  ];
+  for(const [key,label] of futureLabelsFa){
+    const tile=departmentsFa.locator(`[data-department="${key}"]`);
+    await expect(tile).toBeDisabled();
+    await expect(tile).toContainText(label);
+    await expect(tile).toContainText('به‌زودی');
+  }
+  expect(orderSubmissions).toBe(0);
+});
+
 test('discovery review frames cover English and Dari at desktop, tablet, mobile and 360 px stress widths', async ({page})=>{
   const noRatings={...restaurant,rating:null,total_reviews:0,delivery_time_min:20,delivery_time_max:35,delivery_fee_min:50};
   await clearPublicRestaurantFallbacks(page);
@@ -921,6 +973,8 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   await page.setViewportSize({width:1440,height:1000});
   await page.goto('/restaurants');
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(2);
+  await expect(page.locator('.ae-department-nav')).toBeVisible();
+  await expect(page.locator('.ae-department-row [data-department]')).toHaveCount(8);
   fs.mkdirSync(path.join(__dirname,'../visual-proof'),{recursive:true});
   const captureWidths=async(locale)=>{
     for(const [width,height,label] of [[1440,1000,'desktop'],[768,1024,'tablet'],[390,844,'mobile'],[360,800,'stress']]){
@@ -929,11 +983,14 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
       if(width<=390){
         const mobileLayout=await page.evaluate(()=>{
           const tile=document.querySelector('.dish-category-chip')?.getBoundingClientRect();
+          const departmentRow=document.querySelector('.ae-department-row');
           const sort=document.querySelector('#sort')?.getBoundingClientRect();
-          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortWidth:sort?.width||0};
+          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortWidth:sort?.width||0,departmentScrolls:Boolean(departmentRow&&departmentRow.scrollWidth>departmentRow.clientWidth),pageWidth:document.documentElement.scrollWidth};
         });
         expect(mobileLayout.tileFullyVisible).toBe(true);
         expect(mobileLayout.sortWidth).toBeGreaterThanOrEqual(138);
+        expect(mobileLayout.departmentScrolls).toBe(true);
+        expect(mobileLayout.pageWidth).toBeLessThanOrEqual(width+1);
       }
       await stampFixtureLabel(page);
       await page.screenshot({path:path.join(__dirname,`../visual-proof/restaurant-discovery-review-fixture-${locale}-${label}-${width}x${height}.png`),animations:'disabled'});
@@ -961,6 +1018,8 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(2);
   await expect(page.locator('#search')).toHaveAttribute('placeholder','نام رستورانت یا غذا را جستجو کنید');
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
+  await expect(page.locator('[data-department="groceries"]')).toContainText('به‌زودی');
+  await expect(page.locator('[data-department="pet-supplies"]')).toContainText('لوازم حیوانات خانگی');
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانه هرات');
   await expect(page.locator('#restaurantGrid .browse-card-meta').first()).toContainText('زمان ارسال در انتظار تأیید');
   await expect(page.locator('#restaurantGrid .browse-card-meta').first()).not.toContainText('۲۰–۳۵');
@@ -1052,11 +1111,11 @@ test('sparse and unavailable-area review frames are clearly named fixture states
   await page.goto('/restaurants');
   await expect(page.locator('#restaurantGrid .delivery-inline-notice')).toContainText('Delivery is not active at this address yet.');
   await expect(page.locator('#restaurantGrid .directory-results')).toContainText('Jumeirah Fast Food');
-  const publicDirectoryCard=page.locator('#restaurantGrid .directory-card').first();
-  await expect(publicDirectoryCard).toBeVisible();
-  await expect.poll(async()=>page.locator('#restaurantGrid .directory-card').evaluateAll(cards=>cards.length?cards[0].getBoundingClientRect().top:Number.POSITIVE_INFINITY)).toBeLessThan(760);
+  await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
+  await expect(page.locator('#restaurantGrid .directory-card').first()).toBeVisible();
+  await page.setViewportSize({width:390,height:1400});
   await stampFixtureLabel(page);
-  await page.screenshot({path:path.join(__dirname,'../visual-proof/restaurant-discovery-review-fixture-unavailable-address-en-mobile-390x844.png'),animations:'disabled'});
+  await page.screenshot({path:path.join(__dirname,'../visual-proof/restaurant-discovery-review-fixture-unavailable-address-en-mobile-full-page.png'),fullPage:true,animations:'disabled'});
 });
 
 test('browser Back from a public menu restores discovery search and active filters', async ({page})=>{

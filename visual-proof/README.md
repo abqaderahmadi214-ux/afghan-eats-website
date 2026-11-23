@@ -15,11 +15,20 @@ The dialog is shown with an example address entered but not submitted. These fra
 
 The submitted address uses the existing read-only `orders.quote` GET contract for eligible restaurants in the currently loaded list. Its request contains only `restaurantId`, `fulfillment`, `deliveryArea`, and `deliveryAddress`; basket data and order submission are not involved. The [dynamic-field map](restaurant-discovery-data-field-map.md) documents the flow and its quote/error display rules.
 
+## Marketplace departments
+
+The reference-inspired department strip is separate from restaurant cuisine filters. Restaurants is the only active browsing link; Groceries, Health & Beauty, Alcohol, Convenience, Gifts, Electronics, and Pet Supplies are disabled and labeled **Coming soon** (Dari: **به‌زودی**). No non-restaurant inventory, catalogue, or order flow is connected. Ordering remains paused site-wide.
+
+| Language | Desktop | Mobile |
+|---|---|---|
+| English | [1440 × 1000](restaurant-discovery-review-fixture-en-desktop-1440x1000.png) | [390 × 844](restaurant-discovery-review-fixture-en-mobile-390x844.png) |
+| Dari (RTL) | — | [390 × 844](restaurant-discovery-review-fixture-fa-mobile-390x844.png) |
+
 ## Restaurant-listing layout overview
 
 ![Restaurant discovery contact sheet](restaurant-discovery-contact-sheet.png)
 
-The contact sheet summarizes the base browsing layout. Use the individual frames below for current listing copy and the address-dialog screenshots above for the new interaction.
+The refreshed contact sheet shows the current viewport fixtures in pairs: English on the left and Dari/RTL on the right, with desktop, tablet, mobile, and 360 px stress views from top to bottom. Use the individual frames below for exact viewport sizes.
 
 ## Populated catalogue fixtures
 
@@ -31,12 +40,12 @@ The contact sheet summarizes the base browsing layout. Use the individual frames
 ## Distinct catalogue states
 
 - **Sparse catalogue:** [English desktop, 1440 × 1000](restaurant-discovery-review-fixture-sparse-en-desktop-1440x1000.png), with one restaurant and unsupported rating/delivery values withheld.
-- **Delivery unavailable at the entered address:** [English mobile, 390 × 844](restaurant-discovery-review-fixture-unavailable-address-en-mobile-390x844.png). A failed address quote is shown separately from public menu browsing; a public restaurant/menu listing remains visible.
+- **Delivery unavailable at the entered address:** [English mobile, full page at 390 px width](restaurant-discovery-review-fixture-unavailable-address-en-mobile-full-page.png). A failed address quote is shown separately from public menu browsing; a public restaurant/menu listing remains visible.
 
 ## Data and regression notes
 
 - [Dynamic-field mapping](restaurant-discovery-data-field-map.md) explains which catalogue, quote, and verified-location fields are allowed to appear.
-- [Customer journey regression tests](../tests/customer-journey.spec.js) include exact quote-contract checks, stale/in-flight quote invalidation, bilingual viewport checks, mobile overflow checks, and the named fixture captures.
+- [Customer journey regression tests](../tests/customer-journey.spec.js) include exact quote-contract checks, stale/in-flight quote invalidation, department availability state, bilingual viewport checks, mobile overflow checks, and the named fixture captures.
 - [Ordering-pause regression tests](../tests/ordering-pause.spec.js) preserve the paused-ordering / public-menu-browsing distinction.
 - The organization page was not changed: Herat service area, `support@afghaneats.net`, replies within three business days, and the multi-location caveat remain intact.
 

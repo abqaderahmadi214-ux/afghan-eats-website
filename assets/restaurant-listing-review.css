@@ -49,6 +49,31 @@ html[dir="rtl"] .restaurants-page .restaurant-page-head h1 { letter-spacing: 0; 
 }
 html[dir="rtl"] .restaurant-page-kicker { letter-spacing: 0; text-transform: none; }
 
+.ae-department-nav { margin: 0 0 13px; padding: 10px 0 12px; border-bottom: 1px solid var(--ae-discovery-line); }
+.ae-department-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin: 0 0 8px; }
+.ae-department-heading h2 { margin: 0 0 3px; color: var(--ae-discovery-ink); font-size: 1.04rem; font-weight: 850; }
+.ae-department-heading p { margin: 0; color: var(--ae-discovery-muted); font-size: .76rem; line-height: 1.45; }
+.ae-department-row { display: flex; align-items: stretch; gap: 8px; min-width: 0; overflow-x: auto; overscroll-behavior-inline: contain; padding: 2px 2px 7px; scroll-padding-inline: 2px; scroll-snap-type: x proximity; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+.ae-department-tile { display: grid; flex: 1 0 108px; grid-template-rows: 60px auto auto; align-content: start; justify-items: center; gap: 6px; min-width: 108px; max-width: 148px; min-height: 128px; padding: 7px 6px 8px; border: 1px solid transparent; border-radius: 15px; background: transparent; color: #344b3e; font: inherit; text-align: center; text-decoration: none; scroll-snap-align: start; }
+.ae-department-tile.is-active { border-color: #2e7b57; background: #fff; box-shadow: 0 0 0 2px rgba(46,123,87,.11); }
+.ae-department-tile[href]:hover { border-color: #b9d4c0; background: #fff; }
+.ae-department-tile:focus-visible { outline: 3px solid #a96b10; outline-offset: 2px; }
+.ae-department-tile:disabled { cursor: not-allowed; opacity: 1; color: #66766c; }
+.ae-department-art { display: grid; width: 72px; height: 60px; place-items: center; overflow: hidden; border-radius: 14px; background: linear-gradient(145deg,#fff3e7,#f4ddd0); }
+.ae-department-icon { display: block; width: 52px; height: 49px; }
+.art-groceries { background: linear-gradient(145deg,#eef7ec,#dcebe1); }
+.art-health { background: linear-gradient(145deg,#eff7f2,#dceee5); }
+.art-alcohol { background: linear-gradient(145deg,#fff4d9,#f2e1ad); }
+.art-convenience { background: linear-gradient(145deg,#edf5fa,#dce9f0); }
+.art-gifts { background: linear-gradient(145deg,#fff0ee,#f4d9d8); }
+.art-electronics { background: linear-gradient(145deg,#eef0fb,#d9def3); }
+.art-pets { background: linear-gradient(145deg,#eff5f6,#dcebed); }
+.ae-department-name { max-width: 100%; color: #30483b; font-size: .75rem; font-weight: 850; line-height: 1.2; }
+.ae-department-tile.is-active .ae-department-name { color: #1e6d4b; }
+.ae-department-status { display: inline-flex; align-items: center; justify-content: center; min-height: 18px; padding: 2px 7px; border-radius: 999px; background: #f3f1eb; color: #756a55; font-size: .61rem; font-weight: 800; line-height: 1.15; white-space: nowrap; }
+.ae-department-status.is-available { background: #e8f3e9; color: #246b48; }
+html[dir="rtl"] .ae-department-heading { text-align: start; }
+
 .ae-skip-link {
   position: fixed;
   z-index: 2000;
@@ -748,6 +773,16 @@ body.restaurants-page #aePlatformStatus .ae-platform-inner { padding-block: 8px;
   .restaurants-page .restaurant-page-head { margin-bottom: 5px; padding-bottom: 6px; }
   .restaurants-page .restaurant-page-head h1 { font-size: 1.55rem; line-height: 1.18; }
   .restaurants-page .restaurant-page-head p { display: none; }
+  .restaurants-page .ae-department-nav { margin-bottom: 8px; padding: 6px 0 8px; }
+  .restaurants-page .ae-department-heading { align-items: flex-start; margin-bottom: 6px; }
+  .restaurants-page .ae-department-heading h2 { margin-bottom: 2px; font-size: .9rem; }
+  .restaurants-page .ae-department-heading p { max-width: 42ch; font-size: .66rem; line-height: 1.35; }
+  .restaurants-page .ae-department-row { gap: 6px; margin-inline: -3px; padding: 2px 3px 6px; scroll-padding-inline: 3px; }
+  .restaurants-page .ae-department-tile { flex: 0 0 96px; grid-template-rows: 53px auto auto; gap: 4px; min-width: 96px; min-height: 116px; padding: 5px 4px 6px; border-radius: 12px; }
+  .restaurants-page .ae-department-art { width: 64px; height: 53px; border-radius: 11px; }
+  .restaurants-page .ae-department-icon { width: 46px; height: 44px; }
+  .restaurants-page .ae-department-name { font-size: .67rem; line-height: 1.15; }
+  .restaurants-page .ae-department-status { min-height: 17px; padding: 2px 5px; font-size: .55rem; }
   .restaurants-page .ae-listing-browse-note { margin-bottom: 7px; padding: 7px 9px; }
   .restaurants-page .ae-listing-browse-note { padding-block: 6px; }
   .restaurants-page .ae-listing-browse-note p { font-size: .72rem; line-height: 1.3; }
@@ -787,6 +822,9 @@ body.restaurants-page #aePlatformStatus .ae-platform-inner { padding-block: 8px;
   .restaurants-page .restaurant-toolbar { grid-template-columns: minmax(0,1fr) 140px 90px !important; gap: 4px; }
   .restaurants-page .restaurant-mobile-filter-trigger { font-size: .68rem; }
   .restaurants-page .restaurant-toolbar > .restaurant-view-toggle button { font-size: .66rem; }
+  .restaurants-page .ae-department-row { gap: 5px; }
+  .restaurants-page .ae-department-tile { flex-basis: 89px; min-width: 89px; padding-inline: 3px; }
+  .restaurants-page .ae-department-status { font-size: .52rem; }
   .restaurants-page .dish-category-chip { flex-basis: 70px !important; }
   .restaurants-page .dish-category-image { width: 50px; height: 45px; }
 }

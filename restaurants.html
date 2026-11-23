@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/assets/restaurant-card-stability.css?v=20260905-2">
 <link rel="stylesheet" href="/assets/restaurants-mobile-fix.css?v=20260906-1">
 <link rel="stylesheet" href="/assets/design-2026.css?v=premium-experience-2"><link rel="stylesheet" href="/assets/premium-design-pass.css?v=premium-experience-2"><link rel="stylesheet" href="/assets/storefront.css?v=storefront-1">
-  <link rel="stylesheet" href="/assets/restaurant-listing-review.css?v=20261123-11">
+  <link rel="stylesheet" href="/assets/restaurant-listing-review.css?v=20261123-12">
 </head>
 <body class="ae-premium premium-customer restaurants-page">
   <a class="ae-skip-link" href="#restaurantGrid"><span class="en-copy">Skip to restaurant results</span><span class="fa-copy">رفتن به نتایج رستورانت‌ها</span></a>
@@ -30,6 +30,51 @@
 <div class="actions"><button class="lang" type="button" onclick="toggleLang()" aria-label="Switch language">دری</button><a class="ae-account" href="/account"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg><span data-i18n="account">Account</span></a><a class="btn btn-primary ae-cart" href="/checkout" data-aria-en="Basket" data-aria-fa="سبد خرید" aria-label="Basket"><svg class="ae-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg><span class="ae-cart-label"><span class="en-copy">Basket</span><span class="fa-copy">سبد</span></span><span class="cart-count badge-count">0</span></a></div></div></header>
   <main class="section soft"><div class="container">
     <div class="section-head restaurant-page-head"><div><span class="restaurant-page-kicker"><span class="en-copy">Herat</span><span class="fa-copy">هرات</span></span><h1><span class="en-copy">Find a restaurant</span><span class="fa-copy">رستورانت پیدا کنید</span></h1><p class="en-copy">Search by restaurant, dish or cuisine.</p><p class="fa-copy">بر اساس رستورانت، غذا یا دسته جستجو کنید.</p></div></div>
+    <nav class="ae-department-nav" aria-label="Marketplace departments" data-aria-en="Marketplace departments" data-aria-fa="بخش‌های فروشگاه">
+      <div class="ae-department-heading"><div><h2 id="aeDepartmentHeading"><span class="en-copy">Departments</span><span class="fa-copy">بخش‌ها</span></h2><p><span class="en-copy">Browse restaurant menus here. Other departments are coming soon.</span><span class="fa-copy">منوهای رستورانت‌ها را اینجا ببینید؛ بخش‌های دیگر به‌زودی.</span></p></div></div>
+      <div class="ae-department-row">
+        <a class="ae-department-tile is-active" data-department="restaurants" href="/restaurants" aria-current="page">
+          <span class="ae-department-art art-restaurants" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M22 27c0-7 4.5-12 10-12s10 5 10 12" stroke="#b75c2a" stroke-width="2.6" stroke-linecap="round"/><path d="M14 30h36c0 10-8.1 17-18 17s-18-7-18-17Z" fill="#fff" stroke="#b75c2a" stroke-width="2.6" stroke-linejoin="round"/><path d="M10 50h44M27 11c-3-3 2-5 0-8m8 8c-3-3 2-5 0-8" stroke="#d18a37" stroke-width="2.3" stroke-linecap="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Restaurants</span><span class="fa-copy">رستورانت‌ها</span></strong>
+          <span class="ae-department-status is-available"><span class="en-copy">Browse menus</span><span class="fa-copy">دیدن منوها</span></span>
+        </a>
+        <button class="ae-department-tile is-coming-soon" data-department="groceries" type="button" disabled>
+          <span class="ae-department-art art-groceries" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M18 21h28l-3 29H21l-3-29Z" fill="#fff" stroke="#43805b" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 22c0-7 3-11 8-11s8 4 8 11" stroke="#43805b" stroke-width="2.5"/><path d="m31 42 7-13 4 3-7 12-4 2v-4Z" fill="#e9883e" stroke="#bc5d2d" stroke-width="1.6"/><path d="m35 29 1-6 4 4m-4 2-5-2 4-5" stroke="#4f8c4c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Groceries</span><span class="fa-copy">مواد خوراکی</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="health-beauty" type="button" disabled>
+          <span class="ae-department-art art-health" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M19 19h15v5h3v24H16V24h3v-5Z" fill="#fff" stroke="#45836c" stroke-width="2.4" stroke-linejoin="round"/><path d="M23 13h7v6h-7z" fill="#d9eee0" stroke="#45836c" stroke-width="2.2"/><path d="M25 29v12m-6-6h12" stroke="#d45b59" stroke-width="3" stroke-linecap="round"/><path d="M43 25h8v23h-8z" fill="#f4c7c1" stroke="#bd6a61" stroke-width="2.2"/><path d="M44 20h6v5h-6z" fill="#fff" stroke="#bd6a61" stroke-width="2"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Health &amp; Beauty</span><span class="fa-copy">صحت و زیبایی</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="alcohol" type="button" disabled>
+          <span class="ae-department-art art-alcohol" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M27 9h10v8l4 5v25H23V22l4-5V9Z" fill="#fff" stroke="#92733c" stroke-width="2.5" stroke-linejoin="round"/><path d="M27 14h10m-14 15h18" stroke="#92733c" stroke-width="2.3"/><path d="M26 31h12v10H26z" fill="#e6c774"/><path d="M30 9h4" stroke="#c87643" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Alcohol</span><span class="fa-copy">مشروبات الکلی</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="convenience" type="button" disabled>
+          <span class="ae-department-art art-convenience" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M18 21h28l-3 29H21l-3-29Z" fill="#fff" stroke="#4e7890" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 22c0-7 3-11 8-11s8 4 8 11" stroke="#4e7890" stroke-width="2.5"/><path d="M32 29v13m-6.5-6.5h13" stroke="#e08a42" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Convenience</span><span class="fa-copy">ضروریات روزانه</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="gifts" type="button" disabled>
+          <span class="ae-department-art art-gifts" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M15 27h34v23H15z" fill="#fff" stroke="#ad5f69" stroke-width="2.4"/><path d="M12 21h40v9H12z" fill="#f2b8ae" stroke="#ad5f69" stroke-width="2.4"/><path d="M32 21v29" stroke="#ad5f69" stroke-width="2.4"/><path d="M31 21c-12 1-14-8-8-10 5-1 8 5 9 10Zm2 0c12 1 14-8 8-10-5-1-8 5-9 10Z" fill="#f7db7f" stroke="#ad5f69" stroke-width="2.1" stroke-linejoin="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Gifts</span><span class="fa-copy">هدایا</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="electronics" type="button" disabled>
+          <span class="ae-department-art art-electronics" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><rect x="12" y="11" width="29" height="37" rx="4" fill="#fff" stroke="#5a6c9e" stroke-width="2.5"/><rect x="17" y="16" width="19" height="25" rx="1.5" fill="#cbd7f5"/><circle cx="26.5" cy="44.5" r="1.4" fill="#5a6c9e"/><rect x="39" y="24" width="13" height="24" rx="3" fill="#f5c4a8" stroke="#a76c55" stroke-width="2.3"/><path d="M43 28h5m-3 15h1" stroke="#a76c55" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Electronics</span><span class="fa-copy">لوازم الکترونیکی</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+        <button class="ae-department-tile is-coming-soon" data-department="pet-supplies" type="button" disabled>
+          <span class="ae-department-art art-pets" aria-hidden="true"><svg class="ae-department-icon" viewBox="0 0 64 56" fill="none"><path d="M16 35h32l-4 12H20l-4-12Z" fill="#fff" stroke="#6c7094" stroke-width="2.5" stroke-linejoin="round"/><path d="M19 35c2 5 8 8 13 8s11-3 13-8" fill="#b9d8e1"/><ellipse cx="24" cy="24" rx="3.2" ry="4" fill="#d99a78"/><ellipse cx="31" cy="20" rx="3.2" ry="4" fill="#d99a78"/><ellipse cx="38" cy="24" rx="3.2" ry="4" fill="#d99a78"/><path d="M27 28c0-3 2-5 5-5s5 2 5 5-2 5-5 5-5-2-5-5Z" fill="#d99a78"/></svg></span>
+          <strong class="ae-department-name"><span class="en-copy">Pet Supplies</span><span class="fa-copy">لوازم حیوانات خانگی</span></strong>
+          <span class="ae-department-status"><span class="en-copy">Coming soon</span><span class="fa-copy">به‌زودی</span></span>
+        </button>
+      </div>
+    </nav>
     <p class="discovery-link"><a href="/discover"><span class="en-copy">Explore more Herat restaurants on Google Maps →</span><span class="fa-copy">رستورانت‌های بیشتر هرات در گوگل مپس ←</span></a></p><div class="restaurant-discovery-bar">
       <div class="restaurant-service-row"><div class="mode-tabs"><button data-mode="delivery" onclick="setMode('delivery')" data-i18n="delivery"></button><button data-mode="pickup" onclick="setMode('pickup')" data-i18n="pickup"></button></div><div class="restaurant-view-toggle" role="group" aria-label="Restaurant view"><button type="button" class="active" data-restaurant-view="list" aria-pressed="true"><span class="en-copy">List</span><span class="fa-copy">فهرست</span></button><button type="button" data-restaurant-view="map" aria-pressed="false"><span class="en-copy">Map</span><span class="fa-copy">نقشه</span></button></div><div id="addressSummary" class="address-summary"></div></div>
       <div class="filters restaurant-filter-row"><div class="restaurant-search-wrap"><span aria-hidden="true">⌕</span><input aria-label="Search restaurants or food" data-aria-en="Search restaurants or food" data-aria-fa="جستجوی رستورانت یا غذا" id="search" type="search" data-ph-en="Search restaurants or food" data-ph-fa="جستجوی رستورانت یا غذا" oninput="advancedRestaurantSearch()"></div><select id="sort" aria-label="Sort restaurants" onchange="advancedRestaurantSearch()"><option value="recommended" data-i18n="recommended"></option><option value="rating" data-en="Rating" data-fa="امتیاز">Rating</option><option value="fastest" data-i18n="fastest"></option><option value="fee" data-i18n="fee"></option></select><button class="chip" data-filter="open" onclick="toggleAdvancedFilter(this)" data-i18n="openNow"></button><button class="chip" data-filter="favorites" onclick="toggleAdvancedFilter(this)" data-i18n="favorites"></button></div>

@@ -2,6 +2,12 @@
 
 **Review note:** The screenshot frames use named Playwright fixture data, not the live restaurant catalogue. This mapping describes the review implementation and the fields it is allowed to show. A quote requires a manual address entry; the default location label is not a delivery address or service-coverage check.
 
+## Marketplace departments
+
+| Screen element | Source / behavior | Display rule in this review |
+|---|---|---|
+| Department strip | Static markup in `restaurants.html`; does not read category inventory | Restaurants links to the existing restaurant listing and is the only active browsing department. Groceries, Health & Beauty, Alcohol, Convenience, Gifts, Electronics, and Pet Supplies are disabled controls labeled “Coming soon” / “به‌زودی”. No non-restaurant catalogue, inventory, or order flow is connected. This row does not claim stock, delivery coverage, or order availability. Site-wide ordering remains paused. |
+
 ## Restaurant cards and listing
 
 | Screen element | Source field / origin | Display rule in this review |
