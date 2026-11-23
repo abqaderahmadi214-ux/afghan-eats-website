@@ -8,6 +8,8 @@
 /order /order.html 200
 /account /account.html 200
 /partner /partner.html 200
+/department-partner /department-partner.html 200
+/department-owner /department-owner.html 200
 /claim /claim.html 200
 /rider /rider.html 200
 /help /help.html 200

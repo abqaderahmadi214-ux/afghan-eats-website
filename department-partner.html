@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="same-origin">
+  <title>Retail partner interest | Afghan Eats</title>
+  <link rel="stylesheet" href="/assets/department-retail.css">
+  <script src="/config.js"></script>
+</head>
+<body>
+<header class="dr-header">
+  <a href="/" class="dr-brand" aria-label="Afghan Eats home"><span>AE</span><b>Afghan Eats</b></a>
+  <div class="dr-head-actions"><a href="/owner.html">Restaurant owner portal</a><button type="button" id="dr-language" class="dr-lang" aria-label="Change language">دری</button></div>
+</header>
+<main class="dr-wrap" id="department-partner-app">
+  <section class="dr-hero">
+    <p class="dr-eyebrow">PARTNER WITH AFGHAN EATS · RETAIL DEPARTMENTS</p>
+    <h1 data-en="Build the next chapter of local shopping." data-fa="فصل بعدی خرید محلی را با ما بسازید.">Build the next chapter of local shopping.</h1>
+    <p data-en="A separate onboarding path for Groceries, Health &amp; Beauty, Convenience, Gifts, Electronics and Pet Supplies — never part of Restaurants." data-fa="مسیر جداگانهٔ ثبت‌نام برای مواد خوراکی، صحت و زیبایی، ضروریات روزانه، تحفه‌ها، الکترونیک و لوازم حیوانات خانگی — هرگز بخشی از رستورانت‌ها نیست.">A separate onboarding path for Groceries, Health &amp; Beauty, Convenience, Gifts, Electronics and Pet Supplies — never part of Restaurants.</p>
+    <div class="dr-status"><span class="dr-dot"></span><div><b data-en="Applications are currently closed" data-fa="درخواست‌ها در حال حاضر بسته است">Applications are currently closed</b><small id="gate-summary" role="status">Checking department availability…</small></div></div>
+  </section>
+  <section class="dr-panel">
+    <div class="dr-panel-head"><div><p class="dr-eyebrow">01 · PARTNER APPLICATION</p><h2 data-en="Tell us about your business" data-fa="دربارهٔ کاروبار خود بگویید">Tell us about your business</h2></div><span class="dr-pill" id="application-gate-state">Closed</span></div>
+    <p class="dr-note" id="interest-message" data-en="Applications are closed for all six departments. The form will become available only when the selected department's application gate is explicitly opened." data-fa="درخواست‌ها برای هر شش بخش بسته است. فورم تنها زمانی فعال می‌شود که دروازهٔ درخواست بخش انتخاب‌شده رسماً باز شود.">Applications are closed for all six departments. The form will become available only when the selected department's application gate is explicitly opened.</p>
+    <form id="department-interest-form">
+      <label><span data-en="Department" data-fa="بخش">Department</span><select id="departmentKey" name="departmentKey" required><option value="" data-en="Choose one of six departments" data-fa="یکی از شش بخش را انتخاب کنید">Choose one of six departments</option><option value="groceries">Groceries · مواد خوراکی</option><option value="health-beauty">Health &amp; Beauty · صحت و زیبایی</option><option value="convenience">Convenience · ضروریات روزانه</option><option value="gifts">Gifts · تحفه‌ها</option><option value="electronics">Electronics · الکترونیک</option><option value="pet-supplies">Pet Supplies · لوازم حیوانات خانگی</option></select></label>
+      <fieldset id="application-fields" disabled style="border:0;padding:0;margin:0;min-width:0">
+        <div class="dr-grid">
+          <label><span data-en="Business / store name" data-fa="نام کاروبار / فروشگاه">Business / store name</span><input name="businessName" autocomplete="organization" minlength="2" maxlength="200" required></label>
+          <label><span data-en="Owner’s full name" data-fa="نام کامل مالک">Owner’s full name</span><input name="ownerName" autocomplete="name" minlength="2" maxlength="200" required></label>
+          <label><span data-en="Contact phone" data-fa="شماره تماس">Contact phone</span><input name="phone" type="tel" autocomplete="tel" minlength="9" maxlength="50" required></label>
+          <label><span data-en="Email for verification" data-fa="ایمیل برای تأیید">Email for verification</span><input name="email" type="email" autocomplete="email" maxlength="320" required></label>
+          <label><span data-en="City" data-fa="شهر">City</span><select name="cityKey" required><option value="herat">Herat · هرات</option></select><small class="dr-caption">At this stage, applications are collected for the current Herat service area.</small></label>
+          <label><span data-en="District / area" data-fa="ناحیه / منطقه">District / area</span><input name="district" maxlength="100" required></label>
+          <label><span data-en="Store address" data-fa="آدرس فروشگاه">Store address</span><input name="address" maxlength="900" required></label>
+          <label><span data-en="Fulfillment you can support" data-fa="روش‌های آماده‌سازی سفارش">Fulfillment you can support</span><select name="fulfillment"><option value="delivery">Delivery</option><option value="pickup">Pickup</option><option value="both">Delivery and pickup</option></select></label>
+          <label><span data-en="Operating hours or notes" data-fa="ساعات کاری یا توضیحات">Operating hours or notes</span><input name="hours" maxlength="500"></label>
+        </div>
+        <label><span data-en="Products you carry and other application notes" data-fa="محصولات موجود و توضیحات درخواست">Products you carry and other application notes</span><textarea name="productSummary" rows="3" maxlength="1200"></textarea></label>
+        <label class="dr-check"><input name="understandsPaused" type="checkbox" required><span data-en="I understand this is an application, not a launch approval. Public listings and ordering remain closed until Afghan Eats completes its reviews." data-fa="می‌دانم این فقط درخواست است، نه تأیید راه‌اندازی. فهرست عمومی و سفارش‌دهی تا تکمیل بررسی افغان ایتس بسته می‌ماند.">I understand this is an application, not a launch approval. Public listings and ordering remain closed until Afghan Eats completes its reviews.</span></label>
+        <button id="application-submit" type="submit" class="dr-button" disabled data-en="Applications closed" data-fa="درخواست‌ها بسته است">Applications closed</button>
+      </fieldset>
+      <p id="application-result" class="dr-message" role="status" aria-live="polite" hidden></p>
+    </form>
+  </section>
+  <section class="dr-panel dr-lookup" id="application-status">
+    <div class="dr-panel-head"><div><p class="dr-eyebrow">02 · APPLICATION STATUS</p><h2 data-en="Check an existing application" data-fa="بررسی وضعیت درخواست موجود">Check an existing application</h2></div><span class="dr-pill dr-pill-muted">Reference + email</span></div>
+    <p data-en="Use the reference number shown after submission and the same email address. This secure lookup returns only the applicant-facing status; internal review notes are not shown." data-fa="شماره پیگیری پس از ارسال و همان ایمیل را وارد کنید. این بررسی امن فقط وضعیت قابل‌مشاهده برای متقاضی را نشان می‌دهد؛ یادداشت‌های داخلی نمایش داده نمی‌شود.">Use the reference number shown after submission and the same email address. This secure lookup returns only the applicant-facing status; internal review notes are not shown.</p>
+    <form id="status-lookup-form">
+      <div class="dr-grid"><label><span data-en="Application reference" data-fa="شماره پیگیری درخواست">Application reference</span><input name="reference" autocomplete="off" minlength="8" maxlength="40" required placeholder="AEM-20261124-…"></label><label><span data-en="Email used on application" data-fa="ایمیل استفاده‌شده در درخواست">Email used on application</span><input name="email" type="email" autocomplete="email" maxlength="320" required></label></div>
+      <div class="dr-grid"><button type="submit" class="dr-button dr-button-secondary" data-en="Check status" data-fa="بررسی وضعیت">Check status</button><button id="resend-verification" type="button" class="dr-button dr-button-muted" hidden data-en="Resend verification email" data-fa="ارسال دوبارهٔ ایمیل تأیید">Resend verification email</button></div>
+      <p id="status-result" class="dr-message" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+  <footer class="dr-footer"><a href="/department-owner.html">Department owner portal · invitation only</a><span>Retail departments are separate from Restaurants. Public orders remain paused.</span></footer>
+</main>
+<script src="/assets/department-partner.js"></script>
+</body>
+</html>
