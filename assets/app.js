@@ -247,12 +247,14 @@ async function hydrateDeliveryContext() {
     }
     await Promise.all(Array.from({ length: Math.min(4, queue.length) }, worker));
   })();
+  const activeContextPromise = deliveryContextPromise;
   try {
-    await deliveryContextPromise;
+    await activeContextPromise;
   } finally {
-    deliveryContextPromise = null;
+    if (deliveryContextPromise === activeContextPromise) deliveryContextPromise = null;
   }
 }
+async function refreshDeliveryContext() { deliveryContextPromise = null; return hydrateDeliveryContext(); }
 function renderAddressContext(){const e=$('#addressSummary');if(!e)return;const address=localStorage.getItem('ae_address')?.trim(),modeLabel=t(mode==='pickup'?'pickup':'delivery'),change=lang==='fa'?'تغییر آدرس':'Change address';e.innerHTML=address?`<span><b>${esc(modeLabel)}</b> · 📍 ${esc(address)}</span><button class="btn btn-light" type="button" onclick="localStorage.removeItem('ae_address');clearQuoteCache();location.reload()">${esc(change)}</button>`:`<span><b>${esc(modeLabel)}</b> · 📍 ${esc(t('address'))}</span>`}
 function useCheckoutAddress(button){const form=$('form[onsubmit*="placeOrder"]');if(!form)return;const district=button.dataset.district||'',address=button.dataset.address||'',landmark=button.dataset.landmark||'';if(form.elements.district&&[...form.elements.district.options].some(o=>o.value===district))form.elements.district.value=district;if(form.elements.address)form.elements.address.value=address;if(form.elements.landmark)form.elements.landmark.value=landmark;scheduleCheckoutQuote();form.elements.address?.focus()}
 function renderCheckoutAddressChoices(remote=[]){const host=$('#savedAddressChoices');if(!host)return;const local=safeStoredList('ae_addresses'),seen=new Set(),items=[...(Array.isArray(remote)?remote:[]),...local].filter(x=>{const key=`${x.district}|${x.address}|${x.landmark||''}`.toLowerCase();if(!x.address||seen.has(key))return false;seen.add(key);return true}).slice(0,5);host.innerHTML=items.length?`<span class="saved-address-label">${lang==='fa'?'آدرس‌های ذخیره‌شده':'Saved addresses'}</span><div class="saved-address-list">${items.map(x=>`<button class="saved-address-chip" type="button" data-district="${esc(x.district||'')}" data-address="${esc(x.address||'')}" data-landmark="${esc(x.landmark||'')}" onclick="useCheckoutAddress(this)"><b>${esc(x.label||x.district||t('saved'))}</b><small>${esc(x.address)}</small></button>`).join('')}</div>`:''}
