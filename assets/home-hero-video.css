@@ -1,0 +1,53 @@
+.ae-premium .ae-video-toggle {
+  position: absolute;
+  z-index: 4;
+  inset-block-start: 18px;
+  inset-inline-start: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(18, 60, 50, .14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #17352b;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 8px 24px rgba(23, 37, 31, .15);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.ae-premium .ae-video-toggle:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+.ae-premium .ae-video-toggle:focus-visible {
+  outline: 3px solid #d4a144;
+  outline-offset: 3px;
+}
+.ae-premium .ae-video-toggle[hidden] {
+  display: none !important;
+}
+.ae-premium .ae-video-toggle-icon {
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  font-size: 14px;
+  line-height: 1;
+}
+@media (max-width: 760px) {
+  .ae-premium .ae-video-toggle {
+    inset-block-start: 12px;
+    inset-inline-start: 12px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ae-premium .ae-video-toggle {
+    transition: none;
+  }
+}

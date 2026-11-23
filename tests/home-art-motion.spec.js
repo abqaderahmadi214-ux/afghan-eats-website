@@ -9,12 +9,26 @@ async function stubPublicApi(page) {
   });
 }
 
-test('original hero and category artwork load without attributing them to a restaurant', async ({ page }) => {
+test('conceptual hero video and category artwork load without attributing them to a restaurant', async ({ page }) => {
   await stubPublicApi(page);
   await page.goto('/');
-  const hero = page.locator('.ae-hero-visual .ae-feast');
-  await expect(hero).toHaveAttribute('alt', /Illustrative Afghan-style/);
-  await expect.poll(() => hero.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  const hero = page.locator('.ae-hero-visual video.ae-feast');
+  await expect(hero).toHaveAttribute('poster', /ae-hero-original\.jpg/);
+  await expect(hero).toHaveAttribute('muted', '');
+  await expect(hero).toHaveAttribute('loop', '');
+  await expect(hero).toHaveAttribute('playsinline', '');
+  await expect(hero.locator('source')).toHaveAttribute('src', '/assets/video/afghan-eats-hero-journey.mp4');
+  await expect(page.locator('.ae-hero-accent')).toContainText('CONCEPT PREVIEW');
+  await expect(page.locator('.ae-hero-visual figcaption')).toContainText('cash or online');
+  const control = page.locator('[data-hero-video-toggle]');
+  await expect(control).toBeVisible();
+  await expect.poll(() => hero.evaluate(video => video.readyState > 0 && !video.paused), { timeout: 10000 }).toBe(true);
+  await expect(control).toHaveAccessibleName('Pause concept video');
+  await control.click();
+  await expect(hero).toHaveJSProperty('paused', true);
+  await expect(control).toHaveAccessibleName('Play concept video');
+  await control.click();
+  await expect.poll(() => hero.evaluate(video => !video.paused), { timeout: 10000 }).toBe(true);
   for (const category of ['Kebab', 'Biryani', 'Sandwiches']) {
     const photo = page.locator('.ae-cuisine').filter({ hasText: category }).locator('img');
     await photo.scrollIntoViewIfNeeded();
@@ -34,6 +48,8 @@ test('mobile hero imagery is visible early and motion stops when reduced motion 
   const box = await hero.boundingBox();
   expect(box.y).toBeLessThan(350);
   expect(box.height).toBeGreaterThan(160);
+  await expect(hero).toHaveJSProperty('paused', true);
+  await expect(page.locator('[data-hero-video-toggle]')).toHaveAccessibleName('Play concept video');
   await expect(page.locator('.ae-browse-link')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   const animation = await page.locator('.ae-hero-visual').evaluate(el => getComputedStyle(el, '::before').animationName);
