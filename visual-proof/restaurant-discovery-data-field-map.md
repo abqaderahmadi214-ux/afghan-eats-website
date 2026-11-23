@@ -1,6 +1,6 @@
 # Afghan Eats restaurant discovery — field map
 
-**Review note:** The screenshot frames use named Playwright fixture data, not the live restaurant catalogue. This mapping describes the review implementation and the fields it is allowed to show. Browse-area labels are not delivery addresses or service-coverage checks.
+**Review note:** The screenshot frames use named Playwright fixture data, not the live restaurant catalogue. This mapping describes the review implementation and the fields it is allowed to show. A quote requires a manual address entry; the default location label is not a delivery address or service-coverage check.
 
 ## Restaurant cards and listing
 
@@ -24,7 +24,7 @@
 | Minimum order | Matching delivery quote: `_deliveryQuote.minimumOrder` | Display only when the address-specific delivery quote provides a positive amount. Raw `min_order_amount` is not shown as a confirmed checkout minimum. Format as `AFN` in English and `افغانی` in Dari. |
 | Pickup preparation/collection time | Pickup quote: `pickupEtaMin/Max` or `collectionEtaMin/Max` | Display only when these dedicated pickup fields exist on a pickup quote. Otherwise show “Pickup timing not confirmed”; the app's copied delivery ETA is not reused. |
 | Pickup fee / minimum | None in the browse card | Do not show a delivery fee in pickup mode. Pickup minimums are also omitted because the existing app can seed that value from raw `min_order_amount` rather than a confirmed pickup quote. Delivery-only fee and fastest sorting choices are hidden in pickup mode. |
-| Delivery unavailable at the entered address | Quote failure tagged as unavailable; transient `_deliveryUnavailable` state | Show the inline unavailable notice while leaving public menus browsable. This is separate from the editable browse-area label. |
+| Delivery unavailable at the entered address | Fresh address-specific `orders.quote` failure tagged as unavailable; transient `_deliveryUnavailable` state | Clear the prior delivery quote before checking a changed address. Show unavailable only for a matching service-area/coverage response; a missing or transient quote remains unconfirmed. Public menus stay browsable. |
 | Map coordinates | Existing map catalogue/research records with `location.accuracy === "verified"`, finite coordinates, and Herat-bounds validation | Only verified in-bounds locations can create map pins. Map preview uses the same mode-matched quote guards as the list. List view remains available when map configuration or loading fails. |
 
 ## Search, offers, and fields not yet supported
@@ -33,14 +33,15 @@
 |---|---|---|
 | Dish results | Existing dish search endpoint plus dish name, Dari name, description, and restaurant association | Stale responses are ignored; selecting a result routes to its existing menu. |
 | Delivery / pickup switch | Existing `mode` and restaurant eligibility (`has_delivery`, `has_takeaway`) | Remains usable for browsing while ordering is paused. It does not enable checkout or order actions. |
-| Browse-area pill | `localStorage.ae_browse_area` | Display-only browsing label. It does not set `ae_address`, request a quote, update coverage, or alter the underlying catalogue results. |
+| Delivery-location control | Manual full street/area/landmark entered by the user and saved as `localStorage.ae_address` | The dialog clears cached and in-memory quotes, silently selects delivery mode, then calls `refreshDeliveryContext()` to invalidate any in-flight quote hydration for the previous address and run the existing `hydrateDeliveryContext()` flow on the currently loaded listing. That flow sends a read-only GET to `orders.quote` per orderable restaurant with delivery enabled; the exact input is `{ restaurantId, fulfillment, deliveryArea, deliveryAddress }`, with the entered string used for both area and address. No basket, subtotal, item or order data is sent. Only returned quote data updates fees/timing; a tagged coverage failure may mark the restaurant unavailable. No device geolocation or geocoding is used. Ordering remains paused. |
+| Legacy browse-area value | Existing `localStorage.ae_browse_area` value from the earlier display-only control | Not used as an address or as proof of coverage. The new dialog requires an explicit manual address before requesting a quote. |
 | Offers, sponsored placement, loyalty, dietary badges | No verified active campaign/placement or reliable partner-specific fields are wired into this listing | Omit rather than invent a promotion, sponsorship, diet claim, or loyalty benefit. Add only when an authoritative active data source exists. |
 | Distance and 4+ rating sort | No complete, trustworthy per-customer distance or rating dataset in the current listing flow | Not offered as a sort option. A partial or unverified ordering would be misleading. |
 | Sparse catalogue / outside-area state | Test fixtures only | Review frames are explicitly named `fixture`; values are illustrative and must not be mistaken for production availability. |
 
 ## Key source files
 
-- `assets/restaurant-listing-review.js` — display guards, staged filters, and card metadata.
+- `assets/restaurant-listing-review.js` — manual address dialog, quote refresh wiring, display guards, staged filters, and card metadata.
 - `assets/restaurant-discovery-map.js` — map-coordinate validation and quote-aware previews.
 - `assets/app.js` — existing catalogue, rating, fulfilment and menu-hand-off functions; not modified for this website-only review.
 - `tests/customer-journey.spec.js` — fixture routes, assertions, and review-frame capture.

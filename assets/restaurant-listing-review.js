@@ -24,12 +24,16 @@
 
   function setBrowseAreaLabel(trigger, value) {
     const label = document.getElementById('aeBrowseAreaName');
-    const area = String(value || '').trim() || 'Herat';
+    const caption = trigger?.querySelector('small');
+    const address = String(value || '').trim();
+    if (caption) caption.innerHTML = `<span class="en-copy">Delivery address</span><span class="fa-copy">آدرس تحویل</span>`;
     if (label) {
-      label.textContent = isDari() && area.toLowerCase() === 'herat' ? 'هرات' : area;
+      label.textContent = address || copy('Set address', 'آدرس را وارد کنید');
       label.dir = 'auto';
     }
-    trigger?.setAttribute('aria-label', copy(`Browsing area: ${area}. Change browsing area`, `ناحیۀ مرور: ${area}. تغییر ناحیۀ مرور`));
+    trigger?.setAttribute('aria-label', address
+      ? copy(`Delivery address: ${address}. Change delivery address`, `آدرس تحویل: ${address}. تغییر آدرس تحویل`)
+      : copy('Set a delivery address to check restaurant quotes', 'برای بررسی نرخ رستورانت، آدرس تحویل را وارد کنید'));
   }
 
   function addBrowseAreaDialog(trigger) {
@@ -41,34 +45,89 @@
       dialog.className = 'ae-discovery-dialog ae-browse-area-dialog';
       dialog.setAttribute('aria-labelledby', 'aeBrowseAreaTitle');
       dialog.setAttribute('aria-describedby', 'aeBrowseAreaDescription');
-      dialog.innerHTML = `<form class="ae-dialog-card" id="aeBrowseAreaForm"><div class="ae-dialog-title-row"><span class="restaurant-page-kicker"><span class="en-copy">BROWSE AREA</span><span class="fa-copy">ناحیۀ مرور</span></span><button class="ae-dialog-close" type="button" aria-label="Close" data-dialog-close>×</button></div><h2 id="aeBrowseAreaTitle"><span class="en-copy">Choose a browsing area</span><span class="fa-copy">ناحیه‌ای برای مرور انتخاب کنید</span></h2><p id="aeBrowseAreaDescription"><span class="en-copy">This is a browsing label only. It does not confirm delivery coverage, fees or timing. A delivery address quote is separate.</span><span class="fa-copy">این نام فقط برای مرور است و دسترسی ارسال، هزینه یا زمان را تأیید نمی‌کند. تأیید ارسال به نشانی جداگانه نیاز دارد.</span></p><label for="aeBrowseAreaInput"><span class="en-copy">Area or landmark</span><span class="fa-copy">ناحیه یا نشانی نزدیک</span></label><input id="aeBrowseAreaInput" name="browseArea" list="aeBrowseAreaSuggestions" autocomplete="off" maxlength="80" placeholder="e.g. Gulha Circle" data-ph-en="e.g. Gulha Circle" data-ph-fa="برای نمونه: گل‌ها" dir="auto"><datalist id="aeBrowseAreaSuggestions"></datalist><div class="ae-dialog-actions"><button class="btn btn-light" type="button" data-dialog-close><span class="en-copy">Cancel</span><span class="fa-copy">لغو</span></button><button class="btn btn-primary" type="submit"><span class="en-copy">Set browsing area</span><span class="fa-copy">تعیین ناحیۀ مرور</span></button></div></form>`;
+      dialog.innerHTML = `<form class="ae-dialog-card" id="aeBrowseAreaForm"><div class="ae-dialog-title-row"><span class="restaurant-page-kicker"><span class="en-copy">DELIVERY ADDRESS</span><span class="fa-copy">آدرس تحویل</span></span><button class="ae-dialog-close" type="button" aria-label="Close" data-dialog-close>×</button></div><h2 id="aeBrowseAreaTitle"><span class="en-copy">Enter a delivery address</span><span class="fa-copy">آدرس تحویل را وارد کنید</span></h2><p id="aeBrowseAreaDescription"><span class="en-copy">Enter a street, area or landmark. The existing read-only quote flow checks eligible delivery restaurants in the current list. This does not use your basket or place an order; ordering remains paused. If Pickup is selected, checking delivery switches the listing to Delivery.</span><span class="fa-copy">سرک، ناحیه یا نشانی نزدیک را وارد کنید. جریان خواندنی نرخ، رستورانت‌های واجد ارسال را در فهرست کنونی بررسی می‌کند. این کار از سبد خرید استفاده نمی‌کند و سفارش ثبت نمی‌کند؛ سفارش‌گیری همچنان متوقف است. اگر دریافت حضوری انتخاب شده باشد، بررسی ارسال فهرست را به حالت ارسال تغییر می‌دهد.</span></p><label for="aeBrowseAreaInput"><span class="en-copy">Full address, street or landmark</span><span class="fa-copy">آدرس کامل، سرک یا نشانی نزدیک</span></label><input id="aeBrowseAreaInput" name="deliveryAddress" autocomplete="street-address" minlength="5" maxlength="180" required placeholder="Street, area or landmark" data-ph-en="Street, area or landmark" data-ph-fa="سرک، ناحیه یا نشانی نزدیک" dir="auto"><p id="aeBrowseAreaStatus" class="ae-location-status" role="status" aria-live="polite" hidden></p><div class="ae-dialog-actions"><button class="btn btn-light" type="button" data-dialog-close><span class="en-copy">Cancel</span><span class="fa-copy">لغو</span></button><button class="btn btn-primary" type="submit"><span class="en-copy">Check delivery here</span><span class="fa-copy">بررسی ارسال به این نشانی</span></button></div></form>`;
       document.body.append(dialog);
     }
     const form = dialog.querySelector('#aeBrowseAreaForm');
     const input = dialog.querySelector('#aeBrowseAreaInput');
+    const status = dialog.querySelector('#aeBrowseAreaStatus');
+    const submit = form?.querySelector('button[type="submit"]');
     const updateInputCopy = () => { if (input) input.placeholder = copy(input.dataset.phEn, input.dataset.phFa); };
-    setBrowseAreaLabel(trigger, localStorage.getItem('ae_browse_area') || 'Herat');
+    setBrowseAreaLabel(trigger, localStorage.getItem('ae_address') || '');
     trigger.addEventListener('click', () => {
-      if (input) input.value = localStorage.getItem('ae_browse_area') || 'Herat';
-      updateInputCopy();
-      const suggestions = dialog.querySelector('#aeBrowseAreaSuggestions');
-      if (suggestions) {
-        const areas = new Set(['Herat']);
-        getRows().forEach(restaurant => [restaurant?.district, restaurant?.neighborhood].forEach(area => area && areas.add(String(area).trim())));
-        suggestions.innerHTML = [...areas].filter(Boolean).sort((a, b) => a.localeCompare(b)).map(area => `<option value="${esc(area)}"></option>`).join('');
+      if (input) {
+        input.value = localStorage.getItem('ae_address') || '';
+        input.setCustomValidity('');
       }
+      if (status) {
+        status.hidden = true;
+        status.textContent = '';
+        delete status.dataset.state;
+      }
+      updateInputCopy();
       if (!dialog.open) dialog.showModal();
       input?.focus();
     });
+    input?.addEventListener('input', () => input.setCustomValidity(''));
     dialog.addEventListener('click', event => {
       if (event.target === dialog || event.target.closest('[data-dialog-close]')) dialog.close();
     });
-    form?.addEventListener('submit', event => {
+    form?.addEventListener('submit', async event => {
       event.preventDefault();
-      const area = String(input?.value || '').trim() || 'Herat';
-      localStorage.setItem('ae_browse_area', area);
-      setBrowseAreaLabel(trigger, area);
-      dialog.close();
+      const address = String(input?.value || '').trim();
+      if (!input || !submit || !form.reportValidity()) return;
+      if (address.length < 5) {
+        input.setCustomValidity(copy('Enter at least five characters for the address.', 'برای آدرس دست‌کم پنج نویسه وارد کنید.'));
+        input.reportValidity();
+        return;
+      }
+      input.setCustomValidity('');
+      localStorage.setItem('ae_address', address);
+      setBrowseAreaLabel(trigger, address);
+      normalizeAddressSummary();
+      if (status) {
+        status.hidden = false;
+        status.dataset.state = 'checking';
+        status.textContent = copy('Checking current address-specific delivery quotes…', 'در حال بررسی نرخ‌های فعلی ارسال برای این آدرس…');
+      }
+      form.setAttribute('aria-busy', 'true');
+      input.disabled = true;
+      submit.disabled = true;
+      try {
+        const clearQuoteCache = appFunction('clearQuoteCache');
+        const setMode = appFunction('setMode');
+        const refreshDeliveryContext = appFunction('refreshDeliveryContext');
+        const renderRestaurantSurfaces = appFunction('renderRestaurantSurfaces');
+        if (!clearQuoteCache || !setMode || !refreshDeliveryContext) {
+          throw new Error('The existing live address-quote flow is unavailable.');
+        }
+        clearQuoteCache();
+        getRows().forEach(restaurant => {
+          delete restaurant._deliveryQuote;
+          delete restaurant._deliveryUnavailable;
+        });
+        setMode('delivery', { silent: true });
+        await refreshDeliveryContext();
+        renderRestaurantSurfaces?.();
+        window.dispatchEvent(new CustomEvent('ae:restaurantsrefreshed', { detail: { count: getRows().length } }));
+        const quotedRestaurants = getRows().filter(restaurant => deliveryQuoteFor(restaurant)).length;
+        if (status) {
+          status.dataset.state = quotedRestaurants ? 'success' : 'pending';
+          status.textContent = quotedRestaurants
+            ? copy('Address check complete. Restaurant fees and timing appear only where a current quote was returned. No order was placed; ordering remains paused.', 'بررسی آدرس انجام شد. هزینه و زمان رستورانت تنها در صورت دریافت نرخ تازه نمایش داده می‌شود. سفارشی ثبت نشد؛ سفارش‌گیری همچنان متوقف است.')
+            : copy('No current address-specific quote was returned. Delivery availability is not confirmed; public menus remain available.', 'برای این آدرس نرخ تازه‌ای دریافت نشد. دسترسی ارسال تأیید نشده است؛ منوهای عمومی همچنان قابل مشاهده‌اند.');
+        }
+      } catch (error) {
+        console.warn('Address quote refresh unavailable', error);
+        if (status) {
+          status.dataset.state = 'error';
+          status.textContent = copy('Live delivery details could not be refreshed. No availability is confirmed; public menus remain available.', 'معلومات زنده ارسال تازه نشد. دسترسی ارسال تأیید نشده است؛ منوهای عمومی همچنان قابل مشاهده‌اند.');
+        }
+      } finally {
+        form.removeAttribute('aria-busy');
+        input.disabled = false;
+        submit.disabled = false;
+      }
     });
     dialog.addEventListener('close', () => trigger.focus());
   }
@@ -79,7 +138,7 @@
     note.id = 'aeListingAreaNote';
     note.className = 'ae-listing-browse-note';
     note.setAttribute('role', 'note');
-    note.innerHTML = `<span class="ae-listing-browse-icon" aria-hidden="true">i</span><p><span class="en-copy">The area label is for browsing only. Delivery coverage, fees and times require a separate address confirmation.</span><span class="fa-copy">نام ناحیه فقط برای مرور است. دسترسی ارسال، هزینه و زمان به تأیید جداگانۀ آدرس نیاز دارد.</span></p>`;
+    note.innerHTML = `<span class="ae-listing-browse-icon" aria-hidden="true">i</span><p><span class="en-copy">Enter a delivery address to refresh restaurant-level quotes. Fees and times appear only when a restaurant returns an address-specific quote; this page does not place orders.</span><span class="fa-copy">برای تازه‌سازی نرخ‌های هر رستورانت، آدرس تحویل را وارد کنید. هزینه و زمان تنها هنگام دریافت نرخ مخصوص همان آدرس نمایش داده می‌شود؛ از این صفحه سفارش ثبت نمی‌شود.</span></p>`;
     anchor.insertAdjacentElement('afterend', note);
   }
 
@@ -460,7 +519,7 @@
     if (pickup) {
       if (label) label.textContent = copy('Pickup selected; preparation time appears only when confirmed.', 'دریافت حضوری انتخاب شده؛ زمان آماده‌سازی تنها پس از تأیید نمایش داده می‌شود.');
     } else if (address) {
-      if (label) label.textContent = copy(`Address entered: ${address}. Delivery is confirmed only when a quote appears.`, `آدرس واردشده: ${address}. ارسال تنها با نمایش نرخ تأیید می‌شود.`);
+      if (label) label.textContent = copy(`Address entered: ${address}. Restaurant delivery details appear only when a current quote is returned.`, `آدرس واردشده: ${address}. جزئیات ارسال رستورانت تنها با دریافت نرخ تازه نمایش داده می‌شود.`);
     } else {
       summary.replaceChildren();
     }
@@ -493,7 +552,7 @@
     const body = legacyEmptyHint
       ? copy('No matches. Try a dish, cuisine or fewer filters. If the list still looks empty, retry the public restaurant list.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید. اگر فهرست خالی ماند، دوباره تلاش کنید.')
       : !hasRows
-        ? copy('Please try again to refresh the public restaurant list. Browsing the area label does not check delivery coverage.', 'برای تازه‌سازی فهرست عمومی رستورانت‌ها دوباره تلاش کنید. نام ناحیه دسترسی ارسال را بررسی نمی‌کند.')
+        ? copy('Please try again to refresh the public restaurant list. A missing quote does not confirm delivery availability.', 'برای تازه‌سازی فهرست عمومی رستورانت‌ها دوباره تلاش کنید. نبودن نرخ، دسترسی ارسال را تأیید نمی‌کند.')
         : hasSearch || hasFilters
         ? copy('Try another dish or restaurant, or clear the current filters to see more public menus.', 'نام غذای دیگری را جستجو کنید یا فیلترها را پاک کنید تا منوهای بیشتری ببینید.')
         : copy('No matches. Try a dish, cuisine or fewer filters.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید.');
@@ -644,7 +703,7 @@
     const discoveryLink = container.querySelector('.discovery-link');
     const resultsHeading = document.createElement('div');
     resultsHeading.className = 'restaurant-results-heading';
-    resultsHeading.innerHTML = `<div><h2><span class="en-copy">Restaurants in Herat</span><span class="fa-copy">رستورانت‌های هرات</span></h2><p><span class="en-copy">Browse public menus. Delivery details are not verified by the area label.</span><span class="fa-copy">منوهای عمومی را ببینید؛ نام ناحیه اطلاعات ارسال را تأیید نمی‌کند.</span></p></div>`;
+    resultsHeading.innerHTML = `<div><h2><span class="en-copy">Restaurants in Herat</span><span class="fa-copy">رستورانت‌های هرات</span></h2><p><span class="en-copy">Browse public menus. Delivery availability, fees and timing appear only when an address-specific quote is returned.</span><span class="fa-copy">منوهای عمومی را ببینید؛ دسترسی ارسال، هزینه و زمان تنها هنگام دریافت نرخ مخصوص همان آدرس نمایش داده می‌شود.</span></p></div>`;
 
     const feeContext = document.createElement('p');
     feeContext.className = 'ae-fee-context';

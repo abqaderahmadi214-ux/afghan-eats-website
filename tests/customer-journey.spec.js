@@ -100,6 +100,132 @@ test('homepage to restaurant to mobile basket to quoted checkout', async ({page}
   await expect(page.locator('.delivery-only').first()).toHaveClass(/hidden/);
 });
 
+test('manual delivery address refreshes restaurant quotes without basket or order data', async ({page})=>{
+  const quoteRequests=[];
+  const orderWrites=[];
+  const address='Tank Markaz Street, Herat';
+  await mockApi(page,{quoteHandler:async(route,input)=>{
+    quoteRequests.push({method:route.request().method(),input});
+    await route.fulfill({status:200,contentType:'application/json',body:trpc({...quote,restaurantId:input.restaurantId})});
+  }});
+  page.on('request',request=>{
+    if(new URL(request.url()).pathname.endsWith('/orders.place'))orderWrites.push(request);
+  });
+  await page.addInitScript(()=>localStorage.setItem('ae_mode','pickup'));
+  await page.goto('/restaurants');
+  await expect(page.locator('#aePlatformStatus')).toContainText('New ordering is temporarily paused');
+  const cartBefore=await page.evaluate(()=>localStorage.getItem('ae_cart'));
+  await expect(page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first()).toBeVisible();
+  await page.locator('#aeBrowseAreaTrigger').click();
+  const dialog=page.locator('#aeBrowseAreaDialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText('does not use your basket or place an order');
+  await expect(dialog).toContainText('ordering remains paused');
+  await expect(page.locator('#aeBrowseAreaInput')).toHaveAttribute('autocomplete','street-address');
+  await page.locator('#aeBrowseAreaInput').fill(address);
+  const quoteRequest=page.waitForRequest(request=>new URL(request.url()).pathname.endsWith('/orders.quote'));
+  await page.locator('#aeBrowseAreaForm button[type="submit"]').click();
+  const request=await quoteRequest;
+  expect(request.method()).toBe('GET');
+  const input=JSON.parse(new URL(request.url()).searchParams.get('input')).json;
+  expect(Object.keys(input).sort()).toEqual(['deliveryAddress','deliveryArea','fulfillment','restaurantId']);
+  expect(input).toMatchObject({restaurantId:restaurant.id,fulfillment:'delivery',deliveryArea:address,deliveryAddress:address});
+  await expect(dialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  await expect(page.locator('#aeBrowseAreaName')).toHaveText(address);
+  const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
+  await expect(card).toContainText('AFN 60');
+  await expect(card).toContainText('Delivery 25–40 min');
+  expect(await page.evaluate(()=>localStorage.getItem('ae_address'))).toBe(address);
+  expect(await page.evaluate(()=>localStorage.getItem('ae_mode'))).toBe('delivery');
+  expect(await page.evaluate(()=>localStorage.getItem('ae_cart'))).toBe(cartBefore);
+  expect(quoteRequests.length).toBeGreaterThan(0);
+  for(const entry of quoteRequests){
+    expect(entry.method).toBe('GET');
+    expect(Object.keys(entry.input).sort()).toEqual(['deliveryAddress','deliveryArea','fulfillment','restaurantId']);
+    expect(entry.input.fulfillment).toBe('delivery');
+    expect(entry.input.deliveryArea).toBe(address);
+    expect(entry.input.deliveryAddress).toBe(address);
+  }
+  expect(orderWrites).toHaveLength(0);
+});
+
+test('an unavailable quote for a changed address cannot leave a previous fee visible', async ({page})=>{
+  const oldAddress='Previous street, Herat';
+  const newAddress='New unconfirmed street';
+  const quotedAddresses=[];
+  await mockApi(page,{quoteHandler:async(route,input)=>{
+    quotedAddresses.push(input.deliveryAddress);
+    if(input.deliveryAddress===oldAddress){
+      await route.fulfill({status:200,contentType:'application/json',body:trpc({...quote,restaurantId:input.restaurantId})});
+      return;
+    }
+    await route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({error:{json:{message:'Delivery is not available for this address'}}})});
+  }});
+  await page.addInitScript(({address})=>{
+    localStorage.setItem('ae_mode','delivery');
+    localStorage.setItem('ae_address',address);
+  },{address:oldAddress});
+  await page.goto('/restaurants');
+  const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
+  await expect(card).toContainText('AFN 60');
+  await page.locator('#aeBrowseAreaTrigger').click();
+  await page.locator('#aeBrowseAreaInput').fill(newAddress);
+  await page.locator('#aeBrowseAreaForm button[type="submit"]').click();
+  await expect(page.locator('#aeBrowseAreaStatus')).toContainText('No current address-specific quote was returned');
+  await expect.poll(()=>page.evaluate(id=>{
+    const current=typeof restaurants==='undefined'?null:restaurants.find(row=>row.id===id);
+    return Boolean(current?._deliveryQuote);
+  },restaurant.id)).toBe(false);
+  await expect(page.locator('.restaurant-card').filter({hasText:'Jumeirah Fast Food'})).toBeVisible();
+  expect(quotedAddresses).toContain(oldAddress);
+  expect(quotedAddresses).toContain(newAddress);
+});
+
+test('a changed address supersedes an in-flight quote for the previous address', async ({page})=>{
+  const oldAddress='Slow previous street, Herat';
+  const newAddress='Fresh new street, Herat';
+  let releaseOldQuote;
+  let signalOldStarted;
+  let signalNewStarted;
+  const oldQuoteGate=new Promise(resolve=>{releaseOldQuote=resolve});
+  const oldStarted=new Promise(resolve=>{signalOldStarted=resolve});
+  const newStarted=new Promise(resolve=>{signalNewStarted=resolve});
+  await mockApi(page,{quoteHandler:async(route,input)=>{
+    if(input.deliveryAddress===oldAddress){
+      signalOldStarted();
+      await oldQuoteGate;
+      await route.fulfill({status:200,contentType:'application/json',body:trpc({...quote,restaurantId:input.restaurantId,deliveryFee:99})});
+      return;
+    }
+    signalNewStarted(input);
+    await route.fulfill({status:200,contentType:'application/json',body:trpc({...quote,restaurantId:input.restaurantId,deliveryFee:60})});
+  }});
+  await page.addInitScript(({address})=>{
+    localStorage.setItem('ae_mode','delivery');
+    localStorage.setItem('ae_address',address);
+  },{address:oldAddress});
+  await page.goto('/restaurants');
+  await oldStarted;
+  await page.locator('#aeBrowseAreaTrigger').click();
+  await page.locator('#aeBrowseAreaInput').fill(newAddress);
+  await page.locator('#aeBrowseAreaForm button[type="submit"]').click();
+  const newInput=await newStarted;
+  expect(newInput.deliveryAddress).toBe(newAddress);
+  await expect(page.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
+  await expect(card).toContainText('AFN 60');
+  const oldRequestFinished=page.waitForEvent('requestfinished',request=>{
+    try {
+      const url=new URL(request.url());
+      return url.pathname.endsWith('/orders.quote') && JSON.parse(url.searchParams.get('input')).json.deliveryAddress===oldAddress;
+    } catch { return false; }
+  });
+  releaseOldQuote();
+  await oldRequestFinished;
+  await expect(card).toContainText('AFN 60');
+  await expect(card).not.toContainText('AFN 99');
+});
+
 test('photo-free dishes receive bilingual local illustrations without remote image requests', async ({page})=>{
   const photoFreeMenu={categories:menu.categories,items:[
     {...menu.items[0],image_url:null},
@@ -746,7 +872,7 @@ test('restaurant discovery shows only quoted delivery facts and keeps public men
   await expect(page.locator('.add-btn:not([disabled])')).toHaveCount(0);
 });
 
-test('mobile filters stage before applying and the browse-area label does not change results or imply delivery coverage', async ({page})=>{
+test('mobile filters stage before applying and manual address quotes preserve the filtered public list', async ({page})=>{
   const noRatings={...restaurant,rating:null,total_reviews:0};
   await clearPublicRestaurantFallbacks(page);
   await mockApi(page,{restaurants:[noRatings,directoryListing]});
@@ -778,12 +904,14 @@ test('mobile filters stage before applying and the browse-area label does not ch
 
   await page.locator('#aeBrowseAreaTrigger').click();
   const areaDialog=page.locator('#aeBrowseAreaDialog');
-  await expect(areaDialog).toContainText('This is a browsing label only');
+  await expect(areaDialog).toContainText('does not use your basket or place an order');
+  await expect(areaDialog).toContainText('ordering remains paused');
   await areaDialog.locator('#aeBrowseAreaInput').fill('Gulha Circle');
   await areaDialog.locator('button[type="submit"]').click();
+  await expect(areaDialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
   await expect(page.locator('#aeBrowseAreaName')).toHaveText('Gulha Circle');
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(1);
-  await expect(page.locator('#aeListingAreaNote')).toContainText('require a separate address confirmation');
+  await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
 });
 
 test('discovery review frames cover English and Dari at desktop, tablet, mobile and 360 px stress widths', async ({page})=>{
@@ -812,6 +940,21 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
     }
   };
   await captureWidths('en');
+  const captureAddressDialog=async(locale,label,width,height)=>{
+    await page.setViewportSize({width,height});
+    await page.locator('#aeBrowseAreaTrigger').click();
+    const dialog=page.locator('#aeBrowseAreaDialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText(locale==='fa'?'جریان خواندنی نرخ':'read-only quote flow');
+    await expect(dialog.locator('#aeBrowseAreaInput')).toHaveAttribute('autocomplete','street-address');
+    await dialog.locator('#aeBrowseAreaInput').fill('Gulha Circle, Herat');
+    await stampFixtureLabel(page);
+    await page.screenshot({path:path.join(__dirname,`../visual-proof/restaurant-discovery-address-dialog-${locale}-${label}-${width}x${height}.png`),animations:'disabled'});
+    await dialog.locator('[data-dialog-close]').first().click();
+    await expect(dialog).toBeHidden();
+  };
+  await captureAddressDialog('en','desktop',1440,1000);
+  await captureAddressDialog('en','mobile',390,844);
   await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
@@ -824,6 +967,7 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   const widths=await page.evaluate(()=>({viewport:window.innerWidth,document:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
   expect(widths.document).toBeLessThanOrEqual(widths.viewport+1);
   await captureWidths('fa');
+  await captureAddressDialog('fa','mobile',390,844);
   const stressWidths=await page.evaluate(()=>({viewport:window.innerWidth,document:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
   expect(stressWidths.document).toBeLessThanOrEqual(stressWidths.viewport+1);
 });
@@ -888,7 +1032,7 @@ test('an unavailable delivery address is distinct from public menu browsing', as
   await page.goto('/restaurants');
   await expect(page.locator('#restaurantGrid .delivery-inline-notice')).toContainText('Delivery is not active at this address yet.');
   await expect(page.locator('#restaurantGrid .directory-results')).toContainText('Jumeirah Fast Food');
-  await expect(page.locator('#aeListingAreaNote')).toContainText('require a separate address confirmation');
+  await expect(page.locator('#aeListingAreaNote')).toContainText('Fees and times appear only when a restaurant returns an address-specific quote');
 });
 
 test('sparse and unavailable-area review frames are clearly named fixture states', async ({page})=>{

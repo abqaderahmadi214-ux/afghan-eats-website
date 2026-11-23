@@ -577,6 +577,10 @@ html[dir="rtl"] .restaurant-page-kicker { letter-spacing: 0; text-transform: non
 .ae-dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 17px; }
 .ae-dialog-actions button { min-height: 44px; }
 .ae-dialog-close { display: grid; width: 44px; height: 44px; flex: none; place-items: center; border: 0; border-radius: 50%; background: #f2f6f2; color: #2a4938; font-size: 1.5rem; cursor: pointer; }
+.ae-location-status { margin: 12px 0 0; padding: 10px 12px; border: 1px solid #dbe8dc; border-radius: 10px; background: #f5faf5; color: #355b43; font-size: .82rem; line-height: 1.55; }
+.ae-location-status[hidden] { display: none; }
+.ae-location-status[data-state="checking"] { border-color: #d9e4ec; background: #f4f8fb; color: #39576a; }
+.ae-location-status[data-state="error"] { border-color: #edc8c3; background: #fff4f2; color: #8b3029; }
 .ae-dialog-done { width: 100%; margin-top: 12px; }
 .ae-mobile-filter-actions { position: sticky; bottom: -20px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 9px; margin: 16px -20px -20px; padding: 13px 20px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid #e5ebe5; background: rgba(255,255,255,.97); }
 .ae-mobile-filter-actions button { min-height: 46px; }
@@ -689,6 +693,8 @@ html[dir="rtl"] .ae-featured-shelf-track { direction: rtl; }
   .ae-back-to-top { inset-inline-end: 12px; bottom: 76px; width: 44px; height: 44px; }
   .ae-discovery-dialog.ae-mobile-filters-dialog { inset: auto 0 0; width: 100%; max-width: none; max-height: min(82dvh, 700px); margin: 0; border-radius: 21px 21px 0 0; }
   .ae-mobile-filters-dialog .ae-dialog-card { padding: 17px 18px calc(17px + env(safe-area-inset-bottom)); }
+  .ae-discovery-dialog.ae-browse-area-dialog { inset: auto 0 0; width: 100%; max-width: none; max-height: min(82dvh, 700px); margin: 0; border-radius: 21px 21px 0 0; }
+  .ae-browse-area-dialog .ae-dialog-card { padding: 17px 18px calc(17px + env(safe-area-inset-bottom)); }
   .ae-mobile-filter-actions { bottom: -17px; margin-inline: -18px; padding-inline: 18px; }
   .ae-dialog-actions { flex-direction: column-reverse; }
   .ae-dialog-actions button { width: 100%; }
