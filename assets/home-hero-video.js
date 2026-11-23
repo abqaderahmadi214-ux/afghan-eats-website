@@ -18,8 +18,8 @@
     if (dariLabel) dariLabel.textContent = faText;
     button.querySelector('[data-video-icon]')?.replaceChildren(document.createTextNode(playing ? 'Ⅱ' : '▶'));
     button.setAttribute('aria-label', isDari()
-      ? (playing ? 'توقف ویدیوی نمایشی' : 'پخش ویدیوی نمایشی')
-      : `${enText} concept video`);
+      ? (playing ? 'توقف پیش‌نمایش نمونهٔ اپ' : 'پخش پیش‌نمایش نمونهٔ اپ')
+      : `${enText} sample app preview`);
   }
 
   function startWhenAllowed() {
