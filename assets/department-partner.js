@@ -17,13 +17,37 @@
   let lang = localStorage.getItem('ae_lang') === 'fa' ? 'fa' : 'en';
   let gates = new Map();
   let gateStatus = 'loading';
+  let gateError = null;
   let lookedUp = null;
   function text(en, fa) { return lang === 'fa' ? fa : en; }
+  function refreshGateSummary() {
+    if (!gateSummary) return;
+    const known=ids.filter(id=>gates.has(id)).length;
+    const openCount=ids.filter(gateOpen).length;
+    const complete=known===ids.length;
+    if (gateStatus==='loading') {
+      gateSummary.textContent=text('Checking department availability…','دسترسی بخش‌ها در حال بررسی است…');
+      gateSummary.dataset.state='loading';
+    } else if (gateStatus==='error') {
+      gateSummary.textContent=gateError==='api-unavailable'?text('Availability API unavailable · applications unavailable','API در دسترس نیست · درخواست‌ها غیرفعال است'):text('Gate status unverified · applications unavailable','وضعیت دروازه تأیید نشد · درخواست‌ها غیرفعال است');
+      gateSummary.dataset.state='unknown';
+    } else if (!complete) {
+      gateSummary.textContent=text(`${known} of 6 department gates verified · ${openCount} open · remaining unverified`,`وضعیت ${known} از ۶ دروازه تأیید شد · ${openCount} باز · بقیه تأییدنشده`);
+      gateSummary.dataset.state='unknown';
+    } else if (openCount) {
+      gateSummary.textContent=text(`${openCount} application gate(s) open · only selected departments accept submissions`,`دروازهٔ ${openCount} بخش باز است · فقط همان بخش‌ها درخواست می‌پذیرند`);
+      gateSummary.dataset.state='open';
+    } else {
+      gateSummary.textContent=text('All 6 department application gates closed','دروازهٔ درخواست هر شش بخش بسته است');
+      gateSummary.dataset.state='closed';
+    }
+  }
   function setLanguage(next) {
     lang = next === 'fa' ? 'fa' : 'en'; localStorage.setItem('ae_lang', lang);
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
     document.querySelectorAll('[data-en][data-fa]').forEach(node => { node.textContent = node.dataset[lang]; });
     const button = document.getElementById('dr-language'); if (button) button.textContent = lang === 'fa' ? 'English' : 'دری';
+    refreshGateSummary();
     refreshSelectedGate();
   }
   async function call(path, input, method = 'GET') {
@@ -68,29 +92,28 @@
 
     if (!id) {
       if (gateStatus==='loading') appMessage.textContent=text('Checking department availability. Applications remain unavailable until a selected department gate is confirmed open.','دسترسی بخش‌ها در حال بررسی است. تا تأیید بازبودن دروازهٔ بخش انتخاب‌شده، درخواست‌ها غیرفعال می‌مانند.');
-      else if (gateStatus==='error') appMessage.textContent=text('Department availability could not be confirmed. Applications remain unavailable; no application will be submitted. Public listings and ordering remain closed.','دسترسی بخش‌ها تأیید نشد. درخواست‌ها غیرفعال می‌مانند و هیچ درخواستی ارسال نمی‌شود. فهرست عمومی و سفارش‌دهی بسته است.');
-      else if (!complete) appMessage.textContent=text(`Availability is confirmed for ${known} of 6 departments; ${openCount} application gate(s) open. Remaining gates are unverified and treated as closed. Choose a confirmed open department to continue; public listings and ordering remain closed.`,`دسترسی ${known} از ۶ بخش تأیید شده و دروازهٔ درخواست ${openCount} بخش باز است. وضعیت دروازه‌های دیگر تأیید نشده و بسته در نظر گرفته می‌شود. برای ادامه یک بخش با دروازهٔ بازشده انتخاب کنید؛ فهرست عمومی و سفارش‌دهی بسته است.`);
+      else if (gateStatus==='error') appMessage.textContent=text('Department availability could not be confirmed. Applications remain unavailable; no application will be submitted. Applying does not itself activate public listings or ordering.','دسترسی بخش‌ها تأیید نشد. درخواست‌ها غیرفعال می‌مانند و هیچ درخواستی ارسال نمی‌شود. ارسال درخواست به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند.');
+      else if (!complete) appMessage.textContent=text(`Availability is confirmed for ${known} of 6 departments; ${openCount} application gate(s) open. Remaining gates are unverified and treated as closed. Choose a confirmed open department to continue. Applying does not itself activate public listings or ordering.`,`دسترسی ${known} از ۶ بخش تأیید شده و دروازهٔ درخواست ${openCount} بخش باز است. وضعیت دروازه‌های دیگر تأیید نشده و بسته در نظر گرفته می‌شود. برای ادامه یک بخش با دروازهٔ بازشده انتخاب کنید. ارسال درخواست به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند.`);
       else if (!openCount) appMessage.textContent=text('Applications are closed for all six departments. The form will become available only when the selected department’s application gate is explicitly opened.','درخواست‌ها برای هر شش بخش بسته است. فورم تنها زمانی فعال می‌شود که دروازهٔ درخواست بخش انتخاب‌شده رسماً باز شود.');
-      else appMessage.textContent=text(`${openCount} of 6 department application gates are open. Choose an open department to continue. Submitting creates a review request only; public listings and ordering remain closed.`,`${openCount} دروازهٔ درخواست از ۶ بخش باز است. برای ادامه یک بخش باز را انتخاب کنید. ارسال فقط درخواست بررسی می‌سازد؛ فهرست عمومی و سفارش‌دهی بسته می‌ماند.`);
+      else appMessage.textContent=text(`${openCount} of 6 department application gates are open. Choose an open department to continue. Submitting creates a review request only; it does not itself activate public listings or ordering.`,`${openCount} دروازهٔ درخواست از ۶ بخش باز است. برای ادامه یک بخش باز را انتخاب کنید. ارسال فقط درخواست بررسی می‌سازد و به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند.`);
     } else if (gateStatus==='loading') appMessage.textContent=text(`Availability for ${labels[id] || 'this department'} is being checked. The form stays unavailable until its gate is confirmed open.`,`دسترسی ${labels[id] || 'این بخش'} در حال بررسی است. فورم تا تأیید بازبودن دروازه غیرفعال می‌ماند.`);
     else if (gateStatus==='error'||!gates.has(id)) appMessage.textContent=text(`Availability for ${labels[id] || 'this department'} could not be confirmed. No application can be submitted unless its gate is confirmed open.`,`دسترسی ${labels[id] || 'این بخش'} تأیید نشد. تا تأیید بازبودن دروازه، درخواست ارسال نمی‌شود.`);
     else if (open) appMessage.textContent=text(`The ${labels[id]} application gate is open. Submitting creates a review request only; it does not activate a public listing or ordering.`,`دروازهٔ درخواست ${labels[id]} باز است. ارسال فقط درخواست بررسی می‌سازد؛ فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند.`);
     else appMessage.textContent=text(`Applications for ${labels[id] || 'this department'} are closed. No application can be submitted unless its gate is explicitly opened.`,`درخواست‌های ${labels[id] || 'این بخش'} بسته است. تا بازشدن رسمی دروازه، درخواست ارسال نمی‌شود.`);
   }
   async function loadGates() {
-    if (!apiBase) { gateStatus='error'; gateSummary.textContent=text('Availability API unavailable · applications unavailable','API در دسترس نیست · درخواست‌ها غیرفعال است'); gateSummary.dataset.state='unknown'; refreshSelectedGate(); return; }
+    if (!apiBase) { gateStatus='error'; gateError='api-unavailable'; refreshGateSummary(); refreshSelectedGate(); return; }
     try {
       const response=await query('departmentRetail.departmentGates',null);
       const list=Array.isArray(response)?response:(Array.isArray(response?.gates)?response.gates:Array.isArray(response?.departments)?response.departments:[]);
       gates=new Map(list.map(item=>[String(item?.department_key ?? item?.departmentKey ?? item?.departmentId ?? item?.department_id ?? item?.id ?? ''),item]));
-      const complete=ids.every(id=>gates.has(id));
       const open=ids.filter(id=>gateOpen(id));
       gateStatus='loaded';
-      gateSummary.textContent=!complete?text(`${ids.filter(id=>gates.has(id)).length} of 6 department gates verified · ${open.length} open · remaining unverified`,`وضعیت ${ids.filter(id=>gates.has(id)).length} از ۶ دروازه تأیید شد · ${open.length} باز · بقیه تأییدنشده`):open.length?text(`${open.length} application gate(s) open · only selected departments accept submissions`,`دروازهٔ ${open.length} بخش باز است · فقط همان بخش‌ها درخواست می‌پذیرند`):text('All 6 department application gates closed','دروازهٔ درخواست هر شش بخش بسته است');
-      gateSummary.dataset.state=complete?(open.length?'open':'closed'):'unknown';
+      gateError=null;
+      refreshGateSummary();
       refreshSelectedGate();
     } catch(error) {
-      gates=new Map(); gateStatus='error'; gateSummary.textContent=text('Gate status unverified · applications unavailable','وضعیت دروازه تأیید نشد · درخواست‌ها غیرفعال است'); gateSummary.dataset.state='unknown';
+      gates=new Map(); gateStatus='error'; gateError='query-failed'; refreshGateSummary();
       refreshSelectedGate();
     }
   }
