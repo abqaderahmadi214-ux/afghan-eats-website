@@ -75,7 +75,7 @@ test('homepage area browse to separate delivery quote dialog and mobile checkout
   await page.goto('/');
   await page.locator('#aeHomeArea').fill('Gulha Circle');
   await page.locator('#aeHomeAreaSubmit').click();
-  await expect(page).toHaveURL(/\/restaurants\?area=Gulha\+Circle$/);
+  await expect(page).toHaveURL(/\/restaurants\?area=Gulha\+Circle&q=$/);
   await expect(page.locator('#aeLocationBrowseStatus')).toContainText('published location details match');
   const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
   await expect(card).toBeVisible();
@@ -936,70 +936,64 @@ test('mobile filters stage before applying and manual address quotes preserve th
   await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
 });
 
-test('homepage presents premium top-level departments while restaurant cuisines stay on the Restaurants page', async ({page})=>{
+test('homepage uses one shared department rail while restaurant cuisines stay on the Restaurants page', async ({page})=>{
   await clearPublicRestaurantFallbacks(page);
   await mockApi(page,{restaurants:[restaurant,directoryListing]});
   let orderSubmissions=0;
   page.on('request',request=>{if(new URL(request.url()).pathname.endsWith('/orders.place'))orderSubmissions+=1;});
   await page.setViewportSize({width:1440,height:1000});
   await page.goto('/');
-  const departments=page.getByRole('navigation',{name:'Marketplace departments'});
+
+  const departments=page.locator('#aeMarketplaceTabs');
   await expect(departments).toBeVisible();
+  await expect(departments).toHaveAttribute('aria-label','Department links');
   await expect(departments.locator('[data-department]')).toHaveCount(7);
-  await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
-  const departmentKeys=await departments.locator('.ae-department-row > [data-department]').evaluateAll(nodes=>nodes.map(node=>node.dataset.department));
+  const departmentKeys=await departments.locator('.ae-marketplace-tabs__track > [data-department]').evaluateAll(nodes=>nodes.map(node=>node.dataset.department));
   expect(departmentKeys).toEqual(['restaurants','groceries','health-beauty','convenience','gifts','electronics','pet-supplies']);
+  await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
+  await expect(page.locator('.ae-home-department-nav, .ae-department-tile')).toHaveCount(0);
+  await expect(page.locator('img[src*="afghan-feast"]')).toHaveCount(0);
   await expect(page.locator('.ae-cuisine-section')).toHaveCount(0);
   await expect(page.locator('.dish-category-row')).toHaveCount(0);
   await expect(departments.locator('a')).toHaveCount(7);
-  const restaurantsTile=departments.locator('[data-department="restaurants"]');
-  await expect(restaurantsTile).toHaveAttribute('href','/restaurants');
-  await expect(restaurantsTile).toContainText('Restaurants');
-  await expect(restaurantsTile).toContainText('Browse menus');
-  const restaurantPhoto=restaurantsTile.locator('.ae-department-art img');
-  await expect(restaurantPhoto).toHaveAttribute('src','/assets/images/afghan-feast-small.webp');
-  await restaurantPhoto.scrollIntoViewIfNeeded();
-  await expect.poll(()=>restaurantPhoto.evaluate(image=>image.naturalWidth)).toBeGreaterThan(0);
-  const futureDepartments=[
-    ['groceries','Groceries','groceries.jpg'],['health-beauty','Health & Beauty','health-beauty.jpg'],
-    ['convenience','Convenience','convenience.jpg'],['gifts','Gifts','gifts.jpg'],
-    ['electronics','Electronics','electronics.jpg'],['pet-supplies','Pet Supplies','pet-supplies.jpg']
-  ];
-  for(const [key,label,imageName] of futureDepartments){
-    const tile=departments.locator(`[data-department="${key}"]`);
-    await expect(tile).toHaveAttribute('href',`/${key}`);
-    await expect(tile).toContainText(label);
-    await expect(tile).toContainText('Coming soon');
-    const photo=tile.locator('.ae-department-art img');
-    await expect(photo).toHaveAttribute('src',`/assets/department-images/${imageName}`);
-    await photo.scrollIntoViewIfNeeded();
-    await expect.poll(()=>photo.evaluate(image=>image.naturalWidth)).toBeGreaterThan(0);
+  const restaurantsTab=departments.locator('[data-department="restaurants"]');
+  await expect(restaurantsTab).toHaveAttribute('href','/restaurants');
+  await expect(restaurantsTab).toContainText('Restaurants');
+  await expect(restaurantsTab).toContainText('Browse menus');
+  for(const key of departmentKeys.slice(1)){
+    const tab=departments.locator(`[data-department="${key}"]`);
+    await expect(tab).toHaveAttribute('href',`/${key}`);
+    await expect(tab).toContainText('Coming soon');
   }
+
+  const homeForm=page.locator('#aeHomeAreaForm');
+  const fields=await homeForm.locator('input').evaluateAll(nodes=>nodes.map(node=>node.name));
+  expect(fields).toEqual(['area','q']);
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label','Search restaurants, items, and categories');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+
   await page.setViewportSize({width:390,height:844});
-  const mobileDepartmentLayout=await page.evaluate(()=>{
-    const row=document.querySelector('.ae-department-row');
-    return{viewport:window.innerWidth,pageWidth:document.documentElement.scrollWidth,rowClientWidth:row.clientWidth,rowScrollWidth:row.scrollWidth,columns:getComputedStyle(row).gridTemplateColumns.split(' ').length};
-  });
-  expect(mobileDepartmentLayout.pageWidth).toBeLessThanOrEqual(mobileDepartmentLayout.viewport+1);
-  expect(mobileDepartmentLayout.rowScrollWidth).toBeLessThanOrEqual(mobileDepartmentLayout.rowClientWidth+1);
-  expect(mobileDepartmentLayout.columns).toBe(2);
+  const mobileRail=await page.locator('.ae-marketplace-tabs__track').evaluate(element=>({client:element.clientWidth,scroll:element.scrollWidth}));
+  expect(mobileRail.scroll).toBeGreaterThan(mobileRail.client);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
   await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
-  const departmentsFa=page.getByRole('navigation',{name:'بخش‌های فروشگاه'});
-  await expect(departmentsFa).toBeVisible();
-  await expect(departmentsFa.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
-  await expect(departmentsFa.locator('[data-department="restaurants"]')).toContainText('دیدن منوها');
+  await expect(departments).toHaveAttribute('aria-label','پیوندهای بخش‌ها');
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('دیدن منوها');
   const futureLabelsFa=[
-    ['groceries','مواد خوراکی'],['health-beauty','صحت و زیبایی'],
-    ['convenience','ضروریات روزانه'],['gifts','هدایا'],['electronics','لوازم الکترونیکی'],['pet-supplies','لوازم حیوانات خانگی']
+    ['groceries','مواد غذایی'],['health-beauty','صحت و زیبایی'],
+    ['convenience','ضروریات روزمره'],['gifts','هدایا'],['electronics','الکترونیک'],['pet-supplies','لوازم حیوانات خانگی']
   ];
   for(const [key,label] of futureLabelsFa){
-    const tile=departmentsFa.locator(`[data-department="${key}"]`);
-    await expect(tile).toHaveAttribute('href',`/${key}`);
-    await expect(tile).toContainText(label);
-    await expect(tile).toContainText('به‌زودی');
+    const tab=departments.locator(`[data-department="${key}"]`);
+    await expect(tab).toHaveAttribute('href',`/${key}`);
+    await expect(tab).toContainText(label);
+    await expect(tab).toContainText('به‌زودی');
   }
+
   await page.goto('/restaurants');
   await expect(page.locator('.ae-home-department-nav')).toHaveCount(0);
   await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);

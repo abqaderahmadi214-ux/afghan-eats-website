@@ -12,3 +12,5 @@ Cuisine thumbnails reuse the stock photographs already referenced by this websit
 - cafe.webp: https://images.unsplash.com/photo-1495474472287-4d71bcdd2085
 
 Restaurant catalogue photography is unchanged and continues to use the catalogue's existing sources and missing-photo treatment.
+
+The AI-generated `afghan-feast.webp` artwork has been removed from the homepage and Afghan Eats Business hero on the clean-review branch; dynamic restaurant cards continue to use each listing's own public restaurant media when available.

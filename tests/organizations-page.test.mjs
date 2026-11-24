@@ -5,6 +5,7 @@ import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const navigation = fs.readFileSync(path.join(root, 'assets/marketplace-navigation.js'), 'utf8');
 const page = fs.readFileSync(path.join(root, 'organizations/index.html'), 'utf8');
 const build = fs.readFileSync(path.join(root, 'scripts/build-render-static.cjs'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
@@ -19,11 +20,14 @@ test('homepage stays focused and links to the existing Afghan Eats Business page
   assert.match(home, /href="\/organizations\/"/);
   assert.match(home, /id="homeRestaurants"/);
   assert.doesNotMatch(home, /class="ae-org-promo"|class="ae-community"/);
-  assert.match(home, /data-department="restaurants"/);
+  assert.match(home, /marketplace-navigation\.js/);
+  assert.doesNotMatch(home, /ae-home-department-nav|ae-department-tile/);
+  assert.doesNotMatch(home, /afghan-feast\.webp/);
+  assert.match(navigation, /slug: 'restaurants',[^\n]*statusEn: 'Browse menus'/);
   for (const department of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
-    assert.match(home, new RegExp(`data-department="${department}"[^>]*>[\\s\\S]*?Coming soon`));
+    assert.match(navigation, new RegExp(`slug: '${department}',[^\n]*statusEn: 'Coming soon'`));
   }
-  assert.doesNotMatch(home, /data-department="alcohol"/);
+  assert.doesNotMatch(navigation, /slug: 'alcohol'/);
 });
 
 test('organizations page contains the verified service facts, support types, process and capacity limits', () => {

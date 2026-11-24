@@ -1,97 +1,84 @@
-/* Afghan Eats marketplace navigation: seven first-level departments. */
-:root {
-  --ae-marketplace-sticky-offset: 120px;
-}
-
+/* Shared seven-department rail: simple text navigation, no repeated tile cards. */
+:root { --ae-marketplace-sticky-offset: 112px; }
 .header > .ae-marketplace-tabs {
   position: relative;
   z-index: 49;
   width: 100%;
-  border-top: 1px solid rgba(226, 234, 228, .82);
-  border-bottom: 1px solid rgba(220, 229, 223, .92);
-  background: linear-gradient(180deg, rgba(255, 255, 255, .99), rgba(249, 252, 249, .98));
-  box-shadow: 0 7px 16px rgba(23, 37, 31, .035);
+  border-top: 1px solid #eceee8;
+  border-bottom: 1px solid #e6e9e2;
+  background: #fffefa;
 }
-
 .ae-marketplace-tabs__track {
-  width: min(1240px, 92%);
-  min-height: 52px;
-  margin: 0 auto;
-  padding: 4px 2px;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: stretch;
+  justify-content: space-between;
   gap: 4px;
+  width: min(1240px, 92%);
+  min-height: 56px;
+  margin: 0 auto;
+  padding: 4px 0 0;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
-  scroll-padding-inline: 10px;
+  scroll-padding-inline: 8px;
   scrollbar-width: thin;
-  scrollbar-color: #dce6df transparent;
+  scrollbar-color: #d9e0d8 transparent;
 }
-
 .ae-marketplace-tabs__track::-webkit-scrollbar { height: 4px; }
-.ae-marketplace-tabs__track::-webkit-scrollbar-thumb { border-radius: 999px; background: #dce6df; }
-
+.ae-marketplace-tabs__track::-webkit-scrollbar-thumb { border-radius: 999px; background: #d9e0d8; }
 .ae-marketplace-tab {
-  min-height: 44px;
-  flex: 0 0 auto;
+  position: relative;
   display: inline-flex;
-  align-items: center;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-  gap: 7px;
-  padding: 6px 7px;
-  border: 1px solid #e4ebe5;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .9);
-  color: #31483d;
-  box-shadow: 0 2px 7px rgba(23, 37, 31, .035);
-  font-size: .78rem;
-  font-weight: 820;
-  line-height: 1.1;
+  gap: 3px;
+  min-height: 48px;
+  padding: 5px 9px 7px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #344a3e;
+  box-shadow: none;
+  font-size: .83rem;
+  font-weight: 760;
+  line-height: 1.15;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+  transition: color .15s ease, border-color .15s ease, background-color .15s ease;
 }
-
 .ae-marketplace-tab:hover {
-  transform: translateY(-1px);
-  border-color: #bad4c2;
-  background: #f8fcf9;
-  box-shadow: 0 7px 16px rgba(23, 37, 31, .08);
+  border-bottom-color: #becdbd;
+  background: #fafbf7;
+  color: #17563d;
+  box-shadow: none;
+  transform: none;
 }
-
-.ae-marketplace-tab:focus-visible {
-  outline: 3px solid rgba(28, 122, 85, .42);
-  outline-offset: 2px;
-}
-
+.ae-marketplace-tab:focus-visible { outline: 3px solid rgba(28, 122, 85, .42); outline-offset: -2px; }
 .ae-marketplace-tab[aria-current="page"] {
-  border-color: #1c7a55;
-  background: linear-gradient(135deg, #eaf6ee, #f8fcf9);
-  color: #17583f;
-  box-shadow: 0 5px 13px rgba(28, 122, 85, .12);
+  border-bottom-color: #176b48;
+  background: transparent;
+  color: #14553c;
+  box-shadow: none;
 }
-
 .ae-marketplace-tab__status {
   display: inline-flex;
   align-items: center;
-  min-height: 22px;
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: #fbf2df;
-  color: #75571e;
-  font-size: .61rem;
-  font-weight: 850;
-  line-height: 1;
-  letter-spacing: .01em;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #78837a;
+  font-size: .65rem;
+  font-weight: 620;
+  line-height: 1.2;
+  letter-spacing: 0;
 }
+.ae-marketplace-tab[data-availability="available"] .ae-marketplace-tab__status { color: #437456; }
 
-.ae-marketplace-tab[data-availability="available"] .ae-marketplace-tab__status {
-  background: #eaf6ee;
-  color: #17623f;
-}
-
-/* The button's text remains available to assistive technology; the flag is the visual label. */
+/* The switch is visually flags-only; its accessible label remains localized. */
 button.lang {
   position: relative;
   display: inline-grid;
@@ -102,38 +89,20 @@ button.lang {
   padding: 0 !important;
   overflow: hidden;
   border: 1px solid #d5e2d9;
-  border-radius: 14px;
-  background: linear-gradient(145deg, #fff, #f2f8f4);
+  border-radius: 12px;
+  background: #fffefa;
   color: #183d32;
-  box-shadow: 0 4px 11px rgba(23, 37, 31, .07);
+  box-shadow: none;
   font-size: 0 !important;
   line-height: 1;
   cursor: pointer;
-  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  transition: border-color .16s ease, background-color .16s ease;
 }
-
-body.ae-premium button.lang {
-  font-size: 0 !important;
-}
-
-button.lang::before {
-  content: "🇦🇫";
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
+body.ae-premium button.lang { font-size: 0 !important; }
+button.lang::before { content: "🇦🇫"; font-size: 1.2rem; line-height: 1; }
 html[lang="fa"] button.lang::before { content: "🇬🇧"; }
-
-button.lang:hover {
-  transform: translateY(-1px);
-  border-color: #b9d4c2;
-  background: #f5fbf7;
-  box-shadow: 0 8px 17px rgba(23, 37, 31, .12);
-}
-
-body.ae-marketplace-mobile-nav-compact .mobile-nav {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+button.lang:hover { border-color: #aec8b4; background: #f6faf6; }
+body.ae-marketplace-mobile-nav-compact .mobile-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* Keep restaurant menu sections and sticky category tabs below the expanded site header. */
 .store-tabs { top: var(--ae-marketplace-sticky-offset); }
@@ -141,38 +110,24 @@ body.ae-marketplace-mobile-nav-compact .mobile-nav {
 .cart-panel { top: calc(var(--ae-marketplace-sticky-offset) + 70px); }
 
 @media (max-width: 1000px) {
+  .ae-marketplace-tabs__track { width: 100%; justify-content: flex-start; padding-inline: 4%; }
+}
+@media (max-width: 760px) {
+  :root { --ae-marketplace-sticky-offset: 104px; }
   .ae-marketplace-tabs__track {
-    width: 100%;
+    width: min(100% - 24px, 680px);
+    min-height: 52px;
     justify-content: flex-start;
-    padding-inline: 4%;
-  }
-}
-
-@media (max-width: 620px) {
-  :root { --ae-marketplace-sticky-offset: 112px; }
-  .ae-marketplace-tabs__track {
-    min-height: 50px;
-    gap: 6px;
-    padding-block: 3px;
-  }
-  .ae-marketplace-tab {
-    min-height: 42px;
     gap: 5px;
-    padding: 5px 9px;
-    font-size: .73rem;
+    margin-inline: auto;
+    padding: 2px 0 0;
   }
-  .ae-marketplace-tab__status {
-    min-height: 20px;
-    padding: 3px 6px;
-    font-size: .57rem;
-  }
-  button.lang { width: 42px; min-width: 42px; height: 42px; }
+  .ae-marketplace-tab { min-height: 46px; padding-inline: 9px; font-size: .78rem; }
+  .ae-marketplace-tab__status { font-size: .61rem; }
 }
-
 @media (max-width: 360px) {
   button.lang { width: 38px; min-width: 38px; height: 38px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .ae-marketplace-tab, button.lang { transition: none; }
+  .ae-marketplace-tab, button.lang { transition: none !important; }
 }

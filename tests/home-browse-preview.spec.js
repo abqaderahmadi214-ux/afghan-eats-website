@@ -40,11 +40,12 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
   await expect(page.locator('#homeRestaurants')).toHaveCount(1);
-  await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
-  const departments = page.locator('.ae-home-department-nav');
+  const departments = page.locator('#aeMarketplaceTabs');
   await expect(departments).toBeVisible();
+  await expect(departments).toHaveAttribute('aria-label', 'Department links');
   await expect(departments.locator('[data-department]')).toHaveCount(7);
-  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  await expect(page.locator('.ae-home-department-nav, .ae-department-tile')).toHaveCount(0);
+  const departmentKeys = await departments.locator('.ae-marketplace-tabs__track > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
   expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
   await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
   await expect(page.locator('.ae-cuisine')).toHaveCount(0);
@@ -56,12 +57,12 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
-  await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
+  await expect(page.locator('label[for="aeHomeArea"] .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
+  await expect(departments).toHaveAttribute('aria-label', 'پیوندهای بخش‌ها');
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
   const comingSoonDari = [
-    ['groceries', 'مواد خوراکی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزانه'],
-    ['gifts', 'هدایا'], ['electronics', 'لوازم الکترونیکی'], ['pet-supplies', 'لوازم حیوانات خانگی']
+    ['groceries', 'مواد غذایی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزمره'],
+    ['gifts', 'هدایا'], ['electronics', 'الکترونیک'], ['pet-supplies', 'لوازم حیوانات خانگی']
   ];
   for (const [key, label] of comingSoonDari) {
     const tile = departments.locator(`[data-department="${key}"]`);
@@ -76,16 +77,22 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   }
 });
 
-test('mobile department cards fill their grid tracks', async ({ page }) => {
+test('mobile homepage keeps area before search and scrolls the single department rail without page overflow', async ({ page }) => {
   await routeApi(page);
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto('/');
-  const grid = await page.locator('.ae-department-row').boundingBox();
-  const card = await page.locator('.ae-department-tile').first().boundingBox();
-  const art = await page.locator('.ae-department-art').first().boundingBox();
-  const photo = await page.locator('.ae-department-art img').first().boundingBox();
-  expect(card.width).toBeGreaterThan(grid.width * 0.45);
-  expect(photo.width).toBeGreaterThan(art.width * 0.95);
+  const form = page.locator('#aeHomeAreaForm');
+  const fields = await form.locator('input').evaluateAll(nodes => nodes.map(node => node.id));
+  expect(fields).toEqual(['aeHomeArea', 'aeHomeSearch']);
+  const positions = await page.evaluate(() => ({
+    area: document.querySelector('#aeHomeArea').getBoundingClientRect().top,
+    search: document.querySelector('#aeHomeSearch').getBoundingClientRect().top
+  }));
+  expect(positions.area).toBeLessThan(positions.search);
+  const track = page.locator('.ae-marketplace-tabs__track');
+  const widths = await track.evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+  expect(widths.scroll).toBeGreaterThan(widths.client);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
 test('merchant growth bundle is loaded once without a duplicate declaration error', async ({ page }) => {
@@ -171,20 +178,20 @@ test('homepage search finds restaurants, menu items, and categories in both lang
 
   await page.locator('#aeHomeSearch').fill('Saffron Kitchen Preview');
   await page.locator('.ae-home-search button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/restaurants\?q=Saffron\+Kitchen\+Preview$/);
+  await expect(page).toHaveURL(/\/restaurants\?area=&q=Saffron\+Kitchen\+Preview$/);
   await expect(page.locator('#search')).toHaveValue('Saffron Kitchen Preview');
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('Saffron Kitchen Preview');
 
   await page.goto('/');
   await page.locator('#aeHomeSearch').fill('Qabili Signature');
   await page.locator('.ae-home-search button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/restaurants\?q=Qabili\+Signature$/);
+  await expect(page).toHaveURL(/\/restaurants\?area=&q=Qabili\+Signature$/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('Saffron Kitchen Preview');
 
   await page.goto('/');
   await page.locator('#aeHomeSearch').fill('Main dishes');
   await page.locator('.ae-home-search button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/restaurants\?q=Main\+dishes$/);
+  await expect(page).toHaveURL(/\/restaurants\?area=&q=Main\+dishes$/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('Saffron Kitchen Preview');
 
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
@@ -196,14 +203,22 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('ثبت سفارش جدید موقتاً متوقف است');
   await page.locator('#aeHomeSearch').fill('قابلی ویژه');
   await page.locator('.ae-home-search button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/restaurants\?q=/);
+  await expect(page).toHaveURL(/\/restaurants\?area=&q=/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانهٔ زعفران');
 
   await page.goto('/');
   await page.locator('#aeHomeSearch').fill('غذاهای اصلی');
   await page.locator('.ae-home-search button[type="submit"]').click();
-  await expect(page).toHaveURL(/\/restaurants\?q=/);
+  await expect(page).toHaveURL(/\/restaurants\?area=&q=/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانهٔ زعفران');
+
+  await page.goto('/');
+  await page.locator('#aeHomeArea').fill('Jebrael');
+  await page.locator('#aeHomeSearch').fill('Qabili Signature');
+  await page.locator('#aeHomeAreaSubmit').click();
+  await expect(page).toHaveURL(/\/restaurants\?area=Jebrael&q=Qabili\+Signature$/);
+  await expect(page.locator('#aeLocationArea')).toHaveValue('Jebrael');
+  await expect(page.locator('#search')).toHaveValue('Qabili Signature');
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
   expect(overflow).toBe(false);
@@ -247,17 +262,19 @@ test('public browse-only restaurant menus stay visible while all ordering paths 
   expect(orderRequests).toHaveLength(0);
 });
 
-test('homepage motion respects a reduced-motion preference', async ({ page }) => {
+test('homepage controls respect a reduced-motion preference', async ({ page }) => {
   await routeApi(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(page.locator('.ae-department-tile').first()).toBeVisible();
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   const motion = await page.evaluate(() => ({
     enabled: document.documentElement.classList.contains('ae-motion-enabled'),
-    photoTransition: getComputedStyle(document.querySelector('.ae-department-art img')).transitionDuration,
-    areaTransition: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transitionDuration
+    searchButtonTransition: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transitionDuration,
+    searchButtonTransform: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transform,
+    departmentTransition: getComputedStyle(document.querySelector('#aeMarketplaceTabs a')).transitionDuration
   }));
   expect(motion.enabled).toBe(false);
-  expect(motion.photoTransition).toBe('0s');
-  expect(motion.areaTransition).toBe('0s');
+  expect(motion.searchButtonTransition).toBe('0s');
+  expect(motion.searchButtonTransform).toBe('none');
+  expect(motion.departmentTransition).toBe('0s');
 });
