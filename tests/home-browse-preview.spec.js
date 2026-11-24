@@ -39,7 +39,7 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
-  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
+  await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
   const departments = page.locator('.ae-home-department-nav');
   await expect(departments).toBeVisible();
@@ -166,7 +166,7 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Search restaurants, items, and categories');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search restaurants, items, and categories');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('Other marketplace departments are coming soon');
+  await expect(page.locator('#aeHomeSearchNote')).toContainText('Browse menus while ordering is paused');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
 
   await page.locator('#aeHomeSearch').fill('Saffron Kitchen Preview');

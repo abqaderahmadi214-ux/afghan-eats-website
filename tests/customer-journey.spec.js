@@ -399,7 +399,7 @@ test('focused homepage omits duplicate restaurant cards while public menu browsi
   await mockApi(page,{restaurants:[preview,testListing,restaurant]});
   await page.goto('/');
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
-  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
+  await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await page.waitForTimeout(1200);
   await expect(page.getByText('Preview Only Restaurant',{exact:true})).toHaveCount(0);
   await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);

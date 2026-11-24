@@ -194,6 +194,7 @@ test('applicant can resend email verification using the reference and email cont
     return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:`unexpected ${path}`}})});
   });
   await page.goto('/department-partner');
+  await page.locator('#application-status summary').click();
   await page.getByLabel('Application reference').fill('AEM-20261124-A1B2C3');
   await page.getByLabel('Email used on application').fill('owner@example.com');
   await page.getByRole('button',{name:'Check status'}).click();

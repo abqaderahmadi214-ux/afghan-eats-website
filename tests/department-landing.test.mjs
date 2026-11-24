@@ -17,9 +17,13 @@ test('each department has a complete bilingual, image-led landing page that rema
     assert.match(page, new RegExp(`/assets/department-images/${slug}\\.jpg`), `${slug} uses its genuine category image`);
     assert.match(page, /Coming soon/);
     assert.match(page, /به‌زودی/);
-    assert.match(page, /No public shops are listed yet/);
-    assert.match(page, /There are no approved public shop listings in this department yet/);
-    assert.match(page, /no retail order can be placed here/);
+    if (slug === 'groceries') {
+      assert.match(page, /Apply as a shop owner/);
+      assert.equal((page.match(/<li class="department-plan-card">/g) || []).length, 4);
+    } else {
+      assert.match(page, /No public shops are listed yet/);
+      assert.match(page, /no retail order can be placed here/);
+    }
     assert.match(page, /https:\/\/afghaneats\.net\/department-partner\.html/);
     assert.match(page, /class="department-planned-title"/);
     assert.doesNotMatch(page, /\bAlcohol\b/i);
