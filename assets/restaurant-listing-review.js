@@ -318,19 +318,35 @@
     if (!sort) return;
     const hasRatings = rows.some(row => typeof trustedRating === 'function' && trustedRating(row));
     const pickupMode = typeof mode !== 'undefined' && mode === 'pickup';
-    const hasQuotedEta = !pickupMode && rows.length > 0 && rows.every(row => {
+    const hasQuotedEta = !pickupMode && rows.some(row => {
       const quote = deliveryQuoteFor(row);
       return quote?.etaMin != null && quote.etaMin !== '';
     });
-    const hasQuotedFee = !pickupMode && rows.length > 0 && rows.every(row => {
+    const hasQuotedFee = !pickupMode && rows.some(row => {
       const quote = deliveryQuoteFor(row);
       return quote?.deliveryFee != null && quote.deliveryFee !== '';
     });
-    [['rating', hasRatings], ['fastest', hasQuotedEta], ['fee', hasQuotedFee]].forEach(([value, available]) => {
-      const option = sort.querySelector(`option[value="${value}"]`);
-      if (option) option.hidden = !available;
+    const hasMinimumOrder = !pickupMode && rows.some(row => {
+      const value = deliveryQuoteFor(row)?.minimumOrder;
+      return value != null && value !== '' && Number.isFinite(Number(value));
     });
-    if (sort.selectedOptions[0]?.hidden) sort.value = 'recommended';
+    const updateOption = (value, labelEn, labelFa, available, hidden = false) => {
+      const option = sort.querySelector(`option[value="${value}"]`);
+      if (!option) return;
+      option.hidden = hidden;
+      option.disabled = hidden || !available;
+      const en = available ? labelEn : `${labelEn} — Coming soon`;
+      const fa = available ? labelFa : `${labelFa} — به‌زودی`;
+      option.dataset.en = en;
+      option.dataset.fa = fa;
+      option.textContent = copy(en, fa);
+    };
+    updateOption('rating', 'Reviews', 'دیدگاه‌ها', hasRatings);
+    updateOption('distance', 'Distance', 'فاصله', false);
+    updateOption('fastest', 'Estimated delivery time', 'زمان تخمینی ارسال', hasQuotedEta, pickupMode);
+    updateOption('min-order', 'Minimum order amount', 'حداقل مبلغ سفارش', hasMinimumOrder, pickupMode);
+    updateOption('fee', 'Delivery costs', 'هزینه ارسال', hasQuotedFee, pickupMode);
+    if (sort.selectedOptions[0]?.hidden || sort.selectedOptions[0]?.disabled) sort.value = 'recommended';
   }
 
   function sanitizeRestaurantCards() {
@@ -490,12 +506,12 @@
 
   function setupSearch(input) {
     if (!input) return;
-    input.setAttribute('aria-label', copy('Search restaurants or dishes', 'نام رستورانت یا غذا را جستجو کنید'));
+    input.setAttribute('aria-label', copy('Search restaurants, items, and categories', 'جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها'));
     input.setAttribute('dir', 'auto');
-    input.dataset.ariaEn = 'Search restaurants or dishes';
-    input.dataset.ariaFa = 'نام رستورانت یا غذا را جستجو کنید';
-    input.dataset.phEn = 'Search restaurants or dishes';
-    input.dataset.phFa = 'نام رستورانت یا غذا را جستجو کنید';
+    input.dataset.ariaEn = 'Search restaurants, items, and categories';
+    input.dataset.ariaFa = 'جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها';
+    input.dataset.phEn = 'Search restaurants, items, and categories';
+    input.dataset.phFa = 'رستورانت‌ها، غذاها و دسته‌بندی‌ها';
     input.placeholder = copy(input.dataset.phEn, input.dataset.phFa);
     input.setAttribute('list', 'aeRestaurantRecentSearches');
     const datalist = document.createElement('datalist');
@@ -599,7 +615,8 @@
     const input = document.getElementById('search');
     const sort = document.getElementById('sort');
     if (input) input.value = state.search || '';
-    if (sort && !sort.querySelector(`option[value="${CSS.escape(state.sort || 'recommended')}"]`)?.hidden) sort.value = state.sort || 'recommended';
+    const savedSort = sort?.querySelector(`option[value="${CSS.escape(state.sort || 'recommended')}"]`);
+    if (savedSort && !savedSort.hidden && !savedSort.disabled) sort.value = state.sort || 'recommended';
     const filters = new Set(Array.isArray(state.filters) ? state.filters : []);
     currentFilterButtons().forEach(button => {
       button.classList.toggle('active', filters.has(button.dataset.filter));
@@ -678,7 +695,7 @@
     const sortLabel = document.createElement('label');
     sortLabel.className = 'restaurant-sort-label';
     sortLabel.htmlFor = 'sort';
-    sortLabel.innerHTML = `<span class="en-copy">Sort</span><span class="fa-copy">مرتب‌سازی</span>`;
+    sortLabel.innerHTML = `<span class="en-copy">Sort by</span><span class="fa-copy">مرتب‌سازی</span>`;
     sortLabel.append(sort);
     const filterTrigger = document.createElement('button');
     filterTrigger.type = 'button';

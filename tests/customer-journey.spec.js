@@ -980,7 +980,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   }
   await page.goto('/restaurants');
   await expect(page.locator('.ae-home-department-nav')).toHaveCount(0);
-  await expect(page.locator('[data-department]')).toHaveCount(0);
+  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);
   await expect(page.locator('.dish-category-row')).toBeVisible();
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
   expect(orderSubmissions).toBe(0);
@@ -1004,11 +1004,13 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
         const mobileLayout=await page.evaluate(()=>{
           const tile=document.querySelector('.dish-category-chip')?.getBoundingClientRect();
           const departmentRow=document.querySelector('.ae-department-row');
+          const sortGroup=document.querySelector('.restaurant-sort-label')?.getBoundingClientRect();
           const sort=document.querySelector('#sort')?.getBoundingClientRect();
-          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortWidth:sort?.width||0,departmentsAbsent:!departmentRow,pageWidth:document.documentElement.scrollWidth};
+          return{tileFullyVisible:Boolean(tile&&tile.left>=0&&tile.right<=window.innerWidth),sortGroupWidth:sortGroup?.width||0,sortWidth:sort?.width||0,departmentsAbsent:!departmentRow,pageWidth:document.documentElement.scrollWidth};
         });
         expect(mobileLayout.tileFullyVisible).toBe(true);
-        expect(mobileLayout.sortWidth).toBeGreaterThanOrEqual(138);
+        expect(mobileLayout.sortGroupWidth).toBeGreaterThanOrEqual(138);
+        expect(mobileLayout.sortWidth).toBeGreaterThanOrEqual(90);
         expect(mobileLayout.departmentsAbsent).toBe(true);
         expect(mobileLayout.pageWidth).toBeLessThanOrEqual(width+1);
       }
@@ -1036,7 +1038,7 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(2);
-  await expect(page.locator('#search')).toHaveAttribute('placeholder','نام رستورانت یا غذا را جستجو کنید');
+  await expect(page.locator('#search')).toHaveAttribute('placeholder','رستورانت‌ها، غذاها و دسته‌بندی‌ها');
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
   await expect(page.locator('.ae-department-nav')).toHaveCount(0);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانه هرات');
@@ -1073,6 +1075,65 @@ test('a late dish-search response cannot replace results for a newer query', asy
 });
 
 
+test('phone browse keeps department navigation visible and labels unavailable sort criteria Coming soon', async ({page})=>{
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page,{restaurants:[{...restaurant,rating:null,total_reviews:0}]});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/restaurants');
+  await expect(page.locator('#search')).toHaveAttribute('placeholder','Search restaurants, items, and categories');
+  await expect(page.locator('#search')).toHaveAttribute('aria-label','Search restaurants, items, and categories');
+  await expect(page.locator('#aeMarketplaceTabs')).toBeVisible();
+  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);
+  await expect(page.locator('.restaurant-sort-label .en-copy')).toBeVisible();
+  await expect(page.locator('.restaurant-sort-label')).toContainText('Sort by');
+  await expect(page.locator('#sort')).toHaveAttribute('aria-label','Sort by');
+  const sortLabelBox=await page.locator('.restaurant-sort-label').boundingBox();
+  const sortSelectBox=await page.locator('#sort').boundingBox();
+  expect(sortLabelBox.width).toBeGreaterThanOrEqual(138);
+  expect(sortSelectBox.width).toBeGreaterThanOrEqual(90);
+  for(const value of ['rating','distance','fastest','min-order','fee']){
+    const option=page.locator(`#sort option[value="${value}"]`);
+    await expect(option).toHaveJSProperty('disabled',true);
+    await expect(option).toContainText('Coming soon');
+  }
+  await page.evaluate(()=>localStorage.setItem('ae_lang','fa'));
+  await page.goto('/restaurants');
+  await expect(page.locator('html')).toHaveAttribute('dir','rtl');
+  await expect(page.locator('#sort')).toHaveAttribute('aria-label','مرتب‌سازی بر اساس');
+  await expect(page.locator('.restaurant-sort-label .fa-copy')).toBeVisible();
+  await expect(page.locator('.restaurant-sort-label .fa-copy')).toContainText('مرتب‌سازی');
+  await expect(page.locator('#sort option[value="distance"]')).toContainText('به‌زودی');
+});
+
+test('Reviews, ETA, minimum order, and delivery costs sort on known data with unknown values last', async ({page})=>{
+  const moreReviews={...restaurant,id:'sort-more-reviews',name:'More Reviews Kitchen',rating:4.7,total_reviews:30};
+  const higherQuotes={...restaurant,id:'sort-higher-quotes',name:'Higher Quote Kitchen',rating:4.9,total_reviews:12};
+  const unquoted={...restaurant,id:'sort-unquoted',name:'Unquoted Kitchen',rating:null,total_reviews:0};
+  const values={
+    'sort-more-reviews':{minimumOrder:100,deliveryFee:45,etaMin:20},
+    'sort-higher-quotes':{minimumOrder:300,deliveryFee:80,etaMin:35},
+    'sort-unquoted':{minimumOrder:null,deliveryFee:null,etaMin:null}
+  };
+  await page.addInitScript(()=>localStorage.setItem('ae_address','Gulha Circle'));
+  await clearPublicRestaurantFallbacks(page);
+  await mockApi(page,{restaurants:[moreReviews,higherQuotes,unquoted],quoteHandler:async(route,input)=>{
+    await route.fulfill({status:200,contentType:'application/json',body:trpc({...quote,...values[input.restaurantId],restaurantId:input.restaurantId})});
+  }});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/restaurants');
+  const cards=page.locator('#restaurantGrid .restaurant-card');
+  await expect(cards).toHaveCount(3);
+  for(const value of ['rating','fastest','min-order','fee']) await expect(page.locator(`#sort option[value="${value}"]`)).toBeEnabled();
+  await page.locator('#sort').selectOption('rating');
+  await expect(cards.first()).toContainText('More Reviews Kitchen');
+  await expect(cards.last()).toContainText('Unquoted Kitchen');
+  for(const value of ['fastest','min-order','fee']){
+    await page.locator('#sort').selectOption(value);
+    await expect(cards.first()).toContainText('More Reviews Kitchen');
+    await expect(cards.last()).toContainText('Unquoted Kitchen');
+  }
+});
+
 test('pickup never reuses the app delivery ETA as preparation time and delivery-only sort options are hidden', async ({page})=>{
   await page.addInitScript(()=>localStorage.setItem('ae_mode','pickup'));
   await clearPublicRestaurantFallbacks(page);
@@ -1085,6 +1146,7 @@ test('pickup never reuses the app delivery ETA as preparation time and delivery-
   await expect(meta).not.toContainText('500');
   await expect(page.locator('#sort option[value="fastest"]')).toBeHidden();
   await expect(page.locator('#sort option[value="fee"]')).toBeHidden();
+  await expect(page.locator('#sort option[value="min-order"]')).toBeHidden();
 });
 
 test('a positive minimum order is shown only when supplied by the matching address quote', async ({page})=>{
