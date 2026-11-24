@@ -56,8 +56,8 @@
   function prepareRestaurants(){
     if(!isRestaurants())return;
     mountSkeleton('#restaurantGrid');
-    const input=document.querySelector('#search');if(input){input.placeholder=copy('Search restaurant, dish, area or cuisine','رستورانت، غذا، محله یا دسته غذایی را جستجو کنید');input.setAttribute('aria-label',copy('Search restaurants and dishes','جستجوی رستورانت‌ها و غذاها'))}
-    const rating=document.querySelector('#sort option[value="rating"]');if(rating)rating.textContent=copy('Rating','امتیاز');
+    const input=document.querySelector('#search');if(input){input.placeholder=copy('Search restaurants, items, and categories','رستورانت‌ها، غذاها و دسته‌بندی‌ها را جستجو کنید');input.setAttribute('aria-label',copy('Search restaurants, items, and categories','جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها'))}
+    const rating=document.querySelector('#sort option[value="rating"]');if(rating)rating.textContent=copy('Reviews','دیدگاه‌ها');
     const grid=document.querySelector('#restaurantGrid');if(grid)new MutationObserver(refreshRestaurantFilters).observe(grid,{childList:true,subtree:true});
     refreshRestaurantFilters();
   }

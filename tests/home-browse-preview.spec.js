@@ -129,7 +129,7 @@ test('paused Basket is subdued and inaccessible, then restores its normal action
   expect(activeBackground).not.toBe('rgb(233, 236, 231)');
 });
 
-test('homepage search finds a restaurant and a public-menu dish in both languages while orders stay paused', async ({ page }) => {
+test('homepage search finds restaurants, menu items, and categories in both languages while orders stay paused', async ({ page }) => {
   const restaurant = {
     id: 'search-preview-kitchen',
     slug: 'search-preview-kitchen',
@@ -137,6 +137,7 @@ test('homepage search finds a restaurant and a public-menu dish in both language
     name_dari: 'آشپزخانهٔ زعفران',
     category_primary: 'Afghan',
     cuisine_tags: ['Afghan', 'Rice'],
+    _categories: [{ id: 'main-dishes', name: 'Main dishes', name_dari: 'غذاهای اصلی' }],
     city: 'Herat',
     status: 'active',
     is_open: true,
@@ -161,8 +162,10 @@ test('homepage search finds a restaurant and a public-menu dish in both language
   await expect(page.locator('.ae-order-box')).toBeHidden();
   await expect(page.getByRole('search')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Restaurant or dish');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('Browsing only while ordering is paused');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Search restaurants, items, and categories');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search restaurants, items, and categories');
+  await expect(page.locator('#aeHomeSearchNote')).toContainText('Retail departments remain Coming soon');
+  await expect(page.locator('#aeHomeSearchNote')).toContainText('ordering is paused');
 
   await page.locator('#aeHomeSearch').fill('Saffron Kitchen Preview');
   await page.locator('.ae-home-search button[type="submit"]').click();
@@ -176,13 +179,26 @@ test('homepage search finds a restaurant and a public-menu dish in both language
   await expect(page).toHaveURL(/\/restaurants\?q=Qabili\+Signature$/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('Saffron Kitchen Preview');
 
+  await page.goto('/');
+  await page.locator('#aeHomeSearch').fill('Main dishes');
+  await page.locator('.ae-home-search button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/restaurants\?q=Main\+dishes$/);
+  await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('Saffron Kitchen Preview');
+
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'رستورانت یا غذا');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'رستورانت‌ها، غذاها و دسته‌بندی‌ها');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها');
   await expect(page.locator('.ae-home-search button[type="submit"]')).toContainText('جستجو');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('فقط برای مرور');
+  await expect(page.locator('#aeHomeSearchNote')).toContainText('ثبت سفارش متوقف است');
   await page.locator('#aeHomeSearch').fill('قابلی ویژه');
+  await page.locator('.ae-home-search button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/restaurants\?q=/);
+  await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانهٔ زعفران');
+
+  await page.goto('/');
+  await page.locator('#aeHomeSearch').fill('غذاهای اصلی');
   await page.locator('.ae-home-search button[type="submit"]').click();
   await expect(page).toHaveURL(/\/restaurants\?q=/);
   await expect(page.locator('#restaurantGrid .restaurant-card').first()).toContainText('آشپزخانهٔ زعفران');
