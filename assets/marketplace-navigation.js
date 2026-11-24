@@ -90,8 +90,8 @@
     const nav = document.createElement('nav');
     nav.id = 'aeMarketplaceTabs';
     nav.className = 'ae-marketplace-tabs';
-    nav.dataset.ariaEn = 'Marketplace departments';
-    nav.dataset.ariaFa = 'بخش‌های فروشگاه';
+    nav.dataset.ariaEn = 'Department links';
+    nav.dataset.ariaFa = 'پیوندهای بخش‌ها';
     nav.setAttribute('aria-label', document.documentElement.lang === 'fa' ? nav.dataset.ariaFa : nav.dataset.ariaEn);
 
     const track = document.createElement('div');

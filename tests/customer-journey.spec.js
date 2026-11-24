@@ -980,7 +980,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   }
   await page.goto('/restaurants');
   await expect(page.locator('.ae-home-department-nav')).toHaveCount(0);
-  await expect(page.locator('[data-department]')).toHaveCount(0);
+  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);
   await expect(page.locator('.dish-category-row')).toBeVisible();
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
   expect(orderSubmissions).toBe(0);

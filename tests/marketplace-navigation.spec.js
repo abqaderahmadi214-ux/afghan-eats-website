@@ -17,7 +17,7 @@ test('shared marketplace tabs present seven first-level departments and keep six
   const nav = page.locator('#aeMarketplaceTabs');
   await expect(nav).toBeVisible();
   await expect(nav.locator('a')).toHaveCount(7);
-  await expect(nav).toHaveAttribute('aria-label', 'Marketplace departments');
+  await expect(nav).toHaveAttribute('aria-label', 'Department links');
   const actualDepartmentPaths = await nav.locator('a').evaluateAll(links => links.map(link => link.getAttribute('href')));
   expect(actualDepartmentPaths).toEqual(departmentPaths);
   await expect(nav.locator('a[data-department="groceries"]')).toHaveAttribute('aria-current', 'page');
@@ -45,6 +45,9 @@ test('mobile marketplace rail scrolls to every peer department', async ({ page }
     const edge = element.parentElement.getBoundingClientRect().right;
     return right <= edge + 1;
   })).toBe(true);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/groceries');
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
 test('desktop header shows all seven peer choices without horizontal overflow', async ({ page }) => {
@@ -76,7 +79,7 @@ test('language switch shows flags only while exposing a localized accessible nam
   await languageButton.click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'fa');
   await expect(languageButton).toHaveAttribute('aria-label', 'تغییر زبان به انگلیسی');
-  await expect(page.locator('#aeMarketplaceTabs')).toHaveAttribute('aria-label', 'بخش‌های فروشگاه');
+  await expect(page.locator('#aeMarketplaceTabs')).toHaveAttribute('aria-label', 'پیوندهای بخش‌ها');
   const englishFlag = await languageButton.evaluate(element => getComputedStyle(element, '::before').content);
   expect(englishFlag).toContain('🇬🇧');
 });
