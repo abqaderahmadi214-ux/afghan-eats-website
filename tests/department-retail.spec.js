@@ -32,7 +32,7 @@ test('open department application uses backend field names and supports email-ba
     const request=route.request(),path=tRPCPath(request.url()),input=request.method()==='GET'?getInput(request.url()):request.postDataJSON()?.json;
     calls.push({path,method:request.method(),input});
     if(path==='departmentRetail.departmentGates')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope(departments.map(department_key=>({department_key,applications_open:department_key==='groceries',listing_enabled:false,ordering_enabled:false}))))});
-    if(path==='departmentRetail.apply')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope({success:true,duplicate:false,reference:'AEM-20261124-A1B2C3',status:'pending',emailVerified:false,verificationEmailSent:true}))});
+    if(path==='departmentRetail.submitApplication')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope({success:true,duplicate:false,reference:'AEM-20261124-A1B2C3',status:'pending',emailVerified:false,verificationEmailSent:true}))});
     if(path==='departmentRetail.applicationStatus')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope({reference:'AEM-20261124-A1B2C3',department_key:'groceries',business_name:'Test Market',status:'pending',email_verified:false,created_at:'2026-11-24T00:00:00Z'}))});
     return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:`unexpected ${path}`}})});
   });
@@ -50,7 +50,7 @@ test('open department application uses backend field names and supports email-ba
   await page.locator('#application-submit').click();
   await expect(page.locator('#application-result')).toContainText('AEM-20261124-A1B2C3');
   await expect(page.locator('#status-result')).toContainText('pending');
-  const call=calls.find(item=>item.path==='departmentRetail.apply');
+  const call=calls.find(item=>item.path==='departmentRetail.submitApplication');
   expect(call.method).toBe('POST');
   expect(call.input).toMatchObject({departmentKey:'groceries',businessName:'Test Market',ownerName:'Test Owner',phone:'+937000000000',email:'owner@example.com',cityKey:'herat',address:'Center — Main street'});
   expect(call.input.description).toContain('Products: Fresh produce');
