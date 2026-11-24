@@ -12,6 +12,8 @@
   const appMessage = document.getElementById('interest-message');
   const appResult = document.getElementById('application-result');
   const statusForm = document.getElementById('status-lookup-form');
+  const statusPanel = document.getElementById('application-status');
+  if (statusPanel && window.location.hash === '#application-status') statusPanel.open = true;
   const statusResult = document.getElementById('status-result');
   const resendButton = document.getElementById('resend-verification');
   let lang = localStorage.getItem('ae_lang') === 'fa' ? 'fa' : 'en';
@@ -131,6 +133,7 @@
       const result=await mutate('departmentRetail.submitApplication',{departmentKey,businessName:String(data.get('businessName')||'').trim(),ownerName:String(data.get('ownerName')||'').trim(),phone:String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),cityKey:String(data.get('cityKey')||'herat'),address,description:details||undefined});
       lookedUp={reference:result.reference,email:String(data.get('email')||'').trim()};
       setResult(appResult,result.duplicate?text(`A recent application already exists. Reference: ${result.reference}. Check its status below.`,`یک درخواست تازه موجود است. شماره پیگیری: ${result.reference}. وضعیت را پایین بررسی کنید.`):text(`Application received for ${labels[departmentKey]}. Reference: ${result.reference}. ${result.verificationEmailSent?'Check your email to verify the address.':'The application was recorded, but the verification email could not be confirmed; use status lookup to retry.'}`,`درخواست ${labels[departmentKey]} دریافت شد. شماره پیگیری: ${result.reference}. ${result.verificationEmailSent?'برای تأیید ایمیل خود را بررسی کنید.':'درخواست ثبت شد؛ ایمیل تأیید را نتوانستیم تأیید کنیم، از بررسی وضعیت برای ارسال دوباره استفاده کنید.'}`));
+      if (statusPanel) statusPanel.open = true;
       statusForm.elements.reference.value=result.reference; statusForm.elements.email.value=lookedUp.email; statusForm.scrollIntoView({behavior:'smooth',block:'center'}); await lookupStatus();
       if(!result.duplicate)form.reset();
     } catch(error) { setResult(appResult,error.message||text('Application could not be submitted.','درخواست ارسال نشد.'),true); }

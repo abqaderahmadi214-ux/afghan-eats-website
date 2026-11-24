@@ -17,7 +17,8 @@ test('homepage stays focused and links to the existing Afghan Eats Business page
   assert.match(home, /class="ae-home-business"/);
   assert.match(home, /Food for your organization’s programs\./);
   assert.match(home, /href="\/organizations\/"/);
-  assert.doesNotMatch(home, /id="homeRestaurants"|class="ae-org-promo"|class="ae-community"/);
+  assert.match(home, /id="homeRestaurants"/);
+  assert.doesNotMatch(home, /class="ae-org-promo"|class="ae-community"/);
   assert.match(home, /data-department="restaurants"/);
   for (const department of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
     assert.match(home, new RegExp(`data-department="${department}"[^>]*>[\\s\\S]*?Coming soon`));

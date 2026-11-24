@@ -102,6 +102,7 @@ test('the homepage places one accessible iPhone QR in the mobile-apps section an
   await page.goto('/');
 
   const section = page.locator('#aeMobileApps');
+  await section.locator('summary').click();
   await expect(section).toBeVisible();
   await expect(section.locator('#aeMobileAppsTitle')).toContainText('Mobile apps coming soon.');
   await expect(section.locator('#aeMobileAppsTitle .fa-copy')).toContainText('اپلیکیشن‌های موبایل به‌زودی عرضه می‌شوند.');
@@ -136,6 +137,7 @@ for (const language of ['en', 'fa']) {
     await page.goto('/');
 
     const section = page.locator('#aeMobileApps');
+    await section.locator('summary').click();
     const qr = section.locator('#aeIosQr img');
     const androidSlot = section.locator('#aeAndroidAppSlot');
     for (const width of [1280, 900, 761, 760, 390, 320]) {
@@ -190,11 +192,13 @@ test('the footer QR stays visible on iPhone screens alongside Safari install gui
   const { context, page } = await newIPhonePage(browser);
   try {
     await page.goto(LOCAL_HOME, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#aeMobileApps')).toBeVisible();
+    const guide = page.locator('#aePwaInstall');
+    await expect(guide).toBeVisible();
+    await expect(guide).toContainText('Add to Home Screen');
+    await guide.locator('[data-pwa-later]').click();
+    await page.locator('#aeMobileApps summary').click();
     await expect(page.locator('#aeIosQr img')).toBeVisible();
     await expect(page.locator('#aeIosQr img')).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
-    await expect(page.locator('#aePwaInstall')).toBeVisible();
-    await expect(page.locator('#aePwaInstall')).toContainText('Add to Home Screen');
   } finally {
     await context.close();
   }

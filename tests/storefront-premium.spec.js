@@ -31,7 +31,7 @@ test('premium home is address-first, keeps peer department choices, and switches
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
   await expect(page.locator('.ae-home-business')).toHaveCount(1);
   await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
-  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
+  await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await expect(page.locator('.ae-value-strip')).toHaveCount(0);
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
