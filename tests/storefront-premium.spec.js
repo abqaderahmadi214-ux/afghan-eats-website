@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('premium home keeps its local discovery paths clear in English and Dari at mobile and desktop widths', async ({ page }) => {
+async function stubPausedStatus(page) {
   await page.route('https://afghaneats-api.onrender.com/**', async route => {
     const path = new URL(route.request().url()).pathname.split('/').at(-1);
     const data = path === 'platform.publicStatus'
@@ -19,28 +19,55 @@ test('premium home keeps its local discovery paths clear in English and Dari at 
       body: JSON.stringify({ result: { data: { json: data } } })
     });
   });
+}
 
+test('premium home is address-first, keeps peer department choices, and switches language', async ({ page }) => {
+  await stubPausedStatus(page);
   await page.goto('/');
-  const strip = page.locator('.ae-value-strip');
-  await expect(strip).toContainText('Made for Herat');
-  await expect(strip).toContainText('English + Dari');
-  await expect(strip).toContainText('Follow your order');
-  await expect(strip.locator('a[href="/restaurants"]')).toBeVisible();
-  await expect(strip.locator('a[href="/orders"]')).toBeVisible();
-  await expect(page.locator('#aePlatformStatus.critical')).toBeVisible();
-  await expect(page.locator('.ae-order-box .mode-tabs button').first()).toBeDisabled();
 
-  const pauseBackground = await page.locator('#aePlatformStatus.critical').evaluate(el => getComputedStyle(el).backgroundImage);
-  expect(pauseBackground).toContain('linear-gradient');
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
+  await expect(page.locator('#aeHomeArea')).toHaveAttribute('name', 'area');
+  await expect(page.locator('#aeHomeSearch')).toBeVisible();
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
+  await expect(page.locator('.ae-home-business')).toHaveCount(1);
+  await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
+  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
+  await expect(page.locator('.ae-value-strip')).toHaveCount(0);
+  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+  await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
+  await expect(page.locator('.ae-order-box')).toHaveCount(0);
+  await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
 
+  const departments = page.locator('.ae-home-department-nav');
+  await expect(departments).toBeVisible();
+  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
+  await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
+  for (const key of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
+    await expect(departments.locator(`[data-department="${key}"]`)).toContainText('Coming soon');
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(strip).toContainText('ساخته‌شده برای هرات');
-  await expect(strip).toContainText('انگلیسی + دری');
-  await expect(strip).toContainText('سفارش خود را پیگیری کنید');
-  const languageButton = page.locator('.ae-value-strip button');
-  await expect(languageButton).toBeVisible();
+  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
+  await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
+  await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
+  const comingSoonDari = [
+    ['groceries', 'مواد خوراکی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزانه'],
+    ['gifts', 'هدایا'], ['electronics', 'لوازم الکترونیکی'], ['pet-supplies', 'لوازم حیوانات خانگی']
+  ];
+  for (const [key, label] of comingSoonDari) {
+    const tile = departments.locator(`[data-department="${key}"]`);
+    await expect(tile).toContainText(label);
+    await expect(tile).toContainText('به‌زودی');
+  }
 
   for (const width of [360, 390, 768, 1280]) {
     await page.setViewportSize({ width, height: 900 });
@@ -48,12 +75,34 @@ test('premium home keeps its local discovery paths clear in English and Dari at 
     expect(scrollWidth, `no horizontal overflow at ${width}px`).toBeLessThanOrEqual(width);
   }
 
-  await languageButton.click();
+  await page.locator('.lang').click();
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-  await expect(page.locator('.ae-value-strip')).toContainText('Made for Herat');
+  await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
 });
 
-test('homepage browse tiles and links have tactile hover feedback that respects reduced motion', async ({ page }) => {
+test('primary site language controls show only flags and keep accessible toggle names', async ({ page }) => {
+  await stubPausedStatus(page);
+  for (const route of ['/', '/restaurants', '/organizations/index.html']) {
+    await page.goto(route);
+    const button = page.locator('button.lang');
+    await expect(button).toBeVisible();
+    await expect(button).toHaveAccessibleName('Switch language to Dari');
+    await expect.poll(() => button.evaluate(element => getComputedStyle(element).fontSize)).toBe('0px');
+    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇦🇫');
+
+    await button.click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fa');
+    await expect(button).toHaveAccessibleName('تغییر زبان به انگلیسی');
+    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇬🇧');
+
+    await button.click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(button).toHaveAccessibleName('Switch language to Dari');
+    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇦🇫');
+  }
+});
+
+test('homepage area CTA hover feedback respects reduced-motion settings', async ({ page }) => {
   await page.route('https://afghaneats-api.onrender.com/**', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -67,13 +116,13 @@ test('homepage browse tiles and links have tactile hover feedback that respects 
   const photo = department.locator('.ae-department-art img');
   await department.hover();
   await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
-  const browseLink = page.locator('.ae-browse-link');
-  await browseLink.hover();
-  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
+  const areaButton = page.locator('#aeHomeAreaSubmit');
+  await areaButton.hover();
+  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).toBe('none');
-  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transform)).toBe('none');
   await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
-  await expect.poll(() => browseLink.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
+  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
 });

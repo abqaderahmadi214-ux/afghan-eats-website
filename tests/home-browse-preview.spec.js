@@ -33,12 +33,13 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await routeApi(page);
   await page.goto('/');
 
-  await expect(page.locator('#aePlatformStatus.critical')).toContainText('New ordering is temporarily paused');
-  await expect(page.locator('.ae-order-box')).toBeHidden();
-  await expect(page.locator('.ae-browse-link[href="/restaurants"]')).toBeVisible();
-  await expect(page.locator('.ae-org-link[href="/organizations/"]')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
-  await expect(page.locator('#homeRestaurants .restaurant-card').first()).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('.ae-order-box')).toHaveCount(0);
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
+  await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
   await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
   const departments = page.locator('.ae-home-department-nav');
   await expect(departments).toBeVisible();
@@ -55,7 +56,7 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('.ae-browse-link .fa-copy')).toBeVisible();
+  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
   await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
   const comingSoonDari = [
@@ -158,14 +159,15 @@ test('homepage search finds restaurants, menu items, and categories in both lang
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await expect(page.locator('#aePlatformStatus.critical')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
   await expect(page.locator('.ae-order-box')).toBeHidden();
   await expect(page.getByRole('search')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Search restaurants, items, and categories');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search restaurants, items, and categories');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('Retail departments remain Coming soon');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('ordering is paused');
+  await expect(page.locator('#aeHomeSearchNote')).toContainText('Other marketplace departments are coming soon');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
 
   await page.locator('#aeHomeSearch').fill('Saffron Kitchen Preview');
   await page.locator('.ae-home-search button[type="submit"]').click();
@@ -191,7 +193,7 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'رستورانت‌ها، غذاها و دسته‌بندی‌ها');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها');
   await expect(page.locator('.ae-home-search button[type="submit"]')).toContainText('جستجو');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('ثبت سفارش متوقف است');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('ثبت سفارش جدید موقتاً متوقف است');
   await page.locator('#aeHomeSearch').fill('قابلی ویژه');
   await page.locator('.ae-home-search button[type="submit"]').click();
   await expect(page).toHaveURL(/\/restaurants\?q=/);
@@ -253,9 +255,9 @@ test('homepage motion respects a reduced-motion preference', async ({ page }) =>
   const motion = await page.evaluate(() => ({
     enabled: document.documentElement.classList.contains('ae-motion-enabled'),
     photoTransition: getComputedStyle(document.querySelector('.ae-department-art img')).transitionDuration,
-    linkTransition: getComputedStyle(document.querySelector('.ae-browse-link')).transitionDuration
+    areaTransition: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transitionDuration
   }));
   expect(motion.enabled).toBe(false);
   expect(motion.photoTransition).toBe('0s');
-  expect(motion.linkTransition).toBe('0s');
+  expect(motion.areaTransition).toBe('0s');
 });

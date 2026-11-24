@@ -112,6 +112,10 @@ button.lang {
   transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
 }
 
+body.ae-premium button.lang {
+  font-size: 0 !important;
+}
+
 button.lang::before {
   content: "🇦🇫";
   font-size: 1.25rem;

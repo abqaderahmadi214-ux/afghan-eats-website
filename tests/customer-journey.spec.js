@@ -70,15 +70,29 @@ async function stampFixtureLabel(page){
   });
 }
 
-test('homepage to restaurant to mobile basket to quoted checkout', async ({page})=>{
+test('homepage area browse to separate delivery quote dialog and mobile checkout', async ({page})=>{
   await mockApi(page,{orderingEnabled:true});
   await page.goto('/');
-  await page.locator('.address-box input[name="address"]').fill('Gulha Circle');
-  await page.locator('.address-box button').click();
-  await expect(page).toHaveURL(/\/restaurants(?:\?.*)?$/);
-  const card=page.locator('.restaurant-card').first();
-  await expect(card).toContainText('Herat Kitchen');
+  await page.locator('#aeHomeArea').fill('Gulha Circle');
+  await page.locator('#aeHomeAreaSubmit').click();
+  await expect(page).toHaveURL(/\/restaurants\?area=Gulha\+Circle$/);
+  await expect(page.locator('#aeLocationBrowseStatus')).toContainText('published location details match');
+  const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
+  await expect(card).toBeVisible();
+  await expect(page.locator('.restaurant-card').filter({hasText:'Jumeirah Fast Food'})).toHaveCount(0);
+
+  await page.locator('#aeBrowseAreaTrigger').click();
+  const deliveryDialog=page.locator('#aeBrowseAreaDialog');
+  await expect(deliveryDialog).toBeVisible();
+  await deliveryDialog.locator('#aeBrowseAreaInput').fill('Gulha Circle');
+  const quoteRequest=page.waitForRequest(request=>request.url().includes('/orders.quote'));
+  await deliveryDialog.locator('#aeBrowseAreaForm button[type="submit"]').click();
+  await quoteRequest;
+  await expect(deliveryDialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
   await expect(card).toContainText('AFN 60');
+  await deliveryDialog.getByRole('button', { name: 'Close' }).click();
+  await expect(deliveryDialog).toBeHidden();
+
   await card.click();
   await expect(page.locator('#menuContent')).toContainText('Kebab');
   await page.locator('.add-btn').click();
@@ -113,7 +127,8 @@ test('manual delivery address refreshes restaurant quotes without basket or orde
   });
   await page.addInitScript(()=>localStorage.setItem('ae_mode','pickup'));
   await page.goto('/restaurants');
-  await expect(page.locator('#aePlatformStatus')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
   const cartBefore=await page.evaluate(()=>localStorage.getItem('ae_cart'));
   await expect(page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first()).toBeVisible();
   await page.locator('#aeBrowseAreaTrigger').click();
@@ -354,14 +369,12 @@ test('Dari customer chrome and discovery stay localized', async ({page})=>{
   await mockApi(page);
   await page.goto('/');
   await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
-  await expect(page.locator('.ae-value-strip button')).toHaveAccessibleName('Switch language to Dari');
   await page.evaluate(()=>{localStorage.setItem('ae_lang','fa');localStorage.setItem('ae_mode','pickup')});
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir','rtl');
   await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
-  await expect(page.locator('.ae-value-strip button')).toHaveAccessibleName('تغییر زبان به انگلیسی');
-  await expect(page.locator('.mode-tabs button[data-mode="pickup"]')).toContainText('دریافت حضوری');
   await page.goto('/restaurants');
+  await expect(page.locator('.mode-tabs button[data-mode="pickup"]')).toContainText('دریافت حضوری');
   await expect(page.locator('.restaurant-card').first()).toContainText('آشپزخانه هرات');
   await expect(page.locator('.restaurant-card').first()).toContainText('افغانی');
   await expect(page.locator('#search')).toHaveAttribute('placeholder',/رستورانت/);
@@ -380,16 +393,20 @@ test('recommended discovery prioritizes orderable restaurants and hides test inv
   await expect(page.locator('#resultCount')).not.toContainText('available to order');
 });
 
-test('late homepage refreshes keep preview and test inventory out of popular restaurants', async ({page})=>{
+test('focused homepage omits duplicate restaurant cards while public menu browsing remains available', async ({page})=>{
   const preview={...restaurant,id:'preview-only',slug:'preview-only',name:'Preview Only Restaurant',verification_status:'public_seeded',menu_preview_only:true};
   const testListing={...restaurant,id:'test-row-uuid',slug:'test-one-resturant',name:'Test One Resturant',verification_status:'public_seeded'};
   await mockApi(page,{restaurants:[preview,testListing,restaurant]});
   await page.goto('/');
-  await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
+  await expect(page.locator('#homeRestaurants')).toHaveCount(0);
   await page.waitForTimeout(1200);
   await expect(page.getByText('Preview Only Restaurant',{exact:true})).toHaveCount(0);
   await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
-  await expect(page.locator('#homeRestaurants')).toContainText('Herat Kitchen');
+  await page.goto('/restaurants');
+  await expect(page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'})).toBeVisible();
+  await expect(page.locator('.restaurant-card').filter({hasText:'Preview Only Restaurant'})).toBeVisible();
+  await expect(page.getByText('Test One Resturant',{exact:true})).toHaveCount(0);
 });
 
 test('stable restaurant slugs resolve the live record and remain canonical', async ({page})=>{
@@ -588,15 +605,20 @@ test('saved checkout addresses can be reused without a client-invented promo dis
   await expect(page.locator('#cartDiscount')).toContainText('0');
 });
 
-test('an unavailable delivery address shows a compact change-address notice', async ({page})=>{
+test('an unavailable delivery address stays separate from area browsing and keeps public menus available', async ({page})=>{
   await mockApi(page,{orderingEnabled:true,deliveryUnavailable:true});
-  await page.goto('/');
-  await page.locator('.address-box input[name="address"]').fill('Outside delivery area');
-  await page.locator('.address-box button').click();
+  await page.goto('/restaurants');
+  await page.locator('#aeBrowseAreaTrigger').click();
+  const dialog=page.locator('#aeBrowseAreaDialog');
+  await dialog.locator('#aeBrowseAreaInput').fill('Outside delivery area');
+  await dialog.locator('#aeBrowseAreaForm button[type="submit"]').click();
+  await expect(dialog.locator('#aeBrowseAreaStatus')).toContainText('No current address-specific quote was returned');
+  await expect(dialog.locator('#aeBrowseAreaStatus')).toContainText('Delivery availability is not confirmed');
   const notice=page.locator('.delivery-inline-notice');
   await expect(notice).toContainText('Delivery is not active at this address yet.');
   await expect(notice.getByRole('button',{name:'Change address'})).toBeVisible();
   await expect(page.locator('.delivery-empty')).toHaveCount(0);
+  await expect(page.locator('#restaurantGrid .restaurant-card').first()).toBeVisible();
 });
 
 test('one-time admin reset removes its token after a successful password change', async ({page})=>{
