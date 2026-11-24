@@ -21,15 +21,15 @@ test('ordering pause is clear across customer paths without hiding restaurant re
 
   await page.goto('/');
   await expect(page.locator('#aePlatformStatus')).toContainText('New ordering is temporarily paused');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Menus remain available to browse');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
   await expect(page.locator('#aeOrderingPauseContext a[href="/partner"]')).toBeVisible();
-  await expect(page.locator('.ae-platform-partner-link[href="/partner"]')).toBeVisible();
-  await expect(page.locator('.ae-order-box .mode-tabs button').first()).toBeDisabled();
-  await expect(page.locator('.ae-order-box .address-box button[type="submit"]')).toBeDisabled();
+  await expect(page.locator('#aePlatformStatus.ae-platform-pause-duplicate')).toBeHidden();
+  await expect(page.locator('.ae-order-box')).toHaveCount(0);
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-label', 'Ordering paused');
   await expect(page.locator('.ae-cart .ae-cart-label .en-copy')).toHaveText('Ordering paused');
-  await expect(page.locator('.ae-join-restaurant[href="/partner"]')).toBeVisible();
+  await expect(page.locator('.footer a[href="/partner"]')).toBeVisible();
 
   await page.goto('/restaurants');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
@@ -113,10 +113,10 @@ test('unknown status fails closed until verified, remains truthful in both langu
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-label', 'Ordering unavailable');
   await expect(page.locator('.ae-cart')).not.toHaveAttribute('href', '/checkout');
-  await expect(page.locator('.ae-order-box .mode-tabs button').first()).toBeDisabled();
-  await expect(page.locator('.ae-order-box .address-box button[type="submit"]')).toBeDisabled();
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
+  await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('.lang')).toBeEnabled();
-  await expect(page.locator('.ae-browse-link')).toHaveAttribute('href', '/restaurants');
+  await expect(page.locator('#aeHomeAreaForm')).toHaveAttribute('action', '/restaurants');
 
   await page.evaluate(() => { document.documentElement.lang = 'fa'; });
   await expect(page.locator('#aePlatformStatus')).toContainText('وضعیت ثبت سفارش بررسی نشد');
@@ -127,6 +127,6 @@ test('unknown status fails closed until verified, remains truthful in both langu
   await expect(page.locator('body')).toHaveAttribute('data-ordering-available', 'true');
   await expect(page.locator('#aePlatformStatus')).toHaveCount(0);
   await expect(page.locator('.ae-cart')).toHaveAttribute('href', '/checkout');
-  await expect(page.locator('.ae-order-box .mode-tabs button').first()).toBeEnabled();
-  await expect(page.locator('.ae-order-box .address-box button[type="submit"]')).toBeEnabled();
+  await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
+  await expect(page.locator('#aeHomeArea')).toBeEnabled();
 });
