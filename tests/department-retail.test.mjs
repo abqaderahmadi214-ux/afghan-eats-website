@@ -21,7 +21,7 @@ test('partner page has distinct retail applications and reference/email status l
   assert.match(partner,/<fieldset id="application-fields" disabled/);
   assert.match(partner,/name="email" type="email"/);
   assert.match(partner,/id="application-status"/);
-  assert.match(partnerJs,/departmentRetail\.apply/);
+  assert.match(partnerJs,/departmentRetail\.submitApplication/);
   assert.match(partnerJs,/departmentRetail\.applicationStatus/);
   assert.match(partnerJs,/departmentRetail\.resendApplicationVerification/);
   assert.match(partnerJs,/department_key/);
