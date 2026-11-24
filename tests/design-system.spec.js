@@ -7,7 +7,8 @@ for(const route of ['/','/restaurants','/checkout','/owner','/rider-portal']){
   const button=route==='/'?page.locator('#aeHomeAreaSubmit'):page.locator('.btn-primary:not(.ae-cart)').first();
   await expect(button).toBeAttached();
   if(route==='/') await expect(button).toBeEnabled();
-  await expect.poll(()=>button.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(13, 74, 58)');
+  const expectedButtonColor=route==='/'?'rgb(18, 75, 57)':'rgb(13, 74, 58)';
+  await expect.poll(()=>button.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe(expectedButtonColor);
   const size=await button.boundingBox();
   if(size) expect(size.height).toBeGreaterThanOrEqual(40);
   if(route==='/') {

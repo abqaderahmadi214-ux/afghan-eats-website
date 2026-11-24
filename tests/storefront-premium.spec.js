@@ -40,9 +40,9 @@ test('premium home is address-first, keeps peer department choices, and switches
   await expect(page.locator('.ae-order-box')).toHaveCount(0);
   await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
 
-  const departments = page.locator('.ae-home-department-nav');
+  const departments = page.locator('#aeMarketplaceTabs');
   await expect(departments).toBeVisible();
-  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  const departmentKeys = await departments.locator('.ae-marketplace-tabs__track > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
   expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
   await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
@@ -55,13 +55,13 @@ test('premium home is address-first, keeps peer department choices, and switches
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
+  await expect(page.locator('label[for="aeHomeArea"] .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
   await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
-  await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
+  await expect(departments).toHaveAttribute('aria-label', 'پیوندهای بخش‌ها');
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
   const comingSoonDari = [
-    ['groceries', 'مواد خوراکی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزانه'],
-    ['gifts', 'هدایا'], ['electronics', 'لوازم الکترونیکی'], ['pet-supplies', 'لوازم حیوانات خانگی']
+    ['groceries', 'مواد غذایی'], ['health-beauty', 'صحت و زیبایی'], ['convenience', 'ضروریات روزمره'],
+    ['gifts', 'هدایا'], ['electronics', 'الکترونیک'], ['pet-supplies', 'لوازم حیوانات خانگی']
   ];
   for (const [key, label] of comingSoonDari) {
     const tile = departments.locator(`[data-department="${key}"]`);
@@ -102,7 +102,7 @@ test('primary site language controls show only flags and keep accessible toggle 
   }
 });
 
-test('homepage area CTA hover feedback respects reduced-motion settings', async ({ page }) => {
+test('homepage search feedback respects reduced-motion settings', async ({ page }) => {
   await page.route('https://afghaneats-api.onrender.com/**', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -112,17 +112,11 @@ test('homepage area CTA hover feedback respects reduced-motion settings', async 
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
 
-  const department = page.locator('.ae-department-tile').first();
-  const photo = department.locator('.ae-department-art img');
-  await department.hover();
-  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
-  const areaButton = page.locator('#aeHomeAreaSubmit');
-  await areaButton.hover();
-  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
+  const searchButton = page.locator('#aeHomeAreaSubmit');
+  await searchButton.hover();
+  await expect.poll(() => searchButton.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).toBe('none');
-  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transform)).toBe('none');
-  await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
-  await expect.poll(() => areaButton.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
+  await expect.poll(() => searchButton.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await expect.poll(() => searchButton.evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');
 });

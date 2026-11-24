@@ -8,6 +8,7 @@ const read = path => readFileSync(new URL(path, root), 'utf8');
 const slugs = ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies'];
 const pages = Object.fromEntries(slugs.map(slug => [slug, read(`${slug}.html`)]));
 const homepage = read('index.html');
+const navigation = read('assets/marketplace-navigation.js');
 
 test('each department has a complete bilingual, image-led landing page that remains closed to shoppers', () => {
   for (const slug of slugs) {
@@ -36,15 +37,23 @@ test('each department has a complete bilingual, image-led landing page that rema
   }
 });
 
-test('homepage keeps all marketplace departments as peers and links each Coming soon tile', () => {
-  const departmentNav = homepage.match(/<nav class="ae-home-department-nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
-  assert.match(departmentNav, /<a class="ae-department-tile is-available" data-department="restaurants" href="\/restaurants">/);
+test('homepage uses the shared seven-department rail instead of a duplicate tile row', () => {
+  assert.match(homepage, /id="aeHomeAreaForm"/);
+  assert.doesNotMatch(homepage, /ae-home-department-nav|ae-department-tile/);
+  assert.match(navigation, /const departments = \[([\s\S]*?)\];/);
+  const departmentData = navigation.match(/const departments = \[([\s\S]*?)\];/)?.[1] ?? '';
+  assert.equal((departmentData.match(/slug:/g) ?? []).length, 7);
+  assert.match(navigation, /nav\.id = 'aeMarketplaceTabs'/);
+  assert.match(navigation, /nav\.dataset\.ariaEn = 'Department links'/);
+  assert.match(navigation, /nav\.dataset\.ariaFa = 'پیوندهای بخش‌ها'/);
+  assert.match(departmentData, /slug: 'restaurants',[^\n]*statusEn: 'Browse menus'/);
   for (const slug of slugs) {
-    assert.match(departmentNav, new RegExp(`<a class="ae-department-tile is-coming-soon" data-department="${slug}" href="/${slug}">`));
-    assert.match(departmentNav, /Coming soon/);
-    assert.doesNotMatch(departmentNav, new RegExp(`<button[^>]*data-department="${slug}"`));
+    assert.match(departmentData, new RegExp(`slug: '${slug}'`));
+    assert.match(departmentData, new RegExp(`href: '/${slug}'`));
+    assert.match(departmentData, new RegExp(`slug: '${slug}',[^\n]*statusEn: 'Coming soon'`));
+    assert.match(departmentData, new RegExp(`slug: '${slug}',[^\n]*availability: 'coming-soon'`));
   }
-  assert.doesNotMatch(departmentNav, /data-department="alcohol"/i);
+  assert.doesNotMatch(departmentData, /slug: 'alcohol'/i);
 });
 
 test('static route aliases, Render rewrites, and sitemap expose all six page URLs', () => {

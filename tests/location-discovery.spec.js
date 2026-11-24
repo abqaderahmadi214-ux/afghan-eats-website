@@ -91,7 +91,7 @@ test('home area form routes to address-matched public listings without calling d
   await page.goto('/');
   await page.locator('#aeHomeArea').fill('Gulha Circle');
   await page.locator('#aeHomeAreaSubmit').click();
-  await expect(page).toHaveURL(/\/restaurants\?area=Gulha\+Circle$/);
+  await expect(page).toHaveURL(/\/restaurants\?area=Gulha\+Circle&q=$/);
   await expect(page.locator('#aeLocationBrowseStatus')).toContainText('published location details match');
   await expect(page.locator('#restaurantGrid .restaurant-card').filter({ hasText: 'Gulha Location Kitchen' })).toBeVisible();
   await expect(page.locator('#restaurantGrid .restaurant-card').filter({ hasText: 'Far Location Kitchen' })).toHaveCount(0);

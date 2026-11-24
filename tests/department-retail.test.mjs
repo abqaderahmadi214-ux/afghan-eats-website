@@ -92,9 +92,20 @@ test('admin portal uses admin-scoped retail routes while keeping public listing 
   assert.match(adminJs,/fullAdmin\(\)/);
 });
 
-test('existing homepage top-level departments, photos, labels and separate restaurant flow remain covered',()=>{
+test('shared homepage rail, department-page photos, labels and separate restaurant flow remain covered',()=>{
   assert.match(homeTests,/Coming soon/);assert.match(journeyTests,/Coming soon/);
   const homepage=read('index.html');
-  for(const id of ids){assert.match(homepage,new RegExp(`data-department="${id}"`));assert.match(homepage,new RegExp(`/assets/department-images/${id}\\.jpg`));}
-  assert.match(homepage,/data-department="restaurants"/);assert.doesNotMatch(homepage,/data-department="alcohol"/);
+  const navigation=read('assets/marketplace-navigation.js');
+  const departmentData=navigation.match(/const departments = \[([\s\S]*?)\];/)?.[1]||'';
+  assert.match(homepage,/marketplace-navigation\.js/);
+  assert.doesNotMatch(homepage,/ae-home-department-nav|ae-department-tile/);
+  assert.match(departmentData,/slug: 'restaurants',[^\n]*statusEn: 'Browse menus'/);
+  assert.doesNotMatch(departmentData,/slug: 'alcohol'/);
+  for(const id of ids){
+    assert.match(departmentData,new RegExp(`slug: '${id}',[^\n]*statusEn: 'Coming soon'`));
+    assert.match(departmentData,new RegExp(`href: '/${id}'`));
+    const landing=read(`${id}.html`);
+    assert.match(landing,new RegExp(`/assets/department-images/${id}\\.jpg`));
+  }
+  assert.match(journeyTests,/dish-category-row/);
 });

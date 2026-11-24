@@ -117,7 +117,7 @@
     }
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/marketplace-navigation.css?v=20261124-1';
+    link.href = '/assets/marketplace-navigation.css?v=review-clean-20261124-1';
     link.dataset.aeMarketplaceNavigationStyles = 'true';
     link.addEventListener('load', mountNavigation, { once: true });
     link.addEventListener('error', mountNavigation, { once: true });

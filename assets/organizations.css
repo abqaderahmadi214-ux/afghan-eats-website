@@ -254,3 +254,9 @@
   .ae-org-service-card,
   .ae-org-service-card:hover { transition: none; transform: none; }
 }
+
+
+/* Review redesign: keep the organization hero factual and text-led rather than using synthetic food artwork. */
+.ae-org-hero-grid { grid-template-columns: minmax(0, 1fr); max-width: 900px; margin-inline: auto; }
+.ae-org-hero-copy { max-width: 760px; }
+.ae-org-hero-visual { display: none !important; }

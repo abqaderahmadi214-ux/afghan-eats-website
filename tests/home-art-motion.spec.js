@@ -21,66 +21,73 @@ async function stubPublicApi(page) {
   });
 }
 
-test('home uses the Afghan food image and focused address-first copy, not a checkout-oriented video', async ({ page }) => {
+test('home keeps address-first public discovery and one shared seven-choice department rail', async ({ page }) => {
   await stubPublicApi(page);
   await page.goto('/');
 
-  const heroImage = page.locator('.ae-hero-visual img.ae-feast');
-  await expect(heroImage).toHaveAttribute('src', '/assets/images/afghan-feast.webp');
-  await expect(heroImage).toHaveAttribute('alt', 'Illustrative Afghan food spread');
-  await expect(heroImage).toHaveCSS('object-fit', 'cover');
-  await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
-  await expect(page.locator('.ae-hero-visual video')).toHaveCount(0);
-  await expect(page.locator('.ae-hero-accent')).toHaveCount(0);
-  await expect(page.locator('.ae-hero-visual figcaption')).toContainText('Browse public menus by area');
-  await expect(page.locator('.ae-hero-visual figcaption')).not.toContainText(/checkout|rider tracking|new orders remain paused/i);
+  await expect(page.locator('.ae-hero')).toBeVisible();
+  await expect(page.locator('.ae-hero img, .ae-hero video, .ae-hero-visual')).toHaveCount(0);
+  await expect(page.locator('img[src*="afghan-feast"]')).toHaveCount(0);
+  await expect(page.locator('.ae-hero-copy h1')).toBeVisible();
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
-  await expect(page.locator('#aeHomeSearch')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
+  await expect(page.locator('#aeHomeAreaForm')).toHaveAttribute('action', '/restaurants');
+  await expect(page.locator('#aeHomeAreaForm')).toHaveAttribute('method', 'get');
+  const fields = await page.locator('#aeHomeAreaForm input').evaluateAll(nodes => nodes.map(node => ({ id: node.id, name: node.name })));
+  expect(fields).toEqual([{ id: 'aeHomeArea', name: 'area' }, { id: 'aeHomeSearch', name: 'q' }]);
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search restaurants, items, and categories');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('paused');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
 
-  for (const department of ['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
-    const photo = page.locator(`.ae-home-department-nav [data-department="${department}"] img`);
-    await photo.scrollIntoViewIfNeeded();
-    await expect(photo).toHaveAttribute('alt', '');
-    await expect.poll(() => photo.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
-  }
-  await expect(page.locator('.ae-home-department-nav [data-department="alcohol"]')).toHaveCount(0);
+  const departments = page.locator('#aeMarketplaceTabs');
+  await expect(departments).toBeVisible();
+  await expect(departments).toHaveAttribute('aria-label', 'Department links');
+  await expect(departments.locator('[data-department]')).toHaveCount(7);
+  const keys = await departments.locator('.ae-marketplace-tabs__track > [data-department]').evaluateAll(nodes => nodes.map(node => node.dataset.department));
+  expect(keys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
+  await expect(page.locator('.ae-home-department-nav, .ae-department-tile')).toHaveCount(0);
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
+  for (const key of keys.slice(1)) await expect(departments.locator(`[data-department="${key}"]`)).toContainText('Coming soon');
+  await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
+  await expect(page.locator('.ae-home-business-link')).toBeVisible();
 });
 
-test('mobile home puts area and search controls first, fits the viewport, and respects reduced motion', async ({ page }) => {
+test('mobile home puts area before search, scrolls the department rail, and respects reduced motion', async ({ page }) => {
   await stubPublicApi(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
 
-  await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('paused');
   await expect(page.locator('.ae-hero-copy h1')).toBeVisible();
   await expect(page.locator('#aeHomeArea')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('.ae-home-business-link')).toBeVisible();
-  const heroImage = page.locator('.ae-hero-visual .ae-feast');
-  await heroImage.scrollIntoViewIfNeeded();
-  await expect(heroImage).toHaveCSS('object-fit', 'cover');
-  const imageBox = await heroImage.boundingBox();
-  const captionBox = await page.locator('.ae-hero-visual figcaption').boundingBox();
-  expect(captionBox.y).toBeGreaterThanOrEqual(imageBox.y);
-  expect(captionBox.y + captionBox.height).toBeLessThanOrEqual(imageBox.y + imageBox.height + 1);
-  await expect(heroImage).toHaveJSProperty('tagName', 'IMG');
-  const animation = await page.locator('.ae-hero-visual').evaluate(element => getComputedStyle(element, '::before').animationName);
-  expect(animation).toBe('none');
+  const positions = await page.evaluate(() => ({
+    area: document.querySelector('#aeHomeArea').getBoundingClientRect().top,
+    search: document.querySelector('#aeHomeSearch').getBoundingClientRect().top
+  }));
+  expect(positions.area).toBeLessThan(positions.search);
+  const rail = await page.locator('.ae-marketplace-tabs__track').evaluate(element => ({ scroll: element.scrollWidth, client: element.clientWidth }));
+  expect(rail.scroll).toBeGreaterThan(rail.client);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  const motion = await page.evaluate(() => ({
+    enabled: document.documentElement.classList.contains('ae-motion-enabled'),
+    buttonTransition: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transitionDuration,
+    buttonTransform: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transform
+  }));
+  expect(motion.enabled).toBe(false);
+  expect(motion.buttonTransition).toBe('0s');
+  expect(motion.buttonTransform).toBe('none');
 });
 
-test('motion-enabled department cards reveal when brought into view', async ({ page }) => {
+test('motion-enabled homepage reveals the organization panel when it enters view', async ({ page }) => {
   await stubPublicApi(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveClass(/ae-motion-enabled/);
-  const card = page.locator('.ae-department-tile').first();
-  await card.scrollIntoViewIfNeeded();
-  await expect(card).toHaveClass(/ae-motion-visible/);
-  await expect(card).toBeVisible();
+  const panel = page.locator('.ae-home-business-card');
+  await expect(panel).toHaveClass(/ae-motion-reveal/);
+  await panel.scrollIntoViewIfNeeded();
+  await expect(panel).toHaveClass(/ae-motion-visible/);
+  await expect(panel).toBeVisible();
 });
