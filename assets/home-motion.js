@@ -26,7 +26,7 @@
           entry.target.classList.add('ae-motion-visible');
           observer.unobserve(entry.target);
         }
-      }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' })
+      }, { threshold: 0, rootMargin: '0px 0px 64px 0px' })
     : null;
 
   function nextStaggerDelay(element) {
