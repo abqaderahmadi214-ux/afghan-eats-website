@@ -192,12 +192,13 @@ test('the footer QR stays visible on iPhone screens alongside Safari install gui
   const { context, page } = await newIPhonePage(browser);
   try {
     await page.goto(LOCAL_HOME, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#aeMobileApps')).toBeVisible();
+    const guide = page.locator('#aePwaInstall');
+    await expect(guide).toBeVisible();
+    await expect(guide).toContainText('Add to Home Screen');
+    await guide.locator('[data-pwa-later]').click();
     await page.locator('#aeMobileApps summary').click();
     await expect(page.locator('#aeIosQr img')).toBeVisible();
     await expect(page.locator('#aeIosQr img')).toHaveAttribute('alt', 'QR code linking to Afghan Eats at https://afghaneats.net/');
-    await expect(page.locator('#aePwaInstall')).toBeVisible();
-    await expect(page.locator('#aePwaInstall')).toContainText('Add to Home Screen');
   } finally {
     await context.close();
   }
