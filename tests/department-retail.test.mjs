@@ -17,7 +17,7 @@ test('partner page has distinct retail applications and reference/email status l
   const selector=partner.match(/<select id="departmentKey"[\s\S]*?<\/select>/)?.[0]||'';
   assert.deepEqual([...selector.matchAll(/<option value="([^"]+)"/g)].map(m=>m[1]).filter(Boolean),ids);
   assert.match(partner,/Separate from Restaurants|never part of Restaurants/);
-  assert.match(partner,/Public orders remain paused/);
+  assert.match(partner,/Applying does not itself activate public listings or ordering/);
   assert.match(partner,/<fieldset id="application-fields" disabled/);
   assert.match(partner,/name="email" type="email"/);
   assert.match(partner,/id="application-status"/);

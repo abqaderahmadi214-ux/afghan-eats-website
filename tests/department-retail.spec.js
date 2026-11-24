@@ -7,6 +7,128 @@ const departments=['groceries','health-beauty','convenience','gifts','electronic
 function tRPCPath(url){return new URL(url).pathname.split('/api/trpc/')[1]||'';}
 function getInput(url){try{return JSON.parse(new URL(url).searchParams.get('input')||'{}').json}catch{return null}}
 
+test('availability stays pending while loading, then accurately describes all-open gates and language changes',async({page})=>{
+  let releaseGate;
+  const gateResponse=new Promise(resolve=>{releaseGate=resolve;});
+  const requests=[];
+  await page.route(`${API}**`,async route=>{
+    const request=route.request(),path=tRPCPath(request.url());requests.push({path,method:request.method()});
+    if(path==='departmentRetail.departmentGates'){await gateResponse;return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope(departments.map(department_key=>({department_key,applications_open:true,listing_enabled:false,ordering_enabled:false}))))});}
+    return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:'unexpected API call'}})});
+  });
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-headline')).toHaveText('Checking application availability…');
+  await expect(page.locator('#interest-message')).toContainText('Checking department availability');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+  releaseGate();
+  await expect(page.locator('#gate-headline')).toHaveText('Applications are open for all six departments');
+  await expect(page.locator('#interest-message')).toContainText('6 of 6 department application gates are open');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-headline')).toHaveText('درخواست‌ها برای هر شش بخش باز است');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-headline')).toHaveText('Applications are open for all six departments');
+  await page.locator('#departmentKey').selectOption('groceries');
+  await expect(page.locator('#application-fields')).toBeEnabled();
+  await expect(page.locator('#interest-message')).toContainText('The Groceries application gate is open');
+  expect(requests.filter(request=>request.path.startsWith('departmentRetail.'))).toEqual([{path:'departmentRetail.departmentGates',method:'GET'}]);
+});
+
+test('gate summary and application wording stay bilingual and accurate through every availability state',async({page})=>{
+  let mode='loading',releaseGate;
+  const gateResponse=new Promise(resolve=>{releaseGate=resolve;});
+  await page.route(`${API}**`,async route=>{
+    if(tRPCPath(route.request().url())!=='departmentRetail.departmentGates')return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:'unexpected API call'}})});
+    if(mode==='loading')await gateResponse;
+    if(mode==='error')return route.abort();
+    const gates=mode==='incomplete'?[{department_key:'groceries',applications_open:true},{department_key:'health-beauty',applications_open:false}]:departments.map(department_key=>({department_key,applications_open:department_key==='groceries'}));
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope(gates))});
+  });
+
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-summary')).toHaveText('Checking department availability…');
+  await expect(page.locator('#gate-summary')).toHaveAttribute('data-state','loading');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-summary')).toHaveText('دسترسی بخش‌ها در حال بررسی است…');
+  releaseGate();
+  await expect(page.locator('#gate-summary')).toHaveText('دروازهٔ 1 بخش باز است · فقط همان بخش‌ها درخواست می‌پذیرند');
+  await expect(page.locator('#gate-summary')).toHaveAttribute('data-state','open');
+  await expect(page.locator('#interest-message')).toContainText('ارسال فقط درخواست بررسی می‌سازد و به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-summary')).toHaveText('1 application gate(s) open · only selected departments accept submissions');
+  await expect(page.locator('#interest-message')).toContainText('Submitting creates a review request only; it does not itself activate public listings or ordering');
+  await expect(page.locator('#interest-message')).not.toContainText('remain closed');
+
+  mode='incomplete';
+  await page.reload();
+  await expect(page.locator('#gate-summary')).toHaveText('2 of 6 department gates verified · 1 open · remaining unverified');
+  await expect(page.locator('#gate-summary')).toHaveAttribute('data-state','unknown');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-summary')).toHaveText('وضعیت 2 از ۶ دروازه تأیید شد · 1 باز · بقیه تأییدنشده');
+  await expect(page.locator('#interest-message')).toContainText('ارسال درخواست به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند');
+  await expect(page.locator('#interest-message')).not.toContainText('فهرست عمومی و سفارش‌دهی بسته است');
+
+  mode='error';
+  await page.reload();
+  await expect(page.locator('#gate-summary')).toHaveText('وضعیت دروازه تأیید نشد · درخواست‌ها غیرفعال است');
+  await expect(page.locator('#gate-summary')).toHaveAttribute('data-state','unknown');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-summary')).toHaveText('Gate status unverified · applications unavailable');
+  await page.getByRole('button',{name:'Change language'}).click();
+  await expect(page.locator('#gate-summary')).toHaveText('وضعیت دروازه تأیید نشد · درخواست‌ها غیرفعال است');
+  await expect(page.locator('#interest-message')).toContainText('ارسال درخواست به‌تنهایی فهرست عمومی یا سفارش‌دهی را فعال نمی‌کند');
+});
+
+test('partially open gates are described correctly with no selection and a closed selection',async({page})=>{
+  await page.route(`${API}**`,async route=>{
+    const path=tRPCPath(route.request().url());
+    if(path==='departmentRetail.departmentGates')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope(departments.map(department_key=>({department_key,applications_open:department_key==='groceries',listing_enabled:false,ordering_enabled:false}))))});
+    return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:'unexpected API call'}})});
+  });
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-headline')).toHaveText('Applications are open for 1 of 6 departments');
+  await expect(page.locator('#interest-message')).toContainText('1 of 6 department application gates are open');
+  await page.locator('#departmentKey').selectOption('health-beauty');
+  await expect(page.locator('#interest-message')).toContainText('Applications for Health & Beauty are closed');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+});
+
+test('incomplete gate response reports unknown departments and keeps them unavailable',async({page})=>{
+  await page.route(`${API}**`,async route=>{
+    if(tRPCPath(route.request().url())==='departmentRetail.departmentGates')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(envelope([{department_key:'groceries',applications_open:true},{department_key:'health-beauty',applications_open:false}]))});
+    return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({error:{message:'unexpected API call'}})});
+  });
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-headline')).toHaveText('Availability confirmed for 2 of 6 departments · 1 open');
+  await expect(page.locator('#gate-summary')).toContainText('2 of 6 department gates verified · 1 open · remaining unverified');
+  await expect(page.locator('#interest-message')).toContainText('Remaining gates are unverified and treated as closed');
+  await page.locator('#departmentKey').selectOption('convenience');
+  await expect(page.locator('#interest-message')).toContainText('Availability for Convenience could not be confirmed');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+});
+
+test('gate API errors and missing API configuration are explicitly unverified and fail closed',async({page})=>{
+  const requests=[];
+  await page.route(`${API}**`,async route=>{requests.push(route.request().url());return route.abort();});
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-headline')).toHaveText('Department availability could not be verified');
+  await expect(page.locator('#gate-summary')).toContainText('Gate status unverified · applications unavailable');
+  await expect(page.locator('#interest-message')).toContainText('Department availability could not be confirmed');
+  await page.locator('#departmentKey').selectOption('groceries');
+  await expect(page.locator('#interest-message')).toContainText('Availability for Groceries could not be confirmed');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+  expect(requests.filter(url=>url.includes('/api/trpc/departmentRetail.'))).toHaveLength(1);
+  expect(requests.some(url=>url.includes('/api/trpc/departmentRetail.')&&!url.includes('departmentRetail.departmentGates'))).toBe(false);
+
+  await page.unroute(`${API}**`);
+  await page.route('**/config.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:'window.AFGHAN_EATS_CONFIG={apiBaseUrl:""};'}));
+  await page.goto('/department-partner');
+  await expect(page.locator('#gate-headline')).toHaveText('Department availability could not be verified');
+  await expect(page.locator('#gate-summary')).toContainText('Availability API unavailable · applications unavailable');
+  await expect(page.locator('#interest-message')).toContainText('Department availability could not be confirmed');
+  await expect(page.locator('#application-fields [name="businessName"]')).toBeDisabled();
+});
+
 test('retail application intake and status lookup stay read-only while every gate is closed',async({page})=>{
   const requests=[];
   await page.route(`${API}**`,async route=>{
@@ -16,6 +138,8 @@ test('retail application intake and status lookup stay read-only while every gat
   });
   await page.goto('/department-partner');
   await expect(page.getByRole('heading',{name:'Tell us about your business'})).toBeVisible();
+  await expect(page.locator('#gate-headline')).toHaveText('Applications are closed for all six departments');
+  await expect(page.locator('#interest-message')).toContainText('Applications are closed for all six departments');
   await expect(page.locator('#gate-summary')).toContainText('All 6 department application gates closed');
   await expect(page.locator('#departmentKey')).toBeEnabled();
   await page.locator('#departmentKey').selectOption('groceries');
