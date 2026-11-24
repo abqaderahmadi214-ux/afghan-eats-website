@@ -160,6 +160,7 @@ const VIEW_META = {
   overview: ['Marketplace control', 'Overview'],
   dispatch: ['Live operations', 'Orders & dispatch'],
   restaurants: ['Partner operations', 'Restaurants'],
+  'retail-departments': ['Retail operations', 'Retail / Departments'],
   riders: ['Delivery operations', 'Riders'],
   customers: ['Customer operations', 'Customers & rewards'],
   promotions: ['Commercial operations', 'Promotions'],
@@ -252,6 +253,7 @@ async function renderView(background = false) {
     const renderers = {
       manager: () => window.AIManager.render(),
       overview: renderOverview, dispatch: renderDispatch, workers: () => window.WorkerQueue.renderPage(), restaurants: renderRestaurants,
+      'retail-departments': () => window.AdminRetailDepartments.render(),
       riders: renderRiders, customers: renderCustomers, promotions: renderPromotionsView,
       communications: renderCommunicationsView, support: renderSupportView,
       security: renderSecurityView, audit: renderAuditView, ops: renderOperationsTools,

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-design="2026">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Retail checkout | Afghan Eats</title>
+  <meta name="description" content="Review a retail basket and request a server-verified quote from Afghan Eats.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="stylesheet" href="/assets/styles.css?v=premium-experience-2">
+  <link rel="stylesheet" href="/assets/design-2026.css?v=premium-experience-2">
+  <link rel="stylesheet" href="/assets/premium-design-pass.css?v=premium-experience-2">
+  <link rel="stylesheet" href="/assets/department-retail-buyer.css?v=retail-buyer-20261124">
+  <script src="/config.js?v=retail-buyer-20261124"></script>
+</head>
+<body class="dr-buyer-page ae-premium">
+  <header class="header"><div class="container nav">
+    <a class="brand brand-home" href="/" aria-label="Afghan Eats home"><span class="brand-emblem" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="1" y="1" width="38" height="38" rx="12" fill="currentColor"/><path d="M12.5 23.5c1.8 4.9 13.2 4.9 15 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M14.5 21h11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 11.5c-2.7 0-4.8 2.1-4.8 4.7h9.6c0-2.6-2.1-4.7-4.8-4.7Z" fill="#fff"/><circle cx="20" cy="9.2" r="1.6" fill="#f4b43f"/></svg></span><span class="brand-wordmark">Afghan Eats</span></a>
+    <nav class="navlinks" aria-label="Main navigation"><a href="/restaurants">Restaurants</a><a href="/department-partner">For retail partners</a></nav>
+    <div class="actions"><button class="lang" type="button" onclick="toggleLang()" aria-label="Switch language">دری</button><a class="btn btn-primary" data-retail-checkout-link href="/retail-checkout.html"><span class="en-copy">Retail basket</span><span class="fa-copy">سبد فروشگاهی</span> <span data-retail-cart-count>0</span></a></div>
+  </div></header>
+  <main class="dr-buyer-main"><div class="dr-buyer-wrap">
+    <a class="dr-crumb" id="retailCheckoutBack" href="/retail-store.html"><span class="en-copy">← Back to this store</span><span class="fa-copy">← بازگشت به فروشگاه</span></a>
+    <section class="dr-buyer-hero"><p class="dr-eyebrow"><span class="en-copy">RETAIL BASKET</span><span class="fa-copy">سبد فروشگاهی</span></p><h1><span class="en-copy">Review your basket</span><span class="fa-copy">سبد خرید خود را بررسی کنید</span></h1><p><span class="en-copy">Prices, stock, delivery areas and fees are verified by the server before any retail order can be accepted.</span><span class="fa-copy">قیمت، موجودی، ساحه و هزینهٔ ارسال پیش از پذیرش هر سفارش فروشگاهی در سرور بررسی می‌شود.</span></p></section>
+    <div id="retailCheckoutStatus" class="dr-notice info" role="status" aria-live="polite">Checking department availability…</div>
+    <div class="dr-checkout-grid">
+      <form id="retailCheckoutForm" class="dr-checkout-card" hidden>
+        <h2><span class="en-copy">Delivery or pickup</span><span class="fa-copy">ارسال یا دریافت حضوری</span></h2>
+        <label><span class="en-copy">Store</span><span class="fa-copy">فروشگاه</span><input id="retailCheckoutStore" readonly></label>
+        <label for="retailFulfillment"><span class="en-copy">Fulfillment method</span><span class="fa-copy">روش دریافت</span></label>
+        <select id="retailFulfillment" required></select>
+        <div id="retailDeliveryFields">
+          <label for="retailZone"><span class="en-copy">Delivery area</span><span class="fa-copy">ساحهٔ ارسال</span></label>
+          <select id="retailZone"></select>
+          <label for="retailAddress"><span class="en-copy">Delivery address</span><span class="fa-copy">آدرس تحویل</span></label>
+          <input id="retailAddress" minlength="5" maxlength="500" autocomplete="street-address" placeholder="Street, area or nearby landmark">
+        </div>
+        <h2><span class="en-copy">Contact details</span><span class="fa-copy">معلومات تماس</span></h2>
+        <label for="retailCustomerName"><span class="en-copy">Your name</span><span class="fa-copy">نام شما</span></label>
+        <input id="retailCustomerName" required minlength="2" maxlength="120" autocomplete="name">
+        <label for="retailCustomerPhone"><span class="en-copy">Contact phone</span><span class="fa-copy">شمارهٔ تماس</span></label>
+        <input id="retailCustomerPhone" type="tel" required minlength="9" maxlength="30" autocomplete="tel" placeholder="+93 7xx xxx xxx">
+        <label for="retailCustomerNote"><span class="en-copy">Order note (optional)</span><span class="fa-copy">یادداشت سفارش (اختیاری)</span></label>
+        <textarea id="retailCustomerNote" maxlength="1000"></textarea>
+        <fieldset class="dr-payment-options"><legend><span class="en-copy">Payment method</span><span class="fa-copy">روش پرداخت</span></legend><label><input type="radio" name="retailPaymentMethod" value="cash_on_delivery" checked><span class="en-copy">Cash on delivery</span><span class="fa-copy">پرداخت نقدی هنگام تحویل</span></label><label><input type="radio" name="retailPaymentMethod" value="online" disabled><span class="en-copy">Online payment — pending provider approval</span><span class="fa-copy">پرداخت آنلاین — در انتظار تأیید ارائه‌دهنده</span></label></fieldset>
+        <div id="retailPaymentStatus" class="dr-cash-only-note" role="status" aria-live="polite" hidden></div>
+        <p class="dr-checkout-caption"><span class="en-copy">Online payment is pending provider approval and integration. Cash remains an option; this checkout cannot take an online charge.</span><span class="fa-copy">پرداخت آنلاین تا تأیید و ادغام ارائه‌دهنده در انتظار است. پرداخت نقدی همچنان یک گزینه است؛ این صفحه پرداخت آنلاین انجام نمی‌دهد.</span></p>
+        <button id="retailPlaceOrder" class="dr-button" type="submit" disabled><span class="en-copy">Place retail order</span><span class="fa-copy">ثبت سفارش فروشگاهی</span></button>
+        <div id="retailOrderResult" class="dr-order-result" role="status" aria-live="polite"></div>
+      </form>
+      <aside class="dr-checkout-card">
+        <h2><span class="en-copy">Your items</span><span class="fa-copy">محصولات شما</span></h2>
+        <ul id="retailCartItems" class="dr-cart-items"></ul>
+        <div id="retailQuoteStatus" class="dr-notice info" role="status" aria-live="polite" hidden></div>
+        <div id="retailQuoteTotals" class="dr-quote-totals" hidden>
+          <p><span class="en-copy">Subtotal</span><span class="fa-copy">جمع فرعی</span><strong id="retailQuoteSubtotal"></strong></p>
+          <p><span class="en-copy">Delivery fee</span><span class="fa-copy">هزینهٔ ارسال</span><strong id="retailQuoteDelivery"></strong></p>
+          <p><span class="en-copy">Total</span><span class="fa-copy">مجموع</span><strong id="retailQuoteTotal"></strong></p>
+        </div>
+        <p class="dr-checkout-caption"><span class="en-copy">Your separate restaurant basket is not affected.</span><span class="fa-copy">سبد رستورانت شما جدا است و تغییری نمی‌کند.</span></p>
+      </aside>
+    </div>
+  </div></main>
+  <script src="/assets/app.js?v=20260913-final"></script>
+  <script src="/assets/department-retail-buyer.js?v=retail-buyer-20261124"></script>
+</body>
+</html>
