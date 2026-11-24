@@ -929,7 +929,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   expect(departmentKeys).toEqual(['restaurants','groceries','health-beauty','convenience','gifts','electronics','pet-supplies']);
   await expect(page.locator('.ae-cuisine-section')).toHaveCount(0);
   await expect(page.locator('.dish-category-row')).toHaveCount(0);
-  await expect(departments.locator('a')).toHaveCount(1);
+  await expect(departments.locator('a')).toHaveCount(7);
   const restaurantsTile=departments.locator('[data-department="restaurants"]');
   await expect(restaurantsTile).toHaveAttribute('href','/restaurants');
   await expect(restaurantsTile).toContainText('Restaurants');
@@ -945,7 +945,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   ];
   for(const [key,label,imageName] of futureDepartments){
     const tile=departments.locator(`[data-department="${key}"]`);
-    await expect(tile).toBeDisabled();
+    await expect(tile).toHaveAttribute('href',`/${key}`);
     await expect(tile).toContainText(label);
     await expect(tile).toContainText('Coming soon');
     const photo=tile.locator('.ae-department-art img');
@@ -974,7 +974,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   ];
   for(const [key,label] of futureLabelsFa){
     const tile=departmentsFa.locator(`[data-department="${key}"]`);
-    await expect(tile).toBeDisabled();
+    await expect(tile).toHaveAttribute('href',`/${key}`);
     await expect(tile).toContainText(label);
     await expect(tile).toContainText('به‌زودی');
   }

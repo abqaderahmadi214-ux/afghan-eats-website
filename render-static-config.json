@@ -22,6 +22,36 @@
     },
     {
       "type": "rewrite",
+      "source": "/groceries",
+      "destination": "/groceries.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/health-beauty",
+      "destination": "/health-beauty.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/convenience",
+      "destination": "/convenience.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/gifts",
+      "destination": "/gifts.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/electronics",
+      "destination": "/electronics.html"
+    },
+    {
+      "type": "rewrite",
+      "source": "/pet-supplies",
+      "destination": "/pet-supplies.html"
+    },
+    {
+      "type": "rewrite",
       "source": "/restaurant",
       "destination": "/restaurant.html"
     },
