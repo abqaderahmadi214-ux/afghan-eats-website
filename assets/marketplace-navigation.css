@@ -1,0 +1,170 @@
+/* Afghan Eats marketplace navigation: seven first-level departments. */
+:root {
+  --ae-marketplace-sticky-offset: 120px;
+}
+
+.header > .ae-marketplace-tabs {
+  position: relative;
+  z-index: 49;
+  width: 100%;
+  border-top: 1px solid rgba(226, 234, 228, .82);
+  border-bottom: 1px solid rgba(220, 229, 223, .92);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .99), rgba(249, 252, 249, .98));
+  box-shadow: 0 7px 16px rgba(23, 37, 31, .035);
+}
+
+.ae-marketplace-tabs__track {
+  width: min(1240px, 92%);
+  min-height: 52px;
+  margin: 0 auto;
+  padding: 4px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #dce6df transparent;
+}
+
+.ae-marketplace-tabs__track::-webkit-scrollbar { height: 4px; }
+.ae-marketplace-tabs__track::-webkit-scrollbar-thumb { border-radius: 999px; background: #dce6df; }
+
+.ae-marketplace-tab {
+  min-height: 44px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 6px 7px;
+  border: 1px solid #e4ebe5;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .9);
+  color: #31483d;
+  box-shadow: 0 2px 7px rgba(23, 37, 31, .035);
+  font-size: .78rem;
+  font-weight: 820;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.ae-marketplace-tab:hover {
+  transform: translateY(-1px);
+  border-color: #bad4c2;
+  background: #f8fcf9;
+  box-shadow: 0 7px 16px rgba(23, 37, 31, .08);
+}
+
+.ae-marketplace-tab:focus-visible {
+  outline: 3px solid rgba(28, 122, 85, .42);
+  outline-offset: 2px;
+}
+
+.ae-marketplace-tab[aria-current="page"] {
+  border-color: #1c7a55;
+  background: linear-gradient(135deg, #eaf6ee, #f8fcf9);
+  color: #17583f;
+  box-shadow: 0 5px 13px rgba(28, 122, 85, .12);
+}
+
+.ae-marketplace-tab__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #fbf2df;
+  color: #75571e;
+  font-size: .61rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: .01em;
+}
+
+.ae-marketplace-tab[data-availability="available"] .ae-marketplace-tab__status {
+  background: #eaf6ee;
+  color: #17623f;
+}
+
+/* The button's text remains available to assistive technology; the flag is the visual label. */
+button.lang {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid #d5e2d9;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #fff, #f2f8f4);
+  color: #183d32;
+  box-shadow: 0 4px 11px rgba(23, 37, 31, .07);
+  font-size: 0 !important;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+button.lang::before {
+  content: "🇦🇫";
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+html[lang="fa"] button.lang::before { content: "🇬🇧"; }
+
+button.lang:hover {
+  transform: translateY(-1px);
+  border-color: #b9d4c2;
+  background: #f5fbf7;
+  box-shadow: 0 8px 17px rgba(23, 37, 31, .12);
+}
+
+body.ae-marketplace-mobile-nav-compact .mobile-nav {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Keep restaurant menu sections and sticky category tabs below the expanded site header. */
+.store-tabs { top: var(--ae-marketplace-sticky-offset); }
+.menu-section { scroll-margin-top: calc(var(--ae-marketplace-sticky-offset) + 77px); }
+.cart-panel { top: calc(var(--ae-marketplace-sticky-offset) + 70px); }
+
+@media (max-width: 1000px) {
+  .ae-marketplace-tabs__track {
+    width: 100%;
+    justify-content: flex-start;
+    padding-inline: 4%;
+  }
+}
+
+@media (max-width: 620px) {
+  :root { --ae-marketplace-sticky-offset: 112px; }
+  .ae-marketplace-tabs__track {
+    min-height: 50px;
+    gap: 6px;
+    padding-block: 3px;
+  }
+  .ae-marketplace-tab {
+    min-height: 42px;
+    gap: 5px;
+    padding: 5px 9px;
+    font-size: .73rem;
+  }
+  .ae-marketplace-tab__status {
+    min-height: 20px;
+    padding: 3px 6px;
+    font-size: .57rem;
+  }
+  button.lang { width: 42px; min-width: 42px; height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ae-marketplace-tab, button.lang { transition: none; }
+}
