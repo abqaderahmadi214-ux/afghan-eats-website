@@ -75,6 +75,13 @@
     const headerRow = header?.querySelector('.container.nav, .nav');
     if (!header || !utilityNav || !headerRow) return;
 
+    if (['/', '/restaurants', '/restaurant'].includes(normalizedPath(window.location.pathname))) {
+      document.body.classList.add('ae-food-journey');
+      updateAccessibleLabels();
+      new MutationObserver(updateAccessibleLabels).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
+      return;
+    }
+
     // Restaurants now lives in the department strip, alongside the six peer departments.
     utilityNav.querySelectorAll('a').forEach((anchor) => {
       if (linkPath(anchor) === '/restaurants') anchor.remove();

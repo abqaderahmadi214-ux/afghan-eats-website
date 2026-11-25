@@ -26,13 +26,13 @@ test('home uses the Afghan food image and focused address-first copy, not a chec
   await page.goto('/');
 
   const heroImage = page.locator('.ae-hero-visual img.ae-feast');
-  await expect(heroImage).toHaveAttribute('src', '/assets/images/afghan-feast.webp');
-  await expect(heroImage).toHaveAttribute('alt', 'Illustrative Afghan food spread');
+  await expect(heroImage).toHaveAttribute('src', '/assets/menu-item-images/darbar-herat-restaurant-koobideh-kebab-f427a616.jpg');
+  await expect(heroImage).toHaveAttribute('alt', '');
   await expect(heroImage).toHaveCSS('object-fit', 'cover');
   await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.locator('.ae-hero-visual video')).toHaveCount(0);
   await expect(page.locator('.ae-hero-accent')).toHaveCount(0);
-  await expect(page.locator('.ae-hero-visual figcaption')).toContainText('Browse public menus by area');
+  await expect(page.locator('.ae-hero-visual figcaption')).toContainText('Koobideh Kebab');
   await expect(page.locator('.ae-hero-visual figcaption')).not.toContainText(/checkout|rider tracking|new orders remain paused/i);
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
@@ -62,15 +62,9 @@ test('mobile home puts area and search controls first, fits the viewport, and re
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('.ae-home-business-link')).toBeVisible();
   const heroImage = page.locator('.ae-hero-visual .ae-feast');
-  await heroImage.scrollIntoViewIfNeeded();
-  await expect(heroImage).toHaveCSS('object-fit', 'cover');
-  const imageBox = await heroImage.boundingBox();
-  const captionBox = await page.locator('.ae-hero-visual figcaption').boundingBox();
-  expect(captionBox.y).toBeGreaterThanOrEqual(imageBox.y);
-  expect(captionBox.y + captionBox.height).toBeLessThanOrEqual(imageBox.y + imageBox.height + 1);
-  await expect(heroImage).toHaveJSProperty('tagName', 'IMG');
-  const animation = await page.locator('.ae-hero-visual').evaluate(element => getComputedStyle(element, '::before').animationName);
-  expect(animation).toBe('none');
+  await expect(heroImage).toBeHidden();
+  await expect(page.locator('#aeMarketplaceTabs')).toHaveCount(0);
+  expect((await page.locator('.ae-restaurants').boundingBox()).y).toBeLessThan(900);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
