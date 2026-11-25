@@ -74,14 +74,15 @@ test('mobile home puts area and search controls first, fits the viewport, and re
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
-test('motion-enabled department cards reveal when brought into view', async ({ page }) => {
+test('desktop orbit can pause and replay', async ({ page }) => {
   await stubPublicApi(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveClass(/ae-motion-enabled/);
+  await page.setViewportSize({width:1280,height:800});
   const orbit = page.locator('ae-market-orbit');
   await orbit.getByRole('button', {name:'Pause'}).click();
-  await expect(orbit.getByRole('button', {name:'Play'})).toBeVisible();
+  await expect(orbit.getByRole('button', {name:'Play', exact:true})).toBeVisible();
   await orbit.getByRole('button', {name:'Replay'}).click();
   await expect(orbit.getByRole('button', {name:'Pause'})).toBeVisible();
 });
