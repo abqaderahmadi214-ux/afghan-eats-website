@@ -39,7 +39,7 @@ function draw(){
     const lift=(1-arrival)*21;
     const rock=reduce.matches?0:(1-arrival)*(i%2?5:-5)+focus*Math.sin(i+1)*3;
     const scale=mobile.matches?1:(.84+.22*depth+.15*focus);
-    card.firstElementChild.style.transform='translateY('+lift+'px) rotate('+rock+'deg) scale('+(scale*(.9+.1*arrival))+')';
+    card.firstElementChild.style.transform=reduce.matches?'none':'translateY('+lift+'px) rotate('+rock+'deg) scale('+(scale*(.9+.1*arrival))+')';
     card.firstElementChild.style.opacity=.25+.75*arrival;
   });
 }
@@ -67,6 +67,7 @@ function syncLanguage(){
   fa=document.documentElement.lang.startsWith('fa') || document.documentElement.dir==='rtl';
   emblem.alt=fa?'افغان ایتس':'Afghan Eats';
   words.forEach(word=>word.textContent=fa?word.dataset.fa:word.dataset.en);
+  host.setAttribute('aria-label',fa?'بخش‌های فروشگاه':'Marketplace departments');
   list.setAttribute('aria-label',fa?'بخش‌ها':'Departments');
   update();
 }

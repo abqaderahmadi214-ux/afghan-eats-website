@@ -40,13 +40,13 @@ test('home uses the Afghan food image and focused address-first copy, not a chec
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('paused');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
 
-  for (const department of ['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
-    const photo = page.locator(`.ae-home-department-nav [data-department="${department}"] img`);
+  for (const department of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
+    const photo = page.locator(`ae-market-orbit [data-department="${department}"]`).locator('..').locator('img');
     await photo.scrollIntoViewIfNeeded();
     await expect(photo).toHaveAttribute('alt', '');
     await expect.poll(() => photo.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   }
-  await expect(page.locator('.ae-home-department-nav [data-department="alcohol"]')).toHaveCount(0);
+  await expect(page.locator('ae-market-orbit [data-department="alcohol"]')).toHaveCount(0);
 });
 
 test('mobile home puts area and search controls first, fits the viewport, and respects reduced motion', async ({ page }) => {
@@ -79,8 +79,9 @@ test('motion-enabled department cards reveal when brought into view', async ({ p
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('html')).toHaveClass(/ae-motion-enabled/);
-  const card = page.locator('.ae-department-tile').first();
-  await card.scrollIntoViewIfNeeded();
-  await expect(card).toHaveClass(/ae-motion-visible/);
-  await expect(card).toBeVisible();
+  const orbit = page.locator('ae-market-orbit');
+  await orbit.getByRole('button', {name:'Pause'}).click();
+  await expect(orbit.getByRole('button', {name:'Play'})).toBeVisible();
+  await orbit.getByRole('button', {name:'Replay'}).click();
+  await expect(orbit.getByRole('button', {name:'Pause'})).toBeVisible();
 });

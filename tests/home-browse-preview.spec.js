@@ -41,16 +41,16 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
   await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
-  const departments = page.locator('.ae-home-department-nav');
+  const departments = page.locator('ae-market-orbit');
   await expect(departments).toBeVisible();
   await expect(departments.locator('[data-department]')).toHaveCount(7);
-  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
-  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
+  const departmentKeys = await departments.locator('[data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'pet-supplies', 'electronics', 'gifts']);
   await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
   await expect(page.locator('.ae-cuisine')).toHaveCount(0);
-  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse restaurants');
   for (const key of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
-    await expect(departments.locator(`[data-department="${key}"]`)).toContainText('Coming soon');
+    await expect(departments.locator(`[data-department="${key}"]`).locator('..')).toContainText('Coming soon');
   }
 
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
@@ -66,7 +66,7 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   for (const [key, label] of comingSoonDari) {
     const tile = departments.locator(`[data-department="${key}"]`);
     await expect(tile).toContainText(label);
-    await expect(tile).toContainText('به‌زودی');
+    await expect(tile.locator('..')).toContainText('به‌زودی');
   }
 
   for (const width of [360, 390, 768, 1280]) {
@@ -76,14 +76,14 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   }
 });
 
-test('mobile department cards fill their grid tracks', async ({ page }) => {
+test('mobile department collections fit their swipe track', async ({ page }) => {
   await routeApi(page);
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto('/');
-  const grid = await page.locator('.ae-department-row').boundingBox();
-  const card = await page.locator('.ae-department-tile').first().boundingBox();
-  const art = await page.locator('.ae-department-art').first().boundingBox();
-  const photo = await page.locator('.ae-department-art img').first().boundingBox();
+  const grid = await page.locator('ae-market-orbit ul').boundingBox();
+  const card = await page.locator('ae-market-orbit li').first().boundingBox();
+  const art = await page.locator('ae-market-orbit li').first().boundingBox();
+  const photo = await page.locator('ae-market-orbit li img').first().boundingBox();
   expect(card.width).toBeGreaterThan(grid.width * 0.45);
   expect(photo.width).toBeGreaterThan(art.width * 0.95);
 });
@@ -251,10 +251,10 @@ test('homepage motion respects a reduced-motion preference', async ({ page }) =>
   await routeApi(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(page.locator('.ae-department-tile').first()).toBeVisible();
+  await expect(page.locator('ae-market-orbit li').first()).toBeVisible();
   const motion = await page.evaluate(() => ({
     enabled: document.documentElement.classList.contains('ae-motion-enabled'),
-    photoTransition: getComputedStyle(document.querySelector('.ae-department-art img')).transitionDuration,
+    photoTransition: getComputedStyle(document.querySelector('ae-market-orbit').shadowRoot.querySelector('li img')).transitionDuration,
     areaTransition: getComputedStyle(document.querySelector('#aeHomeAreaSubmit')).transitionDuration
   }));
   expect(motion.enabled).toBe(false);
