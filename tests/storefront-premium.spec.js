@@ -40,14 +40,14 @@ test('premium home is address-first, keeps peer department choices, and switches
   await expect(page.locator('.ae-order-box')).toHaveCount(0);
   await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
 
-  const departments = page.locator('.ae-home-department-nav');
+  const departments = page.locator('ae-market-orbit');
   await expect(departments).toBeVisible();
-  const departmentKeys = await departments.locator('.ae-department-row > [data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
-  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']);
+  const departmentKeys = await departments.locator('[data-department]').evaluateAll(cards => cards.map(card => card.dataset.department));
+  expect(departmentKeys).toEqual(['restaurants', 'groceries', 'health-beauty', 'convenience', 'pet-supplies', 'electronics', 'gifts']);
   await expect(departments.locator('[data-department="alcohol"]')).toHaveCount(0);
-  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse menus');
+  await expect(departments.locator('[data-department="restaurants"]')).toContainText('Browse restaurants');
   for (const key of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
-    await expect(departments.locator(`[data-department="${key}"]`)).toContainText('Coming soon');
+    await expect(departments.locator(`[data-department="${key}"]`).locator('..')).toContainText('Coming soon');
   }
 
   await page.setViewportSize({ width: 390, height: 844 });
@@ -66,7 +66,7 @@ test('premium home is address-first, keeps peer department choices, and switches
   for (const [key, label] of comingSoonDari) {
     const tile = departments.locator(`[data-department="${key}"]`);
     await expect(tile).toContainText(label);
-    await expect(tile).toContainText('به‌زودی');
+    await expect(tile.locator('..')).toContainText('به‌زودی');
   }
 
   for (const width of [360, 390, 768, 1280]) {
@@ -112,9 +112,9 @@ test('homepage area CTA hover feedback respects reduced-motion settings', async 
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
 
-  const department = page.locator('.ae-department-tile').first();
-  const photo = department.locator('.ae-department-art img');
-  await department.hover();
+  const department = page.locator('ae-market-orbit li').first();
+  const photo = department.locator('img');
+  await expect(department).toBeVisible();
   await expect.poll(() => photo.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
   const areaButton = page.locator('#aeHomeAreaSubmit');
   await areaButton.hover();
