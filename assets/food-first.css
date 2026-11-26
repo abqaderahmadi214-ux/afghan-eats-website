@@ -79,3 +79,135 @@ body.premium-home .ae-hero-copy h1 { max-width: 16ch; }
   body.premium-home .ae-home-area-control button { grid-column: 1 / -1; }
   body.premium-home .section-head { flex-wrap: wrap; }
 }
+
+/* The masthead pairs the primary search with one editorial photograph. */
+body.premium-home .ae-hero {
+  background: #103b30;
+  color: #fbf7ec;
+  padding-block: clamp(32px,5vw,78px);
+}
+body.premium-home .ae-hero::before,
+body.premium-home .ae-hero::after,
+body.premium-home .ae-hero-visual::before,
+body.premium-home .ae-hero-visual::after { content: none; }
+body.premium-home .ae-hero-copy h1 {
+  color: #fbf7ec;
+  font: 500 clamp(40px,5vw,78px)/1.04 Georgia,serif;
+  letter-spacing: -.045em;
+  max-width: 14ch;
+}
+body.premium-home.rtl .ae-hero-copy h1 {
+  font-family: inherit;
+  font-size: clamp(32px,3.8vw,58px);
+  line-height: 1.5;
+  letter-spacing: 0;
+  max-width: 18ch;
+}
+body.premium-home .ae-home-search-control {
+  background: #fffdf8;
+  border: 0;
+  border-radius: 8px;
+  min-height: 58px;
+}
+body.premium-home .ae-home-search-control button {
+  color: white;
+  background: #19523e;
+  min-height: 46px;
+  border-radius: 5px;
+}
+body.premium-home .ae-home-search-control input { font-size: 16px; }
+body.premium-home .ae-home-search-control input::placeholder { color: #55645a; }
+body.premium-home :is(.ae-home-search label,.ae-home-area-form label,#aeHomeAreaNote) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+body.premium-home .ae-home-area-form { margin-top: 6px; }
+body.premium-home .ae-home-area-control {
+  display: flex;
+  min-height: 44px;
+  padding: 0;
+  gap: 10px;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+body.premium-home .ae-home-area-control input,
+body.premium-home .ae-home-area-control input::placeholder,
+body.premium-home .ae-home-area-pin { color: #f0e9d9; }
+body.premium-home .ae-home-area-control input { max-width: 16rem; min-height: 44px; font-size: .92rem; }
+body.premium-home .ae-home-area-control button {
+  background: transparent;
+  color: #f0e9d9;
+  box-shadow: none;
+  border: 1px solid #739586;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 10px;
+}
+body.premium-home .ae-home-area-control button span { position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; }
+body.premium-home .ae-home-area-control button svg { display: block; }
+body.premium-home .ae-home-status-slot { min-height: 38px; margin-top: 5px; }
+body.premium-home #homeOrderingStatus .ae-ordering-paused-context {
+  font-size: .83rem;
+  color: #e5e9df;
+  border: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body.premium-home .ae-hero-visual { padding: 0; border-radius: 3px; }
+body.premium-home .ae-hero-visual .ae-feast {
+  height: 100%; border: 0; border-radius: 0; box-shadow: none;
+}
+body.premium-home .ae-hero-visual figcaption {
+  inset-inline: 0; bottom: 0; border: 0; border-radius: 0;
+  margin: 0; padding: 28px 18px 12px;
+  max-width: none; background: linear-gradient(transparent,#10261ee6);
+  box-shadow: none; font-size: .85rem;
+}
+body.premium-home #homeRestaurants .restaurant-card {
+  box-shadow: none !important; border-radius: 0 !important;
+  background: transparent; border: 0; border-bottom: 1px solid #d2d9ce;
+}
+body.premium-home #homeRestaurants .restaurant-card-link {
+  display: grid;
+  grid-template-columns: clamp(76px,7vw,102px) minmax(0,1fr);
+  gap: clamp(12px,1.5vw,24px);
+  align-items: center;
+  padding-block: 16px;
+  padding-inline-end: 34px;
+}
+body.premium-home #homeRestaurants .restaurant-image {
+  width: 100%; aspect-ratio: 1; height: auto !important;
+  border-radius: 6px; overflow: hidden;
+}
+body.premium-home #homeRestaurants .restaurant-body { padding: 0 !important; min-width: 0; }
+body.premium-home #homeRestaurants .restaurant-card .fav { inset-block-start: 18px; inset-inline-end: 0; width: 34px; box-shadow: none; }
+body.premium-home #homeRestaurants .restaurant-image .status-pill { position: static; }
+body.premium-home #homeRestaurants .browse-card-meta:empty { display: none; }
+body.premium-home #homeRestaurants { column-gap: 34px; row-gap: 0; }
+@media (max-width:760px) {
+  body.premium-home .ae-hero-copy h1 { font-size: clamp(40px,10vw,60px); }
+  body.premium-home.rtl .ae-hero-copy h1 { font-size: clamp(30px,7.5vw,42px); }
+  body.premium-home .ae-hero { padding-block: 28px 18px; }
+  body.premium-home #homeRestaurants { grid-template-columns: minmax(0,1fr) !important; }
+}
+body.premium-home #homeRestaurants .restaurant-photo-placeholder {
+  background: #e4eadd !important;
+  padding: 0;
+}
+body.premium-home #homeRestaurants .restaurant-photo-placeholder::after { content: none; }
+body.premium-home #homeRestaurants .restaurant-placeholder-mark {
+  color: #244c3a; font: 500 1.35rem Georgia,serif;
+  background: transparent; box-shadow: none; border: 0;
+}
