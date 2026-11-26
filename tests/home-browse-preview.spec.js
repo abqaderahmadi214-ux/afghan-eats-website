@@ -191,7 +191,7 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'نام غذا یا رستورانت را بنویسید');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی نام غذا یا رستورانت را بنویسید');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی غذا یا رستورانت');
   await expect(page.locator('.ae-home-search button[type="submit"]')).toContainText('جستجو');
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('ثبت سفارش موقتاً متوقف است');
   await page.locator('#aeHomeSearch').fill('قابلی ویژه');

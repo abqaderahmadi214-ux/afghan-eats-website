@@ -26,6 +26,7 @@
     .restaurant-page:not([data-ordering-available="true"]) .cart-panel:not([data-has-items="true"]),
     .restaurant-page .cart-panel:not([data-has-items="true"]) .group-order,
     .restaurant-page .saved-basket-note { display: none !important; }
+    .restaurant-page:is([data-ordering-paused="true"],[data-ordering-unavailable="true"]) .cart-panel[data-has-items="true"]:not(.hidden) { display: block !important; }
     .restaurant-page[data-ordering-paused="true"] .cart-panel[data-has-items="true"] .saved-basket-note,
     .restaurant-page[data-ordering-unavailable="true"] .cart-panel[data-has-items="true"] .saved-basket-note { display: block !important; }
     .restaurant-page:not([data-ordering-available="true"]) .menu-layout:not(:has(.cart-panel[data-has-items="true"])) { grid-template-columns: minmax(0,1fr); }

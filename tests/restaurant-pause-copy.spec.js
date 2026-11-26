@@ -85,6 +85,7 @@ test('global ordering pause replaces only positive restaurant status copy and re
 test('a failed status check can be retried without losing the saved basket or posting orders', async ({ page }) => {
   let statusAvailable = false;
   const orderRequests = [];
+  await page.setViewportSize({ width: 390, height: 844 });
   const saved = [{ id: 'kebab', restaurantId: restaurant.id, restaurantName: restaurant.name, name: 'Kebab', qty: 2, price: 250 }];
   await page.addInitScript(items => localStorage.setItem('ae_cart', JSON.stringify(items)), saved);
   await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route => {
@@ -113,6 +114,8 @@ test('a failed status check can be retried without losing the saved basket or po
   await expect(notice).toContainText('new orders are temporarily paused');
   await expect(page.locator('.cart-order-actions')).toBeHidden();
   await expect(page.locator('.group-order')).toBeHidden();
+  await expect(page.locator('.saved-basket-note')).toBeVisible();
+  await expect(page.locator('#cartItems')).toContainText('Kebab');
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ae_cart')))).toEqual(saved);
   expect(orderRequests).toEqual([]);
 });
