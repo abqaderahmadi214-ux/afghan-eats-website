@@ -80,6 +80,8 @@ test('mobile department collections fit their swipe track', async ({ page }) => 
   await routeApi(page);
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto('/');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('ae-market-orbit ul').scrollIntoViewIfNeeded();
   const grid = await page.locator('ae-market-orbit ul').boundingBox();
   const card = await page.locator('ae-market-orbit li').first().boundingBox();
   const art = await page.locator('ae-market-orbit li').first().boundingBox();

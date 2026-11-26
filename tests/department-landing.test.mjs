@@ -37,10 +37,10 @@ test('each department has a complete bilingual, image-led landing page that rema
 });
 
 test('homepage keeps all marketplace departments as peers and links each Coming soon tile', () => {
-  const departmentNav = homepage.match(/<nav class="ae-home-department-nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
-  assert.match(departmentNav, /<a class="ae-department-tile is-available" data-department="restaurants" href="\/restaurants">/);
+  const departmentNav = homepage.match(/<ae-market-orbit\b[\s\S]*?<\/ae-market-orbit>/)?.[0] ?? '';
+  assert.match(departmentNav, /<a data-department="restaurants" href="\/restaurants"/);
   for (const slug of slugs) {
-    assert.match(departmentNav, new RegExp(`<a class="ae-department-tile is-coming-soon" data-department="${slug}" href="/${slug}">`));
+    assert.match(departmentNav, new RegExp(`<a data-department="${slug}" href="/${slug}">`));
     assert.match(departmentNav, /Coming soon/);
     assert.doesNotMatch(departmentNav, new RegExp(`<button[^>]*data-department="${slug}"`));
   }

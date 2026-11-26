@@ -151,7 +151,7 @@ async function main() {
     await fs.writeFile(path.join(output, 'performance-samples.json'), JSON.stringify(samples, null, 2));
     for (const [build, origin] of Object.entries(origins)) {
       for (const lang of ['en', 'fa']) {
-        for (const size of [mobile, { width: 1440, height: 900 }]) {
+        for (const size of [mobile, { width: 1440, height: 900 }, ...(build === 'candidate' ? [{ width: 360, height: 800 }] : [])]) {
           captures.push(...await capture(browser, origin, build, lang, size));
         }
       }

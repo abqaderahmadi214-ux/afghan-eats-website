@@ -69,3 +69,13 @@ body.premium-home .ae-hero-copy h1 { max-width: 16ch; }
 @media(max-width:760px) {
   body.premium-home .ae-hero-copy h1 { max-width: none; }
 }
+@media (max-width: 360px) {
+  body.premium-home .header .container.nav { width: calc(100% - 20px); gap: 4px; }
+  body.premium-home .header .actions { gap: 5px; }
+  body.premium-home .header .brand { font-size: 16px; min-width: 0; }
+  body.premium-home .header .ae-cart { min-width: 44px; padding-inline: 6px; }
+  body.premium-home .ae-hero-copy { min-width: 0; }
+  body.premium-home .ae-home-area-control { display: grid; grid-template-columns: auto minmax(0,1fr); }
+  body.premium-home .ae-home-area-control button { grid-column: 1 / -1; }
+  body.premium-home .section-head { flex-wrap: wrap; }
+}

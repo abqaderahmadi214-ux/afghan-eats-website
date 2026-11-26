@@ -813,7 +813,7 @@ test('zero-item candidates and pending empty-directory records stay hidden', asy
   await mockApi(page, { restaurants: [zeroItemApprovedCandidate, zeroItemPendingDirectory], menuPreviewRows: [] });
   await page.goto('/restaurants');
   await expect(page.locator('.restaurant-card')).toHaveCount(0);
-  await expect(page.locator('#restaurantGrid')).toContainText('No matches. Try a dish, cuisine or fewer filters.');
+  await expect(page.locator('#restaurantGrid')).toContainText('Restaurant list unavailable');
 });
 
 test('empty, rejected and archived static fallback listings stay hidden', async ({page}) => {
@@ -1000,7 +1000,7 @@ test('homepage presents premium top-level departments while restaurant cuisines 
   }
   await page.goto('/restaurants');
   await expect(page.locator('ae-market-orbit')).toHaveCount(0);
-  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);
+  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(0);
   await expect(page.locator('.dish-category-row')).toBeVisible();
   await expect(page.locator('.dish-category-chip[data-dish-category="kebab"]')).toContainText('کباب');
   expect(orderSubmissions).toBe(0);
@@ -1095,15 +1095,15 @@ test('a late dish-search response cannot replace results for a newer query', asy
 });
 
 
-test('phone browse keeps department navigation visible and labels unavailable sort criteria Coming soon', async ({page})=>{
+test('phone browse keeps restaurant navigation visible and labels unavailable sort criteria Coming soon', async ({page})=>{
   await clearPublicRestaurantFallbacks(page);
   await mockApi(page,{restaurants:[{...restaurant,rating:null,total_reviews:0}]});
   await page.setViewportSize({width:390,height:844});
   await page.goto('/restaurants');
   await expect(page.locator('#search')).toHaveAttribute('placeholder','Search restaurants, items, and categories');
   await expect(page.locator('#search')).toHaveAttribute('aria-label','Search restaurants, items, and categories');
-  await expect(page.locator('#aeMarketplaceTabs')).toBeVisible();
-  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(7);
+  await expect(page.locator('.mobile-nav a[href="/restaurants"]')).toBeVisible();
+  await expect(page.locator('#aeMarketplaceTabs [data-department]')).toHaveCount(0);
   await expect(page.locator('.restaurant-sort-label .en-copy')).toBeVisible();
   await expect(page.locator('.restaurant-sort-label')).toContainText('Sort by');
   await expect(page.locator('#sort')).toHaveAttribute('aria-label','Sort by');

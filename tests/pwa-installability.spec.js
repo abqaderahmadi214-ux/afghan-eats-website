@@ -151,7 +151,13 @@ for (const language of ['en', 'fa']) {
       expect(Math.abs(box.width - box.height)).toBeLessThan(1);
       expect(box.x).toBeGreaterThanOrEqual(0);
       expect(box.x + box.width).toBeLessThanOrEqual(width);
-      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      const widthReport = await page.evaluate(() => ({
+        width: document.documentElement.scrollWidth,
+        outside: Array.from(document.querySelectorAll('header *, main *, footer *'))
+          .filter(el => el.getBoundingClientRect().right > innerWidth + 1 || el.getBoundingClientRect().left < -1)
+          .slice(0, 6).map(el => el.tagName + '.' + el.className)
+      }));
+      expect(widthReport.width, JSON.stringify(widthReport.outside)).toBeLessThanOrEqual(width);
       expect(await androidSlot.evaluate(element => element.children.length)).toBe(0);
       if (width <= 760) await expect(androidSlot).toBeHidden();
       else await expect(androidSlot).toBeVisible();
