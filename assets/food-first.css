@@ -211,3 +211,28 @@ body.premium-home #homeRestaurants .restaurant-placeholder-mark {
   color: #244c3a; font: 500 1.35rem Georgia,serif;
   background: transparent; box-shadow: none; border: 0;
 }
+
+/* Decorative restaurant photography moves independently of the search interface. */
+body.premium-home .ae-hero { position: relative; isolation: isolate; overflow: hidden; }
+.ae-food-backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.ae-food-backdrop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; animation: ae-food-drift 18s ease-in-out infinite alternate; }
+.ae-food-backdrop img + img { opacity: 0; animation: ae-food-drift 18s ease-in-out infinite alternate-reverse, ae-food-dissolve 20s ease-in-out infinite; }
+.ae-food-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(5,32,24,.87),rgba(8,40,29,.72) 45%,rgba(8,40,29,.48)); }
+html[dir="rtl"] .ae-food-backdrop::after { transform: scaleX(-1); }
+@keyframes ae-food-drift { from { transform: scale(1.02) translateX(-.6%); } to { transform: scale(1.10) translateX(.6%); } }
+@keyframes ae-food-dissolve { 0%,30%,100% { opacity: 0; } 50%,80% { opacity: 1; } }
+.ae-photo-toggle { position: absolute; z-index: 2; inset-block-end: 6px; inset-inline-end: 12px; display: grid; place-items: center; width: 44px; height: 44px; color: white; cursor: pointer; }
+.ae-photo-toggle input,.ae-photo-label { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+.ae-photo-symbol { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #102e23cc; border: 1px solid #fff9; }
+.ae-photo-symbol::before { content: ""; width: 5px; height: 10px; border-inline: 2px solid currentColor; box-sizing: content-box; }
+.ae-photo-toggle input:checked + .ae-photo-symbol::before { width: 0; height: 0; border: 0; border-block: 5px solid transparent; border-left: 8px solid currentColor; }
+.ae-photo-toggle:focus-within .ae-photo-symbol { outline: 2px solid white; outline-offset: 3px; }
+.ae-hero:has(.ae-photo-toggle input:checked) .ae-food-backdrop img { animation-play-state: paused; }
+@media(max-width:760px) {
+  body.premium-home .ae-hero { padding-block-end: 42px; }
+  .ae-food-backdrop::after { background: linear-gradient(90deg,rgba(5,32,24,.85),rgba(5,32,24,.62)); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .ae-food-backdrop img { animation: none !important; }
+  .ae-food-backdrop img + img,.ae-photo-toggle { display: none; }
+}

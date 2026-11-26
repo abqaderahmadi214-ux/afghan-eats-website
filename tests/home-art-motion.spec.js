@@ -80,3 +80,19 @@ test('desktop orbit can pause and replay', async ({ page }) => {
   await orbit.getByRole('button', {name:'Replay'}).click();
   await expect(orbit.getByRole('button', {name:'Pause'})).toBeVisible();
 });
+
+test('hero food photography loads, moves, pauses and respects reduced motion', async ({ page }) => {
+  await stubPublicApi(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const photos = page.locator('.ae-food-backdrop img');
+  await expect(photos).toHaveCount(2);
+  await expect.poll(() => photos.evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
+  await expect(photos.first()).toHaveCSS('animation-name', 'ae-food-drift');
+  await page.locator('.ae-photo-toggle').click();
+  await expect(photos.first()).toHaveCSS('animation-play-state', 'paused');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(photos.first()).toHaveCSS('animation-name', 'none');
+  await expect(photos.nth(1)).toBeHidden();
+});
