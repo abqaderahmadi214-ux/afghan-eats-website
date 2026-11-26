@@ -177,7 +177,7 @@ body.premium-home .ae-hero-visual figcaption {
 }
 body.premium-home #homeRestaurants .restaurant-card {
   box-shadow: none !important; border-radius: 0 !important;
-  background: transparent; border: 0; border-bottom: 1px solid #d2d9ce;
+  background: transparent !important; border: 0 !important; border-block-end: 1px solid #d2d9ce !important;
 }
 body.premium-home #homeRestaurants .restaurant-card-link {
   display: grid;
@@ -188,7 +188,7 @@ body.premium-home #homeRestaurants .restaurant-card-link {
   padding-inline-end: 34px;
 }
 body.premium-home #homeRestaurants .restaurant-image {
-  width: 100%; aspect-ratio: 1; height: auto !important;
+  width: 100%; height: clamp(76px,7vw,102px) !important;
   border-radius: 6px; overflow: hidden;
 }
 body.premium-home #homeRestaurants .restaurant-body { padding: 0 !important; min-width: 0; }
