@@ -4,7 +4,7 @@ for(const route of ['/','/restaurants','/checkout','/owner','/rider-portal']){
   await page.route('https://afghaneats-api.onrender.com/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({result:{data:{json:[]}}})}));
   await page.goto(route);
   await expect.poll(()=>page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--ae-action').trim())).toBe('#0d4a3a');
-  const button=route==='/'?page.locator('#aeHomeAreaSubmit'):page.locator('.btn-primary:not(.ae-cart)').first();
+  const button=route==='/'?page.locator('.ae-home-search button[type="submit"]'):page.locator('.btn-primary:not(.ae-cart)').first();
   await expect(button).toBeAttached();
   if(route==='/') await expect(button).toBeEnabled();
   await expect.poll(()=>button.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe('rgb(13, 74, 58)');

@@ -128,8 +128,7 @@ test('paused Basket is subdued and inaccessible, then restores its normal action
   await expect(basket).not.toHaveAttribute('aria-disabled');
   await expect(basket).not.toHaveAttribute('tabindex', '-1');
   await expect(basket.locator('.ae-cart-label')).toContainText('Basket');
-  const activeBackground = await basket.evaluate(el => getComputedStyle(el).backgroundColor);
-  expect(activeBackground).not.toBe('rgb(233, 236, 231)');
+  await expect.poll(() => basket.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe('rgb(233, 236, 231)');
 });
 
 test('homepage search finds restaurants, menu items, and categories in both languages while orders stay paused', async ({ page }) => {

@@ -111,7 +111,7 @@ body.premium-home .ae-home-search-control {
 }
 body.premium-home .ae-home-search-control button {
   color: white;
-  background: #19523e;
+  background: var(--ae-action, #0d4a3a);
   min-height: 46px;
   border-radius: 5px;
 }
