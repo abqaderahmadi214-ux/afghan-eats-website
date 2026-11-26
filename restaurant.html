@@ -29,6 +29,8 @@
     .restaurant-page[data-ordering-paused="true"] .cart-panel[data-has-items="true"] .saved-basket-note,
     .restaurant-page[data-ordering-unavailable="true"] .cart-panel[data-has-items="true"] .saved-basket-note { display: block !important; }
     .restaurant-page:not([data-ordering-available="true"]) .menu-layout:not(:has(.cart-panel[data-has-items="true"])) { grid-template-columns: minmax(0,1fr); }
+    .restaurant-page:not([data-ordering-available="true"]) #aeMerchantBanner:has(.ae-merchant-banner:is(.open,.paused)),
+    .restaurant-page:not([data-ordering-available="true"]) #aeMerchantBanner .ae-merchant-banner.closed small { display: none !important; }
     .restaurant-page #aeOrderingPauseContext { max-width: 72rem; margin-inline: auto; }
   </style>
 </head>

@@ -40,3 +40,10 @@ body.premium-home :is(a,button,input):focus-visible { outline: 3px solid #a25d0b
   body.premium-home .ae-hero-visual { display: none; }
   body.premium-home .ae-restaurants { padding-block: 24px; }
 }
+.ae-featured-menu-item {
+  margin: .65rem 0 0;
+  padding-block-start: .6rem;
+  border-block-start: 1px solid #d5dfd6;
+  color: #244d3b;
+  font-weight: 600;
+}

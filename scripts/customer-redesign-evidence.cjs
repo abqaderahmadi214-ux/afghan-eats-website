@@ -7,6 +7,8 @@ const { chromium } = require('@playwright/test');
 const [baseline, candidate, output] = process.argv.slice(2).map(p => path.resolve(p));
 const mobile = { width: 390, height: 844 };
 const apiHost = 'afghaneats-api.onrender.com';
+const directoryId = 'jumeirah-fast-food-herat';
+const menuPath = '/restaurant.html?id=' + directoryId;
 const types = { html: 'text/html', js: 'application/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', avif: 'image/avif', woff2: 'font/woff2', ico: 'image/x-icon' };
 const fixtures = {
   'restaurants.list': [],
@@ -93,14 +95,28 @@ async function measure(browser, origin) {
   } finally { await ctx.close(); }
 }
 
-async function capture(browser, origin, build, language, viewport, menuPath) {
+async function capture(browser, origin, build, language, viewport) {
   const { ctx, page } = await session(browser, origin, viewport, language);
   const rows = [];
   try {
     for (const [surface, url] of Object.entries({ home: '/', discovery: '/restaurants', menu: menuPath })) {
-      await page.goto(origin + url, { waitUntil: 'load' });
-      if (surface === 'home') await page.locator('#homeRestaurants a[href*="restaurant"]').first().waitFor();
-      if (surface === 'menu') await page.locator('h1:visible').first().waitFor();
+      const response = await page.goto(origin + url, { waitUntil: 'load' });
+      if (!response?.ok()) throw new Error(build + ' ' + url + ' returned ' + response?.status());
+      try {
+        if (surface === 'home') await page.locator('#homeRestaurants a[href*="id="]').first().waitFor();
+        if (surface === 'discovery') await page.locator('#restaurantGrid .restaurant-card').first().waitFor();
+        if (surface === 'menu') {
+          await page.locator('#menuContent .public-menu-item').first().waitFor();
+          const restaurantId = await page.evaluate(() => window.currentRestaurant?.id);
+          if (restaurantId !== directoryId) throw new Error('Unexpected restaurant ' + restaurantId);
+          if (!(await page.locator('#menuContent').innerText()).includes('؋')) throw new Error('Missing menu price');
+        }
+      } catch (error) {
+        const name = [build, language, viewport.width, surface, 'failure'].join('-');
+        await page.screenshot({ path: path.join(output, name + '.png') });
+        await fs.writeFile(path.join(output, name + '.txt'), page.url() + '\n' + await page.locator('body').innerText());
+        throw error;
+      }
       await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(600);
       const layout = await page.evaluate(() => ({
@@ -117,6 +133,11 @@ async function capture(browser, origin, build, language, viewport, menuPath) {
 
 async function main() {
   await fs.mkdir(output, { recursive: true });
+  const directory = JSON.parse(await fs.readFile(path.join(baseline, 'data/public-herat-directory.json'), 'utf8'));
+  const entry = directory.find(row => row.restaurant?.id === directoryId);
+  if (!entry?.items?.some(item => Number(item.price) > 0)) throw new Error('Pinned directory fixture must include a priced Jumeirah item');
+  // Expose the real directory record through the mocked listing endpoint; its menu must load from the pinned local snapshot.
+  fixtures['restaurants.list'] = [entry.restaurant];
   const a = await serve(baseline), b = await serve(candidate);
   const origins = { baseline: a.origin, candidate: b.origin };
   let browser;
@@ -127,16 +148,11 @@ async function main() {
       const builds = round % 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'];
       for (const build of builds) samples[build].push(await measure(browser, origins[build]));
     }
-    const { ctx, page } = await session(browser, a.origin, mobile, 'en');
-    await page.goto(a.origin);
-    const link = page.locator('#homeRestaurants a[href*="restaurant"]').first();
-    await link.waitFor();
-    const menuUrl = new URL(await link.getAttribute('href'), a.origin);
-    await ctx.close();
+    await fs.writeFile(path.join(output, 'performance-samples.json'), JSON.stringify(samples, null, 2));
     for (const [build, origin] of Object.entries(origins)) {
       for (const lang of ['en', 'fa']) {
         for (const size of [mobile, { width: 1440, height: 900 }]) {
-          captures.push(...await capture(browser, origin, build, lang, size, menuUrl.pathname + menuUrl.search));
+          captures.push(...await capture(browser, origin, build, lang, size));
         }
       }
     }
@@ -145,7 +161,7 @@ async function main() {
     for (const [build, rows] of Object.entries(samples)) lines.push('| ' + [build, median(rows, 'lcpMs').toFixed(0), median(rows, 'cls').toFixed(4), median(rows, 'bytes')].join(' | ') + ' |');
     lines.push('', 'Screenshots cover the homepage, discovery and the same directory entry in English and Dari. See measurements.json for the individual samples, viewport overflow, direction and headings.');
     await fs.writeFile(path.join(output, 'comparison.md'), lines.join('\n') + '\n');
-    await fs.writeFile(path.join(output, 'measurements.json'), JSON.stringify({ samples, captures, menu: menuUrl.pathname + menuUrl.search }, null, 2));
+    await fs.writeFile(path.join(output, 'measurements.json'), JSON.stringify({ samples, captures, menu: menuPath }, null, 2));
     if (process.env.GITHUB_STEP_SUMMARY) await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, lines.join('\n') + '\n');
     if (captures.some(row => row.build === 'candidate' && (row.overflowPx > 1 || (row.language === 'fa' && row.direction !== 'rtl')))) throw new Error('Candidate layout exceeded viewport or lacked Dari RTL. Inspect measurements.json.');
   } finally {

@@ -88,7 +88,7 @@ test('homepage area browse to separate delivery quote dialog and mobile checkout
   const quoteRequest=page.waitForRequest(request=>request.url().includes('/orders.quote'));
   await deliveryDialog.locator('#aeBrowseAreaForm button[type="submit"]').click();
   await quoteRequest;
-  await expect(deliveryDialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  await expect(deliveryDialog.locator('#aeBrowseAreaStatus')).toContainText('restaurants with a current quote');
   await expect(card).toContainText('AFN 60');
   await deliveryDialog.getByRole('button', { name: 'Close' }).click();
   await expect(deliveryDialog).toBeHidden();
@@ -128,14 +128,14 @@ test('manual delivery address refreshes restaurant quotes without basket or orde
   await page.addInitScript(()=>localStorage.setItem('ae_mode','pickup'));
   await page.goto('/restaurants');
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   const cartBefore=await page.evaluate(()=>localStorage.getItem('ae_cart'));
   await expect(page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first()).toBeVisible();
   await page.locator('#aeBrowseAreaTrigger').click();
   const dialog=page.locator('#aeBrowseAreaDialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText('does not use your basket or place an order');
-  await expect(dialog).toContainText('ordering remains paused');
+  await expect(dialog).toContainText('check delivery fees and times');
+  await expect(dialog).not.toContainText('ordering remains paused');
   await expect(page.locator('#aeBrowseAreaInput')).toHaveAttribute('autocomplete','street-address');
   await page.locator('#aeBrowseAreaInput').fill(address);
   const quoteRequest=page.waitForRequest(request=>new URL(request.url()).pathname.endsWith('/orders.quote'));
@@ -145,7 +145,7 @@ test('manual delivery address refreshes restaurant quotes without basket or orde
   const input=JSON.parse(new URL(request.url()).searchParams.get('input')).json;
   expect(Object.keys(input).sort()).toEqual(['deliveryAddress','deliveryArea','fulfillment','restaurantId']);
   expect(input).toMatchObject({restaurantId:restaurant.id,fulfillment:'delivery',deliveryArea:address,deliveryAddress:address});
-  await expect(dialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  await expect(dialog.locator('#aeBrowseAreaStatus')).toContainText('restaurants with a current quote');
   await expect(page.locator('#aeBrowseAreaName')).toHaveText(address);
   const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
   await expect(card).toContainText('AFN 60');
@@ -226,7 +226,7 @@ test('a changed address supersedes an in-flight quote for the previous address',
   await page.locator('#aeBrowseAreaForm button[type="submit"]').click();
   const newInput=await newStarted;
   expect(newInput.deliveryAddress).toBe(newAddress);
-  await expect(page.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  await expect(page.locator('#aeBrowseAreaStatus')).toContainText('restaurants with a current quote');
   const card=page.locator('.restaurant-card').filter({hasText:'Herat Kitchen'}).first();
   await expect(card).toContainText('AFN 60');
   const oldRequestFinished=page.waitForEvent('requestfinished',request=>{
@@ -255,8 +255,7 @@ test('photo-free dishes receive bilingual local illustrations without remote ima
   const menuImages=page.locator('.menu-item-media img');
   await expect(menuImages).toHaveCount(2);
   await expect(page.locator('.menu-image-illustration')).toHaveCount(2);
-  await expect(menuCards.first()).toContainText('Illustration · تصویر نمونه');
-  await expect(menuCards.first()).toContainText('Not an actual dish photo · عکس واقعی غذا نیست');
+  await expect(menuCards.first().locator('[data-menu-image-label]')).toHaveText('Illustration');
   const pageOrigin=new URL(page.url()).origin;
   for(const image of await menuImages.all()){
     const imageUrl=new URL(await image.evaluate(node=>node.src));
@@ -886,11 +885,11 @@ test('restaurant discovery shows only quoted delivery facts and keeps public men
   await expect(page.locator('#restaurantFilterRail [data-filter="verified"]')).toBeVisible();
   await expect(page.locator('.restaurants-page .mode-tabs button').first()).toBeEnabled();
   await expect(page.locator('.restaurants-page .mode-tabs button[data-mode="pickup"]')).toBeEnabled();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
 
   await card.locator('.restaurant-card-link').click();
   await expect(page.locator('#menuContent')).toContainText('Kebab');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New orders are paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   await expect(page.locator('.add-btn:not([disabled])')).toHaveCount(0);
 });
 
@@ -926,11 +925,11 @@ test('mobile filters stage before applying and manual address quotes preserve th
 
   await page.locator('#aeBrowseAreaTrigger').click();
   const areaDialog=page.locator('#aeBrowseAreaDialog');
-  await expect(areaDialog).toContainText('does not use your basket or place an order');
-  await expect(areaDialog).toContainText('ordering remains paused');
+  await expect(areaDialog).toContainText('check delivery fees and times');
+  await expect(areaDialog).not.toContainText('ordering remains paused');
   await areaDialog.locator('#aeBrowseAreaInput').fill('Gulha Circle');
   await areaDialog.locator('button[type="submit"]').click();
-  await expect(areaDialog.locator('#aeBrowseAreaStatus')).toContainText('Address check complete');
+  await expect(areaDialog.locator('#aeBrowseAreaStatus')).toContainText('restaurants with a current quote');
   await expect(page.locator('#aeBrowseAreaName')).toHaveText('Gulha Circle');
   await expect(page.locator('#restaurantGrid .restaurant-card')).toHaveCount(1);
   await expect(page.locator('#aeListingAreaNote')).toContainText('address-specific quote');
@@ -1045,7 +1044,7 @@ test('discovery review frames cover English and Dari at desktop, tablet, mobile 
     await page.locator('#aeBrowseAreaTrigger').click();
     const dialog=page.locator('#aeBrowseAreaDialog');
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText(locale==='fa'?'جریان خواندنی نرخ':'read-only quote flow');
+    await expect(dialog).toContainText(locale==='fa'?'برای بررسی هزینه و زمان ارسال':'check delivery fees and times');
     await expect(dialog.locator('#aeBrowseAreaInput')).toHaveAttribute('autocomplete','street-address');
     await dialog.locator('#aeBrowseAreaInput').fill('Gulha Circle, Herat');
     await stampFixtureLabel(page);

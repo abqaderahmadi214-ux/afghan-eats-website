@@ -38,7 +38,7 @@ test('home uses the Afghan food image and focused address-first copy, not a chec
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toContainText('paused');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('You can still browse menus');
 
   for (const department of ['groceries', 'health-beauty', 'convenience', 'gifts', 'electronics', 'pet-supplies']) {
     const photo = page.locator(`ae-market-orbit [data-department="${department}"]`).locator('..').locator('img');

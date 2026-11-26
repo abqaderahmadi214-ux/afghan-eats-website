@@ -136,12 +136,17 @@ test('manifest kind controls photo attribution and bilingual image labels', () =
   const original = applyMenuItemImages({items: [{id: 'item-exact', name: 'Kabuli Pulao', image_url: poster}]}, 'restaurant-exact', mapping());
   assert.equal(original.items[0].image_url, photo);
   assert.equal(original.items[0]._menuImagePresentation.kind, 'original');
-  assert.match(imageLabelMarkup(original.items[0]._menuImagePresentation), /Restaurant photo · عکس رستورانت/);
+  assert.match(imageLabelMarkup(original.items[0]._menuImagePresentation), />Restaurant photo</);
   assert.match(imageLabelMarkup(original.items[0]._menuImagePresentation), /https:\/\/example\.com\/dish/);
   const illustration = applyMenuItemImages({items: [{id: 'item-exact', name: 'Kabuli Pulao', image_url: poster}]}, 'restaurant-exact', mapping({kind: 'illustration'}));
-  const label = imageLabelMarkup(illustration.items[0]._menuImagePresentation);
-  assert.match(label, /Illustration · تصویر نمونه/);
-  assert.match(label, /Not an actual dish photo · عکس واقعی غذا نیست/);
+  const presentation = illustration.items[0]._menuImagePresentation;
+  const dari = imageLabelMarkup(presentation, 'fa');
+  assert.match(dari, />تصویر نمونه</);
+  assert.doesNotMatch(dari, /Illustration/);
+  const label = imageLabelMarkup(presentation, 'en');
+  assert.doesNotMatch(label, /تصویر نمونه/);
+  assert.match(label, />Illustration</);
+  assert.equal((label.match(/data-menu-image-label/g) || []).length, 1);
 });
 
 test('dish illustration classifier selects specific food assets and a safe fallback', () => {
@@ -176,7 +181,7 @@ test('replaced-image provenance is suppressed only in markup, never in live item
   const markup = ctx.menuItemMarkup(menu.items[0], {id: 'restaurant-exact'});
   assert.doesNotMatch(markup, /original menu page, not an individual dish photo/i);
   assert.match(markup, /A fragrant rice dish/);
-  assert.match(markup, /Illustration · تصویر نمونه/);
+  assert.match(markup, />Illustration</);
   assert.equal(original.description, 'The image is the original menu page, not an individual dish photo. A fragrant rice dish.');
 });
 
@@ -204,7 +209,7 @@ test('manifest failure still hides a known menu poster and uses an illustration 
   assert.equal(result.items[0].is_available, false);
   assert.equal(result.items[0].price, 300);
   assert.equal(item.image_url, poster);
-  assert.match(ctx.publicMenuItemMarkup(result.items[0]), /Illustration · تصویر نمونه/);
+  assert.match(ctx.publicMenuItemMarkup(result.items[0]), />Illustration</);
   assert.match(ctx.publicMenuItemMarkup(result.items[0]), /1 kg/);
   assert.doesNotMatch(ctx.publicMenuItemMarkup(result.items[0]), /original menu page/);
 });
@@ -333,8 +338,8 @@ test('promotional poster assets are replaced by relevant labeled illustrations',
     assert.equal(entry.source_url, '');
     assert.equal(entry.source_label, 'AI-generated illustration; not an actual restaurant photo');
     const label = imageLabelMarkup({kind: entry.kind, source_url: entry.source_url, source_label: entry.source_label});
-    assert.match(label, /Illustration · تصویر نمونه/);
-    assert.match(label, /Not an actual dish photo · عکس واقعی غذا نیست/);
+    assert.match(label, />Illustration</);
+    assert.equal((label.match(/data-menu-image-label/g) || []).length, 1);
   }
   for (const filename of removedPosterFiles) {
     assert.equal(existsSync(`assets/menu-item-images/${filename}`), false);
@@ -382,8 +387,8 @@ test('Shah keeps exact 74-item baseline, verified photo attribution, and bilingu
     assert.equal(item.price, 321);
   }
   const label = imageLabelMarkup(decorated.items.find((item) => item._menuImagePresentation.kind === 'illustration')._menuImagePresentation);
-  assert.match(label, /Illustration · تصویر نمونه/);
-  assert.match(label, /Not an actual dish photo · عکس واقعی غذا نیست/);
+  assert.match(label, />Illustration</);
+  assert.equal((label.match(/data-menu-image-label/g) || []).length, 1);
 });
 
 test('Shah mappings leave renamed items and changed owner photos untouched', () => {

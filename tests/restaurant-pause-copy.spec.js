@@ -56,13 +56,11 @@ test('global ordering pause replaces only positive restaurant status copy and re
   await page.goto('/restaurant.html?id=shah-restaurant-herat');
   const merchantBanner = page.locator('#aeMerchantBanner');
   const merchantState = page.locator('#aeMerchantBanner .ae-merchant-banner');
-  await expect(page.locator('#aePlatformStatus')).toContainText('New ordering is temporarily paused');
-  await expect(merchantBanner).toContainText('Ordering paused');
-  await expect(merchantBanner).toContainText('New orders are temporarily paused across Afghan Eats.');
-  await expect(merchantBanner).toContainText('Restaurant hours and local availability are unchanged.');
-  await expect(merchantBanner).not.toContainText('Open now');
-  await expect(merchantBanner).not.toContainText('Accepting orders normally.');
-  await expect(merchantState).toHaveClass(/paused/);
+  const pauseNotice = page.locator('#aeOrderingPauseContext');
+  await expect(pauseNotice).toHaveText('The restaurant is open. You can browse the menu while new orders are temporarily paused.');
+  await expect(page.locator('#aePlatformStatus')).toHaveCount(0);
+  await expect(merchantBanner).toBeHidden();
+  await expect(page.locator('.cart-panel')).toBeHidden();
   await expect(page.locator('.store-badges .status-pill')).toHaveText('Open');
   await expect(page.locator('.menu-item .add-btn')).toBeDisabled();
   expect(await page.evaluate(() => window.currentRestaurant?._availability?.acceptingNow)).toBe(true);
@@ -77,11 +75,44 @@ test('global ordering pause replaces only positive restaurant status copy and re
 
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
-  await expect(page.locator('#aePlatformStatus')).toContainText('ثبت سفارش جدید موقتاً متوقف است');
-  await expect(merchantBanner).toContainText('سفارش‌گیری متوقف است');
-  await expect(merchantBanner).toContainText('ثبت سفارش‌های جدید در سراسر افغان ایتس موقتاً متوقف است.');
-  await expect(merchantBanner).toContainText('ساعات کاری و وضعیت محلی رستورانت تغییر نکرده است.');
-  await expect(merchantBanner).not.toContainText('اکنون باز');
-  await expect(merchantBanner).not.toContainText('سفارش‌ها به‌صورت عادی پذیرفته می‌شوند.');
+  await expect(pauseNotice).toHaveText('رستورانت باز است. فعلاً می‌توانید منو را ببینید؛ ثبت سفارش موقتاً متوقف است.');
+  await expect(merchantBanner).toBeHidden();
+  await expect(page.locator('.store-meta-line')).toContainText('دریافت حضوری');
+  expect((await page.locator('.store-meta-line').innerText()).match(/دریافت حضوری/g)).toHaveLength(1);
   await expect(page.locator('.store-badges .status-pill')).toHaveText('باز');
+});
+
+test('a failed status check can be retried without losing the saved basket or posting orders', async ({ page }) => {
+  let statusAvailable = false;
+  const orderRequests = [];
+  const saved = [{ id: 'kebab', restaurantId: restaurant.id, restaurantName: restaurant.name, name: 'Kebab', qty: 2, price: 250 }];
+  await page.addInitScript(items => localStorage.setItem('ae_cart', JSON.stringify(items)), saved);
+  await page.route('https://afghaneats-api.onrender.com/api/trpc/**', async route => {
+    const endpoint = new URL(route.request().url()).pathname.split('/').at(-1);
+    if (endpoint.startsWith('orders.place')) orderRequests.push(endpoint);
+    if (endpoint === 'platform.publicStatus' && !statusAvailable) return route.fulfill({ status: 503, body: '{}' });
+    const response = {
+      'platform.publicStatus': { orderingEnabled: true },
+      'restaurants.list': [restaurant],
+      'restaurants.getMenu': menu,
+      'merchant.publicAvailabilityBatch': [openAvailability]
+    };
+    return route.fulfill({ json: { result: { data: { json: response[endpoint] || [] } } } });
+  });
+  await page.goto('/restaurant.html?id=shah-restaurant-herat');
+  const notice = page.locator('#aeOrderingPauseContext');
+  await expect(notice).toContainText('Ordering availability could not be confirmed');
+  await expect(page.locator('.menu-item')).toContainText('Kebab');
+  await expect(page.locator('.cart-order-actions')).toBeHidden();
+  await expect(page.locator('.menu-item .add-btn')).toBeHidden();
+  statusAvailable = true;
+  await notice.getByRole('button', { name: 'Retry' }).click();
+  await expect(notice).toHaveCount(0);
+  await expect(page.locator('.menu-item .add-btn')).toBeEnabled();
+  await page.evaluate(() => renderPublicStatus({ orderingEnabled: false }));
+  await expect(notice).toContainText('new orders are temporarily paused');
+  await expect(page.locator('.cart-order-actions')).toBeHidden();
+  await expect(page.locator('.group-order')).toBeHidden();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ae_cart')))).toEqual(saved);
+  expect(orderRequests).toEqual([]);
 });
