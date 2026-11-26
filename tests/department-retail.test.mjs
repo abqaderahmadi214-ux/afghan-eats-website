@@ -95,6 +95,6 @@ test('admin portal uses admin-scoped retail routes while keeping public listing 
 test('existing homepage top-level departments, photos, labels and separate restaurant flow remain covered',()=>{
   assert.match(homeTests,/Coming soon/);assert.match(journeyTests,/Coming soon/);
   const homepage=read('index.html');
-  for(const id of ids){assert.match(homepage,new RegExp(`data-department="${id}"`));assert.match(homepage,new RegExp(`/assets/department-images/${id}\\.jpg`));}
+  for(const id of ids){assert.match(homepage,new RegExp(`data-department="${id}"`));assert.match(homepage,new RegExp(`/assets/market-orbit/${id}\\.webp`));}
   assert.match(homepage,/data-department="restaurants"/);assert.doesNotMatch(homepage,/data-department="alcohol"/);
 });

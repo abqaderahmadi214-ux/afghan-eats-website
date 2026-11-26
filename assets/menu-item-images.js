@@ -228,26 +228,25 @@
     return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   }
 
-  function imageLabelMarkup(presentation) {
+  function imageLabelMarkup(presentation, language = typeof lang === 'string' ? lang : 'en') {
     if (!presentation) return '';
+    const dari = language === 'fa';
     if (presentation.kind === 'illustration') {
-      return '<span class="menu-image-presentation menu-image-illustration" data-menu-image-label>Illustration · تصویر نمونه</span><span class="menu-image-disclaimer" data-menu-image-label>Not an actual dish photo · عکس واقعی غذا نیست.</span>';
+      const caption = dari ? 'تصویر نمونه' : 'Illustration';
+      return `<span class="menu-image-presentation menu-image-illustration" data-menu-image-label>${caption}</span>`;
     }
+    const sourceLabel = dari ? 'منبع عکس' : 'Photo source';
     const source = presentation.source_url
-      ? `<a class="menu-image-source" data-menu-image-label href="${escapeHtml(presentation.source_url)}" title="${escapeHtml(presentation.source_label || 'Photo source · منبع عکس')}" target="_blank" rel="noopener noreferrer">Photo source · منبع عکس</a>`
+      ? `<a class="menu-image-source" data-menu-image-label href="${escapeHtml(presentation.source_url)}" title="${escapeHtml(presentation.source_label || sourceLabel)}" target="_blank" rel="noopener noreferrer">${sourceLabel}</a>`
       : '';
-    return `<span class="menu-image-presentation menu-image-original" data-menu-image-label>Restaurant photo · عکس رستورانت</span>${source}`;
+    return `<span class="menu-image-presentation menu-image-original" data-menu-image-label>${dari ? 'عکس رستورانت' : 'Restaurant photo'}</span>${source}`;
   }
 
   function decorateMarkup(markup, item) {
     const presentation = item?._menuImagePresentation;
     if (!presentation) return markup;
-    const label = imageLabelMarkup(presentation);
-    const disclaimer = label.match(/<span class="menu-image-disclaimer"[\s\S]*?<\/span>/)?.[0] || '';
-    const mediaLabel = disclaimer ? label.replace(disclaimer, '') : label;
     return markup.replace('<img ', '<img data-menu-image-src="true" ')
-      .replace('</div><div class="menu-item-copy">', `${mediaLabel}</div><div class="menu-item-copy">`)
-      .replace('</h3>', `</h3>${disclaimer}`);
+      .replace('</div><div class="menu-item-copy">', `${imageLabelMarkup(presentation)}</div><div class="menu-item-copy">`);
   }
 
   function itemForImageRender(item) {

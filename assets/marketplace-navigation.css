@@ -176,3 +176,19 @@ body.ae-marketplace-mobile-nav-compact .mobile-nav {
 @media (prefers-reduced-motion: reduce) {
   .ae-marketplace-tab, button.lang { transition: none; }
 }
+
+body.ae-food-journey button.lang {
+  font-size: .92rem !important;
+  width: auto;
+  min-width: 48px;
+  padding-inline: .65rem !important;
+}
+html body.ae-food-journey button.lang::before { content: none; }
+body.ae-food-journey { --ae-marketplace-sticky-offset: 64px; }
+body.ae-food-journey .ae-view-menu {
+  display: inline-block;
+  color: #205340;
+  font-size: .88rem;
+  font-weight: 650;
+  margin-block-start: .5rem;
+}

@@ -7,14 +7,7 @@
   if (queryArea) localStorage.setItem('ae_browse_area', queryArea);
   window.AE_BROWSE_AREA = selectedArea;
 
-  const clean = value => String(value ?? '')
-    .normalize('NFKC')
-    .replace(/[\u200e\u200f\u200c]/g, '')
-    .replace(/[ك]/g, 'ک')
-    .replace(/[يى]/g, 'ی')
-    .toLocaleLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim();
+  const clean = aeNormalizeDiscoveryText;
 
   function allRestaurants() {
     return typeof restaurants !== 'undefined' && Array.isArray(restaurants) ? restaurants : [];
@@ -147,7 +140,7 @@
         const current = new URL(window.location.href);
         for (const key of ['q', 'c']) {
           const currentValue = key === 'q'
-            ? (document.getElementById('search')?.value || current.searchParams.get(key) || '').trim()
+            ? (document.getElementById('search')?.value ?? current.searchParams.get(key) ?? '').trim()
             : (current.searchParams.get(key) || '');
           if (currentValue) next.searchParams.set(key, currentValue);
         }
@@ -170,3 +163,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 })();
+

@@ -15,6 +15,7 @@ const words=[...root.querySelectorAll('[data-fa]')];
 words.forEach(word=>word.dataset.en=word.textContent);
 const entrance=1.8, beat=4.6;
 let paused=reduce.matches, fa=false, elapsed=paused?entrance:0, previous=null, frame=0;
+let onScreen=!('IntersectionObserver' in window);
 const clamp=value=>Math.max(0,Math.min(1,value));
 function ease(value){
   const t=clamp(value);
@@ -56,7 +57,7 @@ function update(){
   motion.textContent=paused?(fa?'ادامه':'Play'):(fa?'توقف':'Pause');
   // After the mobile entrance, photos are browsed by native horizontal swipe.
   motion.hidden=mobile.matches&&elapsed>=entrance;
-  if(!paused&&!document.hidden&&(!mobile.matches||elapsed<entrance)) frame=requestAnimationFrame(tick);
+  if(onScreen&&!paused&&!document.hidden&&(!mobile.matches||elapsed<entrance)) frame=requestAnimationFrame(tick);
 }
 motion.onclick=()=>{paused=!paused;update()};
 replay.onclick=()=>{elapsed=reduce.matches?entrance:0;paused=reduce.matches;list.scrollLeft=0;update()};
@@ -73,4 +74,10 @@ function syncLanguage(){
 }
 new MutationObserver(syncLanguage).observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
 syncLanguage();
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(([entry])=>{
+    onScreen=entry.isIntersecting;
+    update();
+  },{rootMargin:'80px'}).observe(host);
+}
 })();

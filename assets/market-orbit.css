@@ -29,3 +29,6 @@ li{position:static;transform:none;flex:0 0 min(62vw,238px);scroll-snap-align:sta
 }
 
 li a{color:inherit;text-decoration:none}li a:hover{text-decoration:underline}
+
+@media(min-width:761px){main{height:clamp(540px,44vw,620px)}}
+@media(max-width:760px){main{min-height:0;gap:20px}.emblem{height:124px}}

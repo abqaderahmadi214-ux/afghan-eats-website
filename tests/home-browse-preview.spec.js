@@ -34,11 +34,11 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await page.goto('/');
 
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   await expect(page.locator('.ae-order-box')).toHaveCount(0);
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await expect(page.locator('.ae-home-business-link[href="/organizations/"]')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('You can still browse menus');
   await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await expect(page.getByRole('navigation', { name: 'Marketplace departments' })).toBeVisible();
   const departments = page.locator('ae-market-orbit');
@@ -56,7 +56,7 @@ test('paused home makes browsing primary and keeps the verified directory reacha
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
+  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('انتخاب ناحیه یا نشانی نزدیک');
   await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
   const comingSoonDari = [
@@ -80,6 +80,8 @@ test('mobile department collections fit their swipe track', async ({ page }) => 
   await routeApi(page);
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto('/');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('ae-market-orbit ul').scrollIntoViewIfNeeded();
   const grid = await page.locator('ae-market-orbit ul').boundingBox();
   const card = await page.locator('ae-market-orbit li').first().boundingBox();
   const art = await page.locator('ae-market-orbit li').first().boundingBox();
@@ -126,8 +128,7 @@ test('paused Basket is subdued and inaccessible, then restores its normal action
   await expect(basket).not.toHaveAttribute('aria-disabled');
   await expect(basket).not.toHaveAttribute('tabindex', '-1');
   await expect(basket.locator('.ae-cart-label')).toContainText('Basket');
-  const activeBackground = await basket.evaluate(el => getComputedStyle(el).backgroundColor);
-  expect(activeBackground).not.toBe('rgb(233, 236, 231)');
+  await expect.poll(() => basket.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe('rgb(233, 236, 231)');
 });
 
 test('homepage search finds restaurants, menu items, and categories in both languages while orders stay paused', async ({ page }) => {
@@ -160,14 +161,14 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   await expect(page.locator('.ae-order-box')).toBeHidden();
   await expect(page.getByRole('search')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toHaveAttribute('name', 'q');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Search restaurants, items, and categories');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search restaurants, items, and categories');
-  await expect(page.locator('#aeHomeSearchNote')).toContainText('Browse menus while ordering is paused');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'Search for a dish or restaurant');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'Search for a dish or restaurant');
+  await expect(page.locator('#aeHomeSearchNote')).toHaveCount(0);
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
 
   await page.locator('#aeHomeSearch').fill('Saffron Kitchen Preview');
   await page.locator('.ae-home-search button[type="submit"]').click();
@@ -190,10 +191,10 @@ test('homepage search finds restaurants, menu items, and categories in both lang
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'رستورانت‌ها، غذاها و دسته‌بندی‌ها');
-  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی رستورانت‌ها، غذاها و دسته‌بندی‌ها');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('placeholder', 'نام غذا یا رستورانت را بنویسید');
+  await expect(page.locator('#aeHomeSearch')).toHaveAttribute('aria-label', 'جستجوی غذا یا رستورانت');
   await expect(page.locator('.ae-home-search button[type="submit"]')).toContainText('جستجو');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('ثبت سفارش جدید موقتاً متوقف است');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('ثبت سفارش موقتاً متوقف است');
   await page.locator('#aeHomeSearch').fill('قابلی ویژه');
   await page.locator('.ae-home-search button[type="submit"]').click();
   await expect(page).toHaveURL(/\/restaurants\?q=/);
@@ -240,7 +241,7 @@ test('public browse-only restaurant menus stay visible while all ordering paths 
   });
 
   await page.goto(`/restaurant.html?id=${restaurant.id}`);
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   await expect(page.locator('#menuContent')).toContainText('Kabuli Pulao');
   await expect(page.locator('#menuContent')).toContainText('Menu preview · browse only');
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');

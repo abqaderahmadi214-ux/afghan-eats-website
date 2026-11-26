@@ -1,0 +1,41 @@
+name: Customer redesign evidence
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'restaurants.html'
+      - 'restaurant.html'
+      - 'assets/**'
+      - 'scripts/customer-redesign-evidence.cjs'
+      - '.github/workflows/customer-redesign-evidence.yml'
+permissions:
+  contents: read
+jobs:
+  compare:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'design/food-first-customer-journey'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: f3de917a8c20ea184f3906809102adf54eea0035
+          path: .qa-baseline
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Capture matched browser evidence
+        run: node scripts/customer-redesign-evidence.cjs .qa-baseline . qa-output
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: customer-redesign-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: qa-output/
+          if-no-files-found: error

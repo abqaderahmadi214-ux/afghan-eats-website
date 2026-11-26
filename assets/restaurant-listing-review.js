@@ -45,7 +45,7 @@
       dialog.className = 'ae-discovery-dialog ae-browse-area-dialog';
       dialog.setAttribute('aria-labelledby', 'aeBrowseAreaTitle');
       dialog.setAttribute('aria-describedby', 'aeBrowseAreaDescription');
-      dialog.innerHTML = `<form class="ae-dialog-card" id="aeBrowseAreaForm"><div class="ae-dialog-title-row"><span class="restaurant-page-kicker"><span class="en-copy">DELIVERY ADDRESS</span><span class="fa-copy">آدرس تحویل</span></span><button class="ae-dialog-close" type="button" aria-label="Close" data-dialog-close>×</button></div><h2 id="aeBrowseAreaTitle"><span class="en-copy">Enter a delivery address</span><span class="fa-copy">آدرس تحویل را وارد کنید</span></h2><p id="aeBrowseAreaDescription"><span class="en-copy">Enter a street, area or landmark. The existing read-only quote flow checks eligible delivery restaurants in the current list. This does not use your basket or place an order; ordering remains paused. If Pickup is selected, checking delivery switches the listing to Delivery.</span><span class="fa-copy">سرک، ناحیه یا نشانی نزدیک را وارد کنید. جریان خواندنی نرخ، رستورانت‌های واجد ارسال را در فهرست کنونی بررسی می‌کند. این کار از سبد خرید استفاده نمی‌کند و سفارش ثبت نمی‌کند؛ سفارش‌گیری همچنان متوقف است. اگر دریافت حضوری انتخاب شده باشد، بررسی ارسال فهرست را به حالت ارسال تغییر می‌دهد.</span></p><label for="aeBrowseAreaInput"><span class="en-copy">Full address, street or landmark</span><span class="fa-copy">آدرس کامل، سرک یا نشانی نزدیک</span></label><input id="aeBrowseAreaInput" name="deliveryAddress" autocomplete="street-address" minlength="5" maxlength="180" required placeholder="Street, area or landmark" data-ph-en="Street, area or landmark" data-ph-fa="سرک، ناحیه یا نشانی نزدیک" dir="auto"><p id="aeBrowseAreaStatus" class="ae-location-status" role="status" aria-live="polite" hidden></p><div class="ae-dialog-actions"><button class="btn btn-light" type="button" data-dialog-close><span class="en-copy">Cancel</span><span class="fa-copy">لغو</span></button><button class="btn btn-primary" type="submit"><span class="en-copy">Check delivery here</span><span class="fa-copy">بررسی ارسال به این نشانی</span></button></div></form>`;
+      dialog.innerHTML = `<form class="ae-dialog-card" id="aeBrowseAreaForm"><div class="ae-dialog-title-row"><span class="restaurant-page-kicker"><span class="en-copy">DELIVERY ADDRESS</span><span class="fa-copy">آدرس تحویل</span></span><button class="ae-dialog-close" type="button" aria-label="Close" data-dialog-close>×</button></div><h2 id="aeBrowseAreaTitle"><span class="en-copy">Enter a delivery address</span><span class="fa-copy">آدرس تحویل را وارد کنید</span></h2><p id="aeBrowseAreaDescription"><span class="en-copy">Enter a street or landmark to check delivery fees and times.</span><span class="fa-copy">برای بررسی هزینه و زمان ارسال، نام سرک یا یک نشانی نزدیک را بنویسید.</span></p><label for="aeBrowseAreaInput"><span class="en-copy">Full address, street or landmark</span><span class="fa-copy">آدرس کامل، سرک یا نشانی نزدیک</span></label><input id="aeBrowseAreaInput" name="deliveryAddress" autocomplete="street-address" minlength="5" maxlength="180" required placeholder="Street, area or landmark" data-ph-en="Street, area or landmark" data-ph-fa="سرک، ناحیه یا نشانی نزدیک" dir="auto"><p id="aeBrowseAreaStatus" class="ae-location-status" role="status" aria-live="polite" hidden></p><div class="ae-dialog-actions"><button class="btn btn-light" type="button" data-dialog-close><span class="en-copy">Cancel</span><span class="fa-copy">لغو</span></button><button class="btn btn-primary" type="submit"><span class="en-copy">Check delivery here</span><span class="fa-copy">بررسی ارسال به این نشانی</span></button></div></form>`;
       document.body.append(dialog);
     }
     const form = dialog.querySelector('#aeBrowseAreaForm');
@@ -114,7 +114,7 @@
         if (status) {
           status.dataset.state = quotedRestaurants ? 'success' : 'pending';
           status.textContent = quotedRestaurants
-            ? copy('Address check complete. Restaurant fees and timing appear only where a current quote was returned. No order was placed; ordering remains paused.', 'بررسی آدرس انجام شد. هزینه و زمان رستورانت تنها در صورت دریافت نرخ تازه نمایش داده می‌شود. سفارشی ثبت نشد؛ سفارش‌گیری همچنان متوقف است.')
+            ? copy('Delivery fees and times appear for restaurants with a current quote.', 'هزینه و زمان ارسال برای رستورانت‌هایی که نرخ تازه دارند نمایش داده می‌شود.')
             : copy('No current address-specific quote was returned. Delivery availability is not confirmed; public menus remain available.', 'برای این آدرس نرخ تازه‌ای دریافت نشد. دسترسی ارسال تأیید نشده است؛ منوهای عمومی همچنان قابل مشاهده‌اند.');
         }
       } catch (error) {
@@ -558,22 +558,18 @@
     if (!grid || grid.getAttribute('aria-busy') === 'true' || grid.querySelector('.restaurant-card, .delivery-empty')) return;
     if (grid.querySelector('.ae-empty-state')) return;
     const hasRows = getRows().length > 0;
-    const legacyEmptyHint = grid.textContent.includes('No matches. Try a dish, cuisine or fewer filters.');
     const hasSearch = Boolean(String(document.getElementById('search')?.value || '').trim());
-    const filters = currentFilterButtons().filter(button => button.classList.contains('active'));
-    const hasFilters = filters.length > 0 || Boolean(window.AE_DISH_CATEGORY);
-    const title = !hasRows
-      ? copy('Restaurant listings are temporarily unavailable', 'فهرست رستورانت‌ها موقتاً در دسترس نیست')
-      : copy('No restaurants match this search', 'رستورانتی با این جستجو پیدا نشد');
-    const body = legacyEmptyHint
-      ? copy('No matches. Try a dish, cuisine or fewer filters. If the list still looks empty, retry the public restaurant list.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید. اگر فهرست خالی ماند، دوباره تلاش کنید.')
-      : !hasRows
-        ? copy('Please try again to refresh the public restaurant list. A missing quote does not confirm delivery availability.', 'برای تازه‌سازی فهرست عمومی رستورانت‌ها دوباره تلاش کنید. نبودن نرخ، دسترسی ارسال را تأیید نمی‌کند.')
-        : hasSearch || hasFilters
-        ? copy('Try another dish or restaurant, or clear the current filters to see more public menus.', 'نام غذای دیگری را جستجو کنید یا فیلترها را پاک کنید تا منوهای بیشتری ببینید.')
-        : copy('No matches. Try a dish, cuisine or fewer filters.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید.');
-    grid.innerHTML = `<div class="ae-empty-state" role="status"><h3>${esc(title)}</h3><p>${esc(body)}</p>${hasRows && (hasSearch || hasFilters) ? `<button type="button" data-empty-clear>${esc(copy('Clear search and filters', 'پاک‌کردن جستجو و فیلترها'))}</button>` : `<button type="button" data-empty-retry>${esc(copy('Try again', 'تلاش دوباره'))}</button>`}</div>`;
+    const hasFilters = currentFilterButtons().some(button => button.classList.contains('active')) ||
+      Boolean(window.AE_DISH_CATEGORY || new URLSearchParams(location.search).get('c'));
+    const title = hasRows
+      ? copy('No matching restaurants', 'رستورانتی پیدا نشد')
+      : copy('Restaurant list unavailable', 'فهرست رستورانت‌ها در دسترس نیست');
+    const body = hasRows
+      ? copy('Try another dish, cuisine or restaurant.', 'نام غذا، دسته یا رستورانت دیگری را جستجو کنید.')
+      : copy('Try loading the list again.', 'فهرست را دوباره بارگیری کنید.');
+    grid.innerHTML = `<div class="ae-empty-state" role="status"><h3>${esc(title)}</h3><p>${esc(body)}</p>${hasRows && (hasSearch || hasFilters) ? `<button type="button" data-empty-clear>${esc(copy('Clear search and filters', 'پاک‌کردن جستجو و فیلترها'))}</button> <a href="/restaurants" data-browse-all>${esc(copy('Browse all restaurants', 'دیدن تمام رستورانت‌ها'))}</a>` : `<button type="button" data-empty-retry>${esc(copy('Try again', 'تلاش دوباره'))}</button>`}</div>`;
     grid.querySelector('[data-empty-clear]')?.addEventListener('click', () => window.clearAdvancedFilters?.());
+    grid.querySelector('[data-browse-all]')?.addEventListener('click', () => localStorage.removeItem('ae_browse_area'));
     grid.querySelector('[data-empty-retry]')?.addEventListener('click', async () => {
       const refresh = appFunction('refreshLiveRestaurants') || appFunction('loadData');
       if (refresh) await refresh();
@@ -834,3 +830,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();
+

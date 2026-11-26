@@ -21,7 +21,7 @@ async function stubPausedStatus(page) {
   });
 }
 
-test('premium home is address-first, keeps peer department choices, and switches language', async ({ page }) => {
+test('premium home is search-first, keeps peer department choices, and switches language', async ({ page }) => {
   await stubPausedStatus(page);
   await page.goto('/');
 
@@ -34,8 +34,8 @@ test('premium home is address-first, keeps peer department choices, and switches
   await expect(page.locator('#homeRestaurants')).toHaveCount(1);
   await expect(page.locator('.ae-value-strip')).toHaveCount(0);
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('Public menus remain available to browse');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText('You can still browse menus');
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
   await expect(page.locator('.ae-order-box')).toHaveCount(0);
   await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
@@ -55,7 +55,7 @@ test('premium home is address-first, keeps peer department choices, and switches
   await page.evaluate(() => localStorage.setItem('ae_lang', 'fa'));
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('ناحیه یا نشانی نزدیک شما در هرات');
+  await expect(page.locator('#aeHomeAreaForm label .fa-copy')).toContainText('انتخاب ناحیه یا نشانی نزدیک');
   await expect(page.locator('.lang')).toHaveAccessibleName('تغییر زبان به انگلیسی');
   await expect(page.getByRole('navigation', { name: 'بخش‌های فروشگاه' })).toBeVisible();
   await expect(departments.locator('[data-department="restaurants"]')).toContainText('رستورانت‌ها');
@@ -80,25 +80,25 @@ test('premium home is address-first, keeps peer department choices, and switches
   await expect(page.locator('.lang')).toHaveAccessibleName('Switch language to Dari');
 });
 
-test('primary site language controls show only flags and keep accessible toggle names', async ({ page }) => {
+test('shopping routes show the target language and keep accessible toggle names', async ({ page }) => {
   await stubPausedStatus(page);
-  for (const route of ['/', '/restaurants', '/organizations/index.html']) {
+  for (const route of ['/', '/restaurants', '/restaurant']) {
     await page.goto(route);
     const button = page.locator('button.lang');
     await expect(button).toBeVisible();
     await expect(button).toHaveAccessibleName('Switch language to Dari');
-    await expect.poll(() => button.evaluate(element => getComputedStyle(element).fontSize)).toBe('0px');
-    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇦🇫');
+    await expect.poll(() => button.evaluate(element => getComputedStyle(element).fontSize)).not.toBe('0px');
+    await expect(button).toHaveText('دری');
 
     await button.click();
     await expect(page.locator('html')).toHaveAttribute('lang', 'fa');
     await expect(button).toHaveAccessibleName('تغییر زبان به انگلیسی');
-    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇬🇧');
+    await expect(button).toHaveText('English');
 
     await button.click();
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(button).toHaveAccessibleName('Switch language to Dari');
-    await expect.poll(() => button.evaluate(element => getComputedStyle(element, '::before').content)).toContain('🇦🇫');
+    await expect(button).toHaveText('دری');
   }
 });
 

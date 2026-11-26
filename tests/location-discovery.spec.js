@@ -170,7 +170,7 @@ test('area-matched restaurant menus remain browse-only while global ordering is 
   const card = page.locator('#restaurantGrid .restaurant-card').filter({ hasText: 'Gulha Location Kitchen' });
   await expect(card).toBeVisible();
   await card.click();
-  await expect(page.locator('#aeOrderingPauseContext')).toContainText('New ordering is temporarily paused');
+  await expect(page.locator('#aeOrderingPauseContext')).toContainText(/new orders are temporarily paused/i);
   await expect(page.locator('#menuContent')).toContainText('Public menu item');
   await expect(page.locator('.add-btn')).toHaveCount(0);
   await expect(page.locator('.ae-cart')).toHaveAttribute('aria-disabled', 'true');
@@ -191,6 +191,6 @@ test('location browsing form and read-only delivery quote dialog have separate i
   await expect(dialog.locator('#aeBrowseAreaInput')).toHaveAttribute('autocomplete', 'street-address');
   await expect(page.locator('#aeLocationBrowseForm')).toHaveCount(1);
   await expect(page.locator('#aeLocationBrowseStatus')).toContainText('Delivery availability is checked separately');
-  await expect(dialog).toContainText('does not use your basket or place an order');
+  await expect(dialog).toContainText('check delivery fees and times');
   expect(quoteInputs).toHaveLength(0);
 });
