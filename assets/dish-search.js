@@ -84,14 +84,17 @@
   }
 
   function localDishMatches(query) {
-    const needle = String(query || '').trim().toLowerCase();
+    const needle = aeNormalizeFoodSearch(query);
     const source = typeof restaurants !== 'undefined' && Array.isArray(restaurants) ? restaurants : [];
     if (needle.length < 2 || !source.length) return [];
     const results = [];
     for (const restaurant of source) {
+      if (typeof isCustomerVisibleRestaurant === 'function' && !isCustomerVisibleRestaurant(restaurant)) continue;
+      if (window.aeBrowseAreaMatchesRestaurant && !window.aeBrowseAreaMatchesRestaurant(restaurant)) continue;
       const routeId = restaurant?.slug || restaurant?.public_slug || restaurant?.id;
       for (const item of restaurant?._items || []) {
-        const hay = `${item?.name || ''} ${item?.name_dari || ''} ${item?.description || ''} ${item?.description_dari || ''}`.toLowerCase();
+        if (!item || item.archived_at || item.is_archived || item.status === 'archived') continue;
+        const hay = aeNormalizeFoodSearch(`${item?.name || ''} ${item?.name_dari || ''} ${item?.description || ''} ${item?.description_dari || ''}`);
         if (!hay.includes(needle)) continue;
         results.push({
           ...item,
@@ -144,9 +147,16 @@
     }
 
     try {
-      const results = await fetchDishResults(query, controller.signal);
+      const results = await fetchDishResults(aeNormalizeDiscoveryText(query), controller.signal);
       if (requestId !== requestSequence || query !== String(input?.value || '').trim()) return;
-      renderDishResults(results.length ? results : localDishMatches(query), query);
+      const rows = typeof restaurants !== 'undefined' && Array.isArray(restaurants) ? restaurants : [];
+      const selectedArea = Boolean(window.aeBrowseAreaSelected?.());
+      const eligible = selectedArea ? results.filter(raw => {
+        const id = String(normalizeDish(raw).restaurantId);
+        return rows.some(row => [row.id, row.slug, row.public_slug].some(value => value != null && String(value) === id)
+          && window.aeBrowseAreaMatchesRestaurant(row));
+      }) : results;
+      renderDishResults(eligible.length ? eligible : localDishMatches(query), query);
     } catch (error) {
       if (error?.name === 'AbortError' || requestId !== requestSequence || query !== String(input?.value || '').trim()) return;
       renderDishResults(localDishMatches(query), query);
@@ -196,3 +206,4 @@
 
   document.addEventListener('DOMContentLoaded', init);
 })();
+

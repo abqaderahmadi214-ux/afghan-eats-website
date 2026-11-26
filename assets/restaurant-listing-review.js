@@ -558,20 +558,15 @@
     if (!grid || grid.getAttribute('aria-busy') === 'true' || grid.querySelector('.restaurant-card, .delivery-empty')) return;
     if (grid.querySelector('.ae-empty-state')) return;
     const hasRows = getRows().length > 0;
-    const legacyEmptyHint = grid.textContent.includes('No matches. Try a dish, cuisine or fewer filters.');
     const hasSearch = Boolean(String(document.getElementById('search')?.value || '').trim());
-    const filters = currentFilterButtons().filter(button => button.classList.contains('active'));
-    const hasFilters = filters.length > 0 || Boolean(window.AE_DISH_CATEGORY);
-    const title = !hasRows
-      ? copy('Restaurant listings are temporarily unavailable', 'فهرست رستورانت‌ها موقتاً در دسترس نیست')
-      : copy('No restaurants match this search', 'رستورانتی با این جستجو پیدا نشد');
-    const body = legacyEmptyHint
-      ? copy('No matches. Try a dish, cuisine or fewer filters. If the list still looks empty, retry the public restaurant list.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید. اگر فهرست خالی ماند، دوباره تلاش کنید.')
-      : !hasRows
-        ? copy('Please try again to refresh the public restaurant list. A missing quote does not confirm delivery availability.', 'برای تازه‌سازی فهرست عمومی رستورانت‌ها دوباره تلاش کنید. نبودن نرخ، دسترسی ارسال را تأیید نمی‌کند.')
-        : hasSearch || hasFilters
-        ? copy('Try another dish or restaurant, or clear the current filters to see more public menus.', 'نام غذای دیگری را جستجو کنید یا فیلترها را پاک کنید تا منوهای بیشتری ببینید.')
-        : copy('No matches. Try a dish, cuisine or fewer filters.', 'نتیجه‌ای پیدا نشد. نام غذا یا دسته دیگری را جستجو کنید یا فیلترهای کمتری بگذارید.');
+    const hasFilters = currentFilterButtons().some(button => button.classList.contains('active')) ||
+      Boolean(window.AE_DISH_CATEGORY || new URLSearchParams(location.search).get('c'));
+    const title = hasRows
+      ? copy('No matching restaurants', 'رستورانتی پیدا نشد')
+      : copy('Restaurant list unavailable', 'فهرست رستورانت‌ها در دسترس نیست');
+    const body = hasRows
+      ? copy('Try another dish, cuisine or restaurant.', 'نام غذا، دسته یا رستورانت دیگری را جستجو کنید.')
+      : copy('Try loading the list again.', 'فهرست را دوباره بارگیری کنید.');
     grid.innerHTML = `<div class="ae-empty-state" role="status"><h3>${esc(title)}</h3><p>${esc(body)}</p>${hasRows && (hasSearch || hasFilters) ? `<button type="button" data-empty-clear>${esc(copy('Clear search and filters', 'پاک‌کردن جستجو و فیلترها'))}</button>` : `<button type="button" data-empty-retry>${esc(copy('Try again', 'تلاش دوباره'))}</button>`}</div>`;
     grid.querySelector('[data-empty-clear]')?.addEventListener('click', () => window.clearAdvancedFilters?.());
     grid.querySelector('[data-empty-retry]')?.addEventListener('click', async () => {
@@ -834,3 +829,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 })();
+
