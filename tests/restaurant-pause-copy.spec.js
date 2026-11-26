@@ -63,7 +63,7 @@ test('global ordering pause replaces only positive restaurant status copy and re
   await expect(page.locator('.cart-panel')).toBeHidden();
   await expect(page.locator('.store-badges .status-pill')).toHaveText('Open');
   await expect(page.locator('.menu-item .add-btn')).toBeDisabled();
-  expect(await page.evaluate(() => window.currentRestaurant?._availability?.acceptingNow)).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.currentRestaurant?._availability?.acceptingNow)).toBe(true);
   expect(await page.evaluate(() => window.currentRestaurant?.is_open)).toBe(true);
 
   await page.evaluate(() => renderPublicStatus({ orderingEnabled: true, banner: null, incidents: [] }));
