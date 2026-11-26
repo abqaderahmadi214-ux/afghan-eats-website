@@ -47,3 +47,25 @@ body.premium-home :is(a,button,input):focus-visible { outline: 3px solid #a25d0b
   color: #244d3b;
   font-weight: 600;
 }
+
+/* Keep the first search controls stable while public availability loads. */
+.ae-home-status-slot {
+  min-height: 4.4rem;
+  display: grid;
+  align-items: center;
+}
+body.premium-home .ae-home-status-slot .ae-ordering-paused-context {
+  box-sizing: border-box;
+  margin-block: 6px;
+  padding-block: 8px;
+  width: min(92%,1180px);
+  max-width: 100%;
+  margin-inline: auto;
+}
+body.premium-home[data-ordering-available="true"] .ae-home-status-slot {
+  min-height: 0;
+}
+body.premium-home .ae-hero-copy h1 { max-width: 16ch; }
+@media(max-width:760px) {
+  body.premium-home .ae-hero-copy h1 { max-width: none; }
+}
