@@ -236,3 +236,14 @@ html[dir="rtl"] .ae-food-backdrop::after { transform: scaleX(-1); }
   .ae-food-backdrop img { animation: none !important; }
   .ae-food-backdrop img + img,.ae-photo-toggle { display: none; }
 }
+
+body.premium-home .ae-takeaway picture { display: block; height: 100%; }
+@media (max-width: 760px) {
+  body.premium-home .ae-takeaway {
+    display: block;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    margin-block-start: 16px;
+  }
+  body.premium-home .ae-takeaway .ae-feast { height: 100%; border-radius: 0; }
+}
