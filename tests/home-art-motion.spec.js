@@ -26,9 +26,9 @@ test('home features Afghan Eats branded takeaway art and keeps search available'
   await page.goto('/');
 
   const heroImage = page.locator('.ae-hero-visual img.ae-feast');
-  await expect(heroImage).toHaveAttribute('src', '/assets/home/afghan-eats-burger-wrap.webp');
+  await expect(heroImage).toHaveAttribute('src', '/assets/home/afghan-eats-takeaway-3d.webp');
   await expect(heroImage).toHaveAttribute('alt', '');
-  await expect(heroImage).toHaveCSS('object-fit', 'cover');
+  await expect(heroImage).toHaveCSS('object-fit', 'contain');
   await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.locator('.ae-hero-visual video')).toHaveCount(0);
   await expect(page.locator('.ae-hero-accent')).toHaveCount(0);
@@ -62,7 +62,7 @@ test('mobile home puts area and search controls first, fits the viewport, and re
   await expect(page.locator('.ae-home-business-link')).toBeVisible();
   const heroImage = page.locator('.ae-hero-visual .ae-feast');
   await expect(heroImage).toBeVisible();
-  await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0 && new URL(image.currentSrc).pathname)).toBe('/assets/home/afghan-eats-chicken-sliders.webp');
+  await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0 && new URL(image.currentSrc).pathname)).toBe('/assets/home/afghan-eats-takeaway-3d.webp');
   await expect(page.locator('#aeMarketplaceTabs')).toHaveCount(0);
   expect((await page.locator('.ae-restaurants').boundingBox()).y).toBeLessThan(900);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
