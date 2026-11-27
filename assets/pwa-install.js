@@ -100,7 +100,9 @@
       });
     }
 
-    document.body.appendChild(banner);
+    const footer = document.querySelector('body.premium-home > footer');
+    if (footer) footer.prepend(banner);
+    else document.body.appendChild(banner);
     return banner;
   }
 

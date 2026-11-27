@@ -263,3 +263,56 @@ body.premium-home .ae-takeaway .ae-feast {
     margin-block-start: 14px;
   }
 }
+
+/* The illustrated arch shares the hero grid with the discovery panel. */
+body.premium-home .ae-hero {
+  width: min(calc(100% - 32px), 1600px);
+  margin: 16px auto 0;
+  border-radius: 24px;
+  background: #07392d;
+  padding-block: clamp(32px, 4vw, 64px);
+}
+body.premium-home .ae-food-backdrop { opacity: .38; }
+body.premium-home .ae-hero-grid { width: min(90%, 1200px); gap: clamp(28px, 5vw, 76px); }
+body.premium-home .ae-hero-copy h1 { text-wrap: balance; }
+body.premium-home .ae-takeaway { position: relative; isolation: isolate; width: min(100%, 32rem); }
+body.premium-home .ae-takeaway::before {
+  content: ""; position: absolute; inset: -4% 7% 2%;
+  z-index: -1; border: 1px solid rgb(238 206 143 / .40);
+  border-radius: 50% 50% 12px 12px;
+  background: radial-gradient(ellipse at 48% 75%, #8b8856 0%, #48664c 45%, #285340 80%);
+  box-shadow: inset 0 0 0 7px rgb(248 228 178 / .05);
+  transform: none;
+}
+body.premium-home .ae-discovery-panel {
+  max-width: 38rem; background: #fffcf4; padding: 6px 10px;
+  border-radius: 15px; color: #173c2e; box-shadow: 0 8px 24px rgb(3 20 15 / .14);
+}
+body.premium-home .ae-home-search-control { box-shadow: none; background: transparent; padding-inline: 4px; }
+body.premium-home .ae-home-search-control input { min-width: 0; color: #173c2e; }
+body.premium-home .ae-home-search-control button { border-radius: 10px; padding-inline: 18px; }
+body.premium-home .ae-home-area-form { margin: 0; border-top: 1px solid #dadfd3; }
+body.premium-home .ae-home-area-control { display: flex; align-items: center; padding-inline: 6px; }
+body.premium-home .ae-home-area-control input { flex: 1; min-width: 0; max-width: none; color: #254b3b; }
+body.premium-home .ae-home-area-control input::placeholder,
+body.premium-home .ae-home-area-pin { color: #526558; }
+body.premium-home .ae-home-area-control button { color: #194c38; border: 0; border-radius: 10px; }
+body.premium-home .ae-home-status-slot { margin-top: 12px; }
+body.premium-home .ae-restaurants .section-head { align-items: center; margin-bottom: 20px; }
+body.premium-home #homeRestaurants .restaurant-card {
+  background: #fffdf8 !important; border: 1px solid #deded3 !important;
+  border-radius: 16px !important; padding-inline: 14px;
+}
+body.premium-home #homeRestaurants { gap: 12px 18px; }
+body.premium-home #homeRestaurants .restaurant-card .fav { inset-inline-end: 10px; }
+body.premium-home > footer .ae-pwa-install {
+  position: static; max-width: 76rem; margin: 0 auto 24px;
+  color: #173c2e; box-shadow: none;
+}
+body.premium-home > footer .ae-pwa-install .install { background: #10503c; }
+@media (max-width: 760px) {
+  body.premium-home .ae-hero { width: calc(100% - 16px); margin-top: 8px; border-radius: 18px; padding-block: 24px 36px; }
+  body.premium-home .ae-hero-grid { gap: 12px; }
+  body.premium-home .ae-takeaway { width: min(52vw, 13rem); margin-top: 4px; }
+  body.premium-home .ae-discovery-panel { padding-inline: 6px; }
+}
