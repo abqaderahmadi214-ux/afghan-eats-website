@@ -21,19 +21,18 @@ async function stubPublicApi(page) {
   });
 }
 
-test('home uses the Afghan food image and focused address-first copy, not a checkout-oriented video', async ({ page }) => {
+test('home features Afghan Eats branded takeaway art and keeps search available', async ({ page }) => {
   await stubPublicApi(page);
   await page.goto('/');
 
   const heroImage = page.locator('.ae-hero-visual img.ae-feast');
-  await expect(heroImage).toHaveAttribute('src', '/assets/menu-item-images/darbar-herat-restaurant-koobideh-kebab-f427a616.jpg');
+  await expect(heroImage).toHaveAttribute('src', '/assets/home/afghan-eats-takeaway-3d.webp');
   await expect(heroImage).toHaveAttribute('alt', '');
-  await expect(heroImage).toHaveCSS('object-fit', 'cover');
+  await expect(heroImage).toHaveCSS('object-fit', 'contain');
   await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.locator('.ae-hero-visual video')).toHaveCount(0);
   await expect(page.locator('.ae-hero-accent')).toHaveCount(0);
-  await expect(page.locator('.ae-hero-visual figcaption')).toContainText('Kebabs · Darbar Herat');
-  await expect(page.locator('.ae-hero-visual figcaption')).not.toContainText(/checkout|rider tracking|new orders remain paused/i);
+  await expect(page.locator('.ae-hero-visual a, .ae-hero-visual figcaption')).toHaveCount(0);
   await expect(page.locator('#aeHomeAreaForm')).toBeVisible();
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('#aeOrderingPauseContext')).toBeVisible();
@@ -62,7 +61,8 @@ test('mobile home puts area and search controls first, fits the viewport, and re
   await expect(page.locator('#aeHomeSearch')).toBeVisible();
   await expect(page.locator('.ae-home-business-link')).toBeVisible();
   const heroImage = page.locator('.ae-hero-visual .ae-feast');
-  await expect(heroImage).toBeHidden();
+  await expect(heroImage).toBeVisible();
+  await expect.poll(() => heroImage.evaluate(image => image.complete && image.naturalWidth > 0 && new URL(image.currentSrc).pathname)).toBe('/assets/home/afghan-eats-takeaway-3d.webp');
   await expect(page.locator('#aeMarketplaceTabs')).toHaveCount(0);
   expect((await page.locator('.ae-restaurants').boundingBox()).y).toBeLessThan(900);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);

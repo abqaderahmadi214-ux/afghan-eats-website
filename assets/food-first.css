@@ -185,14 +185,14 @@ body.premium-home #homeRestaurants .restaurant-card-link {
   gap: clamp(12px,1.5vw,24px);
   align-items: center;
   padding-block: 16px;
-  padding-inline-end: 34px;
+  padding-inline-end: 48px;
 }
 body.premium-home #homeRestaurants .restaurant-image {
   width: 100%; height: clamp(76px,7vw,102px) !important;
   border-radius: 6px; overflow: hidden;
 }
 body.premium-home #homeRestaurants .restaurant-body { padding: 0 !important; min-width: 0; }
-body.premium-home #homeRestaurants .restaurant-card .fav { inset-block-start: 18px; inset-inline-end: 0; width: 34px; box-shadow: none; }
+body.premium-home #homeRestaurants .restaurant-card .fav { inset-block-start: 18px; inset-inline-end: 0; width: 44px; min-height: 44px; box-shadow: none; }
 body.premium-home #homeRestaurants .restaurant-image .status-pill { position: static; }
 body.premium-home #homeRestaurants .browse-card-meta:empty { display: none; }
 body.premium-home #homeRestaurants { column-gap: 34px; row-gap: 0; }
@@ -217,7 +217,7 @@ body.premium-home .ae-hero { position: relative; isolation: isolate; overflow: h
 .ae-food-backdrop { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .ae-food-backdrop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; animation: ae-food-drift 18s ease-in-out infinite alternate; }
 .ae-food-backdrop img + img { opacity: 0; animation: ae-food-drift 18s ease-in-out infinite alternate-reverse, ae-food-dissolve 20s ease-in-out infinite; }
-.ae-food-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(5,32,24,.87),rgba(8,40,29,.72) 45%,rgba(8,40,29,.48)); }
+.ae-food-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(5,32,24,.94) 0%,rgba(5,32,24,.86) 42%,rgba(13,57,43,.86) 68%,rgba(12,52,40,.92) 100%); }
 html[dir="rtl"] .ae-food-backdrop::after { transform: scaleX(-1); }
 @keyframes ae-food-drift { from { transform: scale(1.02) translateX(-.6%); } to { transform: scale(1.10) translateX(.6%); } }
 @keyframes ae-food-dissolve { 0%,30%,100% { opacity: 0; } 50%,80% { opacity: 1; } }
@@ -230,9 +230,89 @@ html[dir="rtl"] .ae-food-backdrop::after { transform: scaleX(-1); }
 .ae-hero:has(.ae-photo-toggle input:checked) .ae-food-backdrop img { animation-play-state: paused; }
 @media(max-width:760px) {
   body.premium-home .ae-hero { padding-block-end: 42px; }
-  .ae-food-backdrop::after { background: linear-gradient(90deg,rgba(5,32,24,.85),rgba(5,32,24,.62)); }
+  .ae-food-backdrop::after { background: linear-gradient(0deg,rgba(5,32,24,.94) 0%,rgba(5,32,24,.84) 48%,rgba(12,52,40,.83) 78%,rgba(12,52,40,.85) 100%); }
 }
 @media(prefers-reduced-motion:reduce) {
   .ae-food-backdrop img { animation: none !important; }
   .ae-food-backdrop img + img,.ae-photo-toggle { display: none; }
+}
+
+/* Align the transparent still life to the same grid as the search form. */
+body.premium-home .ae-takeaway {
+  display: grid;
+  align-self: center;
+  justify-self: center;
+  width: min(100%, 30rem);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: visible;
+  box-shadow: none;
+}
+body.premium-home .ae-takeaway .ae-feast {
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(0 8px 9px rgba(4, 25, 18, .24));
+}
+@media (max-width: 760px) {
+  body.premium-home .ae-takeaway {
+    width: min(60vw, 15rem);
+    margin-block-start: 14px;
+  }
+}
+
+/* The illustrated arch shares the hero grid with the discovery panel. */
+body.premium-home .ae-hero {
+  width: min(calc(100% - 32px), 1600px);
+  margin: 16px auto 0;
+  border-radius: 24px;
+  background: #07392d;
+  padding-block: clamp(32px, 4vw, 64px);
+}
+body.premium-home .ae-food-backdrop { opacity: .38; }
+body.premium-home .ae-hero-grid { width: min(90%, 1200px); gap: clamp(28px, 5vw, 76px); }
+body.premium-home .ae-hero-copy h1 { text-wrap: balance; }
+body.premium-home .ae-takeaway { position: relative; isolation: isolate; width: min(100%, 32rem); }
+body.premium-home .ae-takeaway::before {
+  content: ""; position: absolute; inset: -4% 7% 2%;
+  z-index: -1; border: 1px solid rgb(238 206 143 / .40);
+  border-radius: 50% 50% 12px 12px;
+  background: radial-gradient(ellipse at 48% 75%, #8b8856 0%, #48664c 45%, #285340 80%);
+  box-shadow: inset 0 0 0 7px rgb(248 228 178 / .05);
+  transform: none;
+}
+body.premium-home .ae-discovery-panel {
+  max-width: 38rem; background: #fffcf4; padding: 6px 10px;
+  border-radius: 15px; color: #173c2e; box-shadow: 0 8px 24px rgb(3 20 15 / .14);
+}
+body.premium-home .ae-home-search-control { box-shadow: none; background: transparent; padding-inline: 4px; }
+body.premium-home .ae-home-search-control input { min-width: 0; color: #173c2e; }
+body.premium-home .ae-home-search-control button { border-radius: 10px; padding-inline: 18px; }
+body.premium-home .ae-home-area-form { margin: 0; border-top: 1px solid #dadfd3; }
+body.premium-home .ae-home-area-control { display: flex; align-items: center; padding-inline: 6px; }
+body.premium-home .ae-home-area-control input { flex: 1; min-width: 0; max-width: none; color: #254b3b; }
+body.premium-home .ae-home-area-control input::placeholder,
+body.premium-home .ae-home-area-pin { color: #526558; }
+body.premium-home .ae-home-area-control button { color: #194c38; border: 0; border-radius: 10px; }
+body.premium-home .ae-home-status-slot { margin-top: 12px; }
+body.premium-home .ae-restaurants .section-head { align-items: center; margin-bottom: 20px; }
+body.premium-home #homeRestaurants .restaurant-card {
+  background: #fffdf8 !important; border: 1px solid #deded3 !important;
+  border-radius: 16px !important; padding-inline: 14px;
+}
+body.premium-home #homeRestaurants { gap: 12px 18px; }
+body.premium-home #homeRestaurants .restaurant-card .fav { inset-inline-end: 10px; }
+body.premium-home > footer .ae-pwa-install {
+  position: static; max-width: 76rem; margin: 0 auto 24px;
+  color: #173c2e; box-shadow: none;
+}
+body.premium-home > footer .ae-pwa-install .install { background: #10503c; }
+@media (max-width: 760px) {
+  body.premium-home .ae-hero { width: calc(100% - 16px); margin-top: 8px; border-radius: 18px; padding-block: 24px 36px; }
+  body.premium-home .ae-hero-grid { gap: 12px; }
+  body.premium-home .ae-takeaway { width: min(52vw, 13rem); margin-top: 4px; }
+  body.premium-home .ae-discovery-panel { padding-inline: 6px; }
 }
